@@ -1,0 +1,69 @@
+<HTML>
+<HEAD>
+<TITLE>Demo</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<META >
+	<script type="text/javascript" src="../jquery/jquery1.12.0.min.js"></script>
+	<!--<script type="text/javascript" src="jquery-1.7.2.js"></script>-->
+	<!--iCheck-->
+	<link href="../iCheck/custom.css" rel="stylesheet">
+	<script src="../iCheck/icheck.min.js"></script>
+	<script type="text/javascript" src="TreeGrid-1.1.js"></script>
+	<link type="text/css" rel="stylesheet" href="TreeGrid.css"/>
+
+	<script>
+	$(function(){
+		$("#testTreeGrid").TreeGrid({
+			width:"600px",
+			showCheckbox:true,
+			delayLoad:true,
+
+			onDelayLoadData:function(data){return [{name:'node-r',text:'nr',children:[]}]},
+			columns:[
+				{headerText: "Name", dataField: "name", headerAlign: "center",dataAlign: "left",width: "200",formatter:handleName},
+				{headerText: "text", dataField: "text", headerAlign: "center"}
+			],
+			//requestUrl:"/hill/TreeGrid/getData",//远程加载时初始化数据
+			//requestParam:{parentPath:''},
+			data:[{
+				name:'node1',text:0,children:[
+					{name:'中国',text:'n1-1',children:[
+						{name:'中国',text:'文字'},
+						{name:'node1-1-1',text:'a'}
+					]},
+					{name:'node1-2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',text:'n1-2'},
+					{name:'node1-3',text:'n1-3'},
+					{name:'node1-4',text:'n1-4'},
+					{name:'node1-5',text:'n1-5'},
+					{name:'node1-6',text:'n1-6'},
+					//有children但是为[]就会触发延迟加载，获取全程数据
+					{name:'node1-7',text:'n1-7',children:[]}
+				]
+			},{
+				name:'node1',text:'n1'
+			}],
+			itemClick:function(){console.log("itemclick");}
+		});
+		
+
+		function handleName(value){
+			//使其具有悬浮效果
+			return "<span title='"+value+"'>"+value+"</span>";
+		}
+
+	});
+
+	function getCk(){
+		var r = $("#testTreeGrid").TreeGrid("getCheckedRows");
+		console.log(r);
+	}
+		
+	</script>
+</HEAD>
+
+<BODY>
+	<div id="testTreeGrid" class='test'></div>
+	<input type="button" value="GET-CHECKED-VAL" id="btn" onclick="getCk()"/>
+
+</BODY>
+</HTML>

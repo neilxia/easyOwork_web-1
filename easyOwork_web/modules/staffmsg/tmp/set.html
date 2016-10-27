@@ -1,0 +1,319 @@
+<div id="page-wrapper" class="{{$state.current.name}}" ng-controller="setCtrl">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
+        <ul>
+            <li class="active">配置薪酬及社保</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li>员工管理</li>
+        <li class="active">配置薪酬及社保</li>
+    </ol>
+    <!--薪酬-->
+    <div class="btnbox">
+        <button class="btn btn-default btn-sm" ng-click="addconfigitem()">新增配置项</button>
+        <button class="btn btn-default btn-sm" ng-click="delete()">删除</button>
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body smtd">
+            <table class="table bbe table-hover" cellspacing="0" cellpadding="0" width="100%;">
+                <thead>
+                <tr>
+                    <th width="40" class="t_r"><input icheck type="checkbox" ng-model="demo.checkOne"></th>
+                    <th><span class="pl10">项名</span></th>
+                    <th width="100">金额(¥)</th>
+                    <th width="70">周期</th>
+                    <th width="60">计税</th>
+                    <th width="120">生效日期</th>
+                    <th width="90">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="t_r"><input icheck type="checkbox" ng-model="demo.checkOne"></td>
+                    <td><span class="pl10">基本工资</span></td>
+                    <td>1200</td>
+                    <td>月</td>
+                    <td>是</td>
+                    <td>2016-08-21</td>
+                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editconfigitem()"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete()"><i class="iconfont icon-del f14"></i></button></td>
+                </tr>
+                <tr>
+                    <td class="t_r"><input icheck type="checkbox" ng-model="demo.checkOne"></td>
+                    <td><span class="pl10">社保</span></td>
+                    <td>600</td>
+                    <td>月</td>
+                    <td>是</td>
+                    <td>2016-08-21</td>
+                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editconfigitem()"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete()"><i class="iconfont icon-del f14"></i></button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--社保-->
+    <div class="btnbox mt10">
+        <button class="btn btn-default btn-sm" ng-click="addconfigitem2()">新增配置项</button>
+        <button class="btn btn-default btn-sm" ng-click="delete()">删除</button>
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body smtd">
+            <table class="table bbe table-hover" cellspacing="0" cellpadding="0" width="100%;">
+                <thead>
+                <tr>
+                    <th width="40" class="t_r"><input icheck type="checkbox" ng-model="demo.checkOne"></th>
+                    <th><span class="pl10">五险一金项</span></th>
+                    <th width="100">基数(¥)</th>
+                    <th width="60">比例</th>
+                    <th width="70">周期</th>
+                    <th width="120">生效日期</th>
+                    <th width="90">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="t_r"><input icheck type="checkbox" ng-model="demo.checkOne"></td>
+                    <td><span class="pl10">基本工资</span></td>
+                    <td>1200</td>
+                    <td>6%</td>
+                    <td>是</td>
+                    <td>2016-08-21</td>
+                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editconfigitem2()"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete()"><i class="iconfont icon-del f14"></i></button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!--新增配置项-->
+    <script type="text/ng-template" id="addconfigitem.html">
+        <div class="whitemodal">
+            <div class="modal-header">
+                <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                <div class="f16">新增配置项</div>
+            </div>
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line30td">
+                    <tr>
+                        <td width="60" class="g9">项名</td>
+                        <td class="pl5"><input type="text" class="form-control" value="请输入名称"></td>
+                    </tr>
+                    <tr>
+                        <td class="g9">金额(¥)</td>
+                        <td class="pl5"><input type="text" class="form-control" placeholder="请输入金额"></td>
+                    </tr>
+                    <tr>
+                        <td class="g9">周期</td>
+                        <td class="pl5">
+                            <select class="form-control input-sm" name="" id="">
+                                <option value="">日</option>
+                                <option value="">周</option>
+                                <option value="">月</option>
+                                <option value="">季</option>
+                                <option value="">年</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="g9">计税</td>
+                        <td class="pl5">
+                            <select class="form-control input-sm" name="" id="">
+                                <option value="">是</option>
+                                <option value="">否</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="g9">生效日期</td>
+                        <td class="pl5">
+                            <div class="qiyi-group">
+                                <input type="datetime" class="form-control input-sm" date-time ng-model="sampleDate" view="year" min-view="year" format="yyyy-MM-dd" step="5" auto-close="true">
+                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="ok()">保存</button>
+                <button type="button" class="btn btn-white" ng-click="cancel()">关闭</button>
+            </div>
+        </div>
+    </script>
+    <!--编辑配置项-->
+    <script type="text/ng-template" id="editconfigitem.html">
+        <div class="whitemodal">
+            <div class="modal-header">
+                <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                <div class="f16">新增配置项</div>
+            </div>
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line30td">
+                    <tr>
+                        <td width="60" class="g9">项名</td>
+                        <td class="pl5"><input type="text" class="form-control" value="请输入名称"></td>
+                    </tr>
+                    <tr>
+                        <td class="g9">金额(¥)</td>
+                        <td class="pl5"><input type="text" class="form-control" placeholder="请输入金额"></td>
+                    </tr>
+                    <tr>
+                        <td class="g9">周期</td>
+                        <td class="pl5">
+                            <select class="form-control input-sm" name="" id="">
+                                <option value="">日</option>
+                                <option value="">周</option>
+                                <option value="">月</option>
+                                <option value="">季</option>
+                                <option value="">年</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="g9">计税</td>
+                        <td class="pl5">
+                            <select class="form-control input-sm" name="" id="">
+                                <option value="">是</option>
+                                <option value="">否</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="g9">生效日期</td>
+                        <td class="pl5">
+                            <div class="qiyi-group">
+                                <input type="datetime" class="form-control input-sm" date-time ng-model="sampleDate" view="year" min-view="year" format="yyyy-MM-dd" step="5" auto-close="true">
+                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="ok()">保存</button>
+                <button type="button" class="btn btn-white" ng-click="cancel()">关闭</button>
+            </div>
+        </div>
+    </script>
+
+    <!--新增社保配置项-->
+    <script type="text/ng-template" id="addconfigitem2.html">
+        <div class="whitemodal">
+            <div class="modal-header">
+                <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                <div class="f16">新增社保配置项</div>
+            </div>
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line30td">
+                    <tr>
+                        <td width="60" class="g9">项名</td>
+                        <td class="pl5"><input type="text" class="form-control" value="请输入名称"></td>
+                    </tr>
+                    <tr>
+                        <td class="g9">基数(¥)</td>
+                        <td class="pl5"><input type="text" class="form-control" placeholder="请输入基数金额"></td>
+                    </tr>
+                    <tr>
+                        <td class="g9">比例</td>
+                        <td class="pl5"><input type="text" class="form-control" placeholder="请输入比例"></td>
+                    </tr>
+                    <tr>
+                        <td class="g9">周期</td>
+                        <td class="pl5">
+                            <select class="form-control input-sm" name="" id="">
+                                <option value="">日</option>
+                                <option value="">周</option>
+                                <option value="">月</option>
+                                <option value="">季</option>
+                                <option value="">年</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="g9">生效日期</td>
+                        <td class="pl5">
+                            <div class="qiyi-group">
+                                <input type="datetime" class="form-control input-sm" date-time ng-model="sampleDate" view="date" min-view="year" format="yyyy-MM-dd" step="5" auto-close="true">
+                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="ok()">保存</button>
+                <button type="button" class="btn btn-white" ng-click="cancel()">关闭</button>
+            </div>
+        </div>
+    </script>
+    <!--编辑社保配置项-->
+    <script type="text/ng-template" id="editconfigitem2.html">
+        <div class="whitemodal">
+            <div class="modal-header">
+                <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                <div class="f16">新增社保配置项</div>
+            </div>
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line30td">
+                    <tr>
+                        <td width="60" class="g9">项名</td>
+                        <td class="pl5"><input type="text" class="form-control" value="请输入名称"></td>
+                    </tr>
+                    <tr>
+                        <td class="g9">基数(¥)</td>
+                        <td class="pl5"><input type="text" class="form-control" placeholder="请输入基数金额"></td>
+                    </tr>
+                    <tr>
+                        <td class="g9">比例</td>
+                        <td class="pl5"><input type="text" class="form-control" placeholder="请输入比例"></td>
+                    </tr>
+                    <tr>
+                        <td class="g9">周期</td>
+                        <td class="pl5">
+                            <select class="form-control input-sm" name="" id="">
+                                <option value="">日</option>
+                                <option value="">周</option>
+                                <option value="">月</option>
+                                <option value="">季</option>
+                                <option value="">年</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="g9">生效日期</td>
+                        <td class="pl5">
+                            <div class="qiyi-group">
+                                <input type="datetime" class="form-control input-sm" date-time ng-model="sampleDate" view="date" min-view="year" format="yyyy-MM-dd" step="5" auto-close="true">
+                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="ok()">保存</button>
+                <button type="button" class="btn btn-white" ng-click="cancel()">关闭</button>
+            </div>
+        </div>
+    </script>
+
+    <!--删除-->
+    <script type="text/ng-template" id="delete.html">
+        <div class="inmodal bdrs8 ovh">
+            <div class="modal-body t_c">
+                <div class="pt20"><i class="iconfont icon-tishi f18 orange mr5"></i>您确定要删除选择项么？</div>
+                <div class="p10 mt30">
+                    <button type="button" class="btn btn-white btn-sm wd80" ng-click="cancel()">取消</button>
+                    <button type="button" class="btn btn-primary btn-sm wd80" ng-click="ok()">确定</button>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>

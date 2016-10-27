@@ -1,0 +1,181 @@
+<div id="page-wrapper" ng-controller="addpcsCtrl">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
+        <ul>
+            <li class="active">新建流程</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li>审批流程</li>
+        <li class="active">新建流程</li>
+    </ol>
+    <div class="nose-panel">
+        <div class="p30 pb10 addpcs-config">
+            <div class="pct60  f12">
+                <div class="cf mb10">
+                    <div class="col-xs-2 t_r pt7 g9">流程类型</div>
+                    <div class="col-xs-10 form-inline">
+                        <button class="btn btn-default mr5" ng-model="pcsclass" btn-radio=1>类型1</button>
+                        <button class="btn btn-default mr5" ng-model="pcsclass" btn-radio=2>类型2</button>
+                        <button class="btn btn-default mr5" ng-model="pcsclass" btn-radio=3>类型3</button>
+                    </div>
+                </div>
+                <div class="cf mb10">
+                    <div class="col-xs-2 t_r pt7 g9">选择流程</div>
+                    <div class="col-xs-10 form-inline">
+                        <button class="btn btn-default mr5" ng-model="pcsitem" btn-radio=1>选择流程1</button>
+                        <button class="btn btn-default mr5" ng-model="pcsitem" btn-radio=2>选择流程2</button>
+                        <button class="btn btn-default mr5" ng-model="pcsitem" btn-radio=3>选择流程3</button>
+                    </div>
+                </div>
+                <div class="cf mb10">
+                    <div class="col-xs-2 t_r pt7 g9">流程描述</div>
+                    <div class="col-xs-10"><textarea class="form-control" cols="6" disabled placeholder="简要的流程描述"></textarea></div>
+                </div>
+                <div class="cf mb10">
+                    <div class="col-xs-2 t_r pt7 g9">适用人员</div>
+                    <div class="col-xs-10">
+                        <ul class="addpcs-config-prople cf">
+                            <li  class="bdrs4 ng-binding ng-scope" id="ajson1-2-2">用户研究部</li>
+                            <li  class="bdrs4 ng-binding ng-scope" id="ajson1-2-4">李霞</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="mb15 f12 bg-fafafa">
+                <div class="cf pt5 pb10">
+                    <div class="col-xs-2 t_r pt7 f16">流程数据</div>
+                </div>
+            </div>
+            <div class="pct60 f12">
+                <div class="cf mb10">
+                    <div class="col-xs-2 t_r pt7 g9">单文本框</div>
+                    <div class="col-xs-10 form-inline"><input type="text" class="form-control" placeholder="单文本框" ng-model="obj.value"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="nose-panel-body">
+            <table class="table table-hover bte tr" cellspacing="0" cellpadding="0" width="100%;">
+                <thead>
+                <tr>
+                    <th width="80"><span class="pl15">排序</span></th>
+                    <th>级别</th>
+                    <th width="100">审批人</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="pl20">1</td>
+                    <td>第一级审批</td>
+                    <td>王晓尔</td>
+                </tr>
+                <tr>
+                    <td class="pl20">2</td>
+                    <td>第二级审批</td>
+                    <td>王晓尔</td>
+                </tr>
+                <tr>
+                    <td class="pl20">3</td>
+                    <td>第三级审批</td>
+                    <td>王晓尔</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="nose-panel-footer cf bte">
+            <button class="btn btn-default wd80">取消</button>
+            <button class="btn btn-primary wd80" ui-sref="processmsg.mypcs">提交</button>
+        </div>
+    </div>
+
+
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
+<!--增加流程数据-->
+<script type="text/ng-template" id="addpcsdata.html">
+    <div class="whitemodal smbox" ng-controller="addpcsCtrl">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">添加类别</div>
+        </div>
+        <div class="modal-body cf">
+            <div class="col-xs-6">
+                <div class="cf addrow active pl20 pr20 form-inline">
+                    <input type="text" class="form-control wd180" value="单行文本框" disabled>
+                    <button class="btn btn-default" ng-model="radioitem" btn-radio="'input'" ng-click="selected.item = 'input'">点击添加</button>
+                </div>
+                <div class="cf addrow pl20 pr20 form-inline mt10">
+                    <textarea class="form-control h34 wd180" disabled>多行文本框</textarea>
+                    <button class="btn btn-default" ng-model="radioitem" btn-radio="'textarea'" ng-click="selected.item = 'textarea'">点击添加</button>
+                </div>
+                <div class="cf addrow pl20 pr20 form-inline mt10">
+                    <select class="form-control wd180" disabled>
+                        <option>下拉选择框</option>
+                    </select>
+                    <button class="btn btn-default" ng-model="radioitem" btn-radio="'select'" ng-click="selected.item = 'select'">点击添加</button>
+                </div>
+                <div class="cf addrow pl20 pr20 form-inline mt10">
+                    <div class="wd180 dib">
+                        <label> <input icheck type="checkbox" ng-model="demo.checkOne" disabled> 未选中</label>
+                        <label> <input icheck type="checkbox" ng-model="demo.checkTwo" disabled> 已选中</label>
+                    </div>
+                    <button class="btn btn-default" ng-model="radioitem" btn-radio="'checkbox'" ng-click="selected.item = 'checkbox'">点击添加</button>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="cf addrow pl20 pr20 form-inline">
+                    <div class="wd180 dib">
+                        <div class="qiyi-group">
+                            <input type="datetime" class="form-control pct100 f12" value="2016-09-27" disabled >
+                            <span class="abs_r"><i class="iconfont icon-rili"></i></span>
+                        </div>
+                    </div>
+                    <button class="btn btn-default" ng-model="radioitem" btn-radio="'datetime'" ng-click="selected.item = 'datetime'">点击添加</button>
+                </div>
+                <div class="cf addrow pl20 pr20 form-inline mt10">
+                    <div class="wd180 dib">
+                        <div class="qiyi-group">
+                            <input type="datetime" class="form-control pct100 f12" value="2016-09-27~2016-09-28" disabled >
+                            <span class="abs_r"><i class="iconfont icon-rili"></i></span>
+                        </div>
+                    </div>
+                    <button class="btn btn-default" ng-model="radioitem" btn-radio="'daterange'" ng-click="selected.item = 'daterange'">点击添加</button>
+                </div>
+                <div class="cf addrow pl20 pr20 form-inline mt10">
+                    <button class="btn btn-white wd180" disabled><i class="iconfont icon-fujian blue"></i> 附件上传</button>
+                    <button class="btn btn-default"  ng-model="radioitem" btn-radio="'upload'" ng-click="selected.item = 'upload'">点击添加</button>
+                </div>
+                <div class="cf addrow pl20 pr20 form-inline mt10">
+                    <div class="wd180 dib">
+                        <label> <input icheck type="radio" name="radioTest" ng-model="demo.check8" disabled> 未选中</label>
+                        <label> <input icheck type="radio" name="radioTest" ng-model="demo.check8" disabled> 已选中</label>
+                    </div>
+                    <button class="btn btn-default" ng-model="radioitem" btn-radio="'radio'" ng-click="selected.item = 'radio'">点击添加</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+            <button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>
+        </div>
+    </div>
+</script>
+<!--删除-->
+<script type="text/ng-template" id="delete.html">
+    <div class="inmodal bdrs8 ovh">
+        <div class="modal-body t_c">
+            <div class="pt20"><i class="iconfont icon-tishi f18 orange mr5"></i>您确定要删除选择项么？</div>
+            <div class="p10 mt30">
+                <button type="button" class="btn btn-white btn-sm wd80" ng-click="cancel()">取消</button>
+                <button type="button" class="btn btn-primary btn-sm wd80" ng-click="ok()">确定</button>
+            </div>
+        </div>
+    </div>
+</script>

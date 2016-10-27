@@ -1,0 +1,158 @@
+<div id="page-wrapper" class="{{$state.current.name}}" ng-controller="structuremsgCtrl">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
+        <ul>
+            <li class="active">部门管理</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li>组织结构</li>
+        <li class="active">部门管理</li>
+    </ol>
+    <div class="btnbox">
+        <button class="btn btn-default btn-sm" ng-click="addDPment()">新增部门</button>
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <div class="bbe mt-1" nosetree-grid options="treegirdoptions"></div>
+
+            <!--
+            <table class="table table-hover bb-ed" id="processtable" cellspacing="0" cellpadding="0" width="100%;">
+                <thead>
+                    <tr>
+                        <th><span class="pl10">部门名称</span></th>
+                        <th width="100">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ttid="1">
+                        <td>行政部</td>
+                        <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editDPment()"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除"><i class="iconfont icon-del f14"></i></button></td>
+                    </tr>
+                    <tr data-ttid="2">
+                        <td>产品中心</td>
+                        <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editDPment()"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除"><i class="iconfont icon-del f14"></i></button></td>
+                    </tr>
+                    <tr data-ttid="2.1" data-ttparentid="2">
+                        <td>产品一部</td>
+                        <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editDPment()"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除"><i class="iconfont icon-del f14"></i></button></td>
+                    </tr>
+                    <tr data-ttid="2.1" data-ttparentid="2">
+                        <td>用户体验部</td>
+                        <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editDPment()"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除"><i class="iconfont icon-del f14"></i></button></td>
+                    </tr>
+                    <tr data-ttid="2.2" data-ttparentid="2">
+                        <td>用户研究部</td>
+                        <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editDPment()"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除"><i class="iconfont icon-del f14"></i></button></td>
+                    </tr>
+                    <tr data-ttid="3">
+                        <td>人事部</td>
+                        <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editDPment()"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除"><i class="iconfont icon-del f14"></i></button></td>
+                    </tr>
+                    <tr data-ttid="4">
+                        <td>市场部</td>
+                        <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editDPment()"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除"><i class="iconfont icon-del f14"></i></button></td>
+                    </tr>
+                </tbody>
+
+            </table>
+            -->
+
+        </div>
+    </div>
+
+    <!--新增部门-->
+    <script type="text/ng-template" id="addDPment.html">
+        <div class="whitemodal">
+            <div class="modal-header">
+                <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                <div class="f16">新增部门</div>
+            </div>
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td">
+                    <tr>
+                        <td width="60" class="g9">上级部门</td>
+                        <td class="pl5">
+                            <select class="form-control" name=""  placeholder="选择部门" id="">
+                                <option>行政部</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="g9">部门名称</td>
+                        <td class="pl5"><input type="text" class="form-control" placeholder="请输入部门名称（必填）"></td>
+                    </tr>
+                    <tr>
+                        <td class="g9" valign="top">部门描述</td>
+                        <td class="pl5"><textarea class="form-control" rows="4" placeholder="请输入部门描述"></textarea></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                <button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>
+            </div>
+        </div>
+    </script>
+    <!--管理部门-->
+    <script type="text/ng-template" id="editDPment.html">
+        <div class="whitemodal">
+            <div class="modal-header">
+                <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                <div class="f16">编辑部门</div>
+            </div>
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td">
+                    <tr>
+                        <td width="60" class="g9">上级部门</td>
+                        <td class="pl5">
+                            <select class="form-control" name=""  placeholder="选择部门" id="">
+                                <option>行政部</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="g9">修改名称</td>
+                        <td class="pl5"><input type="text" class="form-control" placeholder="请输入部门名称（必填）"></td>
+                    </tr>
+                    <tr>
+                        <td class="g9" valign="top">部门描述</td>
+                        <td class="pl5"><textarea class="form-control" rows="4" placeholder="请输入部门描述"></textarea></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                <button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>
+            </div>
+        </div>
+    </script>
+    <!--删除-->
+    <script type="text/ng-template" id="deleDPment.html">
+        <div class="inmodal bdrs8 ovh">
+            <div class="modal-body t_c">
+                <div class="pt20"><i class="iconfont icon-tishi f18 orange mr5"></i>您确定要删除选择项么？</div>
+                <div class="p10 mt30">
+                    <button type="button" class="btn btn-white btn-sm wd80" ng-click="cancel()">取消</button>
+                    <button type="button" class="btn btn-primary btn-sm wd80" ng-click="ok()">确定</button>
+                </div>
+            </div>
+        </div>
+    </script>
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
+<!--<script>
+    $("#processtable").treetable({
+        expandable: true,
+        nodeIdAttr:'ttid',
+        parentIdAttr:'ttparentid'
+    });
+    // Highlight selected row
+    $("#processtable tbody").on("mousedown", "tr", function() {
+        $(".selected").not(this).removeClass("selected");
+        $(this).toggleClass("selected");
+    });
+</script>-->

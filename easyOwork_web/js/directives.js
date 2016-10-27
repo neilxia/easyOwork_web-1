@@ -1,0 +1,570 @@
+/**
+ * --by Nose
+ */
+
+/**
+ * pageTitle - 指令设置页面标题
+ */
+function pageTitle($rootScope, $timeout) {
+    return {
+        link: function(scope, element) {
+            var listener = function(event, toState, toParams, fromState, fromParams) {
+                // Default title - load on Dashboard 1
+                var title = '企易';
+                // Create your own title pattern
+                if (toState.data && toState.data.pageTitle) title = '企易-' + toState.data.pageTitle;
+                $timeout(function() {
+                    element.text(title);
+                });
+            };
+            $rootScope.$on('$stateChangeStart', listener);
+        }
+    }
+};
+
+
+/**
+ * sideNavigation - Directive for run metsiMenu on sidebar navigation
+ */
+function sideNavigation($timeout) {
+    return {
+        restrict: 'A',
+        link: function(scope, element) {
+            // Call the metsiMenu plugin and plug it to sidebar navigation
+            $timeout(function(){
+                element.metisMenu();
+            });
+        }
+    };
+};
+
+/**
+ * landingScrollspy - Directive for scrollspy in landing page
+ */
+function landingScrollspy(){
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            element.scrollspy({
+                target: '.navbar-fixed-top',
+                offset: 80
+            });
+        }
+    }
+}
+
+
+
+
+
+/**
+ * icheck - Directive for custom checkbox icheck
+ */
+function icheck($timeout) {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function($scope, element, $attrs, ngModel) {
+            return $timeout(function() {
+                var value;
+                value = $attrs['value'];
+
+                $scope.$watch($attrs['ngModel'], function(newValue){
+                    $(element).iCheck('update');
+                });
+
+                return $(element).iCheck({
+                    checkboxClass: 'icheckbox_square-green icheck-sm',
+                    radioClass: 'iradio_square-green icheck-sm'
+
+                }).on('ifChanged', function(event) {
+                    if ($(element).attr('type') === 'checkbox' && $attrs['ngModel']) {
+                        $scope.$apply(function() {
+                            return ngModel.$setViewValue(event.target.checked);
+                        });
+                    }
+                    if ($(element).attr('type') === 'radio' && $attrs['ngModel']) {
+                        return $scope.$apply(function() {
+                            return ngModel.$setViewValue(value);
+                        });
+                    }
+                    // 全选、反选
+                    if($attrs['ngModel'] === 'main.checkAll'){
+                        $("input[name='chkList']:checkbox").each(function(){
+                            if(true == $(element).is(':checked')){
+                                $(this).iCheck('check');
+                            }else{
+                                $(this).iCheck('uncheck');
+                            }
+                        });
+                    }
+                });
+            });
+        }
+    };
+};
+/**
+ * 树形菜单
+ */
+function jsonTree(){
+    return {
+        restrict: 'A',
+        jstree: '=',
+        link:function(scope, element, attrs){
+            scope.$watch('jstree', function(){
+                $(element).jstree(
+                    //  try{
+
+                    scope.jstree.datas
+                    // }catch(exception){}
+                );
+            },true);
+            element.bind('click.jstree',function(event){
+                var resourceId =$(event.target).parents('li').attr('id');
+                var text='根目录';
+                if(resourceId>0){
+                    text = $(element).jstree("get_node", resourceId).text;
+                }
+
+                scope.changes(resourceId,text);
+            });
+            element.bind('ready.jstree',function(event){
+                scope.jsTreeReady();
+            });
+            scope.$watch(attrs['ngModel'], function(newValue){
+                if(newValue >0){
+                    $('#jsonTree').data('jstree', false).empty().jstree(scope.jstree.datas);
+                    //  alert('');
+                    // $(element).jstree(true).reload();
+                }
+            });
+        }
+    };
+};
+/**
+ * 上传
+ */
+function websimUploader($timeout){
+    return{
+        restrict:"A",
+        scope:{
+            divid:'@',
+            btnname:'@',
+            options:"=",
+            uploadSuccess:"&",
+            uploadError:"&"
+        },
+        repeat:true,
+        template:'<div>本地上传</div>',
+        link:function(scope,element,attrs){
+            $timeout(function(){
+                element.attr({'id':attrs.divid});
+                //配置允许上传的类型   图片/音视频/flash/文件
+                var accept = {
+                    //图片
+                    image: {
+                        title : 'Images',//标题
+                        extensions : 'gif,jpg,jpeg,bmp,png,ico',//允许上传文件的后缀
+                        mimeTypes : 'image/*'//允许的mimetype
+                    },
+                    //音视频
+                    video: {
+                        title : 'Videos',
+                        extensions : 'wmv,asf,asx,rm,rmvb,ram,avi,mpg,dat,mp4,mpeg,divx,m4v,mov,qt,flv,f4v,mp3,wav,aac,m4a,wma,ra,3gp,3g2,dv,vob,mkv,ts',
+                        mimeTypes : 'video/*,audio/*'
+                    },
+                    //flash
+                    flash: {
+                        title : 'Flashs',
+                        extensions : 'swf,fla',
+                        mimeTypes : 'application/x-shockwave-flash'
+                    },
+                    //办公文档，压缩文件等等
+                    file: {
+                        title : 'Files',
+                        extensions : 'zip,rar,ppt,pptx,doc,docx,xls,xlsx,pdf',
+                        mimeTypes : 'application/zip,application/x-rar-compressed,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/pdf'
+                    }
+                };
+                // 实例化
+                var defaults={
+                    auto: true, // 选完文件后，是否自动上传。
+                    pick : {
+                        id : '#'+attrs.divid,
+                        //label : '点击选择图片'
+                        //innerHTML: '<i class="iconfont icon-fujian blue"></i> 本地上传',
+                        innerHTML: attrs.btnname || '本地上传',
+                        multiple: false //multiple是否开启多文件上传，默认为true
+                    },
+                    accept : accept[attrs.type], //指定接受哪些类型的文件
+                    //upProgressGoal:"#boxs",
+                    upimgbox:"#thelist",
+                    // swf文件路径
+                    swf : 'Uploader.swf',
+                    disableGlobalDnd : true, //禁用全局拖动
+                    chunked : true,        //是否分片
+                    //chunkSize: 700000,  //每个分片的大小，默认为5M
+                    server : '../demo',
+                    //文件最大数量
+                    fileNumLimit : 30,
+                    //验证文件总大小是否超出限制
+                    fileSizeLimit : 5 * 1024 * 1024, // 200 M
+                    //验证单个文件大小是否超出限制
+                    fileSingleSizeLimit : 1 * 1024 * 1024
+                    // 50 M
+                };
+                var opt = $.extend({},defaults,scope.options);
+                var $list=$(opt.upimgbox).css({"position":"relative"});
+                //创建
+                var uploader = WebUploader.create(opt);
+
+                // 当有文件添加进来的时候
+                /*            uploader.on( 'fileQueued', function( file ) {
+                 debugger;
+                 /!*var $li = $('<div id="' + file.id + '"><div class="info">' + file.name + '</div></div>');
+                 //$img = $li.find('img');
+
+
+                 // $list为容器jQuery实例
+                 $list.append( $li );*!/
+
+                 });*/
+
+                // 文件上传过程中创建进度条实时显示。
+                uploader.on( 'uploadProgress', function( file, percentage ) {
+                    //var $li = $( '#'+file.id ),
+                    var $li = $list,
+                        $percent = $li.find('.progress .progress-bar');
+                    // 避免重复创建
+                    if ( !$percent.length ) {
+                        $percent = $('<div class="progress progress-striped progress-mini active">' +
+                            '<div class="progress-bar" role="progressbar" style="width: 0%">' +
+                            '</div>' +
+                            '</div>').appendTo( $li ).find('.progress-bar');
+                    }
+
+
+                    /*                // 避免重复创建
+                     if ( !$percent.length ) {
+                     $percent = $('<p style="position: absolute; width: 100%; height: 5px; background-color:blue;"><span style="background-color: red;display:block; height: 5px;"></span></p>')
+                     .appendTo( $li )
+                     .find('span');
+                     }
+
+                     var $li = $( '#'+file.id ),
+                     $percent = $li.find('.progress .progress-bar');*/
+
+
+
+                    $percent.css( 'width', percentage * 100 + '%' );
+                });
+
+                // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+                uploader.on( 'uploadSuccess', function( file,response ) {
+                    $( '#'+file.id ).addClass('upload-state-done');
+                    scope.uploadSuccess(file,response);
+                });
+
+                // 文件上传失败，显示上传出错。
+                uploader.on( 'uploadError', function( file,reason ) {
+                    var $li = $list,
+                        $error = $li.find('div.uploaderror');
+                    //debugger;
+                    // 避免重复创建
+                    if ( !$error.length ) {
+                        $error = $('<div class="uploaderror" style="width: 100%; background-color:#999; background-color:rgba(0,0,0,0.5); color: #fff; text-align: center; position: absolute; left: 0; top: 0;"></div>').appendTo( $li );
+                    }
+                    $error.text('上传失败');
+                    scope.uploadError(file,reason);
+                });
+
+                // 完成上传完了，成功或者失败，先删除进度条。
+                uploader.on( 'uploadComplete', function( file ) {
+                    //$( '#'+file.id ).find('.progress').remove();
+                    $list.find('.progress').fadeOut();
+                });
+            },0)
+
+        }
+    }
+}
+
+
+
+/**
+ * slimScroll - 指令与定制slimScroll高度
+ */
+function slimScroll($timeout){
+    return {
+        restrict: 'A',
+        scope: {
+            boxHeight: '@'
+        },
+        link: function(scope, element) {
+            $timeout(function(){
+                element.slimScroll({
+                    height: scope.boxHeight,
+                    alwaysVisible: true,
+                    position : 'right',
+                    size: '4px',
+                    color: '#e5e5e5',
+                    railOpacity: 0.9
+                });
+
+            });
+        }
+    };
+}
+
+function multipleEmail(){
+    return {
+        require: "ngModel",
+        link: function (scope, element, attr, ngModel) {
+            if (ngModel) {
+                var mobileRegexp = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+                var emailsRegexp = /^([a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*[;；]?)+$/i;
+            }
+            var customValidator = function (value) {
+                var validity = ngModel.$isEmpty(value) || (mobileRegexp.test(value) || emailsRegexp.test(value));
+                ngModel.$setValidity("multipleEmail", validity);
+                return validity ? value : undefined;
+            };
+            ngModel.$formatters.push(customValidator);
+            ngModel.$parsers.push(customValidator);
+        }
+    };
+}
+
+function onFinishRender($timeout) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attr) {
+            if (scope.$last === true) {
+                $timeout(function() {
+                    scope.$emit('ngRepeatFinished'); //事件通知
+                    /*
+                     var fun = $scope.$eval(attrs.onFinishRender);
+                     if(fun && typeof(fun)=='function'){
+                     fun();  //回调函数
+                     }
+                    */
+                });
+            }
+        }
+    };
+}
+
+/*function onloadFinishset($timeout,$window) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attr) {
+            $timeout(function() {
+                debugger;
+
+                scope.$on('$viewContentLoaded', function(){
+
+                    fix_height();
+                    function fix_height() {
+                        var navbar = $('nav.navbar-default');
+                        var pagewrapper = $('#page-wrapper');
+                        pagewrapper.css("min-height", $(window).height()-98  + "px");
+                        navbar.css("min-height", $(window).height()-98  + "px");
+
+                    }
+                    //$(window).bind("load resize scroll", function() {
+                    $window.bind("resize scroll", function() {
+                        if(!$("body").hasClass('body-small')) {
+                            fix_height();
+                        }
+                    });
+
+                });
+            });
+        }
+    };
+}*/
+
+/**
+ * 获取验证码
+ */
+
+function getCode(){
+    return {
+        restrict: 'A',
+        scope: {},
+        //template:'<button type="button" class="btn btn-primary btn-verification" ng-click="sendMSG">获取验证码</button>',
+        link: function(scope, element,attr) {
+            element.bind('click',function(){
+                var countdown=60;
+                function settime(obj) {
+                    if (countdown == 0) {
+                        obj.attr("disabled",false);
+                        obj.text("获取验证码");
+                        countdown = 60;
+                        return;
+                    } else {
+                        obj.attr("disabled", true);
+                        obj.text("重新获取" + countdown);
+                        countdown--;
+                    }
+                    setTimeout(function() {
+                        settime(obj)
+                    },1000)
+                }
+                settime(element);
+            });
+
+
+        }
+    };
+}
+/*=========返回==============================*/
+function backButton($window){
+    return {
+        restrict: 'A',
+        link: function (scope, elem, attrs) {
+            elem.bind('click', function () {
+                $window.history.back();
+            });
+        }
+    }
+}
+/*=========返回==============================*/
+function reloadRoute($window){
+    return {
+        restrict: 'A',
+        link: function (scope, elem, attrs) {
+            elem.bind('click', function () {
+                $window.location.reload();
+            });
+        }
+    }
+}
+
+/*=========展开关闭collapseH========================================================================*/
+function collapseH(){
+    return{
+        restrict: 'A',
+        scope: {
+            options:'='
+        },
+        link:function(scope,element,attr){
+            var defaults ={
+                //controlbox:"#box",
+                toggleclick:".btn",
+                cancel:".cancel",
+                togglecom:".dropdown-menu",
+                setcomH:"30",
+                openclass:"aa",
+                closeclass:"bb",
+                activeclass:"active",
+                EveObj:"click",
+                Eveone:"toggle",
+                openArrow:"down",
+                clickEve:null
+
+            };
+            var opt = $.extend(defaults,scope.options);
+            //var toggleboxObj=$(opt.controlbox);
+            var toggleboxObj=element;
+            var clickObj=$(opt.toggleclick,toggleboxObj);
+            var cancelObj=$(opt.cancel,toggleboxObj);
+            var comObj=$(opt.togglecom,toggleboxObj);
+            if(opt.openArrow=='down'){
+                clickObj.on(opt.EveObj,function(){
+                    var that=$(this);
+                    if(opt.Eveone=="toggle"){
+                        if(comObj.hasClass(opt.activeclass)){
+                            that.removeClass(opt.openclass).addClass(opt.closeclass);
+                            comObj.removeClass(opt.activeclass);
+                            comObj.stop().animate({
+                                height: opt.setcomH,
+                            }, 250);
+                        }else{
+                            that.removeClass(opt.closeclass).addClass(opt.openclass);
+                            comObj.addClass(opt.activeclass);
+                            comObj.stop().animate({
+                                height: comObj[0].scrollHeight,
+                            }, 250);
+
+                        }
+                    }else{
+                        that.removeClass(opt.closeclass).addClass(opt.openclass);
+                        comObj.addClass(opt.activeclass);
+                    }
+                });
+            }else if(opt.openArrow=='right'){
+                clickObj.on(opt.EveObj,function(){
+                    var that=$(this);
+                    if(opt.Eveone=="toggle"){
+                        if(comObj.hasClass(opt.activeclass)){
+                            that.removeClass(opt.openclass).addClass(opt.closeclass);
+                            comObj.removeClass(opt.activeclass);
+                            comObj.stop().animate({
+                                right: opt.setcomH,
+                            }, 250);
+                        }else{
+                            that.removeClass(opt.closeclass).addClass(opt.openclass);
+                            comObj.addClass(opt.activeclass);
+                            comObj.stop().animate({
+                                right: 0,
+                            }, 250);
+
+                        }
+                    }else{
+                        that.removeClass(opt.closeclass).addClass(opt.openclass);
+                        comObj.addClass(opt.activeclass);
+                    }
+                });
+            }
+            cancelObj.on("click",function(){
+                cancelObj.removeClass(opt.openclass).addClass(opt.closeclass);
+                comObj.removeClass(opt.activeclass);
+                comObj.stop().animate({
+                    right: opt.setcomH
+                }, 250);
+            });
+        }
+    }
+}
+
+
+/*=========nosetreeGrid========================================================================*/
+function nosetreeGrid($timeout,$compile){
+    return{
+        restrict: 'A',
+        scope: {
+            options:'='
+        },
+        link:function(scope,element,attr){
+            $timeout(function(){
+                element.TreeGrid(scope.options);
+
+            });
+
+
+        }
+    }
+}
+
+/**
+ *
+ * Pass all functions into module
+ */
+angular
+    .module('qiyi.directives',[])
+    .directive('pageTitle', pageTitle)
+    .directive('sideNavigation', sideNavigation)
+    .directive('landingScrollspy', landingScrollspy)
+    .directive('jsonTree', jsonTree) // jsonTree
+    .directive('icheck', icheck)   // 单选框
+    .directive('slimScroll', slimScroll)   // 简单的滚动条
+    .directive('websimUploader', websimUploader)   // 文件上传
+    .directive('multipleEmail', multipleEmail) // 手机和邮箱验证
+    .directive('onFinishRender', onFinishRender)
+    .directive('getCode', getCode) //获取验证码
+    .directive('backButton', backButton) //返回
+    .directive('reloadRoute', reloadRoute) //刷新当前页
+    .directive('collapseH', collapseH) //展开关闭collapseH
+    .directive('nosetreeGrid', nosetreeGrid) //nosetreeGrid
+;

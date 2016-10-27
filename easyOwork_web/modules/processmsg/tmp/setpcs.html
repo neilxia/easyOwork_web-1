@@ -1,0 +1,76 @@
+<div id="page-wrapper" class="{{$state.current.name}}" ng-controller="setpcsCtrl">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
+        <ul>
+            <li class="active">流程设置</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li>审批设置</li>
+        <li class="active">流程设置</li>
+    </ol>
+    <div class="btnbox">
+        <form class="f_r form-inline">
+            <select name="" class="form-control input-sm">
+                <option>类别</option>
+                <option>休假</option>
+                <option>转正</option>
+            </select>
+            <span class="form-group-sm search-group">
+                <input type="text" class="form-control wd180" placeholder="流程名称关键词">
+                <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
+            </span>
+        </form>
+        <button class="btn btn-default btn-sm" ui-sref="processmsg.addsetpcs">添加流程</button>
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <table class="table table-hover tr" cellspacing="0" cellpadding="0" width="100%;">
+                <thead>
+                    <tr>
+                        <th width="80"><span class="pl15">类别</span></th>
+                        <th>流程名称</th>
+                        <th width="120">适用人员</th>
+                        <th width="100">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="pl15">休假</span></td>
+                        <td>员工转正</td>
+                        <td>全体员工</td>
+                        <td><button class="btn btn-default btn-xs h30" title="编辑" ui-sref="processmsg.addsetpcs"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete()"><i class="iconfont icon-del f14"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><span class="pl15">休假</span></td>
+                        <td>员工转正</td>
+                        <td>技术部</td>
+                        <td><button class="btn btn-default btn-xs h30" title="编辑" ui-sref="processmsg.addsetpcs"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete()"><i class="iconfont icon-del f14"></i></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="nose-panel-footer cf bte">
+            <pagination class="pagination-sm yi-page m0 f_r" total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize"  boundary-links="true"></pagination>
+            <div class="g9">共 3625 条数据</div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
+<!--删除-->
+<script type="text/ng-template" id="delete.html">
+    <div class="inmodal bdrs8 ovh">
+        <div class="modal-body t_c">
+            <div class="pt20"><i class="iconfont icon-tishi f18 orange mr5"></i>您确定要删除选择项么？</div>
+            <div class="p10 mt30">
+                <button type="button" class="btn btn-white btn-sm wd80" ng-click="cancel()">取消</button>
+                <button type="button" class="btn btn-primary btn-sm wd80" ng-click="ok()">确定</button>
+            </div>
+        </div>
+    </div>
+</script>

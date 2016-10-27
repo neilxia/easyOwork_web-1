@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="qiyi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--页面标题-->
+    <title page-title></title>
+    <!--解决ie8 console 未定义的代码-->
+    <script type="text/javascript">
+        if (!window.console || !console.firebug) {
+            var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
+
+            window.console = {};
+            for (var i = 0; i < names.length; ++i)
+                window.console[names[i]] = function () {
+                }
+        }
+    </script>
+    <!-- Bootstrap and Fonts -->
+    <link rel="stylesheet" href="plugins/ui-bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="fonts/font-awesome-4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="fonts/custom/iconfont.css">
+    <!-- 动画css -->
+    <link href="css/animate.css" rel="stylesheet">
+    <!--nose css-->
+    <link href="css/cjbase.pc.css" rel="stylesheet">
+    <link href="css/common.css" rel="stylesheet" />
+    <link id="loadBefore" href="css/login.css" rel="stylesheet">
+    <link href="css/my.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+
+    <!--angular-->
+    <!--<script src="plugins/jquery/jquery-2.1.1.min.js"></script>-->
+    <script src="plugins/jquery/jquery1.12.0.min.js"></script>
+    <!--<script src="plugins/jquery-ui/jquery-ui.js"></script>-->
+    <!--<script src="plugins/angular/angular.min.js"></script>-->
+    <script src="plugins/angular1.2.30/angular1.2.30.js"></script>
+    <!--<script src="plugins/angular1.2.30/angular-loader.min.js"></script>-->
+    <script src="plugins/ui-router/angular-ui-router.min.js"></script>
+    <script src="plugins/oclazyload/dist/ocLazyLoad.min.js"></script>
+    <!-- MetsiMenu -->
+    <script src="plugins/metisMenu/jquery.metisMenu.js"></script>
+    <!-- Peace JS -->
+    <script src="plugins/pace/pace.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <!--datapicker-->
+<!--    <link href="plugins/datapicker/angular-datapicker.css" rel="stylesheet">
+    <script src="plugins/datapicker/angular-datepicker.js"></script>-->
+    <!--iCheck-->
+    <link href="plugins/iCheck/custom.css" rel="stylesheet">
+    <script src="plugins/iCheck/icheck.min.js"></script>
+    <!--xeditable-->
+    <link href="plugins/xeditable/xeditable.css" rel="stylesheet">
+    <script src="plugins/xeditable/xeditable.js"></script>
+    <!--ngJsTree-->
+    <link href="plugins/jsTree/style.css" rel="stylesheet">
+    <script src="plugins/jsTree/jstree.js"></script>
+    <script src="plugins/jsTree/ngJsTree.js"></script>
+
+    <!--ngTags-->
+    <!--<script src="http://cdn.bootcss.com/ng-tags-input/2.3.0/ng-tags-input.min.js"></script>-->
+    <!--<link href="http://cdn.bootcss.com/ng-tags-input/2.3.0/ng-tags-input.min.css" rel="stylesheet" media="screen">-->
+    <!--<script src="plugins/ngTags/ng-tags-input.min.js"></script>-->
+    <!--<link href="plugins/ngTags/ng-tags-input.min.css" rel="stylesheet" media="screen">-->
+    <!--<link href="plugins/ngTags/ng-tags-input.bootstrap.min.css" rel="stylesheet" media="screen">-->
+
+    <!--<script src="https://www.jqwidgets.com/jquery-widgets-demo/jqwidgets/jqxtreegrid.js"></script>-->
+
+    <!--treetable-->
+<!--    <link href="plugins/jquery-treetable/jquery.treetable.css" rel="stylesheet">
+    <link href="plugins/jquery-treetable/jquery.treetable.theme.default.css" rel="stylesheet">
+    <script src="plugins/jquery-treetable/jquery.treetable.js"></script>
+    <script src="plugins/jquery-treetable/angular-treetable.js"></script>-->
+
+    <!--TreeGrid-->
+<!--    <link href="plugins/TreeGrid/TreeGrid.css" rel="stylesheet">
+    <script src="plugins/TreeGrid/TreeGrid-1.1.js"></script>-->
+
+
+    <!-- angular程序脚本 -->
+    <script src="js/app.js"></script>
+    <script src="js/route.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/filers.js"></script>
+    <script src="js/controllers.js"></script>
+
+    <!--注意看，这里的路径和上面的bootstrap都在一个文件夹里-->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <!--<script src="js/es5-shim.min.js"></script>-->
+
+
+
+    <script>
+//        document.createElement('ui-view');
+    </script>
+</head>
+<body ng-controller="MainCtrl as main" class="{{$state.current.data.specialClass}}" landing-scrollspy >
+<!-- Main view  -->
+<div ui-view></div>
+
+<!--demo-->
+<script src="modules/demo/ctrl/demoCtrl1.js"></script>
+<script src="modules/demo/ctrl/demoCtrl2.js"></script>
+<script src="modules/demo/init.js"></script>
+
+<!--login/register-->
+<script src="modules/login/ctrl/loginCtrl.js"></script>
+<script src="modules/login/init.js"></script>
+
+<!--my-->
+<script src="modules/my/ctrl/mySetCtrl.js"></script>
+<script src="modules/my/init.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="js/inspinia.js"></script>
+
+<!--staffmag 员工-->
+<script src="modules/staffmsg/ctrl/staffmsgCtrl.js"></script>
+<script src="modules/staffmsg/init.js"></script>
+
+<!--enterprisemsg 组织结构-->
+<!--<script src="modules/enterprisemsg/ctrl/enterprisemsgCtrl.js"></script>
+<script src="modules/enterprisemsg/init.js"></script>-->
+
+<!--structuremsg 组织结构-->
+<script src="modules/structuremsg/ctrl/structuremsgCtrl.js"></script>
+<script src="modules/structuremsg/init.js"></script>
+
+<!--sysmsg 系统设置-->
+<script src="modules/sysmsg/ctrl/sysmsgCtrl.js"></script>
+<script src="modules/sysmsg/init.js"></script>
+
+<!--processmsg 审批流程-->
+<script src="modules/processmsg/ctrl/processmsgCtrl.js"></script>
+<script src="modules/processmsg/init.js"></script>
+
+<!--processAudit 审批流程-->
+<!--<script src="modules/processAudit/ctrl/processAuditCtrl.js"></script>
+<script src="modules/processAudit/init.js"></script>-->
+
+<!--permissions 权限-->
+<script src="modules/permissions/ctrl/permissionsCtrl.js"></script>
+<script src="modules/permissions/init.js"></script>
+
+
+<script src="js/directives.js"></script>
+<!--ui.bootstrap-->
+<script src="plugins/ui-bootstrap/bootstrap.js"></script>
+<script src="plugins/ui-bootstrap/ui-bootstrap-tpls-0.12.1.js"></script>
+
+
+<!--tree-grid-->
+<!--<link href="plugins/tree-grid/treeGrid.css" rel="stylesheet">
+<script src="plugins/tree-grid/tree-grid-directive.js"></script>-->
+</body>
+</html>

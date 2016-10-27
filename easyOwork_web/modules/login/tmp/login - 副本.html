@@ -1,0 +1,82 @@
+<!--菜单-->
+<header ng-include="'modules/common/login-header.html'"></header>
+<!--内容-->
+<div class="bg-register" ng-controller="loginCtrl">
+    <img src="./images/bg-login.png" alt=""/>
+    <div id="wrapper" class="mat">
+        <section class="middle-box t_c animated loginscreen fadeInDown content">
+            <h1><img src="./images/logo-title.png" alt=""/></h1>
+            <div class="panel panel-default login-box login-box2 mt30">
+                <div class="hd">
+                    <div class="login-change cf">
+                        <div class="login-tips login-tips2 f10 t_l">员工号密码登录</div>
+                        <a class="pull-right"><img src="./images/accounticon.png" alt=""/></a>
+                    </div>
+                    <div class="login-change hide cf">
+                        <div class="login-tips f10 t_l">扫描二维码登录</div>
+                        <a class="pull-right"><img src="./images/erweicodeicon.png" alt=""/></a>
+                    </div>
+                </div>
+                <div class="bd">
+                    <!--标准框登录开始-->
+                    <div class="login-info static-form mat">
+                        <h1 class="t_l f20 g0">登录镇在线</h1>
+                        <h2 class="t_l f12 mt15">在镇在线可以查找攻略，分享小镇旅行心路，<br/>结识朋友</h2>
+                        <form class="register-info" name="loginForm" ng-submit="submitForm()">
+
+                            <div class="form-group form-group-list">
+                                <div class="error bg-fce5e4 f10" ng-show="loginForm.tellphone.$error.pattern"><i class="fa fa-exclamation-circle ee8688"></i> 请输入正确的手机11位号码</div>
+                                <div class="error bg-fce5e4 f10" ng-show="loginForm.tellphone.$error.required"><i class="fa fa-exclamation-circle ee8688"></i> 手机号不可为空</div>
+                                <input  type="text" class="form-control mt2" placeholder="您的手机号" name="tellphone" ng-model="form.userName" ng-pattern="/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/" required/>
+                            </div>
+                            <div class="form-group form-group-list mt2">
+                                <div class="error bg-fce5e4 f10" ng-show="loginForm.pwd.$error.pattern"><i class="fa fa-exclamation-circle ee8688"></i>您输入的密码不正确</div>
+                                <div class="error bg-fce5e4 f10" ng-show="loginForm.pwd.$error.required"><i class="fa fa-exclamation-circle ee8688"></i> 您的密码不可为空</div>
+                                <input type="password" class="form-control mt2" placeholder="您的密码" name="pwd" ng-model="form.pswd" ng-pattern="/^[0-9a-zA-Z]{6,}$/" required/>
+                            </div>
+                            <div class="mt25">
+                                <button type="submit" class="btn btn-primary btn-block">登录</button>
+                            </div>
+                        </form>
+                        <div class="login-help mt18 cf">
+                            <div class="pull-left"><a ui-sref="foundpwd">忘记密码</a></div>
+                            <div class="pull-right">还没有注册？<a ui-sref="register">立即注册</a></div>
+                        </div>
+                        <div class="third-login">
+                            <h3 class="t_l f12 mt5">用合作网站账户直接登录</h3>
+                            <ul class="third-list mt10 cf">
+                                <li><a ui-sref=""><img src="./images/weibologinicon.png" alt=""/>微博</a></li>
+                                <li><a ui-sref=""><img src="./images/weixinloginicon.png" alt=""/>微信</a></li>
+                                <li><a ui-sref=""><img src="././images/QQloginicon.png" alt=""/>QQ</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--标准登录框结束-->
+                    <!--快速登录开始-->
+                    <div class="login-info quick-form hide mat">
+                        <h1 class="t_l f20 g0">手机扫码，安全登录</h1>
+                        <div class="code-pic mt20">
+                            <img src="./images/two-code_03.png" alt=""/>
+                        </div>
+                        <div class="scan-tips mat mt25 f14">
+                            <p class="pull-left"><img src="./images/scanicon.png" alt="" width="30"/></p>
+                            <p class="pull-right t_l">打开<small>镇在线APP</small><br/>扫一扫登录</p>
+                            <div class="cl"></div>
+                        </div>
+                    </div>
+                    <!--快速登录结束-->
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<!--尾部-->
+<footer ng-include="'modules/common/footer.html'" class="mt-50"></footer>
+<script>
+    $(function(){
+        $(".hd>.login-change").click(function(){
+            $(this).addClass("hide").siblings().removeClass("hide");
+            $(".bd>.login-info").removeClass("hide").eq($(".hd>.login-change").index(this)).addClass("hide");
+        });
+    });
+</script>

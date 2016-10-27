@@ -1,0 +1,109 @@
+<div id="page-wrapper" ng-controller="listCtrl">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
+        <ul>
+            <li class="active">企业信息</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li>系统设置</li>
+        <li class="active">企业信息</li>
+    </ol>
+    <div class="p20">
+        <div class="row">
+            <div class="col-xs-6">
+                <dl class="sysmsg-info-htab cf bdrs4">
+                    <dt><i class="iconfont icon-yirenzheng green f36"></i></dt>
+                    <dd>
+                        <div>已认证企业</div>
+                        <div class="mt10 g6 f12">上传营业执照，参与企业实名认证，享受更多优质服务。</div>
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-xs-6">
+                <dl class="sysmsg-info-htab cf bdrs4 graybox">
+                    <dt><i class="iconfont icon-weirenzheng red f36"></i></dt>
+                    <dd>
+                        <div>已认证企业</div>
+                        <div class="mt10 g6 f12">上传营业执照，参与企业实名认证，享受更多优质服务。</div>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <div class="pt10 pb10 bbe">
+            <table class="line28td" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                    <td width="60" align="right">资质信息</td>
+                    <td class="pl20"><span class="g6 f12">参与企业实名认证，享受更多优质服务。</span></td>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <div><img src="./images/mo01.jpg" alt=""></div>
+                        <div class="wd220 t_c mt10"><button class="btn btn-primary btn-xs">上传营业执照</button></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="pt10 pb10 bbe">
+            <table class="line30td" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                    <td width="60" align="right">公司信息</td>
+                    <td class="pl20"><span class="g6 f12">企业号：</span><span class="f16">21141819</span></td>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <div><span class="g6 f12">企业标志：</span>未设置<button class="btn btn-default btn-xs ml5">本地上传</button><span class="g6 f12 ml5">请上传800x800，大小1mb以内，支持jpg和png格式</span></div>
+                        <div class="pl60 mt10"><img src="./images/mo02.jpg" alt=""></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">企业名称：</span>
+                        <span editable-text="EPinfo.name" e-form="name">{{EPinfo.name || '无'}}</span> <span class="ml5 orange poi" ng-click="name.$show()" ng-hide="name.$visible">修改</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">企业简称：</span>
+                        <span editable-text="EPinfo.shortName" e-form="textBtnForm">{{EPinfo.shortName || '无'}}</span> <span class="ml5 orange poi" ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible">修改</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20"><span class="g6 f12">企业代表：</span>
+                        <span editable-text="EPinfo.contactName" e-form="contactName">{{EPinfo.contactName || '无'}}</span> <span class="ml5 orange poi" ng-click="contactName.$show()" ng-hide="contactName.$visible">修改</span>
+                        <span class="g6 ml5">用于平台联系企业指定人</span></td>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">企业电话：</span>
+                        <span editable-text="EPinfo.entPhone" e-form="entPhone">{{EPinfo.entPhone || '无'}}</span> <span class="ml5 orange poi" ng-click="entPhone.$show()" ng-hide="entPhone.$visible">修改</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20"><span class="g6 f12">联系电话：</span>
+                        <span editable-text="EPinfo.contactPhone" e-form="contactPhone">{{EPinfo.contactPhone || '无'}}</span> <span class="ml5 orange poi" ng-click="contactPhone.$show()" ng-hide="contactPhone.$visible">修改</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">邮箱绑定：</span>
+                        <span editable-text="EPinfo.entEmail" e-form="entEmail">{{EPinfo.entEmail || '无'}}</span> <span class="ml5 orange poi" ng-click="entEmail.$show()" ng-hide="entEmail.$visible">修改</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>

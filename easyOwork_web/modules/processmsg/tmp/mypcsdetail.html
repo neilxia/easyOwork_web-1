@@ -1,0 +1,89 @@
+<div id="page-wrapper" class="{{$state.current.name}}" ng-controller="mypcsdetailCtrl">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
+        <ul>
+            <li class="active">部门管理</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li>审批流程</li>
+        <li>我的申请</li>
+        <li class="active">流程详情</li>
+    </ol>
+
+    <div class="nose-panel">
+        <div class="p30">
+            <ul class="mypcsdetail-pcs f12">
+                <li class="sucs">
+                    <span class="sign"></span>
+                    <div class="textbox">
+                        一级审批 / 组长 <span class="ml10">欧倩怡</span><span class="green ml10">同意</span> <span class="g9 ml10">08-12 12:30</span>
+                    </div>
+                </li>
+                <li class="jing">
+                    <span class="sign"></span>
+                    <div class="textbox">
+                        二级审批 / 部门经理<span class="ml10">师伯平</span><span class="orange ml10">等待处理</span> <button class="btn btn-default btn-xs ml10" ui-sref="processmsg.mypcs">撤回申请</button>
+                    </div>
+
+                </li>
+                <li>
+                    <span class="sign"></span>
+                    <div class="textbox">
+                        三级审批 / 副总经理 <span class="ml10">王二麻</span>
+                    </div>
+                </li>
+            </ul>
+            <table class="line40td mt10 f12" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                    <td width="80" class="t_r">审批编号：</td>
+                    <td class="pl10">xiny-2016-0010</td>
+                </tr>
+                <!--<tr>
+                    <td width="80" class="t_r">审批结果：</td>
+                    <td class="pl10"><span class="orange">审批中</span></td>
+                </tr>-->
+                <tr>
+                    <td width="80" class="t_r">申请部门：</td>
+                    <td class="pl10">小今成长史</td>
+                </tr>
+                <tr>
+                    <td width="80" class="t_r">申请时间：</td>
+                    <td class="pl10">08-12 14:55</td>
+                </tr>
+                <tr>
+                    <td width="80" class="t_r">申请流程：</td>
+                    <td class="pl10">行政管理 - 出差申请</td>
+                </tr>
+                <tr>
+                    <td width="80" class="t_r">流程说明：</td>
+                    <td class="pl10">该流程用于公司出差的申请，其中涉及到出差地、出差人员、出差相关费用（交通费、住宿费、餐费等等）。</td>
+                </tr>
+                <tr>
+                    <td width="80" class="t_r" valign="top">申请内容：</td>
+                    <td class="pl10">
+                        08/12~08/15共3天，去上海参加客户交流会；<br/>
+                        随同成员：市场部-蒋伯芳，客服部-李明哲，客服部-柯震亮；<br/>
+                        出差费用：交通费1万，住宿费6000，餐费3000，其他费用2万。
+                    </td>
+                </tr>
+
+                <tr>
+                    <td width="80" class="t_r">相关附件：</td>
+                    <td class="pl10"><img class="mr5 mv" src="./images/office01.png" alt="">相关报表附件.rar</td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
+<script>
+
+</script>

@@ -1,0 +1,200 @@
+
+/*对应整个容器*/
+
+.TreeGrid{
+	/*position: relative;*/
+	/*overflow:hidden;*/
+	/*font-size:12px;*/
+}
+
+/*遮罩容器*/
+.TreeGrid-inner{
+	position: relative;
+	overflow:hidden;
+	display:block;
+}
+
+/*列宽改变时的辅助线*/
+.table-resize-proxy {
+	background: #aac5e7;
+	position: absolute;
+	width: 1px;
+	height: 10000px;
+	top: 0;
+	/*left 在js中动态指定*/
+	cursor: e-resize;
+	display: block;
+}
+
+.TreeGrid table{
+	border-collapse: collapse;
+	table-layout:fixed;
+	font-size:13px;
+}
+
+.TreeGrid .header{
+	background-color: #fafafa;
+	background: -webkit-linear-gradient(top,#fafafa 0,#fafafa 100%);
+	background: -moz-linear-gradient(top,#fafafa 0,#fafafa 100%);
+	background: -o-linear-gradient(top,#fafafa 0,#fafafa 100%);
+	background: linear-gradient(to bottom,#fafafa 0,#fafafa 100%);
+	background-repeat: repeat-x;
+}
+
+.TreeGrid td{
+	/*border: 1px solid #E6E6FA;*/
+	padding:0.3em 1em !important;
+	white-space:nowrap;
+	overflow:hidden;
+	word-break:keep-all;
+	text-overflow:ellipsis
+}
+
+
+.TreeGrid a{
+	text-decoration: underline;
+	color: black;
+}
+
+.TreeGrid a:hover{
+	color: #f7941d;
+}
+
+.TreeGrid .row_hover{
+	background-color: #E6E6FA;
+}
+
+.TreeGrid .row_active{
+	background-color: #fff8f0;
+}
+
+.TreeGrid .folder{
+	border: 0;
+	cursor:pointer;
+	align:absmiddle;
+}
+
+.TreeGrid .image_nohand{
+	border: 0;
+	align:absmiddle;
+}
+
+
+.TreeGrid .nodeOpen{
+	background:url(images/node_icons.png);
+	background-repeat:no-repeat;
+	/*截取图片*/
+	background-position:-49px 2px;
+	height:16px;
+	width:16px;
+	margin-right:2px;
+	/*span这种元素不能设置宽度,所以要改为inline-block*/
+	display:-moz-inline-box;
+	display:inline-block;
+}
+
+.TreeGrid .nodeClose{
+	background:url(images/node_icons.png);
+	background-repeat:no-repeat;
+	background-position:-33px 2px;
+	height:16px;
+	width:16px;
+	margin-right:2px;
+	display:-moz-inline-box;
+	display:inline-block;
+}
+
+.TreeGrid .nodeLeaf{
+/*	background:url(images/leaf_icon.gif);
+	background-repeat:no-repeat;
+	background-position:0px 2px;*/
+	height:16px;
+	width:16px;
+	margin-right:2px;
+	display:-moz-inline-box;
+	display:inline-block;
+}
+
+.pagination .first{
+	background:url(images/pagination_icons.png);
+	background-repeat:no-repeat;
+	background-position:0px 3px;
+	height:16px;
+	width:16px;
+	cursor:pointer;
+	display:-moz-inline-box;
+	display:inline-block;
+}
+
+.pagination .prev{
+	background:url(images/pagination_icons.png);
+	background-repeat:no-repeat;
+	background-position:-16px 3px;
+	height:16px;
+	width:16px;
+	cursor:pointer;
+	display:-moz-inline-box;
+	display:inline-block;
+}
+
+.pagination .next{
+	background:url(images/pagination_icons.png);
+	background-repeat:no-repeat;
+	background-position:-32px 3px;
+	height:16px;
+	width:16px;
+	cursor:pointer;
+	display:-moz-inline-box;
+	display:inline-block;
+}
+
+.pagination .last{
+	background:url(images/pagination_icons.png);
+	background-repeat:no-repeat;
+	background-position:-48px 3px;
+	height:16px;
+	width:16px;
+	cursor:pointer;
+	display:-moz-inline-box;
+	display:inline-block;
+}
+
+/*按钮禁用效果*/
+.pagination .disabled{
+	cursor:auto;
+	-webkit-filter: grayscale(100%); 
+	-webkit-filter: grayscale(1); 
+	filter: grayscale(100%);
+	filter:gray;
+}
+
+.pagination .page input{
+	width:20px;
+	height:16px;
+	font-size:10px;
+	display:-moz-inline-box;
+	display:inline-block;
+	text-align:center;
+}
+
+.TreeGrid .loading{
+	position:absolute;
+	top:30px;
+	width:auto;
+	height:16px;
+	padding:2 0 0 20px;
+	color:#000;
+	background:#fff url(images/loading.gif) no-repeat scroll;
+	opacity:0.6;
+	filter:alpha(opacity=60);
+}
+
+.noSelect{	
+	-webkit-user-select:none;/*chrome 不能选中*/
+	-moz-user-select:none;/*firefox*/
+	-ms-user-select: none;   /*IE10*/
+	-khtml-user-select: none; /*早期浏览器*/
+	user-select: none;
+}
+
+

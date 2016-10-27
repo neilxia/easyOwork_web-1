@@ -1,0 +1,69 @@
+<div class="inmodal login-modal" ng-show="firstbox">
+    <div class="modal-header t_c">
+        <div class="modal-title white f22">新用户注册</div>
+        <div class="f16 g9" >补充必要的信息完成注册</div>
+    </div>
+    <div class="modal-body">
+
+        <div tabset class="towntabbox01" justified="true">
+            <div tab active="a.active">
+                <div tab-heading class="f16">
+                    新企业注册
+                </div>
+                <div class="panel-body">
+                    <form  name="form" ng-submit="save()" novalidate="novalidate">
+                        <!--has-error-->
+                    <div ng-class="{'has-error':form.$dirty && form.name.$invalid,'nose-group mt10':true}">
+                        <i class="iconfont icon-tishi f20 abs_r" ng-show="form.$dirty && form.name.$invalid" popover="请输入11位手机号或者正确的邮箱地址" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                        <!--<i class="iconfont icon-tishi f20 abs_r" ng-show="form.$dirty && form.name.$invalid" popover="填写不正确" popover-placement="bottom" popover-trigger="mouseenter"></i>-->
+                        <!--<input type="text"  name="name" ng-model="user.name" required ng-pattern="'/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/' && 'true'" class="form-control input-lg" placeholder="手机号码 / 邮箱">-->
+                        <input type="text"  name="name" ng-model="user.name" required  multiple-email class="form-control input-lg" placeholder="手机号码 / 邮箱">
+                    </div>
+                    <div class="mt10"><input type="text" class="form-control input-lg" placeholder="请输入企业名称"></div>
+                    <div class="form-inline mt10">
+                        <input type="text" class="form-control input-lg verification" placeholder="验证码"/><button type="button" class="btn btn-primary btn-lg ml10 wd140">获取验证码</button>
+                    </div>
+                    <div class="mt10"><input type="password" class="form-control input-lg" placeholder="设置密码，密码长度为8~32位大小写字母或数字"></div>
+                    <div class="mt10"><input type="password" class="form-control input-lg" placeholder="确认密码"></div>
+                    <div class="mt10"><span class="f_r">已有帐号， <a class="a_prime" ng-click="loginbox()">直接登录</a></span><input icheck type="checkbox" ng-model="demo.checkOne"> 我已阅读并接受 <a class="a_prime" href="">服务条款</a></div>
+                    <div class="mt10"><button type="button" class="btn btn-primary btn-lg btn-block" ng-click="secondStep()">完成注册</button></div>
+                    </form>
+                </div>
+            </div>
+            <div tab active="invite">
+                <div tab-heading class="f16">
+                    通过邀请码注册
+                </div>
+                <div class="panel-body">
+                    <div class="mt10"><input type="text" class="form-control input-lg" placeholder="邀请码"></div>
+                    <div class="mt10"><input type="text" class="form-control input-lg" placeholder="手机号码 / 邮箱"></div>
+                    <div class="mt10"><input type="text" class="form-control input-lg" placeholder="请输入企业名称"></div>
+                    <div class="form-inline mt10">
+                        <input type="text" class="form-control input-lg verification" placeholder="验证码"/><button type="button" class="btn btn-primary btn-lg ml10 wd140">获取验证码</button>
+                    </div>
+                    <div class="mt10"><input type="password" class="form-control input-lg" placeholder="设置密码，密码长度为8~32位大小写字母或数字"></div>
+                    <div class="mt10"><input type="password" class="form-control input-lg" placeholder="确认密码"></div>
+                    <div class="mt10"><span class="f_r">已有帐号， <a class="a_prime" ng-click="loginbox()">直接登录</a></span><input icheck type="checkbox" ng-model="demo.checkOne"> 我已阅读并接受 <span class="a_prime">服务条款</span></div>
+                    <div class="mt10"><button type="button" class="btn btn-primary btn-lg btn-block" ng-click="secondStep()">完成注册</button></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="inmodal login-modal" ng-show="secondbox">
+    <div class="modal-header t_c">
+        <div class="modal-title white f22"><i class="iconfont icon-chenggong f22 mr5"></i>注册成功</div>
+        <div class="f16 g9" >请牢记您的企业信息</div>
+    </div>
+    <div class="modal-body">
+        <div>成都尔康互动科技有限公司</div>
+        <div>登录账号：<span class="a_prime">1xxxxxxxxxx</span></div>
+        <!--<div>登录密码：<span class="a_prime">xxxxxxxx</span></div>-->
+        <div>公司或团队标识码：<span class="a_prime">58430108</span> <span class="g9">（企易唯一标识码）</span></div>
+        <div class="f14 g9 mt10">您被默认设定为公司/团队的管理员，可以邀请公司或团队成员一起加入。<br>
+            您可以在后台转移管理员权限给其他人。</div>
+        <div class="mt20 mb10"><button type="button" class="btn btn-primary btn-lg btn-block" ui-sref="index" ng-click="ok()">开始使用</button></div>
+    </div>
+</div>
+

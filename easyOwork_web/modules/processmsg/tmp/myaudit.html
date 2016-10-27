@@ -1,0 +1,139 @@
+<div id="page-wrapper" class="{{$state.current.name}}" ng-controller="myauditCtrl">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
+        <ul>
+            <li class="active">我的审批</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li>审批流程</li>
+        <li class="active">我的审批</li>
+    </ol>
+    <div class="btnbox">
+        <form class="f_r form-inline">
+            <select name="" class="form-control input-sm">
+                <option>类别</option>
+                <option>休假</option>
+                <option>转正</option>
+            </select>
+            <span class="form-group-sm search-group">
+                <input type="text" class="form-control wd180" placeholder="申请内容关键词">
+                <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
+            </span>
+        </form>
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <table class="table table-hover tr" cellspacing="0" cellpadding="0" width="100%;">
+                <thead>
+                    <tr>
+                        <th width="80"><span class="pl15">类别</span></th>
+                        <th>申请内容</th>
+                        <th width="150">申请时间</th>
+                        <th width="120">审批人</th>
+                        <th width="100">审批结果</th>
+                        <th width="60">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="pl15">休假</span></td>
+                        <td>回家请假3天</td>
+                        <td>2016-09-23  20:30</td>
+                        <td>王坤</td>
+                        <td><span class="orange">待处理</span></td>
+                        <td><button ui-sref="processmsg.myauditdetail" class="btn btn-default btn-xs h30" title="查看"><i class="iconfont icon-wodeshenqing f14"></i></button></td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="pl15">休假</span></td>
+                        <td>回家请假3天</td>
+                        <td>2016-09-23  20:30</td>
+                        <td>王坤</td>
+                        <td><span class="g9">已处理</span></td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="nose-panel-footer cf bte">
+            <pagination class="pagination-sm yi-page m0 f_r" total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize"  boundary-links="true"></pagination>
+            <div class="g9">共 3625 条数据</div>
+        </div>
+    </div>
+
+    <!--新增部门-->
+    <script type="text/ng-template" id="addDPment.html">
+        <div class="whitemodal">
+            <div class="modal-header">
+                <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                <div class="f16">新增部门</div>
+            </div>
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td">
+                    <tr>
+                        <td width="60" class="g9">上级部门</td>
+                        <td class="pl5">
+                            <select class="form-control" name=""  placeholder="请输入上级部门名称" id="">
+                                <option>成都尔康互动有限公司</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="g9">部门名称</td>
+                        <td class="pl5"><input type="text" class="form-control" placeholder="请输入部门名称（必填）"></td>
+                    </tr>
+                    <tr>
+                        <td class="g9" valign="top">部门描述</td>
+                        <td class="pl5"><textarea class="form-control" rows="4" placeholder="请输入部门描述"></textarea></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                <button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>
+            </div>
+        </div>
+    </script>
+    <!--管理部门-->
+    <script type="text/ng-template" id="editDPment.html">
+        <div class="whitemodal">
+            <div class="modal-header">
+                <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                <div class="f16">编辑部门</div>
+            </div>
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td">
+                    <tr>
+                        <td width="60" class="g9">当前部门</td>
+                        <td class="pl5">
+                            <select class="form-control" name=""  placeholder="选择部门" id="">
+                                <option>行政部</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="g9">修改名称</td>
+                        <td class="pl5"><input type="text" class="form-control" placeholder="请输入部门名称（必填）"></td>
+                    </tr>
+                    <tr>
+                        <td class="g9" valign="top">部门描述</td>
+                        <td class="pl5"><textarea class="form-control" rows="4" placeholder="请输入部门描述"></textarea></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                <button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>
+            </div>
+        </div>
+    </script>
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
+<script>
+
+</script>

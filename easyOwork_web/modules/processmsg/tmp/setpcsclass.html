@@ -1,0 +1,82 @@
+<div id="page-wrapper" ng-controller="setpcsclassCtrl">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
+        <ul>
+            <li class="active">类别设置</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li>审批设置</li>
+        <li class="active">类别设置</li>
+    </ol>
+    <div class="btnbox">
+        <button class="btn btn-default btn-sm" ng-click="addclass()">添加类别</button>
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <table class="table table-hover tr" cellspacing="0" cellpadding="0" width="100%;">
+                <thead>
+                    <tr>
+                        <th><span class="pl15">类别</span></th>
+                        <th width="100">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="pl15">休假</span></td>
+                        <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editclass()"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除"><i class="iconfont icon-del f14"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td><span class="pl15">休假</span></td>
+                        <td><button class="btn btn-default btn-xs h30" title="编辑"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除"><i class="iconfont icon-del f14"></i></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="nose-panel-footer cf bte">
+            <pagination class="pagination-sm yi-page m0 f_r" total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize"  boundary-links="true"></pagination>
+            <div class="g9">共 3625 条数据</div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
+
+<!--新增配置项-->
+<script type="text/ng-template" id="addclass.html">
+    <div class="whitemodal smbox">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">添加类别</div>
+        </div>
+        <div class="modal-body">
+            <input type="text" class="form-control" placeholder="输入类别名称">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+            <button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>
+        </div>
+    </div>
+</script>
+<!--编辑配置项-->
+<script type="text/ng-template" id="editclass.html">
+    <div class="whitemodal smbox">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">添加类别</div>
+        </div>
+        <div class="modal-body">
+            <input type="text" class="form-control" placeholder="输入类别名称" value="休假">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+            <button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>
+        </div>
+    </div>
+</script>
+
+<script>
+
+</script>

@@ -1,0 +1,52 @@
+.webuploaderbox{
+
+}
+#webupprogressbox{ width:50%; display: none; border: #eee solid 1px; border-radius:4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;  padding: 15px; background-color: #fff; position: absolute;  top: 10px; left: 25%; z-index: 99;}
+#webupprogressbox>div{ width: 100%; overflow: hidden; margin: 5px 0;}
+#webupprogressbox .upstate{ float: right; width: 65px; padding-left: 10px; margin-top:-3px; }
+#webupprogressbox .upstate.success{}
+#webupprogressbox .progress{ margin-bottom: 0;}
+.webuploader-container {
+	position: relative;
+}
+.webuploader-element-invisible {
+	position: absolute !important;
+	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px,1px,1px,1px);
+}
+.webuploader-pick {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	/*background-color: #fff;*/
+	background-color: #f7941d;
+	padding: 7px 15px 6px 15px;
+	color: #fff;
+	/*border: 1px solid #d2d2d2;*/
+	text-align: center;
+	border-radius: 4px;
+	overflow: hidden;
+	transition-property:background-color,border-color,height,width,color;
+	-webkit-transition-property:background-color,border-color,height,width,color;
+	-o-transition-property:background-color,border-color,height,width,color;
+	transition-duration:0.2s;
+	-webkit-transition-duration:0.2s;
+	-o-transition-duration:0.2s;
+	transition-timing-function: ease-in;
+	-webkit-transition-timing-function: ease-in;
+	-o-transition-timing-function: ease-in;
+}
+.webuploader-pick-hover {
+	/*background-color: #fafafa;*/
+	background: #f38400;
+}
+
+.webuploader-pick-disable {
+	opacity: 0.6;
+	pointer-events:none;
+}
+
+.webuploader-pick-progress{
+
+}
+
