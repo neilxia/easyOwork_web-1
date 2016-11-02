@@ -9,9 +9,11 @@
         //'treeGrid',                 // treeGrid
         //'ngTreetable',                 // ngTreetable
         //'jqxTreeGrid',                 // jqxTreeGrid
+        'qiyi.config',
         'qiyi.route',
         'qiyi.services',
-        //'qiyi.servicesRest',
+        'qiyi.servicesRest',
+        //'qiyi.interceptors',
         'qiyi.filters',
         'qiyi.staffmsg',//员工
         //'qiyi.enterprisemsg', //组织结构

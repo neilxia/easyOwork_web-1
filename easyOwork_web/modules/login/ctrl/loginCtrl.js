@@ -2,16 +2,51 @@
  * Created by Nose on 2016/8/30.
  */
 function loginCtrl(){
-    return['$scope','$modal','$state',function($scope,$modal,$state){
+    return['$scope','$modal','$state','publicService',function($scope,$modal,$state,publicService){
         //登录
+        $scope.login=function login(){
+
+            var options={
+                "header":{
+                    "requestId":"12345678900987654321123456789009",
+                    "timeStamp":"20160918080808",
+                    "applicationId":"ezKompany-work",
+                    "ip":"127.0.0.1",
+                    "tokenId":"I0tGIIjMlyAXxs0ojhCJ4b7mHk3xzqSo",
+                    "entId":"00000006"
+                },
+                "body":{
+                    "type":"EMAIL",
+                    "id":"",
+                    "personalEmail":"chenjian407@163.com",
+                    "personalPhoneCountryCode":"",
+                    "personalPhone":"",
+                    "password":"123456"
+                }
+            };
+            var promise = publicService.login(options);
+            promise.success(function(data, status, headers, config){
+                if(data.data !=null){
+
+                }else{
+                    $scope.foodnearmeShop='';
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                console.log(data.msg);
+            });
+
+        };
+
         function loginbox() {
             var modalInstance = $modal.open({
                 templateUrl: 'modules/login/tmp/login_modal.html',
-                controller: loginModalCtrl,
-                windowClass: "animated fadeIn"
+                controller: loginModalCtrl
             });
-
             function loginModalCtrl ($scope, $modalInstance) {
+
+
+
                 $scope.ok = function () {
                     $modalInstance.close();
                 };
