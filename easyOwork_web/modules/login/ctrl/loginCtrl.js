@@ -5,7 +5,6 @@ function loginCtrl(){
     return['$scope','$modal','$state','publicService',function($scope,$modal,$state,publicService){
         //登录
         $scope.login=function login(){
-
             var options={
                 "header":{
                     "requestId":"12345678900987654321123456789009",
@@ -24,6 +23,7 @@ function loginCtrl(){
                     "password":"123456"
                 }
             };
+            debugger;
             var promise = publicService.login(options);
             promise.success(function(data, status, headers, config){
                 if(data.data !=null){
@@ -33,6 +33,7 @@ function loginCtrl(){
                 }
             });
             promise.error(function(data, status, headers, config){
+                debugger;
                 console.log(data.msg);
             });
 

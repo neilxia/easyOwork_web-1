@@ -2,18 +2,29 @@
  * Created by Nose on 2016/9/12.
  */
 var interceptors = angular.module('townPc.interceptors',[]);
-interceptors.factory('HttpInterceptor', ["$q","$rootScope","LocalStorage",function ($q,$rootScope,LocalStorage){
+interceptors.factory('HttpInterceptor', ["$q","$rootScope","LocalStorage",'noseService',function ($q,$rootScope,LocalStorage,noseService){
     return {
         'request': function(config) {
             $rootScope.loading = true;
             // request your $rootscope messaging should be here?
-            var token = LocalStorage.getToken();
-            config.headers["accessToken"] =  LocalStorage.getToken();
+            var thisheader={
+                requestId:noseService.randomWord(false, 32),
+                timeStamp:noseService.getNowFormatDate,
+                applicationId:'ezKompany-work',
+                ip:'192.168.1.1',
+                "tokenId":"I0tGIIjMlyAXxs0ojhCJ4b7mHk3xzqSo",
+                "entId":"00000006"
+                //accessToken:LocalStorage.getToken()
+            }
+            debugger;
+            config.headers=thisheader;
+            //config.headers["accessToken"] =  LocalStorage.getToken();
 /*            config.headers = config.headers || {};
             if($cookies.get('token')){
                 config.headers.authorization = 'Bearer ' + $cookies.get('token');
                 //config.headers["accessToken"] =  LocalStorage.getToken();
             }*/
+/*            var token = LocalStorage.getToken();
             if(token){
                 var url = config.url;
                 if(url.indexOf("html") <0 ){
@@ -23,7 +34,7 @@ interceptors.factory('HttpInterceptor', ["$q","$rootScope","LocalStorage",functi
                         config.url = config.url +'&accessToken='+token;
                     }
                 }
-            }
+            }*/
             return config;
         },
         'requestError': function(rejection) {
