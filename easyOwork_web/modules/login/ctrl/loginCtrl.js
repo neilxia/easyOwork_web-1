@@ -9,6 +9,7 @@ function loginCtrl(){
             promise.success(function(data, status, headers, config){
                 var status=data.body.status;
                 var header=data.header;
+                debugger;
                 if(status.statusCode==0){
                     //getusrinfo();
                     $scope.Perdata={
