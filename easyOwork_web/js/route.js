@@ -45,11 +45,6 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                         {
                             // flexslider
                             files:['plugins/flexslider/flexslider.css','plugins/flexslider/jquery.flexslider.js']
-                        },
-                        {
-                            //消息
-                            name: 'cgNotify',
-                            files: ['plugins/angular-notify/angular-notify.min.css','plugins/angular-notify/angular-notify.min.js']
                         }
                     ])
 

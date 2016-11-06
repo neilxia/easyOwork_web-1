@@ -2,7 +2,7 @@
  * Created by Nose on 2016/8/30.
  */
 function loginCtrl(){
-    return['$scope','$modal','$state','publicService','noseService','LocalStorage','notify',function($scope,$modal,$state,publicService,noseService,LocalStorage,notify){
+    return['$scope','$modal','$state','publicService','noseService','LocalStorage','errorService',function($scope,$modal,$state,publicService,noseService,LocalStorage,errorService){
         //公用登录方法
         function Funlogin(options,$modalInstance){
             var promise = publicService.login({body:options});
@@ -25,7 +25,7 @@ function loginCtrl(){
                     $state.go('index');
                     $modalInstance.close();
                 }else{
-                    notify({ message: status.errorDesc, classes: 'orange iconfont icon-one', templateUrl:'modules/common/prompt.html' ,prompt:true});
+                    errorService.msg(data);
                 }
             });
         }
@@ -126,9 +126,6 @@ function loginCtrl(){
                             console.log(status.errorDesc);
                         }
                     });
-                    promise.error(function(data, status, headers, config){
-                        debugger;
-                    });
                 };
                 //发送验证码
                 $scope.sendMSG=function(){
@@ -142,14 +139,10 @@ function loginCtrl(){
                     };
                     var promise = publicService.sendVerificationCode({body:$scope.sendmsg});
                     promise.success(function(data, status, headers, config){
-                        debugger;
                         var status=data.body.status;
                         if(status.statusCode==0){
-                            $scope.firstbox =! $scope.firstbox;
-                            $scope.secondbox =! $scope.secondbox;
                         }else{
-                            $scope.foodnearmeShop='';
-                            console.log(status.errorDesc);
+                            errorService.msg(data);
                         }
                     });
                     promise.error(function(data, status, headers, config){
@@ -274,7 +267,7 @@ function loginCtrl(){
                             $scope.step2 =false;
                             $scope.step3 =true;
                         }else{
-                            notify({ message: status.errorDesc, classes: 'orange iconfont icon-one', templateUrl:'modules/common/prompt.html' ,prompt:true});
+                            errorService.msg(data);
                         }
                     });
                     promise.error(function(data, status, headers, config){

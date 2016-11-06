@@ -5,6 +5,7 @@
         'ui.bootstrap',                 // Ui Bootstrap
         'xeditable',                 // xeditable
         'ngJsTree',                 // ngJsTree
+        'cgNotify',                 // cgNotify
         //'ngTagsInput',                 // ngTagsInput
         //'treeGrid',                 // treeGrid
         //'ngTreetable',                 // ngTreetable

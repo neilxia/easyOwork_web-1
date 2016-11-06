@@ -45,8 +45,6 @@ interceptors.factory('HttpInterceptor', ["$q","$rootScope","LocalStorage",'noseS
 
         'response': function(response) {
             $rootScope.loading = false;
-            debugger;
-
             // response your $rootscope messagin should be here?
             return response;
         },
