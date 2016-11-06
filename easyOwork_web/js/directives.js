@@ -429,7 +429,8 @@ function backButton($window){
         }
     }
 }
-/*=========返回==============================*/
+
+/*=========刷新当前页==============================*/
 function reloadRoute($window){
     return {
         restrict: 'A',
@@ -440,6 +441,25 @@ function reloadRoute($window){
         }
     }
 }
+/*=========验证两次密码是否一致==============================*/
+function pwCheck($timeout){
+    return {
+        require: 'ngModel',
+        link: function (scope, elem, attrs, ctrl) {
+            var firstPassword = '#' + attrs.pwCheck;
+            elem.add(firstPassword).on('keyup', function () { //keyup blur
+                scope.$apply(function () {
+                    var v = elem.val() === $(firstPassword).val();
+                    $timeout(function() {
+                        ctrl.$setValidity('pwmatch', v);
+                    });
+
+                });
+            });
+        }
+    }
+}
+
 
 /*=========展开关闭collapseH========================================================================*/
 function collapseH(){
@@ -565,6 +585,7 @@ angular
     .directive('getCode', getCode) //获取验证码
     .directive('backButton', backButton) //返回
     .directive('reloadRoute', reloadRoute) //刷新当前页
+    .directive('pwCheck', pwCheck) //验证两次密码是否一致
     .directive('collapseH', collapseH) //展开关闭collapseH
     .directive('nosetreeGrid', nosetreeGrid) //nosetreeGrid
 ;

@@ -11,22 +11,35 @@
                     新企业注册
                 </div>
                 <div class="panel-body">
-                    <form  name="form" ng-submit="save()" novalidate="novalidate">
+                    <!--{{form.$valid}}-->
+                    <form name="form" ng-submit="secondStep(form.$valid)" novalidate="novalidate">
                         <!--has-error-->
-                    <div ng-class="{'has-error':form.$dirty && form.name.$invalid,'nose-group mt10':true}">
-                        <i class="iconfont icon-tishi f20 abs_r" ng-show="form.$dirty && form.name.$invalid" popover="请输入11位手机号或者正确的邮箱地址" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                        <!--<i class="iconfont icon-tishi f20 abs_r" ng-show="form.$dirty && form.name.$invalid" popover="填写不正确" popover-placement="bottom" popover-trigger="mouseenter"></i>-->
-                        <!--<input type="text"  name="name" ng-model="user.name" required ng-pattern="'/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/' && 'true'" class="form-control input-lg" placeholder="手机号码 / 邮箱">-->
-                        <input type="text"  name="name" ng-model="user.name" required  multiple-email class="form-control input-lg" placeholder="手机号码 / 邮箱">
+                    <div class="nose-group mt10" ng-class="{'has-error':form.registername.$dirty && form.registername.$invalid}">
+                        <i class="iconfont icon-tishi f20 abs_r" ng-show="form.registername.$dirty && form.registername.$invalid" popover="请输入11位手机号或者正确的邮箱地址" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                        <input type="text"  name="registername" ng-model="Zh.registername" required  multiple-email class="form-control input-lg" placeholder="手机号码 / 邮箱">
                     </div>
-                    <div class="mt10"><input type="text" class="form-control input-lg" placeholder="请输入企业名称"></div>
-                    <div class="form-inline mt10">
-                        <input type="text" class="form-control input-lg verification" placeholder="验证码"/><button type="button" class="btn btn-primary btn-lg ml10 wd140">获取验证码</button>
+
+                    <div class="nose-group mt10"  ng-class="{'has-error':form.name.$dirty && form.name.$error.required}">
+                        <i class="iconfont icon-tishi f20 abs_r" ng-show="form.name.$dirty && form.name.$error.required" popover="请输入企业名称" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                        <input type="text" class="form-control input-lg" name="name" ng-model="user.name" placeholder="请输入企业名称" required />
                     </div>
-                    <div class="mt10"><input type="password" class="form-control input-lg" placeholder="设置密码，密码长度为8~32位大小写字母或数字"></div>
-                    <div class="mt10"><input type="password" class="form-control input-lg" placeholder="确认密码"></div>
-                    <div class="mt10"><span class="f_r">已有帐号， <a class="a_prime" ng-click="loginbox()">直接登录</a></span><input icheck type="checkbox" ng-model="demo.checkOne"> 我已阅读并接受 <a class="a_prime" href="">服务条款</a></div>
-                    <div class="mt10"><button type="button" class="btn btn-primary btn-lg btn-block" ng-click="secondStep()">完成注册</button></div>
+
+                    <div class="form-inline nose-group mt10" ng-class="{'has-error':form.verificationCode.$dirty && form.verificationCode.$error.required}">
+                        <i class="iconfont icon-tishi f20 abs_r" ng-show="form.verificationCode.$dirty && form.verificationCode.$error.required" popover="请输入验证码" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                        <input type="text" class="form-control input-lg verification" name="verificationCode" ng-model="user.verificationCode" placeholder="验证码" required /><button type="button" class="btn btn-primary btn-lg ml10 wd140" get-code ng-click="sendMSG()">获取验证码</button>
+                    </div>
+
+                    <div class="nose-group mt10"  ng-class="{'has-error':form.registerPassword.$dirty && (form.registerPassword.$error.required || form.registerPassword.$invalid)}">
+                        <i class="iconfont icon-tishi f20 abs_r" ng-show="form.registerPassword.$dirty && form.registerPassword.$error.required" popover="设置密码" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                        <i class="iconfont icon-tishi f20 abs_r" ng-show="form.registerPassword.$dirty && form.registerPassword.$invalid" popover="密码长度最少6位" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                        <input type="password" class="form-control input-lg" id="registerPassword" name="registerPassword" ng-model="user.registerPassword" ng-minlength="6" placeholder="设置密码，密码长度为6~32位大小写字母或数字" required />
+                    </div>
+                    <div class="nose-group mt10"  ng-class="{'has-error':form.confirmPassword.$error.pwmatch}">
+                        <i class="iconfont icon-tishi f20 abs_r" ng-show="form.confirmPassword.$error.pwmatch" popover="两次输入的密码不一致，请重新输入" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                        <input type="password" class="form-control input-lg"  name="confirmPassword" pw-check="registerPassword" ng-model="Zh.confirmPassword" placeholder="确认密码" required />
+                    </div>
+                    <div class="mt10"><span class="f_r">已有帐号， <a class="a_prime" ng-click="loginbox()">直接登录</a></span><input icheck type="checkbox" ng-model="checkedbox"> 我已阅读并接受 <a class="a_prime" href="">服务条款</a></div>
+                    <div class="mt10"><button class="btn btn-primary btn-lg btn-block" type="submit" ng-disabled="">完成注册</button></div>
                     </form>
                 </div>
             </div>
@@ -35,16 +48,38 @@
                     通过邀请码注册
                 </div>
                 <div class="panel-body">
-                    <div class="mt10"><input type="text" class="form-control input-lg" placeholder="邀请码"></div>
-                    <div class="mt10"><input type="text" class="form-control input-lg" placeholder="手机号码 / 邮箱"></div>
-                    <div class="mt10"><input type="text" class="form-control input-lg" placeholder="请输入企业名称"></div>
-                    <div class="form-inline mt10">
-                        <input type="text" class="form-control input-lg verification" placeholder="验证码"/><button type="button" class="btn btn-primary btn-lg ml10 wd140">获取验证码</button>
-                    </div>
-                    <div class="mt10"><input type="password" class="form-control input-lg" placeholder="设置密码，密码长度为8~32位大小写字母或数字"></div>
-                    <div class="mt10"><input type="password" class="form-control input-lg" placeholder="确认密码"></div>
-                    <div class="mt10"><span class="f_r">已有帐号， <a class="a_prime" ng-click="loginbox()">直接登录</a></span><input icheck type="checkbox" ng-model="demo.checkOne"> 我已阅读并接受 <span class="a_prime">服务条款</span></div>
-                    <div class="mt10"><button type="button" class="btn btn-primary btn-lg btn-block" ng-click="secondStep()">完成注册</button></div>
+                    <form name="form2" ng-submit="secondStep(form2.$valid)" novalidate="novalidate">
+                        <div class="nose-group mt10" ng-class="{'has-error':form2.Invitecode.$dirty && form2.Invitecode.$invalid}">
+                            <i class="iconfont icon-tishi f20 abs_r" ng-show="form2.Invitecode.$dirty && form2.Invitecode.$invalid" popover="请输入邀请码" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                            <input type="text"  name="Invitecode" ng-model="Zh.Invitecode" required  class="form-control input-lg" placeholder="邀请码">
+                        </div>
+                        <div class="nose-group mt10" ng-class="{'has-error':form2.registername.$dirty && form2.registername.$invalid}">
+                            <i class="iconfont icon-tishi f20 abs_r" ng-show="form2.registername.$dirty && form2.registername.$invalid" popover="请输入11位手机号或者正确的邮箱地址" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                            <input type="text"  name="registername" ng-model="Zh.registername" required  multiple-email class="form-control input-lg" placeholder="手机号码 / 邮箱">
+                        </div>
+
+                        <div class="nose-group mt10"  ng-class="{'has-error':form2.name.$dirty && form2.name.$error.required}">
+                            <i class="iconfont icon-tishi f20 abs_r" ng-show="form2.name.$dirty && form2.name.$error.required" popover="请输入企业名称" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                            <input type="text" class="form-control input-lg" name="name" ng-model="user.name" placeholder="请输入企业名称" required />
+                        </div>
+
+                        <div class="form-inline nose-group mt10" ng-class="{'has-error':form2.verificationCode.$dirty && form2.verificationCode.$error.required}">
+                            <i class="iconfont icon-tishi f20 abs_r" ng-show="form2.verificationCode.$dirty && form2.verificationCode.$error.required" popover="请输入验证码" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                            <input type="text" class="form-control input-lg verification" name="verificationCode" ng-model="user.verificationCode" placeholder="验证码" required /><button type="button" class="btn btn-primary btn-lg ml10 wd140" get-code ng-click="sendMSG()">获取验证码</button>
+                        </div>
+
+                        <div class="nose-group mt10"  ng-class="{'has-error':form2.registerPassword.$dirty && (form2.registerPassword.$error.required || form2.registerPassword.$invalid)}">
+                            <i class="iconfont icon-tishi f20 abs_r" ng-show="form2.registerPassword.$dirty && form2.registerPassword.$error.required" popover="设置密码" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                            <i class="iconfont icon-tishi f20 abs_r" ng-show="form2.registerPassword.$dirty && form2.registerPassword.$invalid" popover="密码长度最少6位" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                            <input type="password" class="form-control input-lg" id="registerPassword2" name="registerPassword" ng-model="user.registerPassword" ng-minlength="6" placeholder="设置密码，密码长度为6~32位大小写字母或数字" required />
+                        </div>
+                        <div class="nose-group mt10"  ng-class="{'has-error':form2.confirmPassword.$error.pwmatch}">
+                            <i class="iconfont icon-tishi f20 abs_r" ng-show="form2.confirmPassword.$error.pwmatch" popover="两次输入的密码不一致，请重新输入" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                            <input type="password" class="form-control input-lg"  name="confirmPassword" pw-check="registerPassword2" ng-model="Zh.confirmPassword" placeholder="确认密码" required />
+                        </div>
+                        <div class="mt10"><span class="f_r">已有帐号， <a class="a_prime" ng-click="loginbox()">直接登录</a></span><input icheck type="checkbox" ng-model="checkedbox"> 我已阅读并接受 <a class="a_prime" href="">服务条款</a></div>
+                        <div class="mt10"><button class="btn btn-primary btn-lg btn-block" type="submit" ng-disabled="">完成注册</button></div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -57,13 +92,13 @@
         <div class="f16 g9" >请牢记您的企业信息</div>
     </div>
     <div class="modal-body">
-        <div>成都尔康互动科技有限公司</div>
-        <div>登录账号：<span class="a_prime">1xxxxxxxxxx</span></div>
+        <div>{{user.name}}</div>
+        <div>登录账号：<span class="a_prime">{{Zh.registername}}</span></div>
         <!--<div>登录密码：<span class="a_prime">xxxxxxxx</span></div>-->
-        <div>公司或团队标识码：<span class="a_prime">58430108</span> <span class="g9">（企易唯一标识码）</span></div>
+        <div>公司或团队标识码：<span class="a_prime">{{Zh.cpId}}</span> <span class="g9">（企易唯一标识码）</span></div>
         <div class="f14 g9 mt10">您被默认设定为公司/团队的管理员，可以邀请公司或团队成员一起加入。<br>
             您可以在后台转移管理员权限给其他人。</div>
-        <div class="mt20 mb10"><button type="button" class="btn btn-primary btn-lg btn-block" ui-sref="index" ng-click="ok()">开始使用</button></div>
+        <div class="mt20 mb10"><button type="button" class="btn btn-primary btn-lg btn-block" ng-click="ok()">开始使用</button></div>
     </div>
 </div>
 

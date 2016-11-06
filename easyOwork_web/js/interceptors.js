@@ -1,23 +1,23 @@
 /**
  * Created by Nose on 2016/9/12.
  */
-var interceptors = angular.module('townPc.interceptors',[]);
+var interceptors = angular.module('qiyi.interceptors',[]);
 interceptors.factory('HttpInterceptor', ["$q","$rootScope","LocalStorage",'noseService',function ($q,$rootScope,LocalStorage,noseService){
     return {
         'request': function(config) {
             $rootScope.loading = true;
             // request your $rootscope messaging should be here?
-            var thisheader={
-                requestId:noseService.randomWord(false, 32),
-                timeStamp:noseService.getNowFormatDate,
-                applicationId:'ezKompany-work',
-                ip:'192.168.1.1',
-                "tokenId":"I0tGIIjMlyAXxs0ojhCJ4b7mHk3xzqSo",
-                "entId":"00000006"
-                //accessToken:LocalStorage.getToken()
+            if(config.data){
+                var userinfo=LocalStorage.getObject('userinfo');
+                config.data['header']={
+                    requestId:noseService.randomWord(false, 32),
+                    timeStamp:noseService.getNowFormatDate(),
+                    applicationId:'ezKompany-work',
+                    ip:'127.0.0.1',
+                    "tokenId":userinfo.tokenId,
+                    "entId":userinfo.entId
+                }
             }
-            debugger;
-            config.headers=thisheader;
             //config.headers["accessToken"] =  LocalStorage.getToken();
 /*            config.headers = config.headers || {};
             if($cookies.get('token')){
@@ -51,7 +51,8 @@ interceptors.factory('HttpInterceptor', ["$q","$rootScope","LocalStorage",'noseS
         'responseError': function(rejection) {
             var data = rejection.data;
             $rootScope.loading = false;
-            if(rejection.status ==401 || data["code"] == "401"){
+            debugger;
+/*            if(rejection.status ==401 || data["code"] == "401"){
                 $rootScope.$state.nopms;
 
                 if ($rootScope.$state.nopms){
@@ -61,7 +62,7 @@ interceptors.factory('HttpInterceptor', ["$q","$rootScope","LocalStorage",'noseS
                 }
                 $rootScope.$state.go('login');
                 return $q.reject(rejection);
-            }
+            }*/
             // response error your $rootscope messagin should be here?
             return $q.reject(rejection);
         }

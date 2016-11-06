@@ -4,13 +4,22 @@
         <!--<div class="f16 g9" >补充必要的信息完成注册</div>-->
     </div>
     <div class="modal-body">
-        <div class="pl15 pr15">
-            <div class="mt10"><input type="text" class="form-control input-lg" placeholder="手机号码 / 邮箱 / 员工号"></div>
-            <div class="mt10"><input type="password" class="form-control input-lg" placeholder="密码"></div>
-            <div class="mt10"><button type="button" class="btn btn-primary btn-lg btn-block" ui-sref="index" ng-click="ok()">确定登录</button></div>
-            <div class="mt10"><span class="f_r">没有帐号， <a class="a_prime" ng-click="register()">企业免费注册</a></span><a
-                    ng-click=findpwd()>忘记密码？</a></div>
-        </div>
+        <form name="form" ng-submit="ok(form.$valid)" novalidate="novalidate">
+            <div class="pl15 pr15">
+                <div class="nose-group mt10" ng-class="{'has-error':form.registername.$dirty && form.registername.$invalid}">
+                    <i class="iconfont icon-tishi f20 abs_r" ng-show="form.registername.$dirty && form.registername.$invalid" popover="请输入11位手机号或者正确的邮箱地址" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                    <input type="text"  name="registername" ng-model="Zh.registername" required  multiple-email class="form-control input-lg" placeholder="手机号码 / 邮箱">
+                </div>
+                <div class="nose-group mt10"  ng-class="{'has-error':form.registerPassword.$dirty && (form.registerPassword.$error.required || form.registerPassword.$invalid)}">
+                    <i class="iconfont icon-tishi f20 abs_r" ng-show="form.registerPassword.$dirty && form.registerPassword.$error.required" popover="设置密码" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                    <i class="iconfont icon-tishi f20 abs_r" ng-show="form.registerPassword.$dirty && form.registerPassword.$invalid" popover="密码长度最少6位" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                    <input type="password" class="form-control input-lg" id="registerPassword" name="registerPassword" ng-model="Zh.registerPassword" ng-minlength="6" placeholder="设置密码，密码长度为6~32位大小写字母或数字" required />
+                </div>
+                <div class="mt10"><button type="submit" class="btn btn-primary btn-lg btn-block" ng-click="ok()">确定登录</button></div>
+                <div class="mt10"><span class="f_r">没有帐号， <a class="a_prime" ng-click="register()">企业免费注册</a></span><a
+                        ng-click=findpwd()>忘记密码？</a></div>
+            </div>
+        </form>
     </div>
 </div>
 

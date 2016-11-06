@@ -13,7 +13,7 @@
         'qiyi.route',
         'qiyi.services',
         'qiyi.servicesRest',
-        //'qiyi.interceptors',
+        'qiyi.interceptors',
         'qiyi.filters',
         'qiyi.staffmsg',//员工
         //'qiyi.enterprisemsg', //组织结构

@@ -2,7 +2,17 @@
  * Created by Nose on 2016/8/30.
  */
 var app =angular.module('qiyi.servicesRest',[]);
-app.factory('publicService', publicService());
+app.factory('publicService', publicService()); //公共接口
+app.factory('companyService', companyService()); //公司
+app.factory('employeesService', employeesService()); //员工
+app.factory('noticeService', noticeService());//公告
+app.factory('roleService', roleService());//权限
+app.factory('processService', processService());//流程
+app.factory('salaryService', salaryService());//薪酬
+app.factory('assetService', assetService());//资产
+app.factory('attendanceService', attendanceService());//考勤
+app.factory('CustomerService', CustomerService());//客户/销售
+app.factory('projectService', projectService());//项目
 /*========公共接口=====================================================================*/
 function publicService(){
     return ['$http','AppConfig',function($http,AppConfig){

@@ -1,30 +1,48 @@
 <div class="inmodal login-modal" ng-controller="loginCtrl">
     <div class="modal-body">
         <div ng-show="step1">
-            <div class="row pt10 pb20 findpwd-step">
-                <div class="col-xs-4 a_prime"><i class="iconfont icon-jiantou f_r"></i><i class="iconfont icon-one f26 mr5"></i><span class="f16">身份验证</span></div>
-                <div class="col-xs-4"><i class="iconfont icon-jiantou f_r"></i><i class="iconfont icon-two f26 mr5"></i><span class="f16">重置密码</span></div>
-                <div class="col-xs-4"><i class="iconfont icon-three f26 mr5"></i><span class="f16">完成找回</span></div>
-            </div>
-            <div class="pl15 pr15">
-                <div class="mt10"><input type="text" class="form-control input-lg" placeholder="手机号码 / 邮箱 / 员工号"></div>
-                <div class="form-inline mt10">
-                    <input type="text" class="form-control input-lg verification" placeholder="验证码"/><button type="button" class="btn btn-primary btn-lg ml10 wd140">获取验证码</button>
+                <div class="row pt10 pb20 findpwd-step">
+                    <div class="col-xs-4 a_prime"><i class="iconfont icon-jiantou f_r"></i><i class="iconfont icon-one f26 mr5"></i><span class="f16">身份验证</span></div>
+                    <div class="col-xs-4"><i class="iconfont icon-jiantou f_r"></i><i class="iconfont icon-two f26 mr5"></i><span class="f16">重置密码</span></div>
+                    <div class="col-xs-4"><i class="iconfont icon-three f26 mr5"></i><span class="f16">完成找回</span></div>
                 </div>
-                <div class="mt20 mb10"><button type="button" class="btn btn-primary btn-lg btn-block" ng-click="firstStep()">下一步</button></div>
-            </div>
+            <form name="formstep1" ng-submit="firstStep(formstep1.$valid)" novalidate="novalidate">
+                <div class="pl15 pr15">
+                    <div class="nose-group mt10" ng-class="{'has-error':formstep1.registername.$dirty && formstep1.registername.$invalid}">
+                        <i class="iconfont icon-tishi f20 abs_r" ng-show="formstep1.registername.$dirty && formstep1.registername.$invalid" popover="请输入11位手机号或者正确的邮箱地址" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                        <input type="text"  name="registername" ng-model="fdfirst.registername" required  multiple-email class="form-control input-lg" placeholder="手机号码 / 邮箱">
+                    </div>
+                    <div class="form-inline nose-group mt10" ng-class="{'has-error':formstep1.verificationCode.$dirty && formstep1.verificationCode.$error.required}">
+                        <i class="iconfont icon-tishi f20 abs_r" ng-show="formstep1.verificationCode.$dirty && formstep1.verificationCode.$error.required" popover="请输入验证码" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                        <input type="text" class="form-control input-lg verification" name="verificationCode" ng-model="fdfirst.verificationCode" placeholder="验证码" required /><button type="button" class="btn btn-primary btn-lg ml10 wd140" get-code ng-click="sendMSG()">获取验证码</button>
+                    </div>
+
+                    <div class="mt20 mb10"><button type="submit" class="btn btn-primary btn-lg btn-block">下一步</button></div>
+                </div>
+            </form>
         </div>
         <div ng-show="step2">
+
             <div class="row pt10 pb20 findpwd-step">
                 <div class="col-xs-4 a_prime"><i class="iconfont icon-jiantou f_r"></i><i class="iconfont icon-one f26 mr5"></i><span class="f16">身份验证</span></div>
                 <div class="col-xs-4 a_prime"><i class="iconfont icon-jiantou f_r"></i><i class="iconfont icon-two f26 mr5"></i><span class="f16">重置密码</span></div>
                 <div class="col-xs-4"><i class="iconfont icon-three f26 mr5"></i><span class="f16">完成找回</span></div>
             </div>
-            <div class="pl15 pr15">
-                <div class="mt10"><input type="password" class="form-control input-lg" placeholder="输入新密码，密码长度为8~32位大小写字母或数字"></div>
-                <div class="mt10"><input type="password" class="form-control input-lg" placeholder="确认密码"></div>
-                <div class="mt20 mb10"><button type="button" class="btn btn-primary btn-lg btn-block" ng-click="secondStep()">下一步</button></div>
-            </div>
+            <form name="formstep2" ng-submit="secondStep(formstep2.$valid)" novalidate="novalidate">
+                <div class="pl15 pr15">
+                    <div class="nose-group mt10"  ng-class="{'has-error':formstep2.registerPassword.$dirty && (formstep2.registerPassword.$error.required || formstep2.registerPassword.$invalid)}">
+                        <i class="iconfont icon-tishi f20 abs_r" ng-show="formstep2.registerPassword.$dirty && formstep2.registerPassword.$error.required" popover="输入新密码" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                        <i class="iconfont icon-tishi f20 abs_r" ng-show="formstep2.registerPassword.$dirty && formstep2.registerPassword.$invalid" popover="输入新密码，密码长度为8~32位大小写字母或数字" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                        <input type="password" class="form-control input-lg" id="registerPassword" name="registerPassword" ng-model="fdfirst.registerPassword" ng-minlength="6" placeholder="设置密码，密码长度为6~32位大小写字母或数字" required />
+                    </div>
+                    <div class="nose-group mt10"  ng-class="{'has-error':formstep2.confirmPassword.$error.pwmatch}">
+                        <i class="iconfont icon-tishi f20 abs_r" ng-show="formstep2.confirmPassword.$error.pwmatch" popover="两次输入的密码不一致，请重新输入" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                        <input type="password" class="form-control input-lg"  name="confirmPassword" pw-check="registerPassword" ng-model="confirmPassword" placeholder="确认密码" required />
+                    </div>
+
+                    <div class="mt20 mb10"><button type="submit" class="btn btn-primary btn-lg btn-block">下一步</button></div>
+                </div>
+            </form>
         </div>
         <div ng-show="step3">
             <div class="row pt10 pb20 findpwd-step">
@@ -34,7 +52,7 @@
             </div>
             <div class="pl15 pr15">
                 <div class="mt10 f16">已成功重置密码，请牢记您的登录信息：</div>
-                <div class="mt10 f16">登录账号  <span class="a_prime">13458639887</span> <br>登录密码  <span class="a_prime">Erkang123456</span></div>
+                <div class="mt10 f16">登录账号  <span class="a_prime">{{fdfirst.registername}}</span> <br>登录密码  <span class="a_prime">{{fdfirst.registerPassword}}</span></div>
                 <div class="mt20 mb10"><button type="button" class="btn btn-primary btn-lg btn-block" ng-click="ok()">开始使用</button></div>
             </div>
         </div>
