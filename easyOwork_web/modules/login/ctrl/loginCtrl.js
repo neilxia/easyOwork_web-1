@@ -28,6 +28,8 @@ function loginCtrl(){
                     errorService.msg(data);
                 }
             });
+            promise.error(function(data, status, headers, config){
+            });
         }
         //登录
         function loginbox() {

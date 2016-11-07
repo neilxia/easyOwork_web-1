@@ -45,9 +45,16 @@ function permissionsaddCtrl(){
                 ]}
             ],
             itemClick:function(id,date){
+                debugger;
+                alert(11);
                 console.log("itemclick");
             },
             showCheckbox:true
+        }
+
+        $scope.getCk=function (){
+            var r = $scope.treegird.TreeGrid("getCheckedRows");
+            alert(r);
         }
     }]
 }

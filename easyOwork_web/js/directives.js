@@ -554,11 +554,13 @@ function nosetreeGrid($timeout,$compile){
     return{
         restrict: 'A',
         scope: {
-            options:'='
+            options:'=',
+            thistree:'='
         },
         link:function(scope,element,attr){
             $timeout(function(){
                 element.TreeGrid(scope.options);
+                scope.thistree=element;
 
             });
 
