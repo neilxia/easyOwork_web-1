@@ -45,8 +45,6 @@ function permissionsaddCtrl(){
                 ]}
             ],
             itemClick:function(id,date){
-                debugger;
-                alert(11);
                 console.log("itemclick");
             },
             showCheckbox:true

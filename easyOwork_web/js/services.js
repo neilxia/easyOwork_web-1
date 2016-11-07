@@ -75,9 +75,12 @@ app.factory('noseService',[function(){
         }
     }
 }]);
-app.factory('errorService',['notify',function(notify){
+app.factory('MsgService',['notify',function(notify){
     return{
-        msg:function(data){
+        successmsg:function(){
+            notify({ message: '提交成功！', classes: 'orange iconfont icon-one', templateUrl:'modules/common/prompt.html' ,prompt:true});
+        },
+        errormsg:function(data){
             var status=data.body.status;
             notify({ message: status.errorDesc, classes: 'orange iconfont icon-one', templateUrl:'modules/common/prompt.html' ,prompt:true});
             if((status.erroCode=="ErrorCode.login.0004")){

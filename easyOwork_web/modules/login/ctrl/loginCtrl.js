@@ -2,7 +2,7 @@
  * Created by Nose on 2016/8/30.
  */
 function loginCtrl(){
-    return['$scope','$modal','$state','publicService','noseService','LocalStorage','errorService',function($scope,$modal,$state,publicService,noseService,LocalStorage,errorService){
+    return['$scope','$modal','$state','publicService','noseService','LocalStorage','MsgService',function($scope,$modal,$state,publicService,noseService,LocalStorage,MsgService){
         //公用登录方法
         function Funlogin(options,$modalInstance){
             var promise = publicService.login({body:options});
@@ -25,7 +25,7 @@ function loginCtrl(){
                     $state.go('index');
                     $modalInstance.close();
                 }else{
-                    errorService.msg(data);
+                    MsgService.errormsg(data);
                 }
             });
             promise.error(function(data, status, headers, config){
@@ -143,8 +143,9 @@ function loginCtrl(){
                     promise.success(function(data, status, headers, config){
                         var status=data.body.status;
                         if(status.statusCode==0){
+                            MsgService.successmsg();
                         }else{
-                            errorService.msg(data);
+                            MsgService.errormsg(data);
                         }
                     });
                     promise.error(function(data, status, headers, config){
@@ -182,6 +183,9 @@ function loginCtrl(){
 
         };
         $scope.registerModal=registerModal;
+
+
+
         //找回密码
         function findpwd() {
             var modalInstance = $modal.open({
@@ -198,10 +202,12 @@ function loginCtrl(){
                 $scope.step1=true;
                 $scope.step2=false;
                 $scope.step3=false;
+                //第一步
+                $scope.fdfirst={};
                 //发送验证码
                 $scope.sendMSG=function(){
-                    if(!$scope.Zh.registername){return;}
-                    var typearr=noseService.judgeloginClass($scope.Zh.registername);
+                    if(!$scope.fdfirst.registername){return;}
+                    var typearr=noseService.judgeloginClass($scope.fdfirst.registername);
                     $scope.sendmsg = {
                         type:typearr[0],
                         email:typearr[1][0],
@@ -212,22 +218,19 @@ function loginCtrl(){
                     promise.success(function(data, status, headers, config){
                         var status=data.body.status;
                         if(status.statusCode==0){
-                            $scope.firstbox =! $scope.firstbox;
-                            $scope.secondbox =! $scope.secondbox;
+                            MsgService.successmsg();
                         }else{
-                            $scope.foodnearmeShop='';
-                            console.log(status.errorDesc);
+                            MsgService.errormsg(data);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        debugger;
+                        MsgService.errormsg(data);
                     });
                 };
                 //检验验证码
-                //第一步
-                $scope.fdfirst={};
+
                 $scope.firstStep=function(state){
-/*                    if(!state){return;}
+                    if(!state){return;}
                     var typearr=noseService.judgeloginClass($scope.fdfirst.registername);
                     $scope.options = {
                         type:typearr[0],
@@ -238,16 +241,14 @@ function loginCtrl(){
                     };
                     var promise = publicService.verifyCode({body:$scope.options});
                     promise.success(function(data, status, headers, config){
-                        var status=data.body.status;
-                        if(status.statusCode==0){
+                        var the=data.body.status;
+                        if(the.statusCode==0){
                             $scope.step1 =false;
                             $scope.step2 =true;
                         }else{
-                            notify({ message: status.errorDesc, classes: 'orange iconfont icon-one', templateUrl:'modules/common/prompt.html' ,prompt:true});
+                            MsgService.errormsg(data);
                         }
-                    });*/
-                    $scope.step1 =false;
-                    $scope.step2 =true;
+                    });
 
                 }
                 //第二步
@@ -269,7 +270,7 @@ function loginCtrl(){
                             $scope.step2 =false;
                             $scope.step3 =true;
                         }else{
-                            errorService.msg(data);
+                            MsgService.errormsg(data);
                         }
                     });
                     promise.error(function(data, status, headers, config){
