@@ -49,24 +49,43 @@ app.factory('noseService',[function(){
             if (obj) {
                 var mobileRegexp = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
                 var emailsRegexp = /^([a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*[;；]?)+$/i;
+                var idRegexp= /^\d+(\.\d+)?$/;
                 if(mobileRegexp.test(obj)){
                     newObj[0]='MOBILE';
                 }else if(emailsRegexp.test(obj)){
                     newObj[0]='EMAIL';
-                }else{
+                }else if(idRegexp.test(obj)){
                     newObj[0]='ID';
+                }else{
+                    newObj[0]='NAME';
                 }
-                var typearr=['','',''];
+                var typearr=['','','',''];
                 if(newObj=='EMAIL'){
                     typearr[0]=obj
                 }else if(newObj=='MOBILE'){
                     typearr[1]=obj
-                }else{
+                }else if(newObj='ID'){
                     typearr[2]=obj
+                }else{
+                    typearr[3]=obj
                 }
                 newObj[1]=typearr;
             }
             return newObj;
+        }
+    }
+}]);
+app.factory('MsgService',['notify',function(notify){
+    return{
+        successmsg:function(){
+            notify({ message: '提交成功！', classes: 'orange iconfont icon-one', templateUrl:'modules/common/prompt.html' ,prompt:true});
+        },
+        errormsg:function(data){
+            var status=data.body.status;
+            notify({ message: status.errorDesc, classes: 'orange iconfont icon-one', templateUrl:'modules/common/prompt.html' ,prompt:true});
+            if((status.erroCode=="ErrorCode.login.0004")){
+                $rootScope.$state.go('login');
+            }
         }
     }
 }]);

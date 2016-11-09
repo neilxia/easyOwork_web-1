@@ -45,15 +45,13 @@ interceptors.factory('HttpInterceptor', ["$q","$rootScope","LocalStorage",'noseS
 
         'response': function(response) {
             $rootScope.loading = false;
-            debugger;
-
             // response your $rootscope messagin should be here?
             return response;
         },
         'responseError': function(rejection) {
             var data = rejection.data;
             $rootScope.loading = false;
-            debugger;
+            //debugger;
 /*            if(rejection.status ==401 || data["code"] == "401"){
                 $rootScope.$state.nopms;
 

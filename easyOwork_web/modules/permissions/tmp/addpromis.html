@@ -11,28 +11,29 @@
         <li>职务权限</li>
         <li class="active">新增职务</li>
     </ol>
+    <form>
     <div class="p20 f12">
         <table cellspacing="0" cellpadding="0" width="100%" class="line30td">
             <tr>
                 <td width="70"><span class="g9">职务名称</span></td>
-                <td><input type="text" class="form-control wd400" placeholder="输入职务名称"></td>
+                <td><input name="roleName" type="text" class="form-control wd400" placeholder="输入职务名称" ng-model="form.roleName" required ng-maxlength="20"></td>
             </tr>
             <tr>
                 <td valign="top"><span class="g9">职务描述</span></td>
-                <td><textarea type="text" class="form-control wd400" rows="4" placeholder="输入职务描述信息"></textarea></td>
+                <td><textarea name="roleDesc" type="text" class="form-control wd400" rows="4" placeholder="输入职务描述信息" ng-model="form.roleDesc" ng-maxlength="200"></textarea></td>
             </tr>
         </table>
     </div>
     <div class="nose-panel">
         <div class="nose-panel-body">
-            <div nosetree-grid options="treegirdoptions"></div>
+            <div id="functionGrid" nosetree-grid options="treegirdoptions" thistree="treegird"></div>
         </div>
         <div class="nose-panel-footer cf bte">
-            <button class="btn btn-default wd80">取消</button>
-            <button class="btn btn-primary wd80" ui-sref="permissions.list">提交</button>
+            <button class="btn btn-default wd80" ui-sref="permissions.list">取消</button>
+            <button class="btn btn-primary wd80" ng-click="submit()">提交</button>
         </div>
     </div>
-
+	</form>
 
     <!-- Footer -->
     <div ng-include="'modules/common/footer.html'"></div>
