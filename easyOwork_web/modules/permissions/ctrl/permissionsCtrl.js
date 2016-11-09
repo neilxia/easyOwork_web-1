@@ -254,6 +254,5 @@ function permissionsaddCtrl(){
             
         };
         $scope.init();
-        
     }]
 }
