@@ -81,8 +81,10 @@ app.factory('MsgService',['notify',function(notify){
             notify({ message: '提交成功！', classes: 'orange iconfont icon-one', templateUrl:'modules/common/prompt.html' ,prompt:true});
         },
         errormsg:function(data){
+            debugger;
             var status=data.body.status;
             notify({ message: status.errorDesc, classes: 'orange iconfont icon-one', templateUrl:'modules/common/prompt.html' ,prompt:true});
+            //if((status.erroCode=="ErrorCode.login.0004")){
             if((status.erroCode=="ErrorCode.login.0004")){
                 $rootScope.$state.go('login');
             }

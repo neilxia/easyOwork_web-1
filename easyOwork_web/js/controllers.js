@@ -2,7 +2,7 @@
  * MainCtrl - controller--by Nose
  */
 angular.module('qiyi')
-    .controller('MainCtrl', ['$scope','$timeout','$modal','$state','LocalStorage','companyService','employeesService',function($scope,$timeout,$modal,$state,LocalStorage,companyService,employeesService) {
+    .controller('MainCtrl', ['$scope','$timeout','$modal','$state','LocalStorage','companyService','employeesService','MsgService',function($scope,$timeout,$modal,$state,LocalStorage,companyService,employeesService,MsgService) {
     $scope.collapsehset={toggleclick:"#infobtn",togglecom:".topinfo-com",setcomH:"-330px",openArrow:'right'};
 /*    $scope.$on('$viewContentLoaded', function(){});*/
     $scope.$on('$stateChangeSuccess', function(){
@@ -31,7 +31,7 @@ angular.module('qiyi')
                 $scope.companyinfo=datas;
                 LocalStorage.setObject('companyinfo',datas);
             }else{
-                alert(status.errorDesc);
+                MsgService.errormsg(data);
             }
         });
     }
@@ -53,7 +53,7 @@ angular.module('qiyi')
                 $scope.userinfoall=userinfoall;
                 LocalStorage.setObject('userinfo',userinfoall);
             }else{
-                alert(status.errorDesc);
+                MsgService.errormsg(data);
             }
         });
     }
@@ -80,7 +80,7 @@ angular.module('qiyi')
                     LocalStorage.setObject('companyinfo','');
                     $state.go('login');
                 }else{
-                    alert(status.errorDesc);
+                    MsgService.errormsg(data);
                 }
             });
         }
