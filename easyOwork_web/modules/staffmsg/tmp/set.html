@@ -55,7 +55,7 @@
     </div>
     <!--社保-->
     <div class="btnbox mt10">
-        <button class="btn btn-default btn-sm" ng-click="addconfigitem2()">新增配置项</button>
+        <button class="btn btn-default btn-sm" ng-click="addconfigitem2()">新增社保配置项</button>
         <button class="btn btn-default btn-sm" ng-click="delete()">删除</button>
     </div>
     <div class="nose-panel">
@@ -94,20 +94,31 @@
                 <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
                 <div class="f16">新增配置项</div>
             </div>
+            <form name="thisform" ng-submit="ok(form.$valid)" novalidate="novalidate">
             <div class="modal-body">
                 <table cellpadding="0" cellspacing="0" width="100%" class="line30td">
                     <tr>
                         <td width="60" class="g9">项名</td>
-                        <td class="pl5"><input type="text" class="form-control" value="请输入名称"></td>
+                        <td class="pl5">
+                            <div class="nose-group"  ng-class="{'has-error':thisform.name.$dirty && thisform.name.$error.required}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="thisform.name.$dirty && thisform.name.$error.required" popover="请输入名称" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="name" ng-model="thisform.name" placeholder="请输入名称" required />
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td class="g9">金额(¥)</td>
-                        <td class="pl5"><input type="text" class="form-control" placeholder="请输入金额"></td>
+                        <td class="pl5">
+                            <div class="nose-group"  ng-class="{'has-error':thisform.amount.$dirty && thisform.amount.$error.required}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="thisform.amount.$dirty && thisform.amount.$error.required" popover="请输入金额" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="amount" ng-model="thisform.amount" placeholder="请输入金额" required />
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td class="g9">周期</td>
                         <td class="pl5">
-                            <select class="form-control input-sm" name="" id="">
+                            <select class="form-control input-sm" name="period" ng-model="thisform.period">
                                 <option value="">日</option>
                                 <option value="">周</option>
                                 <option value="">月</option>
@@ -119,7 +130,7 @@
                     <tr>
                         <td class="g9">计税</td>
                         <td class="pl5">
-                            <select class="form-control input-sm" name="" id="">
+                            <select class="form-control input-sm" name="payTax" ng-model="thisform.payTax">
                                 <option value="">是</option>
                                 <option value="">否</option>
                             </select>
@@ -128,7 +139,8 @@
                     <tr>
                         <td class="g9">生效日期</td>
                         <td class="pl5">
-                            <div class="qiyi-group">
+                            <div class="qiyi-group nose-group">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="thisform.amount.$dirty && thisform.amount.$error.required" popover="选择生效日期" popover-placement="bottom" popover-trigger="mouseenter"></i>
                                 <input type="datetime" class="form-control input-sm" date-time ng-model="sampleDate" view="year" min-view="year" format="yyyy-MM-dd" step="5" auto-close="true">
                                 <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
                             </div>
@@ -140,6 +152,7 @@
                 <button type="button" class="btn btn-primary" ng-click="ok()">保存</button>
                 <button type="button" class="btn btn-white" ng-click="cancel()">关闭</button>
             </div>
+            </form>
         </div>
     </script>
     <!--编辑配置项-->
@@ -149,11 +162,17 @@
                 <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
                 <div class="f16">新增配置项</div>
             </div>
+            <form name="thisform" ng-submit="ok(form.$valid)" novalidate="novalidate">
             <div class="modal-body">
                 <table cellpadding="0" cellspacing="0" width="100%" class="line30td">
                     <tr>
                         <td width="60" class="g9">项名</td>
-                        <td class="pl5"><input type="text" class="form-control" value="请输入名称"></td>
+                        <td class="pl5">
+                            <div class="nose-group"  ng-class="{'has-error':thisform.name.$dirty && thisform.name.$error.required}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="thisform.name.$dirty && thisform.name.$error.required" popover="请输入名称" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="name" ng-model="thisform.name" placeholder="请输入名称" required />
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td class="g9">金额(¥)</td>
@@ -195,6 +214,7 @@
                 <button type="button" class="btn btn-primary" ng-click="ok()">保存</button>
                 <button type="button" class="btn btn-white" ng-click="cancel()">关闭</button>
             </div>
+            </form>
         </div>
     </script>
 
@@ -209,15 +229,30 @@
                 <table cellpadding="0" cellspacing="0" width="100%" class="line30td">
                     <tr>
                         <td width="60" class="g9">项名</td>
-                        <td class="pl5"><input type="text" class="form-control" value="请输入名称"></td>
+                        <td class="pl5">
+                            <div class="nose-group"  ng-class="{'has-error':thisform.name.$dirty && thisform.name.$error.required}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="thisform.name.$dirty && thisform.name.$error.required" popover="请输入名称" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="name" ng-model="thisform.name" placeholder="请输入名称" required />
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td class="g9">基数(¥)</td>
-                        <td class="pl5"><input type="text" class="form-control" placeholder="请输入基数金额"></td>
+                        <td class="pl5">
+                            <div class="nose-group"  ng-class="{'has-error':thisform.amount.$dirty && thisform.amount.$error.required}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="thisform.amount.$dirty && thisform.amount.$error.required" popover="请输入基数金额" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="amount" ng-model="thisform.amount" placeholder="请输入基数金额" required />
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td class="g9">比例</td>
-                        <td class="pl5"><input type="text" class="form-control" placeholder="请输入比例"></td>
+                        <td class="pl5">
+                            <div class="nose-group"  ng-class="{'has-error':thisform.rate.$dirty && thisform.rate.$error.required}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="thisform.rate.$dirty && thisform.rate.$error.required" popover="请输入比例" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="rate" ng-model="thisform.rate" placeholder="请输入比例" required />
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td class="g9">周期</td>

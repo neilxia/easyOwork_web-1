@@ -196,7 +196,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
 
         })
         .state('permissions.addpromis', {
-            url: "/addpromis",
+            url: "/addpromis/:selectedRole",	//添加和编辑使用一个页面
             templateUrl: 'modules/permissions/tmp/addpromis.html',
             data: { pageTitle: '职务权限'},
             resolve:{

@@ -569,6 +569,23 @@ function nosetreeGrid($timeout,$compile){
     }
 }
 
+/*=========ngenter========================================================================*/
+function ngenter($timeout,$compile){
+	return {
+        restrict: 'A',
+        link: function ($scope, element, attrs, controller) {
+            element.bind("keydown keypress", function (event) {
+                if(event.which === 13) {
+                    $scope.$apply(function (){
+                        $scope.$eval(attrs.ngenter);
+                    });
+                    event.preventDefault();
+                }
+            });
+        }
+    }
+}
+
 /**
  *
  * Pass all functions into module
@@ -590,4 +607,5 @@ angular
     .directive('pwCheck', pwCheck) //验证两次密码是否一致
     .directive('collapseH', collapseH) //展开关闭collapseH
     .directive('nosetreeGrid', nosetreeGrid) //nosetreeGrid
+    .directive('ngenter', ngenter) //回车事件
 ;

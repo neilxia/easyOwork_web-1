@@ -15,7 +15,51 @@ function staffmsgCtrl(){
                 controller: modalCtrl
             });
             function modalCtrl ($scope, $modalInstance) {
-                $scope.ok = function () {
+                $scope.user={
+                    "actionType":"",			// ADD, MODIFY, DELETE
+                    "id":"",		//actionType为ADD或者DELETE时必填
+                    "photoUrl":"",		//头像地址
+                    "name":"",		//姓名
+                    "sex":"",			//性别
+                    "birthDate":"",		//出生日期  yyyyMMdd
+                    "university":"",		//毕业院校
+                    "personalEmail":"",		//私人邮箱
+                    "entEmail":"",		//公司邮箱
+                    "personalPhone":"",		//手机号码
+                    "personalPhoneCountryCode":"",	//手机国家代码
+                    "entPhoneCountryCode":"",		//公司号码国家代码
+                    "entPhone":"",		//公司电话号码
+                    "orgList":[{"name":""},{"name":""}],		//所属部门名称
+                    "joiningDate":"",		//入职日期
+                    "roleList":[{"name":""},{"name":""}],	//角色数组, 可多个角色
+                    "contractUrl":"",		//合同文件地址
+                    "salaryTypeList":[{"name":"","amount":"","period":"","payTax":"","startDate":""},{"name":"","amount":"","period":"","isPayTax":"","startDate":""}]	//薪资, period可为ONCE, DAY, WEEK, MONTH, HALFYEAR, FULLYEAR
+            };
+                //提交增加
+                function submitFun(){
+                    var typearr=noseService.judgeloginClass($scope.fdfirst.registername);
+                    var options = {
+                        type:typearr[0],
+                        email:typearr[1][0],
+                        mobileNo:typearr[1][1],
+                        mobileCountryCode:'86'
+                    };
+                    var promise = publicService.sendVerificationCode({body:options});
+                    promise.success(function(data, status, headers, config){
+                        var status=data.body.status;
+                        if(status.statusCode==0){
+                            MsgService.successmsg();
+                        }else{
+                            MsgService.errormsg(data);
+                        }
+                    });
+                    promise.error(function(data, status, headers, config){
+                        MsgService.errormsg(data);
+                    });
+                };
+
+                $scope.ok = function (state) {
+                    if(!state){return;}
                     $modalInstance.close();
                 };
 
@@ -118,6 +162,37 @@ function setCtrl(){
                 controller: modalCtrl
             });
             function modalCtrl ($scope, $modalInstance) {
+
+                $scope.thisform={
+                    "actionType":"",	//ADD, MODIFY, DELETE
+                    "name":"",		//薪酬项名称
+                    "period":"",		//薪酬项周期
+                    "amount":"",		//薪酬项金额
+                    "payTax":""//是否计税
+                };
+                //提交增加
+                function submitFun(){
+                    var typearr=noseService.judgeloginClass($scope.fdfirst.registername);
+                    var options = {
+                        type:typearr[0],
+                        email:typearr[1][0],
+                        mobileNo:typearr[1][1],
+                        mobileCountryCode:'86'
+                    };
+                    var promise = publicService.sendVerificationCode({body:options});
+                    promise.success(function(data, status, headers, config){
+                        var status=data.body.status;
+                        if(status.statusCode==0){
+                            MsgService.successmsg();
+                        }else{
+                            MsgService.errormsg(data);
+                        }
+                    });
+                    promise.error(function(data, status, headers, config){
+                        MsgService.errormsg(data);
+                    });
+                };
+
                 $scope.ok = function () {
                     $modalInstance.close();
                 };

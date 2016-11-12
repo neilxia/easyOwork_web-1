@@ -1,7 +1,7 @@
 <div id="page-wrapper" ng-controller="permissionsCtrl">
     <!--主要内容-->
     <div class="payetilebox">
-        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="init()" title="刷新"></a></div>
         <ul>
             <li class="active">职务权限</li>
         </ul>
@@ -13,11 +13,11 @@
     <div class="btnbox">
         <form class="f_r form-inline">
             <span class="form-group-sm search-group">
-                <input type="text" class="form-control wd180" placeholder="职务名称">
-                <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
+                <input type="text" class="form-control wd180" ng-model="form.searchRoleName" placeholder="职务名称" ngenter="searchRole()">
+                <span class="searchbtn" ng-click="searchRole()"><i class="iconfont icon-sousuo f18"></i></span>
             </span>
         </form>
-        <a class="btn btn-default btn-sm" ui-sref="permissions.addpromis">新增职务</a>
+        <a class="btn btn-default btn-sm" ng-click="add()">新增职务</a>
         <button class="btn btn-default btn-sm" ng-click="delete()">删除</button>
     </div>
     <div class="nose-panel">
@@ -25,7 +25,7 @@
             <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
                 <thead>
                 <tr>
-                    <th width="50" class="t_r"><input icheck type="checkbox" ng-model="demo.checkOne"></th>
+                    <th width="50" class="t_r"><input icheck type="checkbox" ng-model="form.selectedRoles"></th>
                     <th width="80" >职务名称</th>
                     <th>权限</th>
                     <th width="150">创建时间</th>
@@ -33,26 +33,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td class="t_r"><input icheck type="checkbox" ng-model="demo.checkOne"></td>
-                    <td>管理员</td>
-                    <td>部门浏览权，部门考勤浏览权，导出日志权部门评论权，创建项目权项目管理权部门浏览权...</td>
-                    <td>2016-09-23  20:30</td>
-                    <td><button class="btn btn-default btn-xs h30 ml5" title="编辑" ui-sref="permissions.addpromis"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete()"><i class="iconfont icon-del f14"></i></button></td>
-                </tr>
-                <tr>
-                    <td class="t_r"><input icheck type="checkbox" ng-model="demo.checkOne"></td>
-                    <td>总经理</td>
-                    <td>部门浏览权，部门考勤浏览权，导出日志权部门评论权，创建项目权项目管理权部门浏览权...</td>
-                    <td>2016-09-23  20:30</td>
-                    <td><!--<button class="btn btn-default btn-xs h30" title="增加"><i class="iconfont icon-addyuangong f14"></i></button>--><button class="btn btn-default btn-xs h30 ml5" title="编辑" ui-sref="permissions.addpromis"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete()"><i class="iconfont icon-del f14"></i></button></td>
+                <tr  ng-repeat="role in roles">
+                    <td class="t_r"><input icheck name="selectedFunction" type="checkbox" value="{{role.roleName}}" ng-model="checkedRow"></td>
+                    <td>{{role.roleName}}</td>
+                    <td>{{role.functionSummary|cut:true:40:' ...'}}</td>
+                    <td>{{role.creationDate}}</td>
+                    <td><button class="btn btn-default btn-xs h30 ml5" title="编辑" ng-click="changeRole(role.roleName)"><i class="iconfont icon-bianji f14"></i></button>
+                    <button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(role.roleName)"><i class="iconfont icon-del f14"></i></button></td>
                 </tr>
                 </tbody>
             </table>
         </div>
         <div class="nose-panel-footer cf bte">
-            <pagination class="pagination-sm yi-page m0 f_r" total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize"  boundary-links="true"></pagination>
-            <div class="g9">共 3625 条数据</div>
+            <!-- <pagination class="pagination-sm yi-page m0 f_r" total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize"  boundary-links="true"></pagination> -->
+            <div class="g9">共 {{roles.length}}条数据</div>
         </div>
     </div>
 

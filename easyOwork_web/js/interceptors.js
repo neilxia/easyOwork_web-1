@@ -51,7 +51,7 @@ interceptors.factory('HttpInterceptor', ["$q","$rootScope","LocalStorage",'noseS
         'responseError': function(rejection) {
             var data = rejection.data;
             $rootScope.loading = false;
-            debugger;
+            //debugger;
 /*            if(rejection.status ==401 || data["code"] == "401"){
                 $rootScope.$state.nopms;
 

@@ -133,9 +133,9 @@ function roleService(){
             inquiryFunction:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryFunction',form)
             },
-            //POST 5.5.4	B0010-更新权限
-            changePermission:function(form){
-                return $http.post(AppConfig.BASE_URL+'work/rest/changePermission',form)
+            //POST 5.5.4	B0010-删除权限列表
+            deleteRoles:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/deleteRoles',form)
             }
         }
     }];
