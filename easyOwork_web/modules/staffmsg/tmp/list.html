@@ -1,4 +1,4 @@
-<div id="page-wrapper" class="{{$state.current.name}}" ng-controller="staffmsgCtrl">
+<div id="page-wrapper" class="{{$state.current.name}}" ng-controller="staffmsgCtrl" ng-init="initFun()">
     <!--主要内容-->
     <div class="payetilebox">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
@@ -23,14 +23,15 @@
         <button class="btn btn-default btn-sm" ng-click="addstaff()">新增员工</button>
         <!--<button class="btn btn-default btn-sm" ng-click="editstaff()">修改</button>-->
         <button class="btn btn-default btn-sm" ng-click="delete()">删除</button>
+        {{staffselected}}
+        <button class="btn btn-default btn-sm" ng-click="xxxx(22)">xxxx</button>
     </div>
     <div class="nose-panel">
         <div class="nose-panel-body">
-
             <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
                 <thead>
                 <tr>
-                    <th width="50" class="t_r"><input icheck type="checkbox" ng-model="demo.checkOne"></th>
+                    <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
                     <th width="80" >姓名</th>
                     <th width="50">性别</th>
                     <th>部门</th>
@@ -42,36 +43,26 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td class="t_r"><input icheck type="checkbox" ng-model="demo.checkOne"></td>
-                    <td>王晓红</td>
-                    <td>女</td>
-                    <td>HR</td>
-                    <td>管理员</td>
-                    <td>admin@05898551</td>
-                    <td>jammy@gieo.cn</td>
-                    <td>13458639887</td>
-                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editstaff()"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete()"><i class="iconfont icon-del f14"></i></button></td>
-                </tr>
-                <tr>
-                    <td class="t_r"><input icheck type="checkbox" ng-model="demo.checkOne"></td>
-                    <td>王晓红</td>
-                    <td>女</td>
-                    <td>HR</td>
-                    <td>管理员</td>
-                    <td>admin@05898551</td>
-                    <td>jammy@gieo.cn</td>
-                    <td>13458639887</td>
-                    <td><button class="btn btn-default btn-xs h30" title="编辑"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete()"><i class="iconfont icon-del f14"></i></button></td>
+                <tr ng-repeat="data in datalist | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
+                    <td>{{data.name}}</td>
+                    <td>{{data.sex}}</td>
+                    <td>{{data.orgList[0].name}}</td>
+                    <td>{{data.roleList[0].name}}</td>
+                    <td>{{data.id}}</td>
+                    <td>{{data.personalEmail}}</td>
+                    <td>{{data.personalPhone}}</td>
+                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editstaff(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
                 </tr>
                 </tbody>
             </table>
         </div>
         <div class="nose-panel-footer cf bte">
-            <pagination class="pagination-sm yi-page m0 f_r" total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize"  boundary-links="true"></pagination>
+            <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total" ng-change="changepage()" items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
             <div class="g9">共 3625 条数据</div>
         </div>
     </div>
+
 
     <!--增加员工-->
     <script type="text/ng-template" id="addstaff.html">
@@ -82,110 +73,120 @@
                     <div tab-heading class="f16">
                         新增员工基本信息
                     </div>
-                    <form name="baseForm" ng-submit="ok(form.$valid)" novalidate="novalidate">
-                    <div class="panel-body pb0">
-                        <div class="col-xs-9">
-                            <table cellpadding="0" cellspacing="0" width="100%" class="line40td">
-                                <tr>
-                                    <td width="60" class="g9">员工姓名</td>
-                                    <td class="pl5">
-                                        <div class="nose-group"  ng-class="{'has-error':baseForm.name.$dirty && baseForm.name.$error.required}">
-                                            <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.name.$dirty && baseForm.name.$error.required" popover="请输入员工姓名" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                            <input type="text" class="form-control" name="name" ng-model="user.name" ng-maxlength="8" placeholder="输入员工姓名" required />
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="60" class="g9">性别</td>
-                                    <td class="pl5">
-                                        <label> <input icheck type="radio" name="radioTest" ng-model="sex"> 男</label>
-                                        <label> <input icheck type="radio" name="radioTest" ng-model="sex"> 女</label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="g9">出生日期</td>
-                                    <td class="pl5">
-                                        <div class="qiyi-group nose-group line20td">
-                                            <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.birthDate.$dirty && baseForm.birthDate.$error.required" popover="请输入员工姓名" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                            <input type="datetime" name="birthDate" class="form-control" date-time ng-model="sampleDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true">
-                                            <span class="abs_r" style="top: 4px;"><i class="iconfont icon-rili"></i></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="g9">电子邮箱</td>
-                                    <td class="pl5">
-                                        <div class="nose-group"  ng-class="{'has-error':baseForm.entEmail.$dirty && baseForm.entEmail.$error.required}">
-                                            <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.entEmail.$dirty && baseForm.entEmail.$error.required" popover="请输入公司电子邮箱" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                            <input type="text" class="form-control" name="entEmail" ng-model="user.entEmail" placeholder="输入公司电子邮箱" required />
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="g9">联系电话</td>
-                                    <td class="pl5">
-                                        <div class="nose-group"  ng-class="{'has-error':baseForm.personalPhone.$dirty && baseForm.personalPhone.$error.required}">
-                                            <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.personalPhone.$dirty && baseForm.personalPhone.$error.required" popover="请输入手机号码" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                            <input type="text" class="form-control" name="personalPhone" ng-model="user.personalPhone" placeholder="输入手机号码" required />
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="g9">员工编号</td>
-                                    <td class="pl5">
-                                        <div class="nose-group"  ng-class="{'has-error':baseForm.name.$dirty && baseForm.name.$error.required}">
-                                            <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.name.$dirty && baseForm.name.$error.required" popover="请输入员工编号" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                            <input type="text" class="form-control" name="name" ng-model="user.name" ng-maxlength="6" placeholder="输入员工编号" required />
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="g9">所属岗位</td>
-                                    <td class="pl5">
-                                        <div class="form-inline">
-                                            <select class="form-control wd190" name="orgList[0].name"  ng-model="user.orgList[0].name" id="">
-                                                <option value="">选择部门</option>
-                                            </select>
-                                            <select class="form-control wd190" name="orgList[1].name"  ng-model="user.orgList[0].name" id="">
-                                                <option value="">选择职务</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="g9">入职日期</td>
-                                    <td class="pl5">
-                                        <div class="qiyi-group nose-group line20td">
-                                            <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.joiningDate.$dirty && baseForm.joiningDate.$error.required" popover="请选择入职日期" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                            <input type="datetime" name="joiningDate" class="form-control" date-time ng-model="joiningDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true">
-                                            <span class="abs_r" style="top: 4px;"><i class="iconfont icon-rili"></i></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="g9">毕业院校</td>
-                                    <td class="pl5">
-                                        <div class="nose-group"  ng-class="{'has-error':baseForm.university.$dirty && baseForm.university.$error.required}">
-                                            <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.university.$dirty && baseForm.university.$error.required" popover="请输入毕业院校全称" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                            <input type="text" class="form-control" name="university" ng-model="user.university" ng-maxlength="40" placeholder="请输入毕业院校全称" required />
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="col-xs-3 pl20 pt5 t_c">
-                            <div class="headportbox bdrs4 mauto">
-                                <img src="./images/headportrait01.png" width="120" alt="">
-                            </div>
-                            <!--<div class="mt10"><button class="btn btn-default btn-xs">更改头像</button></div>-->
-                        </div>
+                    {{baseForm.$valid}}
+                    <form role="baseForm" name="baseForm"  ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+                        <div class="panel-body pb0">
+                            <div class="col-xs-9">
+                                <table cellpadding="0" cellspacing="0" width="100%" class="line40td">
+                                    <tr>
+                                        <td width="60" class="g9">员工姓名</td>
+                                        <td class="pl5">
+                                            <div class="nose-group"  ng-class="{'has-error':baseForm.name.$dirty && baseForm.name.$invalid}">
+                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.name.$dirty && baseForm.name.$invalid" popover="请输入员工姓名" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                <input type="text" class="form-control" name="name" ng-model="user.name"  placeholder="输入员工姓名" ng-maxlength="4" required />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="60" class="g9">性别</td>
+                                        <td class="pl5">
+                                            <label> <input icheck type="radio" name="sex" ng-model="user.sex" value="男"> 男</label>
+                                            <label> <input icheck type="radio" name="sex" ng-model="user.sex" value="女"> 女</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">出生日期</td>
+                                        <td class="pl5">
+                                            <div class="qiyi-group nose-group line20td">
+                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.birthDate.$dirty && baseForm.birthDate.$invalid" popover="请输入员工姓名" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                <input type="datetime" name="birthDate" class="form-control" date-time ng-model="user.birthDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true">
+                                                <span class="abs_r" style="top: 4px;"><i class="iconfont icon-rili"></i></span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">电子邮箱</td>
+                                        <td class="pl5">
 
-                    </div>
-                    <div class="pt20 pb20 t_r">
-                        <!--<button type="button" class="btn btn-white f_l" ui-sref="staffmsg.set" ng-click="cancel()">配置薪酬及社保</button>-->
-                        <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
-                        <button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>
-                    </div>
+
+                                            <div class="nose-group" ng-class="{'has-error':baseForm.personalEmail.$dirty && baseForm.personalEmail.$invalid}">
+                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.personalEmail.$dirty && baseForm.personalEmail.$invalid" popover="正确的邮箱地址" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                <input type="text"  name="personalEmail" ng-model="user.personalEmail"  multiple-email class="form-control" placeholder="输入电子邮箱(邮箱|电话|员工编号选一必填)">
+                                            </div>
+
+
+
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">联系电话</td>
+                                        <td class="pl5">
+                                            <div class="nose-group" ng-class="{'has-error':baseForm.personalPhone.$dirty && baseForm.personalPhone.$invalid}">
+                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.personalPhone.$dirty && baseForm.personalPhone.$invalid" popover="请输入11位手机号" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                <input type="text"  name="personalPhone" ng-model="user.personalPhone"  multiple-email class="form-control" placeholder="输入手机号码(邮箱|电话|员工编号选一必填)">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">员工编号</td>
+                                        <td class="pl5">
+                                            <div class="nose-group"  ng-class="{'has-error':baseForm.id.$dirty && baseForm.id.$invalid}">
+                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.id.$dirty && baseForm.id.$invalid" popover="请输入最大6位数字的编号" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                <input type="text" class="form-control" name="id" ng-model="user.id" isnumber  placeholder="输入员工编号(邮箱|电话|员工编号选一必填)" ng-maxlength="6" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">所属岗位</td>
+                                        <td class="pl5">
+                                            <span selectdep options="depoptions" myselected="user.orgList" class="wd190 f_l" title="选择部门"></span>
+                                            <span selectdep options="gwoptions" myselected="user.roleList" class="wd190 f_r" title="选择岗位"></span>
+
+                                            <!--<div class="form-inline">
+                                                <select class="form-control wd190" name="orgList[0].name"  ng-model="user.orgList[0].name" id="">
+                                                    <option value="">选择部门</option>
+                                                </select>
+                                                <select class="form-control wd190" name="orgList[1].name"  ng-model="user.orgList[0].name" id="">
+                                                    <option value="">选择职务</option>
+                                                </select>
+                                            </div>-->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">入职日期</td>
+                                        <td class="pl5">
+                                            <div class="qiyi-group nose-group line20td">
+                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.joiningDate.$dirty && baseForm.joiningDate.$invalid" popover="请输入员工姓名" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                <input type="datetime" name="joiningDate" class="form-control" date-time ng-model="user.joiningDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true">
+                                                <span class="abs_r" style="top: 4px;"><i class="iconfont icon-rili"></i></span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">毕业院校</td>
+                                        <td class="pl5">
+                                            <div class="nose-group"  ng-class="{'has-error':baseForm.university.$dirty && baseForm.university.$invalid}">
+                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.university.$dirty && baseForm.university.$invalid" popover="请输入毕业院校全称" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                <input type="text" class="form-control" name="university" ng-model="user.university" ng-maxlength="40" placeholder="请输入毕业院校全称" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-xs-3 pl20 pt5 t_c">
+                                <div class="headportbox bdrs4 mauto">
+                                    <img src="./images/headportrait01.png" width="120" alt="">
+                                </div>
+                                <!--<div class="mt10"><button class="btn btn-default btn-xs">更改头像</button></div>-->
+                            </div>
+
+                        </div>
+                        <div class="pt20 pb20 t_r">
+                            <!--<button type="button" class="btn btn-white f_l" ui-sref="staffmsg.set" ng-click="cancel()">配置薪酬及社保</button>-->
+                            <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                            <button type="submit" class="btn btn-primary wd80">确定</button>
+                        </div>
                     </form>
                 </div>
                 <div tab active="invite">
@@ -230,7 +231,7 @@
                     <div class="pt20 pb20 t_r">
                         <!--<button type="button" class="btn btn-white f_l" ui-sref="staffmsg.set" ng-click="cancel()">配置薪酬及社保</button>-->
                         <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
-                        <button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>
+                        <button type="submit" class="btn btn-primary wd80">确定</button>
                     </div>
                 </div>
             </div>
@@ -246,76 +247,121 @@
                     <div tab-heading class="f16">
                         新增员工基本信息
                     </div>
-                    <div class="panel-body pb0">
-                        <div class="col-xs-9">
-                            <table cellpadding="0" cellspacing="0" width="100%" class="line40td">
-                                <tr>
-                                    <td width="60" class="g9">员工姓名</td>
-                                    <td class="pl5"><input type="text" class="form-control" placeholder="输入员工姓名"></td>
-                                </tr>
-                                <tr>
-                                    <td width="60" class="g9">性别</td>
-                                    <td class="pl5">
-                                        <label> <input icheck type="radio" name="radioTest" ng-model="demo.check8"> 男</label>
-                                        <label> <input icheck type="radio" name="radioTest" ng-model="demo.check8"> 女</label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="g9">出生日期</td>
-                                    <td class="pl5">
-                                        <div class="qiyi-group line20td">
-                                            <input type="datetime" class="form-control" date-time ng-model="sampleDate" view="date"  step="5" auto-close="true">
-                                            <span class="abs_r" style="top: 4px;"><i class="iconfont icon-rili"></i></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="g9">电子邮箱</td>
-                                    <td class="pl5"><input type="text" class="form-control"  placeholder="输入邮箱，邮箱和电话至少必填其一"></td>
-                                </tr>
-                                <tr>
-                                    <td class="g9">联系电话</td>
-                                    <td class="pl5"><input type="text" class="form-control" placeholder="输入手机号码"></td>
-                                </tr>
-                                <tr>
-                                    <td class="g9">员工编号</td>
-                                    <td class="pl5"><input type="text" class="form-control" placeholder="输入员工编号"></td>
-                                </tr>
-                                <tr>
-                                    <td class="g9">所属岗位</td>
-                                    <td class="pl5">
-                                        <div class="form-inline">
-                                            <select class="form-control wd190" name="" id="">
-                                                <option value="">选择部门</option>
-                                            </select>
-                                            <select class="form-control wd190" name="" id="">
-                                                <option value="">选择职务</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="g9">入职日期</td>
-                                    <td class="pl5">
-                                        <div class="qiyi-group line20td">
-                                            <input type="datetime" class="form-control" date-time ng-model="sampleDate" view="date"  step="5" auto-close="true">
-                                            <span class="abs_r" style="top: 4px;"><i class="iconfont icon-rili"></i></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="g9">毕业院校</td>
-                                    <td class="pl5"><input type="text" class="form-control" placeholder="请输入毕业院校全称"></td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="col-xs-3 pl20 pt5 t_c">
-                            <div class="headportbox bdrs4 mauto">
-                                <img src="./images/headportrait01.png" width="120" alt="">
+                    {{baseForm.$valid}}
+                    <form role="baseForm" name="baseForm"  ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+                        <div class="panel-body pb0">
+                            <div class="col-xs-9">
+                                <table cellpadding="0" cellspacing="0" width="100%" class="line40td">
+                                    <tr>
+                                        <td width="60" class="g9">员工姓名</td>
+                                        <td class="pl5">
+                                            <div class="nose-group"  ng-class="{'has-error':baseForm.name.$dirty && baseForm.name.$invalid}">
+                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.name.$dirty && baseForm.name.$invalid" popover="请输入员工姓名" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                <input type="text" class="form-control" name="name" ng-model="user.name"  placeholder="输入员工姓名" ng-maxlength="4" required />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="60" class="g9">性别</td>
+                                        <td class="pl5">
+                                            <label> <input icheck type="radio" name="sex" ng-model="user.sex" value="男"> 男</label>
+                                            <label> <input icheck type="radio" name="sex" ng-model="user.sex" value="女"> 女</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">出生日期</td>
+                                        <td class="pl5">
+                                            <div class="qiyi-group nose-group line20td">
+                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.birthDate.$dirty && baseForm.birthDate.$invalid" popover="请输入员工姓名" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                <input type="datetime" name="birthDate" class="form-control" date-time ng-model="user.birthDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true">
+                                                <span class="abs_r" style="top: 4px;"><i class="iconfont icon-rili"></i></span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">电子邮箱</td>
+                                        <td class="pl5">
+
+
+                                            <div class="nose-group" ng-class="{'has-error':baseForm.personalEmail.$dirty && baseForm.personalEmail.$invalid}">
+                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.personalEmail.$dirty && baseForm.personalEmail.$invalid" popover="正确的邮箱地址" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                <input type="text"  name="personalEmail" ng-model="user.personalEmail"  multiple-email class="form-control" placeholder="输入电子邮箱(邮箱|电话|员工编号选一必填)">
+                                            </div>
+
+
+
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">联系电话</td>
+                                        <td class="pl5">
+                                            <div class="nose-group" ng-class="{'has-error':baseForm.personalPhone.$dirty && baseForm.personalPhone.$invalid}">
+                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.personalPhone.$dirty && baseForm.personalPhone.$invalid" popover="请输入11位手机号" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                <input type="text"  name="personalPhone" ng-model="user.personalPhone"  multiple-email class="form-control" placeholder="输入手机号码(邮箱|电话|员工编号选一必填)">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">员工编号</td>
+                                        <td class="pl5">
+                                            <div class="nose-group"  ng-class="{'has-error':baseForm.id.$dirty && baseForm.id.$invalid}">
+                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.id.$dirty && baseForm.id.$invalid" popover="请输入最大6位数字的编号" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                <input type="text" class="form-control" name="id" ng-model="user.id" isnumber  placeholder="输入员工编号(邮箱|电话|员工编号选一必填)" ng-maxlength="6" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">所属岗位</td>
+                                        <td class="pl5">
+                                            <span selectdep options="depoptions" myselected="user.orgList" class="wd190 f_l" title="选择部门"></span>
+                                            <span selectdep options="gwoptions" myselected="user.roleList" class="wd190 f_r" title="选择岗位"></span>
+
+                                            <!--<div class="form-inline">
+                                                <select class="form-control wd190" name="orgList[0].name"  ng-model="user.orgList[0].name" id="">
+                                                    <option value="">选择部门</option>
+                                                </select>
+                                                <select class="form-control wd190" name="orgList[1].name"  ng-model="user.orgList[0].name" id="">
+                                                    <option value="">选择职务</option>
+                                                </select>
+                                            </div>-->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">入职日期</td>
+                                        <td class="pl5">
+                                            <div class="qiyi-group nose-group line20td" ng-class="{'has-error':baseForm.joiningDate.$dirty && baseForm.joiningDate.$invalid}">
+                                                <i class="iconfont icon-tishi f20 abs_r" style="right: -25px;" ng-show="baseForm.joiningDate.$dirty && baseForm.joiningDate.$invalid" popover="请选择入职日期" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                <input type="datetime" name="joiningDate" class="form-control" date-time ng-model="joiningDate" view="date" min-view="date" format="yyyy-MM-dd" auto-close="true">
+                                                <span class="abs_r" style="top: 4px;"><i class="iconfont icon-rili"></i></span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">毕业院校</td>
+                                        <td class="pl5">
+                                            <div class="nose-group"  ng-class="{'has-error':baseForm.university.$dirty && baseForm.university.$invalid}">
+                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.university.$dirty && baseForm.university.$invalid" popover="请输入毕业院校全称" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                <input type="text" class="form-control" name="university" ng-model="user.university" ng-maxlength="40" placeholder="请输入毕业院校全称" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
-                            <!--<div class="mt10"><button class="btn btn-default btn-xs">更改头像</button></div>-->
+                            <div class="col-xs-3 pl20 pt5 t_c">
+                                <div class="headportbox bdrs4 mauto">
+                                    <img src="./images/headportrait01.png" width="120" alt="">
+                                </div>
+                                <!--<div class="mt10"><button class="btn btn-default btn-xs">更改头像</button></div>-->
+                            </div>
+
                         </div>
-                    </div>
+                        <div class="pt20 pb20 t_r">
+                            <!--<button type="button" class="btn btn-white f_l" ui-sref="staffmsg.set" ng-click="cancel()">配置薪酬及社保</button>-->
+                            <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                            <button type="submit" class="btn btn-primary wd80">确定</button>
+                        </div>
+                    </form>
                 </div>
                 <div tab active="invite">
                     <div tab-heading class="f16">
@@ -326,69 +372,44 @@
                         <table class="table bded mt10" cellspacing="0" cellpadding="0" width="100%;">
                             <thead>
                             <tr>
-                                <th><span class="pl10">薪酬项</span></th>
-                                <th width="100">金额</th>
+                                <th><span class="pl10">项名</span></th>
+                                <th width="100">金额(¥)</th>
                                 <th width="70">周期</th>
                                 <th width="60">计税</th>
-                                <th width="120">生效日期</th>
-                                <th width="90">操作</th>
+                                <th width="100">生效日期</th>
+                                <th width="50">操作</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
                                 <td><span class="pl10">基本工资</span></td>
-                                <td><input type="text" class="form-control input-sm" placeholder="请输入金额"></td>
-                                <td>
-                                    <select class="form-control input-sm" name="" id="">
-                                        <option value="">月</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="form-control input-sm" name="" id="">
-                                        <option value="">是</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <div class="qiyi-group">
-                                        <input type="datetime" class="form-control input-sm" date-time ng-model="sampleDate" view="year" min-view="date" format="yyyy-MM-dd" step="5" auto-close="true">
-                                        <span class="abs_r"><i class="iconfont icon-rili"></i></span>
-                                    </div>
-                                </td>
-                                <td><button class="btn btn-default btn-xs h30"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30"><i class="iconfont icon-del f14"></i></button></td>
+                                <td>1200</td>
+                                <td>月</td>
+                                <td>是</td>
+                                <td>2016-08-18</td>
+                                <td><!--<button class="btn btn-default btn-xs h30"><i class="iconfont icon-bianji f14"></i></button>--><button class="btn btn-danger btn-xs h30" ng-click="delete ()"><i class="iconfont icon-del f14"></i></button></td>
                             </tr>
                             <tr>
                                 <td><span class="pl10">基本工资</span></td>
-                                <td><input type="text" class="form-control input-sm" placeholder="请输入金额"></td>
-                                <td>
-                                    <select class="form-control input-sm" name="" id="">
-                                        <option value="">月</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="form-control input-sm" name="" id="">
-                                        <option value="">是</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <div class="qiyi-group">
-                                        <input type="datetime" class="form-control input-sm" date-time ng-model="sampleDate" view="year" min-view="date" format="yyyy-MM-dd" step="5" auto-close="true">
-                                        <span class="abs_r"><i class="iconfont icon-rili"></i></span>
-                                    </div>
-                                </td>
-                                <td><button class="btn btn-default btn-xs h30"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30"><i class="iconfont icon-del f14"></i></button></td>
+                                <td>1200</td>
+                                <td>月</td>
+                                <td>是</td>
+                                <td>2016-08-18</td>
+                                <td><!--<button class="btn btn-default btn-xs h30"><i class="iconfont icon-bianji f14"></i></button>--><button class="btn btn-danger btn-xs h30" ng-click="delete ()"><i class="iconfont icon-del f14"></i></button></td>
                             </tr>
                             </tbody>
                         </table>
                         <a class="addinfobox t_c mt10" ng-click="addPayclass()"><i class="iconfont icon-add "></i></a>
                         <div class="mt10">员工合同<i class="iconfont icon-fujian blue ml5"></i> 尔康互动员工雇佣合同.doc <a href="" class="a_prime ml5">重新上传</a></div>
                     </div>
+                    <div class="pt20 pb20 t_r">
+                        <!--<button type="button" class="btn btn-white f_l" ui-sref="staffmsg.set" ng-click="cancel()">配置薪酬及社保</button>-->
+                        <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                        <button type="submit" class="btn btn-primary wd80">确定</button>
+                    </div>
                 </div>
             </div>
-            <div class="pt20 pb20 t_r">
-                <!--<button type="button" class="btn btn-white f_l" ui-sref="staffmsg.set" ng-click="cancel()">配置薪酬及社保</button>-->
-                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
-                <button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>
-            </div>
+
         </div>
     </script>
     <!--删除-->

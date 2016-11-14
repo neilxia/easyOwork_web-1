@@ -143,7 +143,7 @@ function loginCtrl(){
                     promise.success(function(data, status, headers, config){
                         var status=data.body.status;
                         if(status.statusCode==0){
-                            MsgService.successmsg();
+                            MsgService.tomsg();
                         }else{
                             MsgService.errormsg(data);
                         }
@@ -218,7 +218,7 @@ function loginCtrl(){
                     promise.success(function(data, status, headers, config){
                         var status=data.body.status;
                         if(status.statusCode==0){
-                            MsgService.successmsg();
+                            MsgService.tomsg();
                         }else{
                             MsgService.errormsg(data);
                         }

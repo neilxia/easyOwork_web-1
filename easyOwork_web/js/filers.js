@@ -56,5 +56,10 @@ app.filter('characters', function () {
             return $filter('filter')(files, { selected: true });
         };
     }
-    ]);
-
+    ])
+    //<tr ng-repeat="item in displayedItemsList | startFrom: currentPage * pageSize  | limitTo:pageSize" /tr>
+    .filter('startFrom', function() {
+        return function(input, start) {
+            return input.slice(start);
+        }
+    });

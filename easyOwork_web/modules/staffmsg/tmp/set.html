@@ -1,6 +1,6 @@
 <div id="page-wrapper" class="{{$state.current.name}}" ng-controller="setCtrl">
     <!--主要内容-->
-    <div class="payetilebox">
+    <div class="payetilebox" ng-init="initFun()">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
         <ul>
             <li class="active">配置薪酬及社保</li>
@@ -14,7 +14,7 @@
     <!--薪酬-->
     <div class="btnbox">
         <button class="btn btn-default btn-sm" ng-click="addconfigitem()">新增配置项</button>
-        <button class="btn btn-default btn-sm" ng-click="delete()">删除</button>
+        <button class="btn btn-default btn-sm" ng-click="delete(['changeSalaryType'])">删除</button>
     </div>
     <div class="nose-panel">
         <div class="nose-panel-body smtd">
@@ -31,14 +31,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <tr ng-repeat="data in datas">
                     <td class="t_r"><input icheck type="checkbox" ng-model="demo.checkOne"></td>
-                    <td><span class="pl10">基本工资</span></td>
-                    <td>1200</td>
-                    <td>月</td>
-                    <td>是</td>
-                    <td>2016-08-21</td>
-                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editconfigitem()"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete()"><i class="iconfont icon-del f14"></i></button></td>
+                    <td><span class="pl10">{{data.name}}</span></td>
+                    <td>{{data.amount}}</td>
+                    <td>{{data.period}}</td>
+                    <td>{{data.payTax}}</td>
+                    <td>{{data.startDate}}</td>
+                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editconfigitem()"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(['changeSalaryType',data.name])"><i class="iconfont icon-del f14"></i></button></td>
                 </tr>
                 <tr>
                     <td class="t_r"><input icheck type="checkbox" ng-model="demo.checkOne"></td>
@@ -94,7 +94,7 @@
                 <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
                 <div class="f16">新增配置项</div>
             </div>
-            <form name="thisform" ng-submit="ok(form.$valid)" novalidate="novalidate">
+                <form name="thisform" ng-submit="ok(thisform.$valid)" novalidate="novalidate">
             <div class="modal-body">
                 <table cellpadding="0" cellspacing="0" width="100%" class="line30td">
                     <tr>
@@ -141,7 +141,7 @@
                         <td class="pl5">
                             <div class="qiyi-group nose-group">
                                 <i class="iconfont icon-tishi f20 abs_r" ng-show="thisform.amount.$dirty && thisform.amount.$error.required" popover="选择生效日期" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                <input type="datetime" class="form-control input-sm" date-time ng-model="sampleDate" view="year" min-view="year" format="yyyy-MM-dd" step="5" auto-close="true">
+                                <input type="datetime" class="form-control input-sm" date-time ng-model="thisform.startDate" view="year" min-view="year" format="yyyy-MM-dd" step="5" auto-close="true">
                                 <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
                             </div>
                         </td>
@@ -162,58 +162,64 @@
                 <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
                 <div class="f16">新增配置项</div>
             </div>
-            <form name="thisform" ng-submit="ok(form.$valid)" novalidate="novalidate">
-            <div class="modal-body">
-                <table cellpadding="0" cellspacing="0" width="100%" class="line30td">
-                    <tr>
-                        <td width="60" class="g9">项名</td>
-                        <td class="pl5">
-                            <div class="nose-group"  ng-class="{'has-error':thisform.name.$dirty && thisform.name.$error.required}">
-                                <i class="iconfont icon-tishi f20 abs_r" ng-show="thisform.name.$dirty && thisform.name.$error.required" popover="请输入名称" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                <input type="text" class="form-control" name="name" ng-model="thisform.name" placeholder="请输入名称" required />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="g9">金额(¥)</td>
-                        <td class="pl5"><input type="text" class="form-control" placeholder="请输入金额"></td>
-                    </tr>
-                    <tr>
-                        <td class="g9">周期</td>
-                        <td class="pl5">
-                            <select class="form-control input-sm" name="" id="">
-                                <option value="">日</option>
-                                <option value="">周</option>
-                                <option value="">月</option>
-                                <option value="">季</option>
-                                <option value="">年</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="g9">计税</td>
-                        <td class="pl5">
-                            <select class="form-control input-sm" name="" id="">
-                                <option value="">是</option>
-                                <option value="">否</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="g9">生效日期</td>
-                        <td class="pl5">
-                            <div class="qiyi-group">
-                                <input type="datetime" class="form-control input-sm" date-time ng-model="sampleDate" view="year" min-view="year" format="yyyy-MM-dd" step="5" auto-close="true">
-                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="ok()">保存</button>
-                <button type="button" class="btn btn-white" ng-click="cancel()">关闭</button>
-            </div>
+            <form name="thisform" ng-submit="ok(thisform.$valid)" novalidate="novalidate">
+                <div class="modal-body">
+                    <table cellpadding="0" cellspacing="0" width="100%" class="line30td">
+                        <tr>
+                            <td width="60" class="g9">项名</td>
+                            <td class="pl5">
+                                <div class="nose-group"  ng-class="{'has-error':thisform.name.$dirty && thisform.name.$error.required}">
+                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="thisform.name.$dirty && thisform.name.$error.required" popover="请输入名称" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                    <input type="text" class="form-control" name="name" ng-model="thisform.name" placeholder="请输入名称" required />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="g9">金额(¥)</td>
+                            <td class="pl5">
+                                <div class="nose-group"  ng-class="{'has-error':thisform.amount.$dirty && thisform.amount.$error.required}">
+                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="thisform.amount.$dirty && thisform.amount.$error.required" popover="请输入金额" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                    <input type="text" class="form-control" name="amount" ng-model="thisform.amount" placeholder="请输入金额" required />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="g9">周期</td>
+                            <td class="pl5">
+                                <select class="form-control input-sm" name="period" ng-model="thisform.period">
+                                    <option value="">日</option>
+                                    <option value="">周</option>
+                                    <option value="">月</option>
+                                    <option value="">季</option>
+                                    <option value="">年</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="g9">计税</td>
+                            <td class="pl5">
+                                <select class="form-control input-sm" name="payTax" ng-model="thisform.payTax">
+                                    <option value="">是</option>
+                                    <option value="">否</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="g9">生效日期</td>
+                            <td class="pl5">
+                                <div class="qiyi-group nose-group">
+                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="thisform.amount.$dirty && thisform.amount.$error.required" popover="选择生效日期" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                    <input type="datetime" class="form-control input-sm" date-time ng-model="thisform.startDate" view="year" min-view="year" format="yyyy-MM-dd" step="5" auto-close="true">
+                                    <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="ok()">保存</button>
+                    <button type="button" class="btn btn-white" ng-click="cancel()">关闭</button>
+                </div>
             </form>
         </div>
     </script>
@@ -225,6 +231,7 @@
                 <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
                 <div class="f16">新增社保配置项</div>
             </div>
+            <form name="thisform" ng-submit="ok(thisform.$valid)">
             <div class="modal-body">
                 <table cellpadding="0" cellspacing="0" width="100%" class="line30td">
                     <tr>
@@ -282,6 +289,7 @@
                 <button type="button" class="btn btn-primary" ng-click="ok()">保存</button>
                 <button type="button" class="btn btn-white" ng-click="cancel()">关闭</button>
             </div>
+            </form>
         </div>
     </script>
     <!--编辑社保配置项-->

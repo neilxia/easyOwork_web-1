@@ -171,10 +171,24 @@ textarea{resize: none;}
     padding: 10px 20px 20px 20px
 }
 
+/*confirmModal*/
+.confirmModal .modal-sm {
+    width: 400px;
+}
+.confirmModal .modal-content {
+    margin-top: 40%;
+}
+.confirmModal .modal-header {
+    padding: 10px 15px;
+}
+.confirmModal .modal-body {
+    padding: 10px 15px;
+    border-top: 1px solid #e5e5e5;
+}
 
 /*group*/
 .nose-group{position: relative; }
-.nose-group .abs_r{ right: -25px; top: 9px;}
+.nose-group .abs_r{ right: -25px; top: 4px;}
 .nose-group .popover-content{word-break:keep-all; white-space:nowrap;  }
 .has-error .abs_r ,.has-error .popover-content{ color: #df3c36;}
 

@@ -23,7 +23,6 @@ angular.module('qiyi')
         }
         var promise = companyService.inquiryCompanyInfo({body:$scope.options});
         promise.success(function(data, status, headers, config){
-            debugger;
             var datas=data.body.data;
             var status=data.body.status;
             if(status.statusCode==0){
@@ -34,6 +33,7 @@ angular.module('qiyi')
                 MsgService.errormsg(data);
             }
         });
+
     }
     function getUserInfo(){
         var options={
@@ -59,7 +59,7 @@ angular.module('qiyi')
     }
 
 }])
-    .controller('headerCtrl',['$scope','LocalStorage','publicService',function($scope,LocalStorage,publicService){
+    .controller('headerCtrl',['$scope','LocalStorage','publicService','MsgService',function($scope,LocalStorage,publicService,MsgService){
         $scope.inithdFun=function(){
             loginstate(); //登录状态设置
         };
@@ -68,13 +68,11 @@ angular.module('qiyi')
             // 写入userinfo companyinfo
             $scope.userinfoall=LocalStorage.getObject('userinfo');
             $scope.companyinfo=LocalStorage.getObject('companyinfo');
-            debugger;
         }
         $scope.logout=function(){
             var promise = publicService.logout({});
             promise.success(function(data, status, headers, config){
                 var status=data.body.status;
-                debugger;
                 if(status.statusCode==0){
                     LocalStorage.setObject('uesrinfo','');
                     LocalStorage.setObject('companyinfo','');

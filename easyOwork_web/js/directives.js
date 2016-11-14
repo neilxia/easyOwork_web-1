@@ -334,6 +334,23 @@ function multipleEmail(){
         }
     };
 }
+function isnumber(){
+    return {
+        require: "ngModel",
+        link: function (scope, element, attr, ngModel) {
+            if (ngModel) {
+                var idRegexp= /^\d+(\.\d+)?$/;
+            }
+            var customValidator = function (value) {
+                var validity = ngModel.$isEmpty(value) || idRegexp.test(value);
+                ngModel.$setValidity("multipleEmail", validity);
+                return validity ? value : undefined;
+            };
+            ngModel.$formatters.push(customValidator);
+            ngModel.$parsers.push(customValidator);
+        }
+    };
+}
 
 function onFinishRender($timeout) {
     return {
@@ -585,13 +602,207 @@ function ngenter($timeout,$compile){
         }
     }
 }
+/*==============选择部门=====================================================*/
+function selectdep($timeout){
+    return {
+        restrict: 'A',
+        scope:{
+            options:'=',
+            myselected:'=',
+            title:'@'
+        },
+        template:'<div class="input-group">' +
+        '<div class="form-control"><span ng-repeat="sele2 in myselected" ng-model="myselected" class="bdrs4 mr5" id="{{sele2.id}}">{{sele2.text}}{{sele2.name}}</span></div>' +
+        '<a class="input-group-addon" ng-click="selectstaff()">{{title}}</a>' +
+        '</div>',
+        /*link: function ($scope, element, attrs) {
+            $timeout(function(){
+                //$scope.myselected
+                $scope.myselected=attrs.myselected;
+            })
+        },*/
+        //replace: true,
+        controller:['$scope','$attrs','$modal',function($scope,$attrs,$modal){
+            $scope.selectstaff=function(){
+                $scope.treeData=$scope.options;
+                var modalInstance = $modal.open({
+                    templateUrl: 'selectdep.html',
+                    size:'sm',
+                    controller: modalCtrl,
+                    resolve:{
+                        items : function() {
+                            return $scope.options;
+                        }
+                    }
+                });
+                modalInstance.result.then(function (selectedItem) {
+                    $scope.myselected  = selectedItem;
+                    //$scope.selected  = selectedItem;
+                }, function () {
+                    //$log.info('Modal dismissed at: ' + new Date());
+                });
+                function modalCtrl ($scope, $modalInstance,items,companyService) {
+
+                    if(items=='bm'){
+                        getCompanyOrg();
+
+                    }else if(items=='gw'){
+                        inquiryRoleFun();
+                    }
+                    //查询部门
+                    function getCompanyOrg(){
+                        $scope.treeData=[
+                            { id : 'ajson1', parent : '#', text : '成都尔康互动有限公司', state: { opened: true} },
+                            { id : 'ajson1-1', parent : 'ajson1', text : '行政部', state: { opened: true} },
+                            { id : 'ajson1-2', parent : 'ajson1', text : '产品中心' , state: { opened: true}},
+                            { id : 'ajson1-2-1', parent : 'ajson1-2', text : '产品一部' , state: { opened: true}},
+                            { id : 'ajson1-2-2', parent : 'ajson1-2', text : '产品二部' , state: { opened: true}},
+                            { id : 'ajson1-2-3', parent : 'ajson1-2', text : '用户体验部' , state: { opened: true}},
+                            { id : 'ajson1-2-4', parent : 'ajson1-2', text : '用户研究部' , state: { opened: true}},
+                            { id : 'ajson1-3', parent : 'ajson1', text : '人事部' , state: { opened: true}},
+                            { id : 'ajson1-4', parent : 'ajson1', text : '市场部' , state: { opened: true}}
+                        ];
+                        /*
+                        var userinfo=LocalStorage.getObject('userinfo');
+                        var options={
+                            entId:userinfo.entId //必填项, 8位企业代码
+                        }
+                        var promise = companyService.inquiryCompanyOrg({body:options});
+                        promise.success(function(data, status, headers, config){
+                            var status=data.body.status;
+                            if(status.statusCode==0){
+
+                                $modalInstance.close();
+
+                            }else{
+                                MsgService.errormsg(data);
+                            }
+                        });
+                        promise.error(function(data, status, headers, config){
+                            MsgService.errormsg(data);
+                        });*/
+                    }
+                    //查询公司角色列表
+                    function inquiryRoleFun(){
+                        $scope.treeData=[
+                            { id : 'id1', text : '岗位1'},
+                            { id : 'id2', text : '岗位2'},
+                            { id : 'id3', text : '岗位3'},
+                            { id : 'id4', text : '岗位4'},
+                            { id : 'id5', text : '岗位5'},
+                            { id : 'id6', text : '岗位6'},
+                            { id : 'id7', text : '岗位7'},
+                            { id : 'id8', text : '岗位'},
+                            { id : 'id9', text : '岗位'},
+                            { id : 'id10', text : '岗位'},
+                            { id : 'id11', text : '岗位'},
+                            { id : 'id12', text : '岗位'}
+                        ];
+                        /*
+                        $scope.options={
+                            "entId":""		//8位企业号
+                        };
+                        var promise = roleService.inquiryRole({body:$scope.options});
+                        promise.success(function(data, status, headers, config){
+                            var sts=data.body.status;
+                            if(sts.statusCode==0){
+                                MsgService.tomsg();
+                                $modalInstance.close();
+                            }else{
+                                MsgService.errormsg(data);
+                            }
+                        });
+                        promise.error(function(data, status, headers, config){
+                            MsgService.errormsg(data);
+                        });*/
+                    };
+
+                    $scope.selected = [];
+                    //c = a.concat(b);
+                    $scope.ok = function () {
+                        //$modalInstance.close();
+                        //$scope.yourCtrl();
+                        $modalInstance.close($scope.selected);
+                    };
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
+                    //tree
+                    //$scope.ignoreChanges = false;
+                    //$scope.treeData=items;
+
+                    $scope.treeConfig = {
+                        core : {
+                            multiple : false, //多选
+                            animation: true,
+                            error : function(error) {
+                                $log.error('treeCtrl: error from js tree - ' + angular.toJson(error));
+                            },
+                            worker : true,  //工人
+                            "themes":{
+                                "dots" : false, //链接接线
+                                "icons" : false //文件图标
+                            }
+                        },
+                        types : {
+                            "default" : {
+                                "icon" : "dn"
+                            }
+                        },
+                        version : 1,
+                        //plugins : ['checkbox']
+                        plugins : ["wholerow"]
+                    };
+                    $scope.changedCB=function(e,item){
+                        $scope.selected=[item.node];
+                    };
+                    $scope.yourCtrl=function ()  {
+                        var selected_nodes = $scope.treeInstance.jstree(true).get_checked('full');
+                        debugger;
+                        $scope.selected=selected_nodes;
+                    }
+                }
+            }
+        }]
+    }
+}
+angular.module("nose.tpls", ["selectdep.html","custom-template"]);
+
+angular.module("selectdep.html", []).run(["$templateCache", function($templateCache) {
+    $templateCache.put("selectdep.html",
+        '<div class="whitemodal smbox">' +
+        '<div class="modal-header">' +
+        '<button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>' +
+        '<div class="f16">请选择</div>' +
+        '</div>' +
+        '<div class="modal-body cf bte bbe">' +
+        '<div class="row">' +
+        '<div slim-scroll box-height="280">' +
+        '<div style="outline: none" js-tree="treeConfig" should-apply="applyModelChanges()" ng-model="treeData" tree="treeInstance" tree-events="changed:changedCB"></div>' +
+        '</div></div></div>' +
+        '<div class="modal-footer">' +
+        '<button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>' +
+        '<button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>' +
+        '</div>' +
+        '</div>');
+}]);
+angular.module('custom-template', []).run(["$templateCache", function($templateCache) {
+    $templateCache.put("template/modal/confirmModelTemplate.html",
+        '<div class="inmodal bdrs8 ovh">' +
+        '<div class="modal-body t_c">' +
+        '<div class="pt20"><i class="iconfont icon-tishi f18 orange mr5"></i>{{content || "您确定要删除选择项么？"}}</div>' +
+        '<div class="p10 mt30">' +
+        '<button type="button" class="btn btn-white btn-sm wd80" ng-click="cancel()">取消</button>' +
+        '<button type="button" class="btn btn-primary btn-sm wd80 ml10" ng-click="ok()">确定</button>' +
+        '</div></div></div>');
+}]);
 
 /**
  *
  * Pass all functions into module
  */
 angular
-    .module('qiyi.directives',[])
+    .module('qiyi.directives',['nose.tpls'])
     .directive('pageTitle', pageTitle)
     .directive('sideNavigation', sideNavigation)
     .directive('landingScrollspy', landingScrollspy)
@@ -600,6 +811,7 @@ angular
     .directive('slimScroll', slimScroll)   // 简单的滚动条
     .directive('websimUploader', websimUploader)   // 文件上传
     .directive('multipleEmail', multipleEmail) // 手机和邮箱验证
+    .directive('isnumber', isnumber) // 是数字验证
     .directive('onFinishRender', onFinishRender)
     .directive('getCode', getCode) //获取验证码
     .directive('backButton', backButton) //返回
@@ -608,4 +820,5 @@ angular
     .directive('collapseH', collapseH) //展开关闭collapseH
     .directive('nosetreeGrid', nosetreeGrid) //nosetreeGrid
     .directive('ngenter', ngenter) //回车事件
+    .directive('selectdep', selectdep) //选择部门
 ;
