@@ -652,15 +652,9 @@ function selectdep($timeout){
                     //查询部门
                     function getCompanyOrg(){
                         $scope.treeData=[
-                            { id : 'ajson1', parent : '#', text : '成都尔康互动有限公司', state: { opened: true} },
-                            { id : 'ajson1-1', parent : 'ajson1', text : '行政部', state: { opened: true} },
-                            { id : 'ajson1-2', parent : 'ajson1', text : '产品中心' , state: { opened: true}},
-                            { id : 'ajson1-2-1', parent : 'ajson1-2', text : '产品一部' , state: { opened: true}},
-                            { id : 'ajson1-2-2', parent : 'ajson1-2', text : '产品二部' , state: { opened: true}},
-                            { id : 'ajson1-2-3', parent : 'ajson1-2', text : '用户体验部' , state: { opened: true}},
-                            { id : 'ajson1-2-4', parent : 'ajson1-2', text : '用户研究部' , state: { opened: true}},
-                            { id : 'ajson1-3', parent : 'ajson1', text : '人事部' , state: { opened: true}},
-                            { id : 'ajson1-4', parent : 'ajson1', text : '市场部' , state: { opened: true}}
+                            { id : 'ajson1', parent : '#', text : '销售部', state: { opened: true} },
+                            { id : 'ajson2', parent : '#', text : '开发部', state: { opened: true} },
+                            { id : 'ajson3', parent : '#', text : '测试部', state: { opened: true} }
                         ];
                         /*
                         var userinfo=LocalStorage.getObject('userinfo');
@@ -685,18 +679,15 @@ function selectdep($timeout){
                     //查询公司角色列表
                     function inquiryRoleFun(){
                         $scope.treeData=[
-                            { id : 'id1', text : '岗位1'},
-                            { id : 'id2', text : '岗位2'},
-                            { id : 'id3', text : '岗位3'},
-                            { id : 'id4', text : '岗位4'},
-                            { id : 'id5', text : '岗位5'},
-                            { id : 'id6', text : '岗位6'},
-                            { id : 'id7', text : '岗位7'},
-                            { id : 'id8', text : '岗位'},
-                            { id : 'id9', text : '岗位'},
-                            { id : 'id10', text : '岗位'},
-                            { id : 'id11', text : '岗位'},
-                            { id : 'id12', text : '岗位'}
+                            { id : 'id1', text : '平台管理员'},
+                            { id : 'id2', text : '人力资源'},
+                            { id : 'id3', text : '项目经理'},
+                            { id : 'id4', text : '销售人员'},
+                            { id : 'id5', text : '部门经理'},
+                            { id : 'id6', text : '资产管理员'},
+                            { id : 'id7', text : '总经理'},
+                            { id : 'id8', text : '财务人员'},
+                            { id : 'id9', text : '行政人员'}
                         ];
                         /*
                         $scope.options={

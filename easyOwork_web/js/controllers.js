@@ -11,13 +11,15 @@ angular.module('qiyi')
             fix_height();
         },0);
     });
-    var userinfo=LocalStorage.getObject('userinfo');
+    var userinfo;
     $scope.initFun=function(){
+        userinfo=LocalStorage.getObject('userinfo');
         //if(!userinfo.tokenId){$state.go('login');return;}
         getCompanyInfo();
-        getUserInfo()
+        //getUserInfo()
     }
     function getCompanyInfo(){
+        $scope.userinfo=userinfo;
         $scope.options={
             "entId":userinfo.entId
         }
@@ -59,7 +61,7 @@ angular.module('qiyi')
     }
 
 }])
-    .controller('headerCtrl',['$scope','LocalStorage','publicService','MsgService',function($scope,LocalStorage,publicService,MsgService){
+    .controller('headerCtrl',['$scope','$state','LocalStorage','publicService','MsgService',function($scope,$state,LocalStorage,publicService,MsgService){
         $scope.inithdFun=function(){
             loginstate(); //登录状态设置
         };
@@ -74,7 +76,7 @@ angular.module('qiyi')
             promise.success(function(data, status, headers, config){
                 var status=data.body.status;
                 if(status.statusCode==0){
-                    LocalStorage.setObject('uesrinfo','');
+                    LocalStorage.setObject('userinfo','');
                     LocalStorage.setObject('companyinfo','');
                     $state.go('login');
                 }else{

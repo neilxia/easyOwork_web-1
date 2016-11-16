@@ -44,7 +44,6 @@ function staffmsgCtrl(){
                 }
             ];
             $scope.datalist=datas;*/
-
             $scope.options={
                 "type":"ALL"
             };
@@ -73,18 +72,11 @@ function staffmsgCtrl(){
             });
         };
 
-
-        $scope.staffselected='22';
-        $scope.xxxx=function(){
-            $scope.selected;
-            debugger;
-        }
         //实现添加/修改/删除员工
         function changeEmployeeFun(change,row,$modalInstance){
             var personalEmail = row.personalEmail;
             var personalPhone = row.personalPhone;
             var id = row.id;
-            debugger;
             if(personalEmail==''&&personalPhone==''&&id==''){
                 MsgService.tomsg('邮箱|电话|员工编号选一必填');
                 return;
@@ -107,14 +99,13 @@ function staffmsgCtrl(){
                 "contractUrl":row.contractUrl,		//合同文件地址
                 "salaryTypeList":row.salaryTypeList
             };
-
             var promise = employeesService.changeEmployee({body:$scope.options});
             promise.success(function(data, status, headers, config){
-                var status=data.body.status;
-                if(status.statusCode==0){
-                    MsgService.tomsg();
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    //MsgService.tomsg();
+                    inquiryEmployeeFun();
                     $modalInstance.close();
-
                 }else{
                     MsgService.errormsg(data);
                 }
@@ -122,6 +113,7 @@ function staffmsgCtrl(){
             promise.error(function(data, status, headers, config){
                 MsgService.errormsg(data);
             });
+            return promise;
         }
         //删除
         $scope.delete=function(row){
@@ -137,13 +129,9 @@ function staffmsgCtrl(){
                 controller: modalCtrl
             });
             function modalCtrl ($scope, $modalInstance) {
-                $scope.depoptions='bm';
-                $scope.gwoptions='gw';
                 $scope.user={};
                 $scope.ok = function(state) {
                     if(!state){return;}
-                    //$scope.user.orgList=[{"name":row.orgList[0].text}];
-                    //$scope.user.roleList=[{"name":row.roleList[0].text}];
                     changeEmployeeFun('ADD',$scope.user,$modalInstance);
                 };
                 $scope.cancel = function () {
@@ -202,8 +190,11 @@ function staffmsgCtrl(){
                 }
                 $scope.ok = function (state) {
                     if(!state){return;}
-                    //changeEmployeeFun('MODIFY',$scope.user);
-                    $modalInstance.close($scope.user);
+                    var promise = changeEmployeeFun('MODIFY',$scope.user,$modalInstance);
+                    promise.success(function(data){}).error(function(){
+                        angular.copy(oldrow, row);
+                    });
+                    //$modalInstance.close($scope.user);
                 };
 
                 $scope.cancel = function () {
