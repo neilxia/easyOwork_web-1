@@ -196,6 +196,22 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
 
         })
         .state('permissions.addpromis', {
+            url: "/addpromis",	//添加和编辑使用一个页面
+            templateUrl: 'modules/permissions/tmp/addpromis.html',
+            data: { pageTitle: '职务权限'},
+            resolve:{
+                loadPlugin:function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            // TreeGrid
+                            files: ['plugins/TreeGrid/TreeGrid.css','plugins/TreeGrid/TreeGrid-1.1.js']
+                        }
+
+                    ])
+                }
+            }
+        })
+        .state('permissions.editpromis', {
             url: "/addpromis/:selectedRole",	//添加和编辑使用一个页面
             templateUrl: 'modules/permissions/tmp/addpromis.html',
             data: { pageTitle: '职务权限'},

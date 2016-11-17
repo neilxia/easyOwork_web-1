@@ -106,7 +106,7 @@ function permissionsCtrl(){
         $scope.changeRole=function(roleName){
         	for(var i=0;i<$scope.roles.length;i++){
  			   if($scope.roles[i].roleName==roleName){
- 				  $state.go('permissions.addpromis',{selectedRole:$scope.roles[i]});
+ 				  $state.go('permissions.editpromis',{selectedRole:$scope.roles[i]});
  				  break;
  			   }
      		}
