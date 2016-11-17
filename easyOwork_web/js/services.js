@@ -1,7 +1,7 @@
 /**
  * Created by Nose on 2016/8/30.
  */
-var app=angular.module('qiyi.services',[]);
+var app=angular.module('qiyi.services',['nose.tpls']);
 
 app.factory('noseService',[function(){
     return {
@@ -75,19 +75,69 @@ app.factory('noseService',[function(){
         }
     }
 }]);
-app.factory('MsgService',['notify',function(notify){
+app.factory('MsgService',['$rootScope','notify',function($rootScope,notify){
     return{
-        successmsg:function(){
-            notify({ message: '提交成功！', classes: 'orange iconfont icon-one', templateUrl:'modules/common/prompt.html' ,prompt:true});
+        tomsg:function(msg){
+           var newmsg = (msg==''|| msg==undefined)?'提交成功！':msg
+            notify({ message: newmsg, classes: 'orange iconfont icon-one', templateUrl:'modules/common/prompt.html' ,prompt:true});
         },
         errormsg:function(data){
             var status=data.body.status;
             notify({ message: status.errorDesc, classes: 'orange iconfont icon-one', templateUrl:'modules/common/prompt.html' ,prompt:true});
             if((status.erroCode=="ErrorCode.login.0004")){
+            //if((status.erroCode=="ErrorCode.common.0002" || status.erroCode=="ErrorCode.login.0004")){
                 $rootScope.$state.go('login');
             }
         }
     }
 }]);
+
+app.factory('Common', ['$q','$modal',
+    function ($q,$modal) {
+        return {
+            openConfirmWindow: function(modalTitle,modalContent,modalInstance) {
+                var deferred = $q.defer();
+                /*
+                 * modalInstance是在弹窗的基础上再弹出confirm确认框时从第一个弹窗中传进的$modalInstance,
+                 * 若是直接在页面上弹出confirm确认框，则不能传$modalInstance,否则会报错
+                 */
+                var confirmModal = $modal.open({
+                    backdrop: 'static',
+                    templateUrl : 'template/modal/confirmModelTemplate.html',  // 指向确认框模板
+                    controller : ConfirmCtrl,// 初始化模态控制器
+                    //windowClass: "confirmModal",// 自定义modal上级div的class
+                    size : 'sm', //大小配置
+                    resolve : {
+                        data : function(){
+                            return {modalContent: modalContent,modalTitle: modalTitle};//surgeonSug: $scope.surgeonSug,
+                        }
+                    }
+                });
+                function ConfirmCtrl($scope,$modalInstance,data){
+                    $scope.iconbox=data.modalTitle;
+                    $scope.content=data.modalContent;
+                    $scope.ok = function() {
+                        $modalInstance.close();
+                    };
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
+                }
+
+
+                // 处理modal关闭后返回的数据
+                confirmModal.result.then(function() {
+                    if(!!modalInstance) {
+                        modalInstance.dismiss('cancel');
+                    }
+                    deferred.resolve();
+                },function(){
+                });
+                return deferred.promise;
+            }
+        }
+    }]);
+
+
 
 

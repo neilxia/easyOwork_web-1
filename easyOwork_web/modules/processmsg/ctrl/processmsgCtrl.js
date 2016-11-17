@@ -501,7 +501,7 @@ function addsetpcsCtrl(){
                 $scope.ignoreChanges = false;
                 $scope.newNode = {};
                 $scope.originalData = [
-                    { id : 'ajson1', parent : '#', text : '成都尔康互动有限公司', state: { opened: true} },
+                    { id : 'ajson1', parent : '#', text : '成都尔康互动有限公司1', state: { opened: true} },
                     { id : 'ajson1-1', parent : 'ajson1', text : '行政部', state: { opened: true} },
                     { id : 'ajson1-2', parent : 'ajson1', text : '产品中心' , state: { opened: true}},
                     { id : 'ajson1-2-1', parent : 'ajson1-2', text : '产品一部' , state: { opened: true}},
@@ -541,6 +541,7 @@ function addsetpcsCtrl(){
                 };
                 $scope.changedCB=function(e,item,n,b){
                     alert(e+','+item+','+n+','+b);
+                    alert(11);
                 };
 
                 $scope.applyModelChanges = function() {

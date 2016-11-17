@@ -299,7 +299,7 @@
 				//根据父行来判断子行是否选中
 				var parentChecked = $context.TreeGrid('isChecked',$tr.attr('pid'));
 				$tr.append("<td class='t_c bre'><input type='checkbox' /></td>");
-				$tr.find("input[type='checkbox']").attr('trid',trid).attr('checked',parentChecked);
+				$tr.find("input[type='checkbox']").attr('trid',trid).iCheck(parentChecked?'check':'uncheck');
 
 				$("input[type='checkbox']").iCheck({
 					checkboxClass: 'icheckbox_square-green icheck-sm',
@@ -564,7 +564,8 @@
 				//点击行,自动check
 				if(config.autoChecked){
 					//全部取消
-					$context.find("input[type='checkbox'][trid]").attr('checked',false);
+					$context.find("input[type='checkbox'][trid]").iCheck('uncheck');
+					//$context.find("input[type='checkbox'][trid]").attr('checked',false);
 					$context.TreeGrid('toggleCheckRecursive',id,true);
 				}
 
@@ -642,8 +643,8 @@
 				//$context.TreeGrid('toggleCheckRecursive',trid,checked);
 				$context.TreeGrid('uncheckParentRecursive',trid,checked);
 			});
-
-/*			$context.on('ifChanged',"input[type='checkbox'][trid]",function(event){
+/*
+			$context.on('ifChanged',"input[type='checkbox'][trid]",function(event){
 				//阻止事件冒泡
 				event.stopPropagation();
 				var $ck = $(this);
@@ -691,6 +692,7 @@
 			if($tr == undefined ){
 				return false;
 			}
+			//return $tr.find("input[type='checkbox'][trid]").iCheck('check');
 			return $tr.find("input[type='checkbox'][trid]").attr('checked');
 		},
 

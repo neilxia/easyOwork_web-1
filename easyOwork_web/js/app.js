@@ -24,7 +24,7 @@
         //'qiyi.processAudit', //审批流程
         'qiyi.permissions', //权限
         'qiyi.login',
-        //'qiyi.demo',
+        'qiyi.demo',
         'qiyi.directives'
 
     ]);

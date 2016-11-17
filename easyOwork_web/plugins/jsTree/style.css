@@ -311,6 +311,8 @@
 .jstree-default .jstree-clicked {
   background: #fff9f2;
   border-radius: 2px;
+  /*padding-left: 5px;*/
+  /*padding-right: 5px;*/
   box-shadow: inset 0 0 1px #999999;
 }
 .jstree-default .jstree-no-icons .jstree-anchor > .jstree-themeicon {

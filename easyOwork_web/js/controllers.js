@@ -2,7 +2,7 @@
  * MainCtrl - controller--by Nose
  */
 angular.module('qiyi')
-    .controller('MainCtrl', ['$scope','$timeout','$modal','$state','LocalStorage','companyService','employeesService',function($scope,$timeout,$modal,$state,LocalStorage,companyService,employeesService) {
+    .controller('MainCtrl', ['$scope','$timeout','$modal','$state','LocalStorage','companyService','employeesService','MsgService',function($scope,$timeout,$modal,$state,LocalStorage,companyService,employeesService,MsgService) {
     $scope.collapsehset={toggleclick:"#infobtn",togglecom:".topinfo-com",setcomH:"-330px",openArrow:'right'};
 /*    $scope.$on('$viewContentLoaded', function(){});*/
     $scope.$on('$stateChangeSuccess', function(){
@@ -11,19 +11,20 @@ angular.module('qiyi')
             fix_height();
         },0);
     });
-    var userinfo=LocalStorage.getObject('userinfo');
+    var userinfo;
     $scope.initFun=function(){
+        userinfo=LocalStorage.getObject('userinfo');
         //if(!userinfo.tokenId){$state.go('login');return;}
         getCompanyInfo();
-        getUserInfo()
+        //getUserInfo()
     }
     function getCompanyInfo(){
+        $scope.userinfo=userinfo;
         $scope.options={
             "entId":userinfo.entId
         }
         var promise = companyService.inquiryCompanyInfo({body:$scope.options});
         promise.success(function(data, status, headers, config){
-            debugger;
             var datas=data.body.data;
             var status=data.body.status;
             if(status.statusCode==0){
@@ -31,9 +32,10 @@ angular.module('qiyi')
                 $scope.companyinfo=datas;
                 LocalStorage.setObject('companyinfo',datas);
             }else{
-                alert(status.errorDesc);
+                MsgService.errormsg(data);
             }
         });
+
     }
     function getUserInfo(){
         var options={
@@ -53,13 +55,13 @@ angular.module('qiyi')
                 $scope.userinfoall=userinfoall;
                 LocalStorage.setObject('userinfo',userinfoall);
             }else{
-                alert(status.errorDesc);
+                MsgService.errormsg(data);
             }
         });
     }
 
 }])
-    .controller('headerCtrl',['$scope','LocalStorage','publicService',function($scope,LocalStorage,publicService){
+    .controller('headerCtrl',['$scope','$state','LocalStorage','publicService','MsgService',function($scope,$state,LocalStorage,publicService,MsgService){
         $scope.inithdFun=function(){
             loginstate(); //登录状态设置
         };
@@ -68,19 +70,17 @@ angular.module('qiyi')
             // 写入userinfo companyinfo
             $scope.userinfoall=LocalStorage.getObject('userinfo');
             $scope.companyinfo=LocalStorage.getObject('companyinfo');
-            debugger;
         }
         $scope.logout=function(){
             var promise = publicService.logout({});
             promise.success(function(data, status, headers, config){
                 var status=data.body.status;
-                debugger;
                 if(status.statusCode==0){
-                    LocalStorage.setObject('uesrinfo','');
+                    LocalStorage.setObject('userinfo','');
                     LocalStorage.setObject('companyinfo','');
                     $state.go('login');
                 }else{
-                    alert(status.errorDesc);
+                    MsgService.errormsg(data);
                 }
             });
         }
