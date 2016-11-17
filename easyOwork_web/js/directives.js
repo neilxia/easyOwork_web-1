@@ -622,7 +622,59 @@ function selectdep($timeout){
             })
         },*/
         //replace: true,
-        controller:['$scope','$attrs','$modal',function($scope,$attrs,$modal){
+        controller:['$scope','$attrs','$modal','roleService','companyService','LocalStorage',function($scope,$attrs,$modal,roleService,companyService,LocalStorage){
+            //查询部门
+            var userinfo=LocalStorage.getObject('userinfo');
+            var pmData=[];
+            var jseData=[];
+            getCompanyOrg();
+            inquiryRoleFun();
+            function getCompanyOrg(){
+                $scope.options={
+                    "entId":userinfo.entId		//8位企业号
+                };
+                function getNewarr(arr,parentId){
+                    angular.forEach(arr,function(val,ind){
+                        if(val.childOrgs.length>0){
+                            getNewarr(val.childOrgs,ind)
+                        }
+                        pmData.push({id:ind,parent:parentId,text:val.name});
+                    });
+                }
+                var promise = companyService.inquiryCompanyOrg({body:$scope.options});
+                promise.success(function(data, status, headers, config){
+                    var datas=data.body;
+                    if(datas.status.statusCode==0){
+                        getNewarr(datas.data.orgs,'#');
+
+                    }else{
+                        MsgService.errormsg(data);
+                    }
+                });
+                promise.error(function(data, status, headers, config){
+                    MsgService.errormsg(data);
+                });
+            };
+            //查询公司角色列表
+            function inquiryRoleFun(){
+                $scope.options={
+                    "entId":userinfo.entId		//8位企业号
+                };
+                var promise = roleService.inquiryRole({body:$scope.options});
+                promise.success(function(data, status, headers, config){
+                    var datas=data.body;
+                    if(datas.status.statusCode==0){
+                        angular.forEach(datas.data.roles,function(val,ind){
+                            jseData.push({id:ind,parent:'#',text:val.roleName});
+                        });
+                    }else{
+                        MsgService.errormsg(data);
+                    }
+                });
+                promise.error(function(data, status, headers, config){
+                    MsgService.errormsg(data);
+                });
+            };
             $scope.selectstaff=function(){
                 $scope.treeData=$scope.options;
                 var modalInstance = $modal.open({
@@ -632,6 +684,12 @@ function selectdep($timeout){
                     resolve:{
                         items : function() {
                             return $scope.options;
+                        },
+                        pmData : function() {
+                            return pmData;
+                        },
+                        jseData : function() {
+                            return jseData;
                         }
                     }
                 });
@@ -641,74 +699,12 @@ function selectdep($timeout){
                 }, function () {
                     //$log.info('Modal dismissed at: ' + new Date());
                 });
-                function modalCtrl ($scope, $modalInstance,items,companyService) {
-
+                function modalCtrl ($scope, $modalInstance,items,pmData,jseData) {
                     if(items=='bm'){
-                        getCompanyOrg();
-
+                        $scope.treeData=pmData;
                     }else if(items=='gw'){
-                        inquiryRoleFun();
+                        $scope.treeData=jseData;
                     }
-                    //查询部门
-                    function getCompanyOrg(){
-                        $scope.treeData=[
-                            { id : 'ajson1', parent : '#', text : '销售部', state: { opened: true} },
-                            { id : 'ajson2', parent : '#', text : '开发部', state: { opened: true} },
-                            { id : 'ajson3', parent : '#', text : '测试部', state: { opened: true} }
-                        ];
-                        /*
-                        var userinfo=LocalStorage.getObject('userinfo');
-                        var options={
-                            entId:userinfo.entId //必填项, 8位企业代码
-                        }
-                        var promise = companyService.inquiryCompanyOrg({body:options});
-                        promise.success(function(data, status, headers, config){
-                            var status=data.body.status;
-                            if(status.statusCode==0){
-
-                                $modalInstance.close();
-
-                            }else{
-                                MsgService.errormsg(data);
-                            }
-                        });
-                        promise.error(function(data, status, headers, config){
-                            MsgService.errormsg(data);
-                        });*/
-                    }
-                    //查询公司角色列表
-                    function inquiryRoleFun(){
-                        $scope.treeData=[
-                            { id : 'id1', text : '平台管理员'},
-                            { id : 'id2', text : '人力资源'},
-                            { id : 'id3', text : '项目经理'},
-                            { id : 'id4', text : '销售人员'},
-                            { id : 'id5', text : '部门经理'},
-                            { id : 'id6', text : '资产管理员'},
-                            { id : 'id7', text : '总经理'},
-                            { id : 'id8', text : '财务人员'},
-                            { id : 'id9', text : '行政人员'}
-                        ];
-                        /*
-                        $scope.options={
-                            "entId":""		//8位企业号
-                        };
-                        var promise = roleService.inquiryRole({body:$scope.options});
-                        promise.success(function(data, status, headers, config){
-                            var sts=data.body.status;
-                            if(sts.statusCode==0){
-                                MsgService.tomsg();
-                                $modalInstance.close();
-                            }else{
-                                MsgService.errormsg(data);
-                            }
-                        });
-                        promise.error(function(data, status, headers, config){
-                            MsgService.errormsg(data);
-                        });*/
-                    };
-
-                    $scope.selected = [];
                     //c = a.concat(b);
                     $scope.ok = function () {
                         //$modalInstance.close();

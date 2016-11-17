@@ -91,7 +91,6 @@ app.factory('MsgService',['$rootScope','notify',function($rootScope,notify){
         }
     }
 }]);
-
 app.factory('Common', ['$q','$modal',
     function ($q,$modal) {
         return {

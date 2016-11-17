@@ -126,166 +126,168 @@
             },
             controller: 'jsTreeCtrl',
             link: function link(scope, elm, attrs, controller) {
+                $timeout(function(){
+                    //debugger;
+                    var config = null,
+                        nodesWatcher = controller.changeWatcher(scope.treeData, controller.nodesFingerprint),
+                        events = [];
 
-                var config = null,
-                    nodesWatcher = controller.changeWatcher(scope.treeData, controller.nodesFingerprint),
-                    events = [];
+                    var blocked = false;
 
-                var blocked = false;
-
-                function treeEventHandler(s, cb) {
-                    return function () {
-                        var args = arguments;
-                        var fn = s.$parent.$eval(cb);
-                        if (!s.$root.$$phase) {
-                            s.$parent.$apply(function () {
+                    function treeEventHandler(s, cb) {
+                        return function () {
+                            var args = arguments;
+                            var fn = s.$parent.$eval(cb);
+                            if (!s.$root.$$phase) {
+                                s.$parent.$apply(function () {
+                                    fn.apply(s.$parent, args);
+                                });
+                            } else {
                                 fn.apply(s.$parent, args);
-                            });
-                        } else {
-                            fn.apply(s.$parent, args);
-                        }
-                    };
-                }
+                            }
+                        };
+                    }
 
-                function manageEvents(s, e, a) {
-                    if (a.treeEvents) {
-                        var evMap = a.treeEvents.split(';');
-                        for (var i = 0; i < evMap.length; i++) {
-                            if (evMap[i].length > 0) {
-                                var name = evMap[i].split(':')[0];
-                                var cb = evMap[i].split(':')[1];
+                    function manageEvents(s, e, a) {
+                        if (a.treeEvents) {
+                            var evMap = a.treeEvents.split(';');
+                            for (var i = 0; i < evMap.length; i++) {
+                                if (evMap[i].length > 0) {
+                                    var name = evMap[i].split(':')[0];
+                                    var cb = evMap[i].split(':')[1];
+                                    if (name.indexOf('.') === -1) {
+                                        name += '.jstree';
+                                    }
+                                    events.push(name);
+                                    if (name.indexOf('.vakata') === -1) {
+                                        s.tree.on(name, treeEventHandler(s, cb));
+                                    } else {
+                                        $(document).on(name, treeEventHandler(s, cb));
+                                    }
+                                }
+                            }
+                        }
+                        if (angular.isObject(s.treeEventsObj)) {
+                            angular.forEach(s.treeEventsObj, function (cb, name) {
                                 if (name.indexOf('.') === -1) {
                                     name += '.jstree';
                                 }
                                 events.push(name);
                                 if (name.indexOf('.vakata') === -1) {
-                                    s.tree.on(name, treeEventHandler(s, cb));
-                                } else {
-                                    $(document).on(name, treeEventHandler(s, cb));
-                                }
-                            }
-                        }
-                    }
-                    if (angular.isObject(s.treeEventsObj)) {
-                        angular.forEach(s.treeEventsObj, function (cb, name) {
-                            if (name.indexOf('.') === -1) {
-                                name += '.jstree';
-                            }
-                            events.push(name);
-                            if (name.indexOf('.vakata') === -1) {
-                                s.tree.on(name, function () {
-                                    var args = arguments;
-                                    if (!s.$root.$$phase) {
-                                        s.$parent.$apply(function () {
+                                    s.tree.on(name, function () {
+                                        var args = arguments;
+                                        if (!s.$root.$$phase) {
+                                            s.$parent.$apply(function () {
+                                                cb.apply(s.$parent, args);
+                                            });
+                                        } else {
                                             cb.apply(s.$parent, args);
-                                        });
-                                    } else {
-                                        cb.apply(s.$parent, args);
-                                    }
-                                });
-                            } else {
-                                $(document).on(name, function () {
-                                    var args = arguments;
-                                    if (!s.$root.$$phase) {
-                                        s.$parent.$apply(function () { cb.apply(s.$parent, args); });
-                                    } else {
-                                        cb.apply(s.$parent, args);
-                                    }
-                                });
-                            }
-                        });
-                    }
-                }
-
-                function getOptions() {
-                    var jsTreeSettings = attrs.jsTree ? scope.$parent.$eval(attrs.jsTree) : {};
-                    config = {};
-                    angular.copy(jsTreeSettings, config);
-                    var result = JSON.stringify(config);
-                    if (config.core) {
-                        config.core.data = scope.treeData;
-                    }
-                    else {
-                        config.core = { data: scope.treeData };
-                    }
-                    if (config.plugins) {
-                        config.plugins.push('alltrigger');
-                    } else {
-                        config.plugins = ['alltrigger'];
-                    }
-                    config.alltrigger = function (name) {
-                        if (!scope.$root.$$phase && events.indexOf(name) === -1) {
-                            scope.$apply();
+                                        }
+                                    });
+                                } else {
+                                    $(document).on(name, function () {
+                                        var args = arguments;
+                                        if (!s.$root.$$phase) {
+                                            s.$parent.$apply(function () { cb.apply(s.$parent, args); });
+                                        } else {
+                                            cb.apply(s.$parent, args);
+                                        }
+                                    });
+                                }
+                            });
                         }
-                    };
-                    return result;
-                }
+                    }
 
-                scope.destroy = function () {
-                    events = [];
-                    if (attrs.tree) {
-                        if (attrs.tree.indexOf('.') !== -1) {
-                            var split = attrs.tree.split('.');
-                            var tree = split.pop();
-                            var context = scope.$parent;
-                            for (var i = 0; i < split.length; i++) {
-                                context = context[split[i]];
-                            }
-                            scope.tree = context[tree] = elm;
+                    function getOptions() {
+                        var jsTreeSettings = attrs.jsTree ? scope.$parent.$eval(attrs.jsTree) : {};
+                        config = {};
+                        angular.copy(jsTreeSettings, config);
+                        var result = JSON.stringify(config);
+                        if (config.core) {
+                            config.core.data = scope.treeData;
                         }
                         else {
-                            scope.tree = scope.$parent[attrs.tree] = elm;
+                            config.core = { data: scope.treeData };
                         }
-
-                    } else {
-                        scope.tree = elm;
+                        if (config.plugins) {
+                            config.plugins.push('alltrigger');
+                        } else {
+                            config.plugins = ['alltrigger'];
+                        }
+                        config.alltrigger = function (name) {
+                            if (!scope.$root.$$phase && events.indexOf(name) === -1) {
+                                scope.$apply();
+                            }
+                        };
+                        return result;
                     }
-                    scope.tree.jstree('destroy');
-                };
 
-                scope.init = function () {
-                    scope.tree.jstree(config);
-                    $timeout(function () {
-                        manageEvents(scope, elm, attrs);
-                    });
-                };
+                    scope.destroy = function () {
+                        events = [];
+                        if (attrs.tree) {
+                            if (attrs.tree.indexOf('.') !== -1) {
+                                var split = attrs.tree.split('.');
+                                var tree = split.pop();
+                                var context = scope.$parent;
+                                for (var i = 0; i < split.length; i++) {
+                                    context = context[split[i]];
+                                }
+                                scope.tree = context[tree] = elm;
+                            }
+                            else {
+                                scope.tree = scope.$parent[attrs.tree] = elm;
+                            }
 
-                nodesWatcher.onChanged = function (node) {
-                    if (angular.isDefined(scope.tree.jstree(true).set_type)) {
-                        scope.tree.jstree(true).set_type(node.id, node.type);
-                    }
-                    scope.tree.jstree(true).rename_node(node.id, node.text);
-                };
+                        } else {
+                            scope.tree = elm;
+                        }
+                        scope.tree.jstree('destroy');
+                    };
 
-                nodesWatcher.onAdded = function (node) {
-                    $timeout(function () {
-                        while (blocked) { }
-                        blocked = true;
-                        var parent = scope.tree.jstree(true).get_node(node.parent);
-                        var res = scope.tree.jstree(true).create_node(parent, node, 'inside', function () {
-                            blocked = false;
+                    scope.init = function () {
+                        scope.tree.jstree(config);
+                        $timeout(function () {
+                            manageEvents(scope, elm, attrs);
                         });
-                        if (!res) {
-                            blocked = false;
+                    };
+
+                    nodesWatcher.onChanged = function (node) {
+                        if (angular.isDefined(scope.tree.jstree(true).set_type)) {
+                            scope.tree.jstree(true).set_type(node.id, node.type);
                         }
+                        scope.tree.jstree(true).rename_node(node.id, node.text);
+                    };
+
+                    nodesWatcher.onAdded = function (node) {
+                        $timeout(function () {
+                            while (blocked) { }
+                            blocked = true;
+                            var parent = scope.tree.jstree(true).get_node(node.parent);
+                            var res = scope.tree.jstree(true).create_node(parent, node, 'inside', function () {
+                                blocked = false;
+                            });
+                            if (!res) {
+                                blocked = false;
+                            }
+                        });
+                    };
+
+                    nodesWatcher.onRemoved = function (node) {
+                        scope.tree.jstree(true).delete_node(node.id);
+                    };
+
+                    nodesWatcher.subscribe(scope, function () {
+                        if (!scope.shouldApply) {
+                            return true;
+                        }
+                        return scope.shouldApply();
                     });
-                };
 
-                nodesWatcher.onRemoved = function (node) {
-                    scope.tree.jstree(true).delete_node(node.id);
-                };
-
-                nodesWatcher.subscribe(scope, function () {
-                    if (!scope.shouldApply) {
-                        return true;
-                    }
-                    return scope.shouldApply();
-                });
-
-                scope.$watch(getOptions, function () {
-                    scope.destroy();
-                    scope.init();
-                });
+                    scope.$watch(getOptions, function () {
+                        scope.destroy();
+                        scope.init();
+                    });
+                })
             }
         };
     }
