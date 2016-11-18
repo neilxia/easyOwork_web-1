@@ -26,6 +26,7 @@ app.filter('characters', function () {
             return input;
         };
     })
+    //分割字符
     .filter('splitcharacters', function() {
         return function (input, chars) {
             if (isNaN(chars)) return input;
@@ -38,6 +39,7 @@ app.filter('characters', function () {
             return input;
         };
     })
+    //词
     .filter('words', function () {
         return function (input, words) {
             if (isNaN(words)) return input;

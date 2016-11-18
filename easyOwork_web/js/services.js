@@ -78,7 +78,7 @@ app.factory('noseService',[function(){
 app.factory('MsgService',['$rootScope','notify',function($rootScope,notify){
     return{
         tomsg:function(msg){
-           var newmsg = (msg==''|| msg==undefined)?'提交成功！':msg
+           var newmsg = (msg==''|| msg==undefined)?'提交成功！':msg;
             notify({ message: newmsg, classes: 'orange iconfont icon-one', templateUrl:'modules/common/prompt.html' ,prompt:true});
         },
         errormsg:function(data){
