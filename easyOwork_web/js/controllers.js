@@ -2,7 +2,7 @@
  * MainCtrl - controller--by Nose
  */
 angular.module('qiyi')
-    .controller('MainCtrl', ['$scope','$timeout','$modal','$state','LocalStorage','companyService','employeesService','MsgService',function($scope,$timeout,$modal,$state,LocalStorage,companyService,employeesService,MsgService) {
+    .controller('MainCtrl', ['$scope','$timeout','$modal','$state','LocalStorage','companyService','employeesService','roleService','accessService','MsgService',function($scope,$timeout,$modal,$state,LocalStorage,companyService,employeesService,roleService,accessService,MsgService) {
     $scope.collapsehset={toggleclick:"#infobtn",togglecom:".topinfo-com",setcomH:"-330px",openArrow:'right'};
 /*    $scope.$on('$viewContentLoaded', function(){});*/
     $scope.$on('$stateChangeSuccess', function(){
@@ -17,6 +17,7 @@ angular.module('qiyi')
         //if(!userinfo.tokenId){$state.go('login');return;}
         getCompanyInfo();
         //getUserInfo()
+        getUserFunction();
     }
     function getCompanyInfo(){
         $scope.userinfo=userinfo;
@@ -56,6 +57,25 @@ angular.module('qiyi')
                 LocalStorage.setObject('userinfo',userinfoall);
             }else{
                 MsgService.errormsg(data);
+            }
+        });
+    }
+    function getUserFunction(){	//得到用户所有权限并用于权限控制
+        var options={
+            "id":userinfo.id,
+            "personalEmail":userinfo.personalEmail,
+            "personalPhoneCountryCode":userinfo.personalPhoneCountryCode,
+            "personalPhone":userinfo.personalPhone
+        }
+        var promise = roleService.inquiryUserFunction({body:options});
+        promise.success(function(data, status, headers, config){
+            var datas=data.body.data;
+            var status=data.body.status;
+            var header=data.header;
+            if(status.statusCode==0){
+                accessService.setAccessList(datas.functionList);
+            }else{
+                MsgService.errormsg("获取用户权限失败");
             }
         });
     }

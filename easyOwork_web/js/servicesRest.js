@@ -129,9 +129,13 @@ function roleService(){
             changeRole:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/changeRole',form)
             },
-            //POST 5.5.3	B0009-查询功能列表
+            //POST 5.5.3	B0009-1-查询功能列表(职位)
             inquiryFunction:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryFunction',form)
+            },
+            //POST 	B0009-2-查询功能列表(员工)
+            inquiryUserFunction:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryUserFunction',form)
             },
             //POST 5.5.4	B0010-删除权限列表
             deleteRoles:function(form){

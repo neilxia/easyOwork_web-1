@@ -136,7 +136,21 @@ app.factory('Common', ['$q','$modal',
             }
         }
     }]);
-
+app.factory('accessService',['$rootScope',function($rootScope){
+	var permissionList;
+	return{
+        setAccessList:function(accessList){
+        	permissionList = accessList;
+        },
+        hasAccess:function(accessId){
+        	for(permission in permissionList){
+        		if(permissionList[permission].functionCode == accessId)
+        			return true
+        	}
+        	return false;
+        }
+    }
+}]);
 
 
 

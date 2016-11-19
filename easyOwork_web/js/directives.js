@@ -753,6 +753,29 @@ function selectdep($timeout){
         }]
     }
 }
+/*==============================权限控制=====================================*/
+function accessId(accessService){
+	  return {
+	    link: function(scope, element, attrs) {
+	      var value = attrs.accessid.trim();
+	      var notAccessFlag = value[0] === '!';
+	      if(notAccessFlag) {
+	        value = value.slice(1).trim();
+	      }
+	  
+	      function toggleVisibilityBasedOnAccess() {
+	        var hasAccess = accessService.hasAccess(value);
+	  
+	        if(hasAccess && !notAccessFlag || !hasAccess && notAccessFlag)
+	          element.show();
+	        else
+	          element.hide();
+	      }
+	      toggleVisibilityBasedOnAccess();
+	      //scope.$on('permissionsChanged', toggleVisibilityBasedOnPermission);
+	    }
+	  }
+	}
 angular.module("nose.tpls", ["selectdep.html","custom-template"]);
 
 angular.module("selectdep.html", []).run(["$templateCache", function($templateCache) {
@@ -808,4 +831,5 @@ angular
     .directive('nosetreeGrid', nosetreeGrid) //nosetreeGrid
     .directive('ngenter', ngenter) //回车事件
     .directive('selectdep', selectdep) //选择部门
+    .directive('accessid', ['accessService',accessId]) //权限控制是否显示元素
 ;
