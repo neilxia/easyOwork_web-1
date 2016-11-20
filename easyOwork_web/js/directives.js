@@ -567,21 +567,21 @@ function collapseH(){
 
 
 /*=========nosetreeGrid========================================================================*/
-function nosetreeGrid($timeout,$compile){
+function nosetreeGrid($timeout){
     return{
         restrict: 'A',
         scope: {
             options:'=',
+            isready:'=',
             thistree:'='
         },
         link:function(scope,element,attr){
             $timeout(function(){
-                element.TreeGrid(scope.options);
-                scope.thistree=element;
-
+                scope.$watch('isready', function(a,b,c){
+                    element.TreeGrid(scope.options);
+                    scope.thistree=element;
+                });
             });
-
-
         }
     }
 }
@@ -609,11 +609,12 @@ function selectdep($timeout){
         scope:{
             options:'=',
             myselected:'=',
+            size:'=',
             title:'@'
         },
-        template:'<div class="input-group">' +
-        '<div class="form-control"><span ng-repeat="sele2 in myselected" ng-model="myselected" class="bdrs4 mr5" id="{{sele2.id}}">{{sele2.text}}{{sele2.name}}</span></div>' +
-        '<a class="input-group-addon" ng-click="selectstaff()">{{title}}</a>' +
+        template:'<div ng-class="{\'input-group-sm\':size == \'sm\' ,\'input-group-lg\':size == \'lg\'}" class="input-group" style="width: 100%;">' +
+        '<div class="form-control ovh" style="width: 100%;"><span ng-repeat="sele2 in myselected" ng-model="myselected" class="bdrs4 mr5" id="{{sele2.id}}">{{sele2.text}}{{sele2.name}}</span></div>' +
+        '<a class="input-group-addon wd70" ng-click="selectstaff()">{{title}}</a>' +
         '</div>',
         /*link: function ($scope, element, attrs) {
             $timeout(function(){
@@ -638,9 +639,11 @@ function selectdep($timeout){
                         if(val.childOrgs.length>0){
                             getNewarr(val.childOrgs,ind)
                         }
-                        pmData.push({id:ind,parent:parentId,text:val.name});
+                        var idname=parentId=='#'?ind.toString():(parentId+'-'+ind);
+                        pmData.push({id:idname,parent:parentId,text:val.name});
                     });
                 }
+
                 var promise = companyService.inquiryCompanyOrg({body:$scope.options});
                 promise.success(function(data, status, headers, config){
                     var datas=data.body;
@@ -702,6 +705,7 @@ function selectdep($timeout){
                 function modalCtrl ($scope, $modalInstance,items,pmData,jseData) {
                     if(items=='bm'){
                         $scope.treeData=pmData;
+                        debugger;
                     }else if(items=='gw'){
                         $scope.treeData=jseData;
                     }
@@ -737,7 +741,7 @@ function selectdep($timeout){
                             }
                         },
                         version : 1,
-                        //plugins : ['checkbox']
+                        //"plugins" : [ "wholerow", "checkbox" ]
                         plugins : ["wholerow"]
                     };
                     $scope.changedCB=function(e,item){

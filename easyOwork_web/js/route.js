@@ -169,7 +169,18 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
         .state('staffmsg.set', {
             url: "/set",
             templateUrl: 'modules/staffmsg/tmp/set.html',
-            data: { pageTitle: '配置薪酬及社保'}
+            data: { pageTitle: '配置薪酬及社保'},
+            resolve:{
+                loadPlugin:function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            //时间控件
+                            name: 'datePicker',
+                            files: ['plugins/datapicker/angular-datapicker.css','plugins/datapicker/angular-datepicker.js'],
+                        }
+                    ])
+                }
+            }
 
         })
         /*========职务权限=============================================================================================== */

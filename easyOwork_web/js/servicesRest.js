@@ -95,7 +95,11 @@ function employeesService(){
             changeEmployee:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/changeEmployee',form)
             },
-            //POST 5.4.2	B0006-查询本人/其他员工信息
+            //POST 5.4.2	B0006-批量删除员工
+            deleteEmployees:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/deleteEmployees',form)
+            },
+            //POST 5.4.3	B0006-查询本人/其他员工信息
             inquiryEmployee:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryEmployee',form)
             }

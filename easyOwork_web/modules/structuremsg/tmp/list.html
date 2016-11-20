@@ -1,6 +1,6 @@
-<div id="page-wrapper" class="{{$state.current.name}}" ng-controller="structuremsgCtrl">
+<div id="page-wrapper" class="{{$state.current.name}}" ng-controller="structuremsgCtrl" ng-init="initFun()">
     <!--主要内容-->
-    <div class="payetilebox">
+    <div class="payetilebox" >
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
         <ul>
             <li class="active">部门管理</li>
@@ -13,10 +13,11 @@
     </ol>
     <div class="btnbox">
         <button class="btn btn-default btn-sm" ng-click="addDPment()">新增部门</button>
+        <!--<button class="btn btn-default btn-sm" ng-click="bbbbbb()">bbbbbb</button>-->
     </div>
     <div class="nose-panel">
         <div class="nose-panel-body">
-            <div class="bbe mt-1" nosetree-grid options="treegirdoptions"></div>
+            <div class="bbe mt-1" nosetree-grid options="treegirdoptions" isready="treedataisready"></div>
 
             <!--
             <table class="table table-hover bb-ed" id="processtable" cellspacing="0" cellpadding="0" width="100%;">
@@ -68,47 +69,54 @@
         <div class="whitemodal">
             <div class="modal-header">
                 <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
-                <div class="f16">新增部门</div>
+                <div class="f16">{{thisname}}部门</div>
             </div>
+            <!--{{baseForm.$valid}}-->
+            <form role="baseForm" name="baseForm"  ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
             <div class="modal-body">
                 <table cellpadding="0" cellspacing="0" width="100%" class="line40td">
                     <tr>
                         <td width="60" class="g9">上级部门</td>
                         <td class="pl5">
-                            <select class="form-control" name=""  placeholder="选择部门" id="">
-                                <option>行政部</option>
-                            </select>
+                            <span selectdep options="'bm'" myselected="theform.parentOrgName" title="选择部门"></span>
                         </td>
                     </tr>
                     <tr>
                         <td class="g9">部门名称</td>
-                        <td class="pl5"><input type="text" class="form-control" placeholder="请输入部门名称（必填）"></td>
+                        <td class="pl5">
+                            <div class="nose-group"  ng-class="{'has-error':baseForm.name.$dirty && baseForm.name.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.name.$dirty && baseForm.name.$invalid" popover="请输入部门名称" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="name" ng-model="theform.name"  placeholder="请输入部门名称（必填）" ng-maxlength="12" required />
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td class="g9" valign="top">部门描述</td>
-                        <td class="pl5"><textarea class="form-control" rows="4" placeholder="请输入部门描述"></textarea></td>
+                        <td class="pl5"><textarea class="form-control" rows="4" placeholder="请输入部门描述" ng-model="theform.desc"></textarea></td>
                     </tr>
                 </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
-                <button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>
+                <button type="submit" class="btn btn-primary wd80">确定</button>
             </div>
+            </form>
         </div>
     </script>
+
     <!--管理部门-->
-    <script type="text/ng-template" id="editDPment.html">
+    <!--<script type="text/ng-template" id="editDPment.html">
         <div class="whitemodal">
             <div class="modal-header">
                 <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
-                <div class="f16">编辑部门</div>
+                <div class="f16">{{thisname}}部门</div>
             </div>
             <div class="modal-body">
                 <table cellpadding="0" cellspacing="0" width="100%" class="line40td">
                     <tr>
                         <td width="60" class="g9">上级部门</td>
                         <td class="pl5">
-                            <select class="form-control" name=""  placeholder="选择部门" id="">
+                            <select class="form-control" name="" placeholder="选择部门" id="">
                                 <option>行政部</option>
                             </select>
                         </td>
@@ -128,9 +136,9 @@
                 <button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>
             </div>
         </div>
-    </script>
+    </script>-->
     <!--删除-->
-    <script type="text/ng-template" id="deleDPment.html">
+<!--    <script type="text/ng-template" id="deleDPment.html">
         <div class="inmodal bdrs8 ovh">
             <div class="modal-body t_c">
                 <div class="pt20"><i class="iconfont icon-tishi f18 orange mr5"></i>您确定要删除选择项么？</div>
@@ -140,7 +148,7 @@
                 </div>
             </div>
         </div>
-    </script>
+    </script>-->
     <!-- Footer -->
     <div ng-include="'modules/common/footer.html'"></div>
 </div>

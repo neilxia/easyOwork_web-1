@@ -216,6 +216,7 @@ button, input, select, textarea { font-size: 100%; outline:none;}
 .line18{line-height:18px;}
 .line20{line-height:20px;}
 .line22{line-height:22px;}
+.line22td td,.line22td th{ padding-top:0 !important; padding-bottom:0 !important; line-height: 20px;}
 .line24{line-height:24px;}
 .line26{line-height:26px;}
 .line28{line-height:28px;}
