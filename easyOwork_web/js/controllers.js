@@ -27,8 +27,8 @@ angular.module('qiyi')
         var promise = companyService.inquiryCompanyInfo({body:$scope.options});
         promise.success(function(data, status, headers, config){
             var datas=data.body.data;
-            var status=data.body.status;
-            if(status.statusCode==0){
+            var sts=data.body.status;
+            if(sts.statusCode==0){
                 //getusrinfo();
                 $scope.companyinfo=datas;
                 LocalStorage.setObject('companyinfo',datas);
