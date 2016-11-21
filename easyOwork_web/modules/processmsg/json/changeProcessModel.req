@@ -1,0 +1,71 @@
+{
+  "header": {
+    "requestId": "12345678900987654321123456789009",
+    "timeStamp": "20160918080808",
+    "applicationId": "ezKompany-work",
+    "ip": "127.0.0.1",
+    "tokenId": "3k9LL9eDxq5WeKFBRTPX2b5j6hWOurm4",
+    "entId": "00000006"
+  },
+  "body": {
+  
+        "actionType":"ADD",
+          "name": "出差报销",
+          "description": "报销流程",
+          "processDefStepDTOList": [
+            {
+              "stepName": "第一级审批",
+              "processDefName": null,
+              "stepNo": 1,
+              "userDTO": {
+                "personalEmail": "luochangqing@outlook.com"
+              },
+              "end": false
+            },
+            {
+              "stepName": "第二级审批",
+              "processDefName": null,
+              "stepNo": 2,
+              "userDTO": {
+                "personalEmail": "luochangqing@outlook.com"
+              },
+              "end": false
+            },
+            {
+              "stepName": "第三级审批",
+              "processDefName": null,
+              "stepNo": 3,
+              "userDTO": {
+                "personalEmail": "luochangqing@outlook.com"
+              },
+              "end": false
+            }
+          ],
+          "processDefFieldDTOList": [
+            {
+              "name": "报销名称",
+              "seqNo": 1,
+              "type": "TEXT",
+              "length": 40,
+              "defaultValue": "",
+              "mandatory": true
+            },
+            {
+              "name": "报销金额",
+              "seqNo": 2,
+              "type": "TEXT",
+              "length": 40,
+              "defaultValue": "",
+              "mandatory": true
+            },
+            {
+              "name": "原因",
+              "seqNo": 3,
+              "type": "TEXT",
+              "length": 40,
+              "defaultValue": "",
+              "mandatory": true
+            }
+          ]
+  }
+}

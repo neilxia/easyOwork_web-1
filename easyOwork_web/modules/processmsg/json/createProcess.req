@@ -1,0 +1,36 @@
+{
+  "header": {
+    "requestId": "12345678900987654321123456789009",
+    "timeStamp": "20160918080808",
+    "applicationId": "ezKompany-work",
+    "ip": "127.0.0.1",
+    "tokenId": "3k9LL9eDxq5WeKFBRTPX2b5j6hWOurm4",
+    "entId": "00000006"
+  },
+  "body": {
+          "name": "报销",
+          "title": "报销实例",
+          "launchUserDTO": 
+            {
+                "personalEmail": "luochangqing@outlook.com"
+            },
+           
+          "processFieldDTOList": [
+            {
+              "name": "报销名称",
+              "value": "测试报销",
+              "seqNo": 1
+            },
+             {
+              "name": "报销金额",
+              "value": "5000",
+              "seqNo": 2
+            },
+             {
+              "name": "报销原因",
+              "value": "出差",
+              "seqNo": 3
+            }
+          ]
+  }
+}
