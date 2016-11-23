@@ -13,7 +13,7 @@
     <div class="btnbox">
         <form class="f_r form-inline">
             <span class="form-group-sm search-group">
-                <input type="text" class="form-control wd180" ng-model="form.searchRoleName" placeholder="职务名称" ngenter="searchRole()">
+                <input type="text" class="form-control wd180" ng-model="form.searchRoleName" placeholder="职务名称">
                 <span class="searchbtn" ng-click="searchRole()"><i class="iconfont icon-sousuo f18"></i></span>
             </span>
         </form>
@@ -33,7 +33,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr  ng-repeat="role in roles">
+                <tr  ng-repeat="role in roles|filter:{roleName:form.searchRoleName}">
                     <td class="t_r"><input icheck name="selectedFunction" type="checkbox" value="{{role.roleName}}" ng-model="checkedRow"></td>
                     <td>{{role.roleName}}</td>
                     <td>{{role.functionSummary|cut:true:40:' ...'}}</td>
