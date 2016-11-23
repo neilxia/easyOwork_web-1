@@ -64,4 +64,5 @@ app.filter('characters', function () {
         return function(input, start) {
             return input.slice(start);
         }
-    });
+    })
+;

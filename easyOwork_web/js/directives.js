@@ -757,6 +757,232 @@ function selectdep($timeout){
         }]
     }
 }
+/*==============选择部门员工=====================================================*/
+function selectdepyuan($timeout){
+    return {
+        restrict: 'A',
+        scope:{
+            options:'=',
+            myselected:'=',
+            size:'=',
+            title:'@'
+        },
+        template:'<ul ng-class="{\'input-group-sm\':size == \'sm\' ,\'input-group-lg\':size == \'lg\'}" class="addpcs-config-prople cf" ng-model="myselected">' +
+        '<li ng-repeat="sele2 in myselected" class="bdrs4" id="{{selected.id}}">{{sele2.text}}{{sele2.name}}</li>' +
+        '<li class="bdrs4 addbtn fadecj" ng-click="selectstaffyuan()"><i class="iconfont icon-add f12"></i></li>' +
+        '</ul>',
+        /*link: function ($scope, element, attrs) {
+         $timeout(function(){
+         //$scope.myselected
+         $scope.myselected=attrs.myselected;
+         })
+         },*/
+        //replace: true,
+        controller:['$scope','$attrs','$modal',function($scope,$attrs,$modal){
+            $scope.selectstaffyuan=function(){
+                var modalInstance = $modal.open({
+                    templateUrl: 'selectdepyuan.html',
+                    //size:'md',
+                    controller: modalCtrl
+                });
+                modalInstance.result.then(function (selectedItem) {
+                    $scope.staffselected  = selectedItem;
+                }, function () {
+                    //$log.info('Modal dismissed at: ' + new Date());
+                });
+                function modalCtrl ($scope, $modalInstance,employeesService,companyService,LocalStorage,MsgService) {
+debugger;
+                    var userinfo=LocalStorage.getObject('userinfo');
+                    var pmData=[];
+                    var yuanData=[];
+                    //查询部门
+                    function getNewarr(arr,parentId){
+                        angular.forEach(arr,function(val,ind){
+                            if(val.childOrgs.length>0){
+                                getNewarr(val.childOrgs,ind)
+                            }
+                            var idname=parentId=='#'?ind.toString():(parentId+'-'+ind);
+                            pmData.push({id:idname,parent:parentId,text:val.name,state: { opened: true}});
+                        });
+                        $scope.treeData = pmData;
+                    }
+                    getCompanyOrg();
+                    function getCompanyOrg(){
+                        $scope.options={
+                            "entId":userinfo.entId		//8位企业号
+                        };
+
+                        var promise = companyService.inquiryCompanyOrg({body:$scope.options});
+                        promise.success(function(data, status, headers, config){
+                            var datas=data.body;
+                            if(datas.status.statusCode==0){
+                                getNewarr(datas.data.orgs,'#');
+                            }else{
+                                MsgService.errormsg(data);
+                            }
+                        });
+                        promise.error(function(data, status, headers, config){
+                            MsgService.errormsg(data);
+                        });
+                    };
+                    //查询员工列表
+                    inquiryEmployeeFun();
+                    function inquiryEmployeeFun(name){
+                        var change;
+                        if(name){
+                            change='ORG';
+                        }else {
+                            change='ALL';
+                        }
+                        $scope.options={
+                            "type":change,		//必填项,ID(员工号), EMAIL(电子邮件),MOBILE(手机号码),NAME(名字),ORG(部门名称),ROLE(职位),ALL(查询所有员工)
+                            "orgName":name	//type为ORG时必填, 部门名称
+                        };
+                        var promise = employeesService.inquiryEmployee({body:$scope.options});
+                        promise.success(function(data, status, headers, config){
+                            var datas=data.body;
+                            if(datas.status.statusCode==0){
+                                var userList=datas.data.userList
+                                if(userList.length>0){
+                                    datas.data.userList
+                                    debugger;
+                                    angular.forEach(datas.data.userList,function(val,ind){
+                                        yuanData.push({id:ind,parent:'#',text:val.name,yuan:val});
+                                    });
+                                    $scope.stafftreeData = yuanData;
+                                }else{
+                                    $scope.stafftreeData=[];
+                                }
+                            }else{
+                                MsgService.errormsg(data);
+                            }
+                        });
+                        promise.error(function(data, status, headers, config){
+                            MsgService.errormsg(data);
+                        });
+                    };
+
+                    $scope.selected = [];
+
+                    //c = a.concat(b);
+                    $scope.ok = function () {
+                        //$modalInstance.close();
+                        $scope.yourCtrl();
+                        $modalInstance.close($scope.selected);
+                    };
+
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
+
+
+                    //tree
+                    $scope.ignoreChanges = false;
+                    $scope.newNode = {};
+                    $scope.originalData = [
+                        { id : 'ajson1', parent : '#', text : '成都尔康互动有限公司1', state: { opened: true} },
+                        { id : 'ajson1-1', parent : 'ajson1', text : '行政部', state: { opened: true} },
+                        { id : 'ajson1-2', parent : 'ajson1', text : '产品中心' , state: { opened: true}},
+                        { id : 'ajson1-2-1', parent : 'ajson1-2', text : '产品一部' , state: { opened: true}},
+                        { id : 'ajson1-2-2', parent : 'ajson1-2', text : '产品二部' , state: { opened: true}},
+                        { id : 'ajson1-2-3', parent : 'ajson1-2', text : '用户体验部' , state: { opened: true}},
+                        { id : 'ajson1-2-4', parent : 'ajson1-2', text : '用户研究部' , state: { opened: true}},
+                        { id : 'ajson1-3', parent : 'ajson1', text : '人事部' , state: { opened: true}},
+                        { id : 'ajson1-4', parent : 'ajson1', text : '市场部' , state: { opened: true}}
+                    ];
+
+                    $scope.treeConfig = {
+                        core : {
+                            multiple : true, //多选
+                            animation: true,
+                            error : function(error) {
+                                $log.error('treeCtrl: error from js tree - ' + angular.toJson(error));
+                            },
+                            worker : true,  //工人
+                            "themes":{
+                                "dots" : false, //链接接线
+                                "icons" : false //文件图标
+                            }
+                        },
+                        types : {
+                            "default" : {
+                                "icon" : "dn"
+                            }
+                        },
+                        version : 1,
+                        checkbox : {
+                            "whole_node" : false,
+                            "tie_selection": false
+                        },
+                        plugins : ['checkbox']
+                        //plugins : ["wholerow",'checkbox']
+                    };
+                    $scope.changedCB=function(e,item){
+                        inquiryEmployeeFun(item.node.text);
+                        alert(e+','+item+','+n+','+b);
+                    };
+
+                    $scope.applyModelChanges = function() {
+                        //return !vm.ignoreChanges;
+                        //return false;
+                    };
+
+
+
+                    //员工选择
+                    $scope.stafforiginalData = [
+                        { id : 'id1', parent : '#', text : '王晓红'},
+                        { id : 'id2', parent : '#', text : '王晓红'},
+                        { id : 'id3', parent : '#', text : '王晓红'},
+                        { id : 'id4', parent : '#', text : '王晓红'},
+                        { id : 'id5', parent : '#', text : '王晓红'},
+                        { id : 'id6', parent : '#', text : '王晓红'},
+                        { id : 'id7', parent : '#', text : '王晓红'},
+                        { id : 'id8', parent : '#', text : '王晓红'},
+                        { id : 'id9', parent : '#', text : '王晓红'},
+                        { id : 'id10', parent : '#', text : '王晓红'},
+                        { id : 'id11', parent : '#', text : '王晓红'},
+                        { id : 'id12', parent : '#', text : '王晓红'}
+                    ];
+                    $scope.staffConfig = {
+                        core : {
+                            multiple : true, //多选
+                            animation: true,
+                            error : function(error) {
+                                $log.error('treeCtrl: error from js tree - ' + angular.toJson(error));
+                            },
+                            worker : true,  //工人
+                            "themes":{
+                                "dots" : false, //链接接线
+                                "icons" : false //文件图标
+                            }
+                        },
+                        types : {
+                            "default" : {
+                                "icon" : "dn"
+                            }
+                        },
+                        version : 1,
+                        plugins : ["wholerow",'checkbox']
+                    };
+                    $scope.changedstaff=function(e,item,n,b){
+                        //alert(e+','+item+','+n+','+b);
+                    };
+
+                    $scope.yourCtrl=function ()  {
+                        //var selected_nodes = this.treeInstance.jstree(true).get_selected('full');
+                        var selected_nodes = $scope.treeInstance.jstree(true).get_checked('full');
+                        var selected_nodes2 = $scope.stafftree.jstree(true).get_checked('full');
+                        $scope.selected=selected_nodes.concat(selected_nodes2);
+                        //Array.prototype.push.apply(selected_nodes, selected_nodes2);
+                        //var a = [1,2], b = [3,4], c = a.concat(b);
+                        //alert(selected_nodes);
+                    }
+                }
+            };
+        }]
+    }
+}
 /*==============================权限控制=====================================*/
 function accessId(accessService){
 	  return {
@@ -780,7 +1006,9 @@ function accessId(accessService){
 	    }
 	  }
 	}
-angular.module("nose.tpls", ["selectdep.html","custom-template"]);
+
+
+angular.module("nose.tpls", ["selectdep.html","selectdepyuan.html","custom-template"]);
 
 angular.module("selectdep.html", []).run(["$templateCache", function($templateCache) {
     $templateCache.put("selectdep.html",
@@ -799,6 +1027,32 @@ angular.module("selectdep.html", []).run(["$templateCache", function($templateCa
         '<button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>' +
         '</div>' +
         '</div>');
+}]);
+angular.module("selectdepyuan.html", []).run(["$templateCache", function($templateCache) {
+    $templateCache.put("selectdepyuan.html",
+        '<div class="whitemodal smbox">' +
+        '<div class="modal-header">' +
+        '<button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>' +
+        '<div class="f16">选择部门/员工</div>' +
+        '</div>' +
+        '<div class="modal-body cf bte bbe">' +
+        '<div class="row">' +
+        '<div class="col-xs-6 bre pr5 pt10 pb10">' +
+        '<div slim-scroll box-height="330">' +
+        '<div style="outline: none" js-tree="treeConfig" should-apply="applyModelChanges()" ng-model="treeData" tree="treeInstance" tree-events="changed:changedCB"></div>' +
+        '</div>' +
+        '</div>' +
+        '<div class="col-xs-6 pr5 pt10 pb10">' +
+        '<div slim-scroll box-height="330" class="addpcs-jstree-com">' +
+        '<div style="outline: none" js-tree="staffConfig" should-apply="applyModelChanges()" ng-model="stafftreeData" tree="stafftree" tree-events="changed:changedstaff"></div>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '<div class="modal-footer">' +
+        '<button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>' +
+        '<button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>' +
+        '</div></div>');
 }]);
 angular.module('custom-template', []).run(["$templateCache", function($templateCache) {
     $templateCache.put("template/modal/confirmModelTemplate.html",
@@ -835,5 +1089,6 @@ angular
     .directive('nosetreeGrid', nosetreeGrid) //nosetreeGrid
     .directive('ngenter', ngenter) //回车事件
     .directive('selectdep', selectdep) //选择部门
+    .directive('selectdepyuan', selectdepyuan) //选择部门员工
     .directive('accessid', ['accessService',accessId]) //权限控制是否显示元素
 ;

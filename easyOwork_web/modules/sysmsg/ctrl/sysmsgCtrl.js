@@ -32,7 +32,6 @@ function listCtrl(){
                 case 'logoUrl':{$scope.EPinfo.logoUrl=data; break;}
                 case 'licenceUrl':{$scope.EPinfo.licenceUrl=data; break;}
             }
-            debugger;
             var promise = companyService.changeCompanyInfo({body:$scope.EPinfo});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
@@ -57,11 +56,64 @@ function listCtrl(){
 
 
 function cssetCtrl(){
-    return['$scope',function($scope){
-
-        $scope.Param={
-            Vcode:'3'
+    return['$scope','publicService',function($scope,publicService){
+        $scope.initFun=function(){
+            inquiryParameterFun();
         }
+        //查询系统参数
+        $scope.options={
+            "name":""	//如为空则查询所有系统参数, 如有值则查询该参数
+        };
+        function inquiryParameterFun(){
+            var promise = publicService.inquiryParameter({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    var datalist=data.body.data.settings;
+                    angular.forEach(datalist,function(val,ind){
+                        if(val.name=='LOGIN_EXPIRE_DURATION'){
+                            val.nameas='登录超时';
+                        }else if(val.name=='LOGIN_MAX_FAILED_COUNT'){
+                            val.nameas='允许登录错误次数';
+                        }
+                    })
+                    $scope.dataslist=datalist;
+                }else{
+                    MsgService.errormsg(data);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.errormsg(data);
+            });
+        };
+
+        //修改系统参数
+
+        $scope.changeParameterFun=function (data,name){
+            $scope.options={
+                "settings":[		//数组, 一次可修改多个参数
+                    {
+                        "name":name,	//必填项 , 参数名
+                        "value":data		//必填项 , 参数值
+                    }
+                ]
+            };
+            var promise = publicService.changeParameter({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    MsgService.tomsg();
+                    $modalInstance.close();
+                }else{
+                    MsgService.errormsg(data);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.errormsg(data);
+            });
+            return promise;
+        };
+
     }]
 }
 function searchCtrl(){

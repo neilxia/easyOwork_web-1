@@ -1,4 +1,4 @@
-<div id="page-wrapper" ng-controller="setpcsclassCtrl">
+<div id="page-wrapper" ng-controller="setpcsclassCtrl" ng-init="initFun()">
     <!--主要内容-->
     <div class="payetilebox">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
@@ -16,7 +16,7 @@
     </div>
     <div class="nose-panel">
         <div class="nose-panel-body">
-            <table class="table table-hover tr" cellspacing="0" cellpadding="0" width="100%;">
+            <table class="table table-hover bbe" cellspacing="0" cellpadding="0" width="100%;">
                 <thead>
                     <tr>
                         <th><span class="pl15">类别</span></th>
@@ -24,21 +24,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><span class="pl15">休假</span></td>
-                        <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editclass()"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除"><i class="iconfont icon-del f14"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td><span class="pl15">休假</span></td>
-                        <td><button class="btn btn-default btn-xs h30" title="编辑"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除"><i class="iconfont icon-del f14"></i></button></td>
+                    <tr ng-repeat="data in datalist">
+                        <td><span class="pl15">{{data.name}}</span></td>
+                        <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editclass(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="nose-panel-footer cf bte">
+<!--        <div class="nose-panel-footer cf bte">
             <pagination class="pagination-sm yi-page m0 f_r" total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize"  boundary-links="true"></pagination>
             <div class="g9">共 3625 条数据</div>
-        </div>
+        </div>-->
     </div>
     <!-- Footer -->
     <div ng-include="'modules/common/footer.html'"></div>
@@ -49,19 +45,24 @@
     <div class="whitemodal smbox">
         <div class="modal-header">
             <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
-            <div class="f16">添加类别</div>
+            <div class="f16">{{thename}}类别</div>
         </div>
+        <form role="baseForm" name="baseForm"  ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
         <div class="modal-body">
-            <input type="text" class="form-control" placeholder="输入类别名称">
+            <div class="nose-group pct99" ng-class="{'has-error':baseForm.name.$dirty && baseForm.name.$invalid}">
+                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.name.$dirty && baseForm.name.$invalid" popover="输入类别名称" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                <input type="text" class="form-control" name="name" ng-model="user.name"  placeholder="输入类别名称" ng-maxlength="4" required />
+            </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
-            <button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>
+            <button type="submit" class="btn btn-primary wd80">确定</button>
         </div>
+        </form>
     </div>
 </script>
 <!--编辑配置项-->
-<script type="text/ng-template" id="editclass.html">
+<!--<script type="text/ng-template" id="editclass.html">
     <div class="whitemodal smbox">
         <div class="modal-header">
             <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
@@ -75,7 +76,7 @@
             <button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>
         </div>
     </div>
-</script>
+</script>-->
 
 <script>
 

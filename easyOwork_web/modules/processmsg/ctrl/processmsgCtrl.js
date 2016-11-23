@@ -933,45 +933,105 @@ function setpcsCtrl(){
 
 /*====================类别设置=================================*/
 function setpcsclassCtrl(){
-    return['$scope', '$modal',function($scope,$modal){
+    return['$scope', '$modal','processService','LocalStorage','Common',function($scope,$modal,processService,LocalStorage,Common){
         $scope.bigTotalItems = 11;
         $scope.bigCurrentPage = 1;
         $scope.maxSize = 5;
         $scope.singleModel = 1;
+        var userinfo;
+        $scope.initFun=function(){
+            userinfo=LocalStorage.getObject('userinfo');
+            inquiryProcessModelTypeFun();
+        }
+        function inquiryProcessModelTypeFun(){
+            //查询流程模板类型
+            $scope.options={
+                "entId":userinfo.entId		//8位企业号
+            };
+            var promise = processService.inquiryProcessModelType({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    $scope.datalist=data.body.data.processDefTypes;
+                }else{
+                    MsgService.errormsg(data);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.errormsg(data);
+            });
+        };
+
+        //添加/修改/删除流程模板类型
+        function changeProcessModelTypeFun(change,row,$modalInstance,oldrow){
+            if(oldrow==undefined){oldrow=row}
+            $scope.options={
+                "actionType":change,		//ADD, MODIFY, DELETE
+                "name":oldrow.name,		//角色名称
+                "newName":row.name		//新角色名称, 必填当actionType为MODIFY时
+            };
+            var promise = processService.changeProcessModelType({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    inquiryProcessModelTypeFun();
+                    $modalInstance.close();
+                }else{
+                    MsgService.errormsg(data);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.errormsg(data);
+            });
+        };
         //$scope.active=true;
-        //增加部门
+        //增加类型
         $scope.addclass=function(){
             var modalInstance = $modal.open({
                 templateUrl: 'addclass.html',
                 //size:'md',
                 controller: modalCtrl
             });
+            $scope.user={
+                "name":""
+            };
             function modalCtrl ($scope, $modalInstance) {
-                $scope.ok = function () {
-                    $modalInstance.close();
+                $scope.thename='添加';
+                $scope.ok = function(state) {
+                    if(!state){return;}
+                    changeProcessModelTypeFun('ADD',$scope.user,$modalInstance);
                 };
-
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                 };
             }
         };
-        //编辑部门
-        $scope.editclass=function(){
+        //编辑类型
+        $scope.editclass=function(row){
             var modalInstance = $modal.open({
-                templateUrl: 'editclass.html',
-                //size:'md',
+                templateUrl: 'addclass.html',
                 controller: modalCtrl
             });
             function modalCtrl ($scope, $modalInstance) {
-                $scope.ok = function () {
-                    $modalInstance.close();
+                $scope.thename='编辑';
+                var oldrow=angular.copy(row);
+                $scope.user=row;
+                $scope.ok = function (state) {
+                    if(!state){return;}
+                    changeProcessModelTypeFun('MODIFY',$scope.user,$modalInstance,oldrow);
                 };
 
                 $scope.cancel = function () {
+                    angular.copy(oldrow, row);
                     $modalInstance.dismiss('cancel');
                 };
             }
+        };
+        //删除
+        $scope.delete=function(row){
+            Common.openConfirmWindow().then(function() {
+                changeProcessModelTypeFun('DELETE',row);
+            });
         };
 
 
