@@ -13,6 +13,7 @@ app.factory('assetService', assetService());//资产
 app.factory('attendanceService', attendanceService());//考勤
 app.factory('CustomerService', CustomerService());//客户/销售
 app.factory('projectService', projectService());//项目
+app.factory('OSSService',OSSService());//阿里云OSS服务
 /*========公共接口=====================================================================*/
 function publicService(){
     return ['$http','AppConfig',function($http,AppConfig){
@@ -382,6 +383,57 @@ function projectService(){
             //POST 5.11.11	B0061-查询项目
             inquiryProject:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryProject',form)
+            }
+        }
+    }];
+}
+
+/*========OSS服务=====================================================================*/
+function OSSService(){
+    return ['$http','AppConfig',function($http,AppConfig){
+    	var isUploadSuccess;
+    	var statusCode;
+        return {
+            uploadFile:function(filePath,file){
+            	var ossBucketUrl = AppConfig.OSS_BUCKET_URL;
+            	var promise = this.inquiryOSSInfo({body:{}});
+            	promise.success(function(data, status, headers, config){
+            		 var status=data.body.status;
+                     var data=data.body.data;
+                     if(status.statusCode==0){
+                    	 var ossInfo = data;
+                    	 $http.post(ossBucketUrl,null,{
+                        	 "headers":{'Content-Type':undefined},
+                        	 "transformRequest":function(data) {
+	                        		 var fd = new FormData();
+	                            	 fd.append('key', filePath+"${filename}");
+	                            	 fd.append('Content-Type', file.type);      
+	                            	 fd.append('OSSAccessKeyId', ossInfo.ossaccessKeyId);
+	                            	 fd.append('policy', ossInfo.policy)
+	                                 fd.append('signature', ossInfo.signature);
+	                            	 fd.append("file",file);
+	                            	 return fd;
+                        		  }
+                         }).success(function(data, status, headers, config){
+                        	 isUploadSuccess = true;
+                        	 statusCode = status;
+                         }).error(function(data, status, headers, config){
+                        	 isUploadSuccess = false;
+                        	 statusCode = status;
+                         })
+                     }else{
+                         return;
+                     }
+            	});
+            },
+            inquiryOSSInfo:function(form){
+            	return $http.post(AppConfig.BASE_URL+'work/rest/inquiryOSSInfo',form)
+            },
+            isUploaded:function(){
+            	return isUploadSuccess;
+            },
+            getStatusCode:function(){
+            	return statusCode;
             }
         }
     }];

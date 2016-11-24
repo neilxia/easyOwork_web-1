@@ -2,9 +2,11 @@
  * Created by Nose on 2016/9/12.
  */
 var interceptors = angular.module('qiyi.interceptors',[]);
-interceptors.factory('HttpInterceptor', ["$q","$rootScope","LocalStorage",'noseService',function ($q,$rootScope,LocalStorage,noseService){
+interceptors.factory('HttpInterceptor', ["$q","$rootScope","LocalStorage",'noseService','AppConfig',function ($q,$rootScope,LocalStorage,noseService,AppConfig){
     return {
         'request': function(config) {
+        	if(config.url == AppConfig.OSS_BUCKET_URL)
+        		return config;
             $rootScope.loading = true;
             // request your $rootscope messaging should be here?
             if(config.data){
