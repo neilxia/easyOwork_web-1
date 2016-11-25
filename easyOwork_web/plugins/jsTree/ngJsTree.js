@@ -127,9 +127,7 @@
             controller: 'jsTreeCtrl',
             link: function link(scope, elm, attrs, controller) {
                 $timeout(function(){
-                    /*scope.$watch('treeData',function(olds,news,scope){
-                        debugger;
-                    })*/
+
                     //debugger;
                     var config = null,
                         nodesWatcher = controller.changeWatcher(scope.treeData, controller.nodesFingerprint),
@@ -285,7 +283,11 @@
                         }
                         return scope.shouldApply();
                     });
-
+/*                    scope.$watch('treeData',function(olds,news,scope){
+                        if(olds==news){return;}
+                        scope.destroy();
+                        scope.init();
+                    })*/
                     scope.$watch(getOptions, function () {
                         scope.destroy();
                         scope.init();

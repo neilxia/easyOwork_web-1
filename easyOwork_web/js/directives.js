@@ -763,12 +763,13 @@ function selectdepyuan($timeout){
         restrict: 'A',
         scope:{
             options:'=',
-            myselected:'=',
+            selectedallarr:'=',
+            selectedall:'=',
             size:'=',
             title:'@'
         },
-        template:'<ul ng-class="{\'input-group-sm\':size == \'sm\' ,\'input-group-lg\':size == \'lg\'}" class="addpcs-config-prople cf" ng-model="myselected">' +
-        '<li ng-repeat="sele2 in myselected" class="bdrs4" id="{{selected.id}}">{{sele2.text}}{{sele2.name}}</li>' +
+        template:'<ul ng-class="{\'input-group-sm\':size == \'sm\' ,\'input-group-lg\':size == \'lg\'}" class="addpcs-config-prople cf" ng-model="selectedallarr">' +
+        '<li ng-repeat="sele2 in selectedall" class="bdrs4" id="{{selected.id}}">{{sele2.text}}{{sele2.name}}</li>' +
         '<li class="bdrs4 addbtn fadecj" ng-click="selectstaffyuan()"><i class="iconfont icon-add f12"></i></li>' +
         '</ul>',
         /*link: function ($scope, element, attrs) {
@@ -778,89 +779,206 @@ function selectdepyuan($timeout){
          })
          },*/
         //replace: true,
-        controller:['$scope','$attrs','$modal',function($scope,$attrs,$modal){
+        controller:['$scope','$attrs','$modal','employeesService','companyService','LocalStorage','MsgService',function($scope,$attrs,$modal,employeesService,companyService,LocalStorage,MsgService){
+            var userinfo=LocalStorage.getObject('userinfo');
+            var pmData=[];
+            var yuanData=[];
+            //查询部门
+            getCompanyOrg();
+            function getNewarr(arr,parentId){
+                angular.forEach(arr,function(val,ind){
+                    if(val.childOrgs.length>0){
+                        getNewarr(val.childOrgs,ind)
+                    }
+                    var idname=parentId=='#'?ind.toString():(parentId+'-'+ind);
+                    pmData.push({id:idname,parent:parentId,text:val.name,state: { opened: true}});
+                });
+            }
+            function getCompanyOrg(){
+                $scope.options={
+                    "entId":userinfo.entId		//8位企业号
+                };
+                var promise = companyService.inquiryCompanyOrg({body:$scope.options});
+                promise.success(function(data, status, headers, config){
+                    var datas=data.body;
+                    if(datas.status.statusCode==0){
+                        getNewarr(datas.data.orgs,'#');
+                    }else{
+                        MsgService.errormsg(data);
+                    }
+                });
+                promise.error(function(data, status, headers, config){
+                    MsgService.errormsg(data);
+                });
+            };
+            //查询员工列表
+            inquiryEmployeeFun();
+            function inquiryEmployeeFun(){
+                $scope.options={
+                    "type":'ALL',		//必填项,ID(员工号), EMAIL(电子邮件),MOBILE(手机号码),NAME(名字),ORG(部门名称),ROLE(职位),ALL(查询所有员工)
+                    "orgName":''	//type为ORG时必填, 部门名称
+                };
+                var promise = employeesService.inquiryEmployee({body:$scope.options});
+                promise.success(function(data, status, headers, config){
+                    var datas=data.body;
+                    if(datas.status.statusCode==0){
+                        angular.forEach(datas.data.userList,function(val,ind){
+                            val.checked=false;
+                        })
+                        yuanData=datas.data.userList;
+                    }else{
+                        MsgService.errormsg(data);
+                    }
+                });
+                promise.error(function(data, status, headers, config){
+                    MsgService.errormsg(data);
+                });
+            };
+
+            //查询流程模板
+            var aaa={
+                "processDefList":[{		//流程模板数组
+                    "name":"模板名称1",		//数据模板名称
+                    "description":"该流程模板用于公司出差的申请",	//数据模板描述
+                    "forRoleName":"角色1",		//模板使用角色
+                    "userDTOList":[{
+                        "id":"001",	//员工号
+                        "personalEmail":"01@163.com",	//邮件地址
+                        "personalPhoneCountryCode":"86",	//电话号码
+                        "personalPhone":"13438301111"		//电话号码
+                    }],
+                    "roleDTOList":[{
+                        "name":"部门名称1",		//模板使用角色名称
+                    }],
+                    "processDefStepDTOList":[
+                        {
+                            "end":false,	//是否结束节点
+                            "stepName":"一级审批",	//节点名称
+                            "stepNo":"1",	//节点顺序号
+                            "userDTO":{
+                                "id":"1",	//员工号
+                                "personalEmail":"1@163.com",	//邮件地址
+                                "personalPhoneCountryCode":"86",	//电话号码
+                                "personalPhone":"13438310001"		//电话号码
+                            },
+                            "roleDTO":{	//当前仅限制审批人为人员, 该值没有
+                                "name":"部门名称2",		//节点处理角色名称
+                            }
+                        }
+                    ],
+                    "processDefFieldDTOList":[
+                        {
+                            "name":"多选文本框",	//数据域名
+                            "seqNo":"1",	//数据域序列号
+                            "type":"TEXTAREA",		//数据域类型 TEXT, TEXTAREA, DATE, CHECKBOX, RADIO, ATTACHMENT, NUMBER, SELECTION
+                            "length":"80",	//数据域长度
+                            "isMandatory":"1",	//数据域是否必填
+                            "valueList":"",	//数据域可选值, 用于type为SELECTION, CHECKBOX, RADIO
+                            "defaultValue":"请输入"	//数据域默认值
+                        },
+                        {
+                            "name":"时间控件",	//数据域名
+                            "seqNo":"1",	//数据域序列号
+                            "type":"DATE",		//数据域类型 TEXT, TEXTAREA, DATE, CHECKBOX, RADIO, ATTACHMENT, NUMBER, SELECTION
+                            "length":"200",	//数据域长度
+                            "isMandatory":"2",	//数据域是否必填
+                            "valueList":"",	//数据域可选值, 用于type为SELECTION, CHECKBOX, RADIO
+                            "defaultValue":"请选择"	//数据域默认值
+                        },
+                        {
+                            "name":"CHECKBOX",	//数据域名
+                            "seqNo":"1",	//数据域序列号
+                            "type":"TEXTAREA",		//数据域类型 TEXT, TEXTAREA, DATE, CHECKBOX, RADIO, ATTACHMENT, NUMBER, SELECTION
+                            "length":"1",	//数据域长度
+                            "isMandatory":"1",	//数据域是否必填
+                            "valueList":[{name:'男'},{name:'女'}],	//数据域可选值, 用于type为SELECTION, CHECKBOX, RADIO
+                            "defaultValue":"男"	//数据域默认值
+                        }
+                    ]
+                }]
+
+            }
+
+            //5.7.7	B0017-查询发起的流程
+            $scope.xxx={
+                "processes":[{
+                    "processesId":'01',
+                    "name":"流程模板1",	//流程模板名称
+                    "title":"回家请假3天",		//流程实例Title
+                    "description":"该流程用于公司出差的申请，其中涉及到出差地、出差人员、出差相关费用（交通费、住宿费、餐费等等）。",	//流程模板描述
+                    "processType":"休假",	//流程模板类型
+                    "status":"审批中",	//流程状态
+
+                    "currentStepNo":"2",	//流程当前在哪个节点
+                    "launchUserDTO":{	//发起员工
+                        "id":"001",	//员工号
+                        "personalEmail":"01@163.com",	//邮件地址
+                        "personalPhoneCountryCode":"86",	//电话号码
+                        "personalPhone":"13438301111"		//电话号码
+                    },
+                    processFieldDTOList:[
+                        {	//流程数据, 数组
+                            "name":"多选文本框",	//数据名称
+                            "value":"1111111111",	//数据值
+                            "seqNo":"1"	//数据序列号
+                        },
+                        {	//流程数据, 数组
+                            "name":"单选",	//数据名称
+                            "value":"1111111111",	//数据值
+                            "seqNo":"2"	//数据序列号
+                        },
+                        {	//流程数据, 数组
+                            "name":"checkbox",	//数据名称
+                            "value":"男",	//数据值
+                            "seqNo":"3"	//数据序列号
+                        },
+                    ],
+                    processStepDTOList:[
+                        {	//流程节点, 数组
+                            "status":"APPROVED",	//APPROVED, REJECTED, PENDING
+                            "message":"",	//拒绝理由
+                            "stepName":"一级审批 / 组长 欧倩怡",	//流程节点名称
+                            "stepNo":"1"	//流程节点序列号
+                        },
+                        {	//流程节点, 数组
+                            "status":"APPROVED",	//APPROVED, REJECTED, PENDING
+                            "message":"",	//拒绝理由
+                            "stepName":"一级审批 / 组长 欧倩怡",	//流程节点名称
+                            "stepNo":"2"	//流程节点序列号
+                        },
+                        {	//流程节点, 数组
+                            "status":"PENDING",	//APPROVED, REJECTED, PENDING
+                            "message":"",	//拒绝理由
+                            "stepName":"三级审批 / 副总经理 王二麻",	//流程节点名称
+                            "stepNo":"3"	//流程节点序列号
+                        }
+                    ]
+                }]
+
+            }
+
             $scope.selectstaffyuan=function(){
                 var modalInstance = $modal.open({
                     templateUrl: 'selectdepyuan.html',
                     //size:'md',
-                    controller: modalCtrl
+                    controller: modalCtrl,
+                    resolve:{
+                        pmData : function() {
+                            return pmData;
+                        },
+                        yuanData : function() {
+                            return yuanData;
+                        }
+                    }
                 });
-                modalInstance.result.then(function (selectedItem) {
-                    $scope.staffselected  = selectedItem;
+                modalInstance.result.then(function (selectedbm) {
+                    $scope.selectedallarr=selectedbm;
+                    $scope.selectedall  = selectedbm[0].concat(selectedbm[1]);
                 }, function () {
                     //$log.info('Modal dismissed at: ' + new Date());
                 });
-                function modalCtrl ($scope, $modalInstance,employeesService,companyService,LocalStorage,MsgService) {
-debugger;
-                    var userinfo=LocalStorage.getObject('userinfo');
-                    var pmData=[];
-                    var yuanData=[];
-                    //查询部门
-                    function getNewarr(arr,parentId){
-                        angular.forEach(arr,function(val,ind){
-                            if(val.childOrgs.length>0){
-                                getNewarr(val.childOrgs,ind)
-                            }
-                            var idname=parentId=='#'?ind.toString():(parentId+'-'+ind);
-                            pmData.push({id:idname,parent:parentId,text:val.name,state: { opened: true}});
-                        });
-                        $scope.treeData = pmData;
-                    }
-                    getCompanyOrg();
-                    function getCompanyOrg(){
-                        $scope.options={
-                            "entId":userinfo.entId		//8位企业号
-                        };
+                function modalCtrl ($scope, $modalInstance,pmData,yuanData) {
 
-                        var promise = companyService.inquiryCompanyOrg({body:$scope.options});
-                        promise.success(function(data, status, headers, config){
-                            var datas=data.body;
-                            if(datas.status.statusCode==0){
-                                getNewarr(datas.data.orgs,'#');
-                            }else{
-                                MsgService.errormsg(data);
-                            }
-                        });
-                        promise.error(function(data, status, headers, config){
-                            MsgService.errormsg(data);
-                        });
-                    };
-                    //查询员工列表
-                    inquiryEmployeeFun();
-                    function inquiryEmployeeFun(name){
-                        var change;
-                        if(name){
-                            change='ORG';
-                        }else {
-                            change='ALL';
-                        }
-                        $scope.options={
-                            "type":change,		//必填项,ID(员工号), EMAIL(电子邮件),MOBILE(手机号码),NAME(名字),ORG(部门名称),ROLE(职位),ALL(查询所有员工)
-                            "orgName":name	//type为ORG时必填, 部门名称
-                        };
-                        var promise = employeesService.inquiryEmployee({body:$scope.options});
-                        promise.success(function(data, status, headers, config){
-                            var datas=data.body;
-                            if(datas.status.statusCode==0){
-                                var userList=datas.data.userList
-                                if(userList.length>0){
-                                    datas.data.userList
-                                    debugger;
-                                    angular.forEach(datas.data.userList,function(val,ind){
-                                        yuanData.push({id:ind,parent:'#',text:val.name,yuan:val});
-                                    });
-                                    $scope.stafftreeData = yuanData;
-                                }else{
-                                    $scope.stafftreeData=[];
-                                }
-                            }else{
-                                MsgService.errormsg(data);
-                            }
-                        });
-                        promise.error(function(data, status, headers, config){
-                            MsgService.errormsg(data);
-                        });
-                    };
 
                     $scope.selected = [];
 
@@ -891,6 +1009,7 @@ debugger;
                         { id : 'ajson1-4', parent : 'ajson1', text : '市场部' , state: { opened: true}}
                     ];
 
+                    $scope.treeData = pmData;
                     $scope.treeConfig = {
                         core : {
                             multiple : true, //多选
@@ -918,62 +1037,31 @@ debugger;
                         //plugins : ["wholerow",'checkbox']
                     };
                     $scope.changedCB=function(e,item){
-                        inquiryEmployeeFun(item.node.text);
-                        alert(e+','+item+','+n+','+b);
+                        $scope.thisbm=[{"name":item.node.text}];
+                        //inquiryEmployeeFun(item.node.text);
+                        //alert(e+','+item+','+n+','+b);
                     };
 
                     $scope.applyModelChanges = function() {
                         //return !vm.ignoreChanges;
                         //return false;
                     };
+                    //员工
+                    $scope.stafftreeData=yuanData;
 
-
-
-                    //员工选择
-                    $scope.stafforiginalData = [
-                        { id : 'id1', parent : '#', text : '王晓红'},
-                        { id : 'id2', parent : '#', text : '王晓红'},
-                        { id : 'id3', parent : '#', text : '王晓红'},
-                        { id : 'id4', parent : '#', text : '王晓红'},
-                        { id : 'id5', parent : '#', text : '王晓红'},
-                        { id : 'id6', parent : '#', text : '王晓红'},
-                        { id : 'id7', parent : '#', text : '王晓红'},
-                        { id : 'id8', parent : '#', text : '王晓红'},
-                        { id : 'id9', parent : '#', text : '王晓红'},
-                        { id : 'id10', parent : '#', text : '王晓红'},
-                        { id : 'id11', parent : '#', text : '王晓红'},
-                        { id : 'id12', parent : '#', text : '王晓红'}
-                    ];
-                    $scope.staffConfig = {
-                        core : {
-                            multiple : true, //多选
-                            animation: true,
-                            error : function(error) {
-                                $log.error('treeCtrl: error from js tree - ' + angular.toJson(error));
-                            },
-                            worker : true,  //工人
-                            "themes":{
-                                "dots" : false, //链接接线
-                                "icons" : false //文件图标
-                            }
-                        },
-                        types : {
-                            "default" : {
-                                "icon" : "dn"
-                            }
-                        },
-                        version : 1,
-                        plugins : ["wholerow",'checkbox']
-                    };
-                    $scope.changedstaff=function(e,item,n,b){
-                        //alert(e+','+item+','+n+','+b);
-                    };
 
                     $scope.yourCtrl=function ()  {
                         //var selected_nodes = this.treeInstance.jstree(true).get_selected('full');
                         var selected_nodes = $scope.treeInstance.jstree(true).get_checked('full');
-                        var selected_nodes2 = $scope.stafftree.jstree(true).get_checked('full');
-                        $scope.selected=selected_nodes.concat(selected_nodes2);
+                        var selectedItems=[];
+                        var datalist = $scope.stafftreeData;
+                        angular.forEach(datalist, function(item) {
+                            if (item.checked == true) {
+                                selectedItems.push(item);
+                                item.checked=false;
+                            }
+                        });
+                        $scope.selected=[selected_nodes,selectedItems];
                         //Array.prototype.push.apply(selected_nodes, selected_nodes2);
                         //var a = [1,2], b = [3,4], c = a.concat(b);
                         //alert(selected_nodes);
@@ -1044,7 +1132,7 @@ angular.module("selectdepyuan.html", []).run(["$templateCache", function($templa
         '</div>' +
         '<div class="col-xs-6 pr5 pt10 pb10">' +
         '<div slim-scroll box-height="330" class="addpcs-jstree-com">' +
-        '<div style="outline: none" js-tree="staffConfig" should-apply="applyModelChanges()" ng-model="stafftreeData" tree="stafftree" tree-events="changed:changedstaff"></div>' +
+        '<div><ul><li class="h30 ovh" ng-repeat="data in stafftreeData | filter:{\'orgList\':thisbm}"><lable ><input icheck type="checkbox" name="chkList" ng-model="data.checked"> {{data.name}}</lable></li></ul></div>' +
         '</div>' +
         '</div>' +
         '</div>' +
