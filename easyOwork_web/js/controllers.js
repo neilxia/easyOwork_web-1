@@ -2,7 +2,7 @@
  * MainCtrl - controller--by Nose
  */
 angular.module('qiyi')
-    .controller('MainCtrl', ['$scope','$timeout','$modal','$state','LocalStorage','companyService','employeesService','roleService','accessService','MsgService',function($scope,$timeout,$modal,$state,LocalStorage,companyService,employeesService,roleService,accessService,MsgService) {
+    .controller('MainCtrl', ['$scope','$timeout','$modal','$state','LocalStorage','companyService','employeesService','roleService','accessService','OSSService','MsgService',function($scope,$timeout,$modal,$state,LocalStorage,companyService,employeesService,roleService,accessService,OSSService,MsgService) {
     $scope.collapsehset={toggleclick:"#infobtn",togglecom:".topinfo-com",setcomH:"-330px",openArrow:'right'};
 /*    $scope.$on('$viewContentLoaded', function(){});*/
     $scope.$on('$stateChangeSuccess', function(){
@@ -18,6 +18,8 @@ angular.module('qiyi')
         getCompanyInfo();
         //getUserInfo()
         getUserFunction();
+        //初始化阿里云OSS参数
+        OSSService.inquiryOSSInfo({body:{}});
     }
     function getCompanyInfo(){
         $scope.userinfo=userinfo;

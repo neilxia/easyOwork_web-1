@@ -389,51 +389,49 @@ function projectService(){
 }
 
 /*========OSS服务=====================================================================*/
+/*
+OSSService.inquiryOSSInfo
+//获取上传文件所需的accessKeyId, signature, policy
+
+OSSService.uploadFile(filePath, uploadFile);	
+//filePath: 为上传的文件路径, 如果没有会自动创建
+//uploadFile: 为文件元素,可以用$("#uploadFile").get(0).files[0]得到该参数值 - uploadFile为html中为file设置的id值
+*/
 function OSSService(){
     return ['$http','AppConfig',function($http,AppConfig){
-    	var isUploadSuccess;
-    	var statusCode;
+    	var ossInfo;
         return {
             uploadFile:function(filePath,file){
             	var ossBucketUrl = AppConfig.OSS_BUCKET_URL;
-            	var promise = this.inquiryOSSInfo({body:{}});
-            	promise.success(function(data, status, headers, config){
-            		 var status=data.body.status;
-                     var data=data.body.data;
-                     if(status.statusCode==0){
-                    	 var ossInfo = data;
-                    	 $http.post(ossBucketUrl,null,{
-                        	 "headers":{'Content-Type':undefined},
-                        	 "transformRequest":function(data) {
-	                        		 var fd = new FormData();
-	                            	 fd.append('key', filePath+"${filename}");
-	                            	 fd.append('Content-Type', file.type);      
-	                            	 fd.append('OSSAccessKeyId', ossInfo.ossaccessKeyId);
-	                            	 fd.append('policy', ossInfo.policy)
-	                                 fd.append('signature', ossInfo.signature);
-	                            	 fd.append("file",file);
-	                            	 return fd;
-                        		  }
-                         }).success(function(data, status, headers, config){
-                        	 isUploadSuccess = true;
-                        	 statusCode = status;
-                         }).error(function(data, status, headers, config){
-                        	 isUploadSuccess = false;
-                        	 statusCode = status;
-                         })
-                     }else{
-                         return;
-                     }
-            	});
+            	return $http.post(ossBucketUrl,null,{
+               	 "headers":{'Content-Type':undefined},
+               	 "transformRequest":function(data) {
+                   		 var fd = new FormData();
+                       	 fd.append('key', filePath+"${filename}");
+                       	 fd.append('Content-Type', file.type);      
+                       	 fd.append('OSSAccessKeyId', ossInfo.ossaccessKeyId);
+                       	 fd.append('policy', ossInfo.policy)
+                            fd.append('signature', ossInfo.signature);
+                       	 fd.append("file",file);
+                       	 return fd;
+               		  }
+                })
             },
             inquiryOSSInfo:function(form){
             	return $http.post(AppConfig.BASE_URL+'work/rest/inquiryOSSInfo',form)
+            				.success(function(data, status, headers, config){
+            					var status=data.body.status;
+            	                var data=data.body.data;
+            	                if(status.statusCode==0){
+            	                	ossInfo = data;
+            	                }
+            				})
+            				.error(function(data, status, headers, config){
+            					
+            				})
             },
-            isUploaded:function(){
-            	return isUploadSuccess;
-            },
-            getStatusCode:function(){
-            	return statusCode;
+            getOssInfo:function(){
+            	return ossInfo;
             }
         }
     }];
