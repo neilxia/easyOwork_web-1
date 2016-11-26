@@ -764,12 +764,12 @@ function selectdepyuan($timeout){
         scope:{
             options:'=',
             selectedallarr:'=',
-            selectedall:'=',
+            myselected:'=',
             size:'=',
             title:'@'
         },
         template:'<ul ng-class="{\'input-group-sm\':size == \'sm\' ,\'input-group-lg\':size == \'lg\'}" class="addpcs-config-prople cf" ng-model="selectedallarr">' +
-        '<li ng-repeat="sele2 in selectedall" class="bdrs4" id="{{selected.id}}">{{sele2.text}}{{sele2.name}}</li>' +
+        '<li ng-repeat="sele2 in myselected" class="bdrs4" id="{{selected.id}}">{{sele2.text}}{{sele2.name}}</li>' +
         '<li class="bdrs4 addbtn fadecj" ng-click="selectstaffyuan()"><i class="iconfont icon-add f12"></i></li>' +
         '</ul>',
         /*link: function ($scope, element, attrs) {
@@ -973,15 +973,12 @@ function selectdepyuan($timeout){
                 });
                 modalInstance.result.then(function (selectedbm) {
                     $scope.selectedallarr=selectedbm;
-                    $scope.selectedall  = selectedbm[0].concat(selectedbm[1]);
+                    $scope.myselected = selectedbm[0].concat(selectedbm[1]);
                 }, function () {
                     //$log.info('Modal dismissed at: ' + new Date());
                 });
                 function modalCtrl ($scope, $modalInstance,pmData,yuanData) {
-
-
                     $scope.selected = [];
-
                     //c = a.concat(b);
                     $scope.ok = function () {
                         //$modalInstance.close();
