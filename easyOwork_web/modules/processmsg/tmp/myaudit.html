@@ -1,4 +1,4 @@
-<div id="page-wrapper" class="{{$state.current.name}}" ng-controller="myauditCtrl">
+<div id="page-wrapper" class="{{$state.current.name}}" ng-controller="myauditCtrl" ng-init="initFun()">
     <!--主要内容-->
     <div class="payetilebox">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
@@ -13,13 +13,9 @@
     </ol>
     <div class="btnbox">
         <form class="f_r form-inline">
-            <select name="" class="form-control input-sm">
-                <option>类别</option>
-                <option>休假</option>
-                <option>转正</option>
-            </select>
+            <select class="form-control input-sm" ng-model="selectedproclass" ng-options="x.name for x in prosclasslist"></select>
             <span class="form-group-sm search-group">
-                <input type="text" class="form-control wd180" placeholder="申请内容关键词">
+                <input type="text" class="form-control wd180" ng-model="processtitle" placeholder="申请内容关键词">
                 <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
             </span>
         </form>
@@ -38,23 +34,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><span class="pl15">休假</span></td>
-                        <td>回家请假3天</td>
+                <!--<tr>
+                    <td><span class="pl15">休假</span></td>
+                    <td>回家请假3天</td>
+                    <td>2016-09-23  20:30</td>
+                    <td>王坤</td>
+                    <td><span class="orange">待处理</span></td>
+                    <td><button ui-sref="processmsg.myauditdetail" class="btn btn-default btn-xs h30" title="查看"><i class="iconfont icon-wodeshenqing f14"></i></button></td>
+                </tr>-->
+                    <tr ng-repeat="data in inquiryProcessesData | filter:{'status':Processstatus,'processType':selectedproclass.name,'title':processtitle}">
+                        <td><span class="pl15">{{data.processType}}</span></td>
+                        <td>{{data.title}}</td>
                         <td>2016-09-23  20:30</td>
-                        <td>王坤</td>
-                        <td><span class="orange">待处理</span></td>
-                        <td><button ui-sref="processmsg.myauditdetail" class="btn btn-default btn-xs h30" title="查看"><i class="iconfont icon-wodeshenqing f14"></i></button></td>
+                        <td>{{data.processStepDTOList[data.currentStepNo].stepName}}</td>
+                        <td><span ng-class="{'orange':data.status=='待处理','g9':data.status=='已处理'}">{{data.status}}</span></td>
+                        <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="chakanFun(data)"><i class="iconfont icon-chakan f14"></i></button></td>
                     </tr>
 
-                    <tr>
-                        <td><span class="pl15">休假</span></td>
-                        <td>回家请假3天</td>
-                        <td>2016-09-23  20:30</td>
-                        <td>王坤</td>
-                        <td><span class="g9">已处理</span></td>
-                        <td>&nbsp;</td>
-                    </tr>
                 </tbody>
             </table>
         </div>

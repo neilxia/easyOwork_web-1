@@ -286,7 +286,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
 
         })
         .state('processmsg.mypcsdetail', {
-            url: "/mypcsdetail",
+            url: "/mypcsdetail?processesId",
             templateUrl: 'modules/processmsg/tmp/mypcsdetail.html',
             data: { pageTitle: '我的申请详情'}
 

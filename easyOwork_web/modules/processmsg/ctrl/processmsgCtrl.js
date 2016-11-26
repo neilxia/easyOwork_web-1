@@ -291,28 +291,97 @@ function addpcsCtrl(){
 
 /*====================我的申请=================================*/
 function mypcsCtrl(){
-    return['$scope', '$modal',function($scope,$modal){
+    return['$rootScope','$scope', '$modal','Common','processService','LocalStorage',function($rootScope,$scope,$modal,Common,processService,LocalStorage){
+
         $scope.bigTotalItems = 11;
         $scope.bigCurrentPage = 1;
         $scope.maxSize = 5;
         $scope.singleModel = 1;
         //$scope.active=true;
-        //删除
-        $scope.delete=function(){
-            var modalInstance = $modal.open({
-                templateUrl: 'delete.html',
-                size:'sm',
-                controller: modalCtrl
+        var userinfo=LocalStorage.getObject('userinfo');
+        $scope.initFun=function(){
+            inquiryCreatedProcessesFun();
+            inquiryProcessModelTypeFun();
+        }
+        //筛选
+        $scope.Processstatus="";
+        $scope.processtitle="";
+        $scope.selectedproclass="";
+        function inquiryProcessModelTypeFun(){
+            //查询流程模板类型
+            $scope.options={
+                "entId":userinfo.entId		//8位企业号
+            };
+            var promise = processService.inquiryProcessModelType({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    $scope.prosclasslist=data.body.data.processDefTypes;
+                }else{
+                    MsgService.errormsg(data);
+                }
             });
-            function modalCtrl ($scope, $modalInstance) {
-                $scope.ok = function () {
-                    $modalInstance.close();
-                };
+            promise.error(function(data, status, headers, config){
+                MsgService.errormsg(data);
+            });
+        };
 
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
+        function inquiryCreatedProcessesFun(){
+            //查询发起的流程
+            $scope.options={
+                "launchUserDTO":{
+                    "id":userinfo.id,	//员工号
+                    "personalEmail":userinfo.personalEmail,	//邮件地址
+                    "personalPhoneCountryCode":userinfo.personalPhoneCountryCode,	//电话号码
+                    "personalPhone":userinfo.personalPhone		//电话号码
+                }
+            };
+            var promise = processService.inquiryCreatedProcesses({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                if(status==200){
+                    $scope.inquiryProcessesData=data.processes;
+                }
+                //远程开启下面的
+                /*var sts=data.body.status;
+                if(sts.statusCode==0){
+                    $scope.inquiryProcessesData=data.body.data;
+                }else{
+                    MsgService.errormsg(data);
+                }*/
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.errormsg(data);
+            });
+        };
+
+        //查看流程详情
+        $scope.chakanFun=function(row){
+            LocalStorage.setObject('pcsdetail',row);
+            $rootScope.$state.go('processmsg.mypcsdetail',{processesId:row.processesId})
+        }
+        //撤回流程
+        $scope.changeProcessFun=function(row){
+            Common.openConfirmWindow('','您确定要撤回申请么？').then(function() {
+                //批准/拒绝/撤回流程
+                $scope.options={
+                    "actionType":"WITHDRAW"	,	//APPROVE, REJECT, WITHDRAW
+                    "name":row.name,	//流程模板名称
+                    "title":row.title,		//流程实例Title
+                    "message":''	//批准拒绝时添加的信息
                 };
-            }
+                var promise = processService.changeProcess({body:$scope.options});
+                promise.success(function(data, status, headers, config){
+                    var sts=data.body.status;
+                    if(sts.statusCode==0){
+                        //成功
+                    }else{
+                        MsgService.errormsg(data);
+                    }
+                });
+                promise.error(function(data, status, headers, config){
+                    MsgService.errormsg(data);
+                });
+            });
         };
 
 
@@ -320,23 +389,179 @@ function mypcsCtrl(){
 }
 /*====================我的申请详情=================================*/
 function mypcsdetailCtrl(){
-    return['$scope',function($scope){
+    return['$rootScope','$scope','LocalStorage','Common',function($rootScope,$scope,LocalStorage,Common){
+        $scope.pcsdetail = LocalStorage.getObject('pcsdetail');
+        //撤回流程
+        $scope.changeProcessFun=function(row){
 
+            Common.openConfirmWindow('','您确定要撤回申请么？').then(function() {
+                //批准/拒绝/撤回流程
+                $scope.options={
+                    "actionType":"WITHDRAW"	,	//APPROVE, REJECT, WITHDRAW
+                    "name":row.name,	//流程模板名称
+                    "title":row.title,		//流程实例Title
+                    "message":''	//批准拒绝时添加的信息
+                };
+                var promise = processService.changeProcess({body:$scope.options});
+                promise.success(function(data, status, headers, config){
+                    var sts=data.body.status;
+                    if(sts.statusCode==0){
+                        //成功
+                        $rootScope.$state.go('processmsg.mypcs');
+                    }else{
+                        MsgService.errormsg(data);
+                    }
+                });
+                promise.error(function(data, status, headers, config){
+                    MsgService.errormsg(data);
+                });
+            });
+        };
     }]
 }
 /*====================我的审批=================================*/
 function myauditCtrl(){
-    return['$scope',function($scope){
+    return['$rootScope','$scope', '$modal','Common','processService','LocalStorage',function($rootScope,$scope,$modal,Common,processService,LocalStorage){
+
+        $scope.bigTotalItems = 11;
+        $scope.bigCurrentPage = 1;
+        $scope.maxSize = 5;
+        $scope.singleModel = 1;
+        //$scope.active=true;
+        var userinfo=LocalStorage.getObject('userinfo');
+        $scope.initFun=function(){
+            inquiryHandlingProcessesFun();
+            inquiryProcessModelTypeFun();
+        }
+        //筛选
+        $scope.Processstatus="";
+        $scope.processtitle="";
+        $scope.selectedproclass="";
+        function inquiryProcessModelTypeFun(){
+            //查询流程模板类型
+            $scope.options={
+                "entId":userinfo.entId		//8位企业号
+            };
+            var promise = processService.inquiryProcessModelType({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    $scope.prosclasslist=data.body.data.processDefTypes;
+                }else{
+                    MsgService.errormsg(data);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.errormsg(data);
+            });
+        };
+
+        function inquiryHandlingProcessesFun(){
+            //查询发起的流程
+            $scope.options={
+                "launchUserDTO":{
+                    "id":userinfo.id,	//员工号
+                    "personalEmail":userinfo.personalEmail,	//邮件地址
+                    "personalPhoneCountryCode":userinfo.personalPhoneCountryCode,	//电话号码
+                    "personalPhone":userinfo.personalPhone		//电话号码
+                }
+            };
+            var promise = processService.inquiryHandlingProcesses({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                if(status==200){
+                    $scope.inquiryProcessesData=data.processes;
+                }
+                //远程开启下面的
+                /*var sts=data.body.status;
+                 if(sts.statusCode==0){
+                 $scope.inquiryProcessesData=data.body.data;
+                 }else{
+                 MsgService.errormsg(data);
+                 }*/
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.errormsg(data);
+            });
+        };
+
+        //查看流程详情
+        $scope.chakanFun=function(row){
+            LocalStorage.setObject('pcsdetail',row);
+            $rootScope.$state.go('processmsg.myauditdetail',{processesId:row.processesId})
+        }
+        //撤回流程
+        $scope.changeProcessFun=function(row){
+            Common.openConfirmWindow('','您确定要撤回申请么？').then(function() {
+                //批准/拒绝/撤回流程
+                $scope.options={
+                    "actionType":"WITHDRAW"	,	//APPROVE, REJECT, WITHDRAW
+                    "name":row.name,	//流程模板名称
+                    "title":row.title,		//流程实例Title
+                    "message":''	//批准拒绝时添加的信息
+                };
+                var promise = processService.changeProcess({body:$scope.options});
+                promise.success(function(data, status, headers, config){
+                    var sts=data.body.status;
+                    if(sts.statusCode==0){
+                        //成功
+                    }else{
+                        MsgService.errormsg(data);
+                    }
+                });
+                promise.error(function(data, status, headers, config){
+                    MsgService.errormsg(data);
+                });
+            });
+        };
+
 
     }]
 }
 /*====================审批详情=================================*/
 function myauditdetailCtrl(){
-    return['$scope',function($scope){
+    return['$rootScope','$scope','LocalStorage','Common',function($rootScope,$scope,LocalStorage,Common){
+        $scope.pcsdetail = LocalStorage.getObject('pcsdetail');
+        //撤回流程
         $scope.jujue=false;
         $scope.jujuetoggle=function(){
             $scope.jujue = !$scope.jujue;
         }
+        //批准同意
+        $scope.agreedproFun=function(){
+            Common.openConfirmWindow('','您确定要批准同意申请么？').then(function() {
+                changeProcessFun('APPROVE',$scope.pcsdetail)
+            });
+        }
+        //批准拒绝
+        $scope.rejectdproFun=function(state){
+            if(!state) return;
+            Common.openConfirmWindow('','您确定要批准拒绝申请么？').then(function() {
+                changeProcessFun('REJECT',$scope.pcsdetail)
+            });
+        }
+        $scope.rejectMsg="";
+        $scope.changeProcessFun=function(change,row){
+            //批准/拒绝/撤回流程
+            $scope.options={
+                "actionType":change	,	//APPROVE, REJECT, WITHDRAW
+                "name":row.name,	//流程模板名称
+                "title":row.title,		//流程实例Title
+                "message":$scope.rejectMsg	//批准拒绝时添加的信息
+            };
+            var promise = processService.changeProcess({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    //成功
+                    $rootScope.$state.go('processmsg.mypcs');
+                }else{
+                    MsgService.errormsg(data);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.errormsg(data);
+            });
+        };
     }]
 }
 /*====================添加流程=================================*/

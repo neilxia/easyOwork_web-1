@@ -1,6 +1,6 @@
 <div id="page-wrapper" class="{{$state.current.name}}" ng-controller="mypcsCtrl">
     <!--主要内容-->
-    <div class="payetilebox">
+    <div class="payetilebox" ng-init="initFun()">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
         <ul>
             <li class="active">我的申请</li>
@@ -13,18 +13,14 @@
     </ol>
     <div class="btnbox">
         <form class="f_r form-inline">
-            <button class="btn btn-primary btn-sm" ng-click="">全部</button>
-            <button class="btn btn-default btn-sm" ng-click="">审批中</button>
-            <button class="btn btn-default btn-sm" ng-click="">已通过</button>
-            <button class="btn btn-default btn-sm" ng-click="">已拒绝</button>
-            <button class="btn btn-default btn-sm" ng-click="">已撤回</button>
-            <select name="" class="form-control input-sm">
-                <option>类别</option>
-                <option>休假</option>
-                <option>转正</option>
-            </select>
+            <button class="btn btn-default btn-sm" ng-model="Processstatus" btn-radio="">全部</button>
+            <button class="btn btn-default btn-sm" ng-model="Processstatus" btn-radio="'审批中'">审批中</button>
+            <button class="btn btn-default btn-sm" ng-model="Processstatus" btn-radio="'已通过'">已通过</button>
+            <button class="btn btn-default btn-sm" ng-model="Processstatus" btn-radio="'已拒绝'">已拒绝</button>
+            <button class="btn btn-default btn-sm" ng-model="Processstatus" btn-radio="'已撤回'">已撤回</button>
+            <select class="form-control input-sm" ng-model="selectedproclass" ng-options="x.name for x in prosclasslist"></select>
             <span class="form-group-sm search-group">
-                <input type="text" class="form-control wd180" placeholder="申请内容关键词">
+                <input type="text" class="form-control wd180" ng-model="processtitle" placeholder="申请内容关键词">
                 <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
             </span>
         </form>
@@ -44,14 +40,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><span class="pl15">休假</span></td>
-                        <td>回家请假3天</td>
+                    <tr ng-repeat="data in inquiryProcessesData | filter:{'status':Processstatus,'processType':selectedproclass.name,'title':processtitle}">
+                        <td><span class="pl15">{{data.processType}}</span></td>
+                        <td>{{data.title}}</td>
                         <td>2016-09-23  20:30</td>
-                        <td>王坤</td>
-                        <td><span class="orange">审批中</span></td>
-                        <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="processmsg.mypcsdetail"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs h30 ml5" title="撤回" ng-click="delete()"><i class="iconfont icon-fanhui f14"></i></button></td>
+                        <td>{{data.processStepDTOList[data.currentStepNo].stepName}}</td>
+                        <td><span ng-class="{'orange':data.status=='审批中','green':data.status=='已通过','red':data.status=='已拒绝','g9':data.status=='已撤回'}">{{data.status}}</span></td>
+                        <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="chakanFun(data)"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs h30 ml5" title="撤回" ng-click="changeProcessFun(data)"><i class="iconfont icon-fanhui f14"></i></button></td>
                     </tr>
+<!--
                     <tr>
                         <td><span class="pl15">休假</span></td>
                         <td>回家请假3天</td>
@@ -75,7 +72,7 @@
                         <td>王坤</td>
                         <td><span class="g9">已回撤</span></td>
                         <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="processmsg.mypcsdetail"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs h30 ml5" title="撤回" ng-click="delete()"><i class="iconfont icon-fanhui f14"></i></button></td>
-                    </tr>
+                    </tr>-->
                 </tbody>
             </table>
         </div>

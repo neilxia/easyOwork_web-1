@@ -931,25 +931,25 @@ function selectdepyuan($timeout){
                             "name":"checkbox",	//数据名称
                             "value":"男",	//数据值
                             "seqNo":"3"	//数据序列号
-                        },
+                        }
                     ],
                     processStepDTOList:[
                         {	//流程节点, 数组
                             "status":"APPROVED",	//APPROVED, REJECTED, PENDING
                             "message":"",	//拒绝理由
-                            "stepName":"一级审批 / 组长 欧倩怡",	//流程节点名称
+                            "stepName":"一级审批  欧倩怡",	//流程节点名称
                             "stepNo":"1"	//流程节点序列号
                         },
                         {	//流程节点, 数组
                             "status":"APPROVED",	//APPROVED, REJECTED, PENDING
                             "message":"",	//拒绝理由
-                            "stepName":"一级审批 / 组长 欧倩怡",	//流程节点名称
+                            "stepName":"一级审批 欧倩怡",	//流程节点名称
                             "stepNo":"2"	//流程节点序列号
                         },
                         {	//流程节点, 数组
                             "status":"PENDING",	//APPROVED, REJECTED, PENDING
                             "message":"",	//拒绝理由
-                            "stepName":"三级审批 / 副总经理 王二麻",	//流程节点名称
+                            "stepName":"三级审批  王二麻",	//流程节点名称
                             "stepNo":"3"	//流程节点序列号
                         }
                     ]

@@ -16,7 +16,28 @@
     <div class="nose-panel">
         <div class="p30">
             <ul class="mypcsdetail-pcs f12">
-                <li class="sucs">
+                <li ng-repeat="data in pcsdetail.processStepDTOList" ng-class="{'sucs':data.status=='APPROVED','jing':data.status=='Pending'}">
+                    <span class="sign"></span>
+                    <div class="textbox" ng-if="data.status=='APPROVED'">
+                        {{data.stepName}} <span class="green ml10">同意</span> <span class="g9 ml10">08-12 12:30</span>
+                    </div>
+                    <div class="textbox" ng-if="data.status=='Pending'">
+                        {{data.stepName}}<span class="orange ml10">等待处理</span>
+                        <button class="btn btn-primary btn-xs ml10" ng-click="agreedproFun()">同意</button>
+                        <button class="btn btn-default btn-xs ml10" ng-click="jujuetoggle()">拒绝</button>
+                        <div class="wd300 pt5" ng-show="jujue">
+                            <form role="baseForm" name="baseForm"  ng-submit="rejectdproFun(baseForm.$valid)" novalidate="novalidate">
+                            <textarea class="form-control" cols="4" ng-model="rejectMsg" placeholder="请输入拒绝理由" required></textarea>
+                            <button type="submit" class="btn btn-primary btn-xs mt3" >提交</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="textbox" ng-if="data.status=='PENDING'">
+                        {{data.stepName}}
+                    </div>
+                </li>
+
+                <!--<li class="sucs">
                     <span class="sign"></span>
                     <div class="textbox">
                         一级审批 / 组长 <span class="ml10">欧倩怡</span><span class="green ml10">同意</span> <span class="g9 ml10">08-12 12:30</span>
@@ -40,7 +61,8 @@
                     <div class="textbox">
                         三级审批 / 副总经理 <span class="ml10">王二麻</span>
                     </div>
-                </li>
+                </li>-->
+
             </ul>
             <table class="line40td mt10 f12" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
@@ -61,24 +83,24 @@
                 </tr>
                 <tr>
                     <td width="80" class="t_r">申请流程：</td>
-                    <td class="pl10">行政管理 - 出差申请</td>
+                    <td class="pl10">{{pcsdetail.title}}</td>
                 </tr>
                 <tr>
                     <td width="80" class="t_r">流程说明：</td>
-                    <td class="pl10">该流程用于公司出差的申请，其中涉及到出差地、出差人员、出差相关费用（交通费、住宿费、餐费等等）。</td>
+                    <td class="pl10">{{pcsdetail.description}}</td>
                 </tr>
                 <tr>
                     <td width="80" class="t_r" valign="top">申请内容：</td>
                     <td class="pl10">
-                        08/12~08/15共3天，去上海参加客户交流会；<br/>
-                        随同成员：市场部-蒋伯芳，客服部-李明哲，客服部-柯震亮；<br/>
-                        出差费用：交通费1万，住宿费6000，餐费3000，其他费用2万。
+                        <div ng-repeat="data in pcsdetail.processFieldDTOList | orderBy:'seqNo'">
+                            {{data.name}}：{{data.value}}
+                        </div>
                     </td>
                 </tr>
 
                 <tr>
                     <td width="80" class="t_r">相关附件：</td>
-                    <td class="pl10"><a href=""><img class="mr5 mv" src="./images/office01.png" alt="">相关报表附件.rar</a></td>
+                    <td class="pl10"><img class="mr5 mv" src="./images/office01.png" alt="">相关报表附件.rar</td>
                 </tr>
 
             </table>
