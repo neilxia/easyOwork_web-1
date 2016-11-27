@@ -566,7 +566,33 @@ function myauditdetailCtrl(){
 }
 /*====================添加流程=================================*/
 function addsetpcsCtrl(){
-    return['$scope','$modal','editableOptions',function($scope,$modal,editableOptions){
+    return['$scope','$modal','editableOptions','processService','LocalStorage','MsgService',function($scope,$modal,editableOptions,processService,LocalStorage,MsgService){
+
+        var userinfo=LocalStorage.getObject('userinfo');
+
+        $scope.initFun=function(){
+            inquiryProcessModelTypeFun()
+        }
+        //默认选择类型
+        $scope.pcsclass='';
+        //查询流程模板类型
+        function inquiryProcessModelTypeFun(){
+            $scope.options={
+                "entId":userinfo.entId		//8位企业号
+            };
+            var promise = processService.inquiryProcessModelType({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    $scope.prosclasslist=data.body.data.processDefTypes;
+                }else{
+                    MsgService.errormsg(data);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.errormsg(data);
+            });
+        };
 
         //增加框
         $scope.objs = new Object();
@@ -575,39 +601,43 @@ function addsetpcsCtrl(){
         // 增加
         $scope.objs.addFun = function(classname) {
             switch(classname){
-
-                case 'input':{
+                case 'TEXT':{
                     //$scope.objs.datas.push({clas:'input',key:'',value:''});
-                    $scope.objs.datas.push({clas:classname, title:'单行文本框',placeholder:'请输入',value:''});
+                    $scope.objs.datas.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'单行文本框',placeholder:'请输入',value:''});
                     break;
                 }
-                case 'textarea':{
-                    $scope.objs.datas.push({clas:classname, title:'多行文本框',placeholder:'请输入',value:''});
+                case 'NUMBER':{
+                    //$scope.objs.datas.push({type:'input',key:'',value:''});
+                    $scope.objs.datas.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'数量框',placeholder:'请输入',value:''});
                     break;
                 }
-                case 'select':{
-                    $scope.objs.datas.push({clas:classname, title:'下拉选择框',selectItem:[{id:1,value:'选择项1'},{id:2,value:'选择项2'}],value:''});
+                case 'TEXTAREA':{
+                    $scope.objs.datas.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'多行文本框',placeholder:'请输入',value:''});
                     break;
                 }
-                case 'datetime':{
-                    $scope.objs.datas.push({clas:classname, title:'时间选择',placeholder:'请选择时间',value:''});
+                case 'SELECTION':{
+                    $scope.objs.datas.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'下拉选择框',selectItem:[{id:1,value:'选择项1'},{id:2,value:'选择项2'}],value:''});
                     break;
                 }
-                case 'daterange':{
-                    $scope.objs.datas.push({clas:classname, title:'时间范围选择',sctitema:'选择开始时间',sctitemb:'选择结束时间',valuea:'',valueb:''});
+                case 'DATE':{
+                    $scope.objs.datas.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'时间选择',placeholder:'请选择时间',value:''});
+                    break;
+                }
+/*                case 'daterange':{
+                    $scope.objs.datas.push({type:classname, seqNo:" , length:"n, isMandatory:"a,defaultValue:"m,e:'时间范围选择',sctitema:'选择开始时间',sctitemb:'选择结束时间',valuea:'',valueb:''});
 
                     break;
-                }
-                case 'upload':{
-                    $scope.objs.datas.push({clas:classname, title:'附件上传',placeholder:'本地上传',value:''});
+                }*/
+                case 'ATTACHMENT':{
+                    $scope.objs.datas.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'附件上传',placeholder:'本地上传',value:''});
                     break;
                 }
-                case 'checkbox':{
-                    $scope.objs.datas.push({clas:classname, title:'流程名称',sctitema:'选择项1',sctitemb:'选择项2',valuea:'',valueb:''});
+                case 'CHECKBOX':{
+                    $scope.objs.datas.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'流程名称',sctitema:'选择项1',sctitemb:'选择项2',valuea:'',valueb:''});
                     break;
                 }
-                case 'radio':{
-                    $scope.objs.datas.push({clas:classname, title:'流程名称',sctitema:'选择项1',sctitemb:'选择项2',value:''});
+                case 'RADIO':{
+                    $scope.objs.datas.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'流程名称',sctitema:'选择项1',sctitemb:'选择项2',value:''});
                     break;
                 }
             }
@@ -621,12 +651,10 @@ function addsetpcsCtrl(){
             })
         };
         // select选项减少
-        $scope.deleselectItem = function($index) {
-            angular.forEach($scope.objs.datas, function(obj, key) {
-                if(obj.selectItem.length > 1){
-                    obj.selectItem.splice($index, 1);
-                }
-            })
+        $scope.deleselectItem = function(thisobj,$index) {
+            if(thisobj.selectItem.length > 1){
+                thisobj.selectItem.splice($index, 1);
+            }
 
         };
         // 减少
@@ -644,10 +672,9 @@ function addsetpcsCtrl(){
         $scope.changeeditable=function(){
             $scope.tableisDisabled = !$scope.tableisDisabled;
         };
-        $scope.user={name:'王晓尔'};
 
         //头像上传
-        $scope.upheadoptions={
+/*        $scope.upheadoptions={
             upimgbox:"#headimgbox",
             server : './xxxx'
         };
@@ -657,7 +684,7 @@ function addsetpcsCtrl(){
         $scope.uploadError=function(file,reason){
             debugger;
             //angular.element("#uploadCon").prepend(el);
-        };
+        };*/
 
         //增加流程数据
         $scope.addpcsdata=function(){
@@ -695,140 +722,65 @@ function addsetpcsCtrl(){
             }
         };
 
-        //选择部门/员工
-        $scope.selectstaff=function(){
-            var modalInstance = $modal.open({
-                templateUrl: 'selectstaff.html',
-                //size:'md',
-                controller: modalCtrl
-            });
-            modalInstance.result.then(function (selectedItem) {
-                $scope.staffselected  = selectedItem;
-            }, function () {
-                //$log.info('Modal dismissed at: ' + new Date());
-            });
-            function modalCtrl ($scope, $modalInstance) {
-                $scope.selected = [];
-
-                //c = a.concat(b);
-                $scope.ok = function () {
-                    //$modalInstance.close();
-                    $scope.yourCtrl();
-                    $modalInstance.close($scope.selected);
-                };
-
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-
-
-                //tree
-                $scope.ignoreChanges = false;
-                $scope.newNode = {};
-                $scope.originalData = [
-                    { id : 'ajson1', parent : '#', text : '成都尔康互动有限公司1', state: { opened: true} },
-                    { id : 'ajson1-1', parent : 'ajson1', text : '行政部', state: { opened: true} },
-                    { id : 'ajson1-2', parent : 'ajson1', text : '产品中心' , state: { opened: true}},
-                    { id : 'ajson1-2-1', parent : 'ajson1-2', text : '产品一部' , state: { opened: true}},
-                    { id : 'ajson1-2-2', parent : 'ajson1-2', text : '产品二部' , state: { opened: true}},
-                    { id : 'ajson1-2-3', parent : 'ajson1-2', text : '用户体验部' , state: { opened: true}},
-                    { id : 'ajson1-2-4', parent : 'ajson1-2', text : '用户研究部' , state: { opened: true}},
-                    { id : 'ajson1-3', parent : 'ajson1', text : '人事部' , state: { opened: true}},
-                    { id : 'ajson1-4', parent : 'ajson1', text : '市场部' , state: { opened: true}}
-                ];
-                $scope.treeData = [];
-                angular.copy($scope.originalData,$scope.treeData);
-                $scope.treeConfig = {
-                    core : {
-                        multiple : true, //多选
-                        animation: true,
-                        error : function(error) {
-                            $log.error('treeCtrl: error from js tree - ' + angular.toJson(error));
-                        },
-                        worker : true,  //工人
-                        "themes":{
-                            "dots" : false, //链接接线
-                            "icons" : false //文件图标
-                        }
-                    },
-                    types : {
-                        "default" : {
-                            "icon" : "dn"
-                        }
-                    },
-                    version : 1,
-                    checkbox : {
-                        "whole_node" : false,
-                        "tie_selection": false
-                    },
-                    plugins : ['checkbox']
-                    //plugins : ["wholerow",'checkbox']
-                };
-                $scope.changedCB=function(e,item,n,b){
-                    alert(e+','+item+','+n+','+b);
-                    alert(11);
-                };
-
-                $scope.applyModelChanges = function() {
-                    //return !vm.ignoreChanges;
-                    //return false;
-                };
-
-
-
-                //员工选择
-                $scope.stafforiginalData = [
-                    { id : 'id1', parent : '#', text : '王晓红'},
-                    { id : 'id2', parent : '#', text : '王晓红'},
-                    { id : 'id3', parent : '#', text : '王晓红'},
-                    { id : 'id4', parent : '#', text : '王晓红'},
-                    { id : 'id5', parent : '#', text : '王晓红'},
-                    { id : 'id6', parent : '#', text : '王晓红'},
-                    { id : 'id7', parent : '#', text : '王晓红'},
-                    { id : 'id8', parent : '#', text : '王晓红'},
-                    { id : 'id9', parent : '#', text : '王晓红'},
-                    { id : 'id10', parent : '#', text : '王晓红'},
-                    { id : 'id11', parent : '#', text : '王晓红'},
-                    { id : 'id12', parent : '#', text : '王晓红'}
-                ];
-                $scope.stafftreeData = [];
-                angular.copy($scope.stafforiginalData,$scope.stafftreeData);
-                $scope.staffConfig = {
-                    core : {
-                        multiple : true, //多选
-                        animation: true,
-                        error : function(error) {
-                            $log.error('treeCtrl: error from js tree - ' + angular.toJson(error));
-                        },
-                        worker : true,  //工人
-                        "themes":{
-                            "dots" : false, //链接接线
-                            "icons" : false //文件图标
-                        }
-                    },
-                    types : {
-                        "default" : {
-                            "icon" : "dn"
-                        }
-                    },
-                    version : 1,
-                    plugins : ["wholerow",'checkbox']
-                };
-                $scope.changedstaff=function(e,item,n,b){
-                    //alert(e+','+item+','+n+','+b);
-                };
-
-                $scope.yourCtrl=function ()  {
-                    //var selected_nodes = this.treeInstance.jstree(true).get_selected('full');
-                    var selected_nodes = $scope.treeInstance.jstree(true).get_checked('full');
-                    var selected_nodes2 = $scope.stafftree.jstree(true).get_checked('full');
-                    $scope.selected=selected_nodes.concat(selected_nodes2);
-                    //Array.prototype.push.apply(selected_nodes, selected_nodes2);
-                    //var a = [1,2], b = [3,4], c = a.concat(b);
-                    //alert(selected_nodes);
-                }
+        $scope.processmodal={
+            "actionType":"",		//ADD, MODIFY, DELETE
+            "name":"",		//数据模板名称
+            "description":"",		//数据模板描述
+            "userDTOList":[],
+            "roleDTOList":[], //如果userDTOList和roleDTOList都不传入则表示适用公司所有人员
+            "processDefStepDTOList":[],
+            "processDefFieldDTOList":[]
+        }
+        $scope.theapply={};
+    //    总流程添加
+        $scope.addprocessmodalFun=function(){
+            if($scope.pcsclass=='' || $scope.processmodal.name==''){
+                MsgService.tomsg('流程类型、流程名称为必填项哦！');
+                return;
             }
-        };
+            if($scope.theapply.selectedallarr){
+                var userDTOList=[];
+                var roleDTOList=[];
+                if($scope.theapply.selectedallarr[1].length>0){
+                    angular.forEach($scope.theapply.selectedallarr[1],function(val,ind){
+                        userDTOList.push({		//适用人员
+                            "id":$scope.theapply.selectedallarr[1][ind].id || '',
+                            "personalEmail":$scope.theapply.selectedallarr[1][ind].personalEmail || '',
+                            "personalPhoneCountryCode":$scope.theapply.selectedallarr[1][ind].personalPhoneCountryCode || '',
+                            "personalPhone":$scope.theapply.selectedallarr[1][ind].personalPhone || ''
+                        })
+                    });
+                }
+                if($scope.theapply.selectedallarr[0].length>0){
+                    angular.forEach($scope.theapply.selectedallarr[0],function(val,ind){
+                        roleDTOList.push({		//适用角色
+                            "name":$scope.theapply.selectedallarr[0][ind].text || ''
+                        })
+                    });
+                }
+                $scope.processmodal.userDTOList=userDTOList;
+                $scope.processmodal.roleDTOList=roleDTOList;
+            }
+            $scope.processmodal.processDefFieldDTOList=$scope.objs.datas || [];
+
+            var promise = processService.changeProcessModel($scope.processmodal);
+            promise.success(function(data, status, headers, config){
+                debugger;
+
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+
+                }else{
+                    MsgService.errormsg(data);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.errormsg(data);
+            });
+        }
+
+
+
         //新增审批人
         $scope.addapprover=function(){
             var modalInstance = $modal.open({
@@ -837,299 +789,71 @@ function addsetpcsCtrl(){
                 controller: modalCtrl
             });
             function modalCtrl ($scope, $modalInstance) {
-                $scope.ok = function () {
+                $scope.approvername='新增';
+                $scope.processDefStep={};
+                $scope.ok = function (state) {
+                    if(!state)return;
+                    debugger;
+                    var row={
+                        "stepName":$scope.processDefStep.stepName,	//节点名称
+                        "stepNo":$scope.processDefStep.stepNo,	//节点顺序号
+                        "end":$scope.processDefStep.end || false,		//是否最后一个节点 TRUE or FALSE
+                        "userDTO":{	//审批人
+                            "name":$scope.processDefStep.selectedallarr[1][0].name,
+                            "id":$scope.processDefStep.selectedallarr[1][0].id,
+                            "personalEmail":$scope.processDefStep.selectedallarr[1][0].personalEmail,
+                            "personalPhoneCountryCode":$scope.processDefStep.selectedallarr[1][0].personalPhoneCountryCode,
+                            "personalPhone":$scope.processDefStep.selectedallarr[1][0].personalPhone
+                        }/*,
+                        "roleDTO":{	//当前仅限制审批人为人员, 该值不传
+                            "name":$scope.processDefStep.selectedallarr[0].text,		//节点处理角色名称
+                        }*/
+                    }
+                    approverchage(row);
                     $modalInstance.close();
                 };
 
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                 };
-                //选择部门/员工
-                $scope.selectstaff=function(){
-                    var modalInstance = $modal.open({
-                        templateUrl: 'selectstaff.html',
-                        //size:'md',
-                        controller: modalCtrl
-                    });
-                    modalInstance.result.then(function (selectedItem) {
-                        $scope.staffselected  = selectedItem;
-                    }, function () {
-                        //$log.info('Modal dismissed at: ' + new Date());
-                    });
-                    function modalCtrl ($scope, $modalInstance) {
-                        $scope.selected = [];
-
-                        //c = a.concat(b);
-                        $scope.ok = function () {
-                            //$modalInstance.close();
-                            $scope.yourCtrl();
-                            $modalInstance.close($scope.selected);
-                        };
-
-                        $scope.cancel = function () {
-                            $modalInstance.dismiss('cancel');
-                        };
-
-
-                        //tree
-                        $scope.ignoreChanges = false;
-                        $scope.newNode = {};
-                        $scope.originalData = [
-                            { id : 'ajson1', parent : '#', text : '成都尔康互动有限公司', state: { opened: true} },
-                            { id : 'ajson1-1', parent : 'ajson1', text : '行政部', state: { opened: true} },
-                            { id : 'ajson1-2', parent : 'ajson1', text : '产品中心' , state: { opened: true}},
-                            { id : 'ajson1-2-1', parent : 'ajson1-2', text : '产品一部' , state: { opened: true}},
-                            { id : 'ajson1-2-2', parent : 'ajson1-2', text : '产品二部' , state: { opened: true}},
-                            { id : 'ajson1-2-3', parent : 'ajson1-2', text : '用户体验部' , state: { opened: true}},
-                            { id : 'ajson1-2-4', parent : 'ajson1-2', text : '用户研究部' , state: { opened: true}},
-                            { id : 'ajson1-3', parent : 'ajson1', text : '人事部' , state: { opened: true}},
-                            { id : 'ajson1-4', parent : 'ajson1', text : '市场部' , state: { opened: true}}
-                        ];
-                        $scope.treeData = [];
-                        angular.copy($scope.originalData,$scope.treeData);
-                        $scope.treeConfig = {
-                            core : {
-                                multiple : true, //多选
-                                animation: true,
-                                error : function(error) {
-                                    $log.error('treeCtrl: error from js tree - ' + angular.toJson(error));
-                                },
-                                worker : true,  //工人
-                                "themes":{
-                                    "dots" : false, //链接接线
-                                    "icons" : false //文件图标
-                                }
-                            },
-                            types : {
-                                "default" : {
-                                    "icon" : "dn"
-                                }
-                            },
-                            version : 1,
-                            checkbox : {
-                                "whole_node" : false,
-                                "tie_selection": false
-                            },
-                            plugins : ['checkbox']
-                            //plugins : ["wholerow",'checkbox']
-                        };
-                        $scope.changedCB=function(e,item,n,b){
-                            alert(e+','+item+','+n+','+b);
-                        };
-
-                        $scope.applyModelChanges = function() {
-                            //return !vm.ignoreChanges;
-                            //return false;
-                        };
-
-
-
-                        //员工选择
-                        $scope.stafforiginalData = [
-                            { id : 'id1', parent : '#', text : '王晓红'},
-                            { id : 'id2', parent : '#', text : '王晓红'},
-                            { id : 'id3', parent : '#', text : '王晓红'},
-                            { id : 'id4', parent : '#', text : '王晓红'},
-                            { id : 'id5', parent : '#', text : '王晓红'},
-                            { id : 'id6', parent : '#', text : '王晓红'},
-                            { id : 'id7', parent : '#', text : '王晓红'},
-                            { id : 'id8', parent : '#', text : '王晓红'},
-                            { id : 'id9', parent : '#', text : '王晓红'},
-                            { id : 'id10', parent : '#', text : '王晓红'},
-                            { id : 'id11', parent : '#', text : '王晓红'},
-                            { id : 'id12', parent : '#', text : '王晓红'}
-                        ];
-                        $scope.stafftreeData = [];
-                        angular.copy($scope.stafforiginalData,$scope.stafftreeData);
-                        $scope.staffConfig = {
-                            core : {
-                                multiple : true, //多选
-                                animation: true,
-                                error : function(error) {
-                                    $log.error('treeCtrl: error from js tree - ' + angular.toJson(error));
-                                },
-                                worker : true,  //工人
-                                "themes":{
-                                    "dots" : false, //链接接线
-                                    "icons" : false //文件图标
-                                }
-                            },
-                            types : {
-                                "default" : {
-                                    "icon" : "dn"
-                                }
-                            },
-                            version : 1,
-                            plugins : ["wholerow",'checkbox']
-                        };
-                        $scope.changedstaff=function(e,item,n,b){
-                            //alert(e+','+item+','+n+','+b);
-                        };
-
-                        $scope.yourCtrl=function ()  {
-                            //var selected_nodes = this.treeInstance.jstree(true).get_selected('full');
-                            var selected_nodes = $scope.treeInstance.jstree(true).get_checked('full');
-                            var selected_nodes2 = $scope.stafftree.jstree(true).get_checked('full');
-                            $scope.selected=selected_nodes.concat(selected_nodes2);
-                            //Array.prototype.push.apply(selected_nodes, selected_nodes2);
-                            //var a = [1,2], b = [3,4], c = a.concat(b);
-                            //alert(selected_nodes);
-                        }
-                    }
-                };
             }
+        }
+        //新增审批人具体实现
+        function approverchage(row){
+            //$scope.processmodal.name=row;
+            $scope.processmodal.processDefStepDTOList.push(row);
         }
 
         //编辑审批人
-        $scope.editapprover=function(){
+        $scope.editapprover=function(row){
+
+            var oldrow=angular.copy(row);
             var modalInstance = $modal.open({
-                templateUrl: 'eidtapprover.html',
+                templateUrl: 'addapprover.html',
                 size:'sm',
                 controller: modalCtrl
             });
             function modalCtrl ($scope, $modalInstance) {
-                $scope.ok = function () {
+                $scope.approvername='编辑';
+                $scope.processDefStep=row;
+                $scope.processDefStep.selectedallarr=[[],[row.userDTO]];
+                debugger;
+                //提交编辑
+                $scope.ok=function(state){
+                    if(!state){return;} //状态判断
                     $modalInstance.close();
                 };
-
                 $scope.cancel = function () {
+                    angular.copy(oldrow, row);
                     $modalInstance.dismiss('cancel');
-                };
-                //选择部门/员工
-                $scope.selectstaff=function(){
-                    var modalInstance = $modal.open({
-                        templateUrl: 'selectstaff.html',
-                        //size:'md',
-                        controller: modalCtrl
-                    });
-                    modalInstance.result.then(function (selectedItem) {
-                        $scope.staffselected  = selectedItem;
-                    }, function () {
-                        //$log.info('Modal dismissed at: ' + new Date());
-                    });
-                    function modalCtrl ($scope, $modalInstance) {
-                        $scope.selected = [];
-
-                        //c = a.concat(b);
-                        $scope.ok = function () {
-                            //$modalInstance.close();
-                            $scope.yourCtrl();
-                            $modalInstance.close($scope.selected);
-                        };
-
-                        $scope.cancel = function () {
-                            $modalInstance.dismiss('cancel');
-                        };
-
-
-                        //tree
-                        $scope.ignoreChanges = false;
-                        $scope.newNode = {};
-                        $scope.originalData = [
-                            { id : 'ajson1', parent : '#', text : '成都尔康互动有限公司', state: { opened: true} },
-                            { id : 'ajson1-1', parent : 'ajson1', text : '行政部', state: { opened: true} },
-                            { id : 'ajson1-2', parent : 'ajson1', text : '产品中心' , state: { opened: true}},
-                            { id : 'ajson1-2-1', parent : 'ajson1-2', text : '产品一部' , state: { opened: true}},
-                            { id : 'ajson1-2-2', parent : 'ajson1-2', text : '产品二部' , state: { opened: true}},
-                            { id : 'ajson1-2-3', parent : 'ajson1-2', text : '用户体验部' , state: { opened: true}},
-                            { id : 'ajson1-2-4', parent : 'ajson1-2', text : '用户研究部' , state: { opened: true}},
-                            { id : 'ajson1-3', parent : 'ajson1', text : '人事部' , state: { opened: true}},
-                            { id : 'ajson1-4', parent : 'ajson1', text : '市场部' , state: { opened: true}}
-                        ];
-                        $scope.treeData = [];
-                        angular.copy($scope.originalData,$scope.treeData);
-                        $scope.treeConfig = {
-                            core : {
-                                multiple : true, //多选
-                                animation: true,
-                                error : function(error) {
-                                    $log.error('treeCtrl: error from js tree - ' + angular.toJson(error));
-                                },
-                                worker : true,  //工人
-                                "themes":{
-                                    "dots" : false, //链接接线
-                                    "icons" : false //文件图标
-                                }
-                            },
-                            types : {
-                                "default" : {
-                                    "icon" : "dn"
-                                }
-                            },
-                            version : 1,
-                            checkbox : {
-                                "whole_node" : false,
-                                "tie_selection": false
-                            },
-                            plugins : ['checkbox']
-                            //plugins : ["wholerow",'checkbox']
-                        };
-                        $scope.changedCB=function(e,item,n,b){
-                            alert(e+','+item+','+n+','+b);
-                        };
-
-                        $scope.applyModelChanges = function() {
-                            //return !vm.ignoreChanges;
-                            //return false;
-                        };
-
-
-
-                        //员工选择
-                        $scope.stafforiginalData = [
-                            { id : 'id1', parent : '#', text : '王晓红'},
-                            { id : 'id2', parent : '#', text : '王晓红'},
-                            { id : 'id3', parent : '#', text : '王晓红'},
-                            { id : 'id4', parent : '#', text : '王晓红'},
-                            { id : 'id5', parent : '#', text : '王晓红'},
-                            { id : 'id6', parent : '#', text : '王晓红'},
-                            { id : 'id7', parent : '#', text : '王晓红'},
-                            { id : 'id8', parent : '#', text : '王晓红'},
-                            { id : 'id9', parent : '#', text : '王晓红'},
-                            { id : 'id10', parent : '#', text : '王晓红'},
-                            { id : 'id11', parent : '#', text : '王晓红'},
-                            { id : 'id12', parent : '#', text : '王晓红'}
-                        ];
-                        $scope.stafftreeData = [];
-                        angular.copy($scope.stafforiginalData,$scope.stafftreeData);
-                        $scope.staffConfig = {
-                            core : {
-                                multiple : true, //多选
-                                animation: true,
-                                error : function(error) {
-                                    $log.error('treeCtrl: error from js tree - ' + angular.toJson(error));
-                                },
-                                worker : true,  //工人
-                                "themes":{
-                                    "dots" : false, //链接接线
-                                    "icons" : false //文件图标
-                                }
-                            },
-                            types : {
-                                "default" : {
-                                    "icon" : "dn"
-                                }
-                            },
-                            version : 1,
-                            plugins : ["wholerow",'checkbox']
-                        };
-                        $scope.changedstaff=function(e,item,n,b){
-                            //alert(e+','+item+','+n+','+b);
-                        };
-
-                        $scope.yourCtrl=function ()  {
-                            //var selected_nodes = this.treeInstance.jstree(true).get_selected('full');
-                            var selected_nodes = $scope.treeInstance.jstree(true).get_checked('full');
-                            var selected_nodes2 = $scope.stafftree.jstree(true).get_checked('full');
-                            $scope.selected=selected_nodes.concat(selected_nodes2);
-                            //Array.prototype.push.apply(selected_nodes, selected_nodes2);
-                            //var a = [1,2], b = [3,4], c = a.concat(b);
-                            //alert(selected_nodes);
-                        }
-                    }
                 };
             }
         }
+        //删除审批人
+        $scope.deleteapprover=function($index){
+            $scope.processmodal.processDefStepDTOList.splice($index, 1);
+        }
+
 
     }]
 }

@@ -163,7 +163,9 @@ function processService(){
             },
             //POST 5.6.3	B0013-添加/修改/删除流程模板
             changeProcessModel:function(form){
-                return $http.post(AppConfig.BASE_URL+'work/rest/changeProcessModel',form)
+                //return $http.post(AppConfig.BASE_URL+'work/rest/changeProcessModel',form)
+                return $http.post('./modules/processmsg/json/changeProcessModel.json',form)
+                //return $http.post('http://192.168.1.102:801/modules/processmsg/json/changeProcessModel.json',form)
             },
             //POST 5.6.4	B0014-查询流程模板
             inquiryProcessModel:function(form){

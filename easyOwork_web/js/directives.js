@@ -179,7 +179,7 @@ function websimUploader($timeout){
                         extensions : 'swf,fla',
                         mimeTypes : 'application/x-shockwave-flash'
                     },
-                    //办公文档，压缩文件等等
+                    //办公文档,压缩文件等等
                     file: {
                         title : 'Files',
                         extensions : 'zip,rar,ppt,pptx,doc,docx,xls,xlsx,pdf',
@@ -188,13 +188,13 @@ function websimUploader($timeout){
                 };
                 // 实例化
                 var defaults={
-                    auto: true, // 选完文件后，是否自动上传。
+                    auto: true, // 选完文件后,是否自动上传。
                     pick : {
                         id : '#'+attrs.divid,
                         //label : '点击选择图片'
                         //innerHTML: '<i class="iconfont icon-fujian blue"></i> 本地上传',
                         innerHTML: attrs.btnname || '本地上传',
-                        multiple: false //multiple是否开启多文件上传，默认为true
+                        multiple: false //multiple是否开启多文件上传,默认为true
                     },
                     accept : accept[attrs.type], //指定接受哪些类型的文件
                     //upProgressGoal:"#boxs",
@@ -203,7 +203,7 @@ function websimUploader($timeout){
                     swf : 'Uploader.swf',
                     disableGlobalDnd : true, //禁用全局拖动
                     chunked : true,        //是否分片
-                    //chunkSize: 700000,  //每个分片的大小，默认为5M
+                    //chunkSize: 700000,  //每个分片的大小,默认为5M
                     server : '../demo',
                     //文件最大数量
                     fileNumLimit : 30,
@@ -259,13 +259,13 @@ function websimUploader($timeout){
                     $percent.css( 'width', percentage * 100 + '%' );
                 });
 
-                // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+                // 文件上传成功,给item添加成功class, 用样式标记上传成功。
                 uploader.on( 'uploadSuccess', function( file,response ) {
                     $( '#'+file.id ).addClass('upload-state-done');
                     scope.uploadSuccess(file,response);
                 });
 
-                // 文件上传失败，显示上传出错。
+                // 文件上传失败,显示上传出错。
                 uploader.on( 'uploadError', function( file,reason ) {
                     var $li = $list,
                         $error = $li.find('div.uploaderror');
@@ -278,7 +278,7 @@ function websimUploader($timeout){
                     scope.uploadError(file,reason);
                 });
 
-                // 完成上传完了，成功或者失败，先删除进度条。
+                // 完成上传完了,成功或者失败,先删除进度条。
                 uploader.on( 'uploadComplete', function( file ) {
                     //$( '#'+file.id ).find('.progress').remove();
                     $list.find('.progress').fadeOut();
@@ -763,13 +763,14 @@ function selectdepyuan($timeout){
         restrict: 'A',
         scope:{
             options:'=',
+            yuangong:'=',
             selectedallarr:'=',
             myselected:'=',
             size:'=',
             title:'@'
         },
         template:'<ul ng-class="{\'input-group-sm\':size == \'sm\' ,\'input-group-lg\':size == \'lg\'}" class="addpcs-config-prople cf" ng-model="selectedallarr">' +
-        '<li ng-repeat="sele2 in myselected" class="bdrs4" id="{{selected.id}}">{{sele2.text}}{{sele2.name}}</li>' +
+        '<li ng-if="yuangong!=\'1\'" ng-repeat="sele2 in myselected" class="bdrs4" id="{{selected.id}}">{{sele2.text}}{{sele2.name}}</li><li ng-if="yuangong==\'1\'&& selectedallarr" class="bdrs4">{{selectedallarr[1][0].text}}{{selectedallarr[1][0].name}}</li>' +
         '<li class="bdrs4 addbtn fadecj" ng-click="selectstaffyuan()"><i class="iconfont icon-add f12"></i></li>' +
         '</ul>',
         /*link: function ($scope, element, attrs) {
@@ -795,10 +796,10 @@ function selectdepyuan($timeout){
                 });
             }
             function getCompanyOrg(){
-                $scope.options={
+                var options={
                     "entId":userinfo.entId		//8位企业号
                 };
-                var promise = companyService.inquiryCompanyOrg({body:$scope.options});
+                var promise = companyService.inquiryCompanyOrg({body:options});
                 promise.success(function(data, status, headers, config){
                     var datas=data.body;
                     if(datas.status.statusCode==0){
@@ -835,127 +836,6 @@ function selectdepyuan($timeout){
                 });
             };
 
-            //查询流程模板
-            var aaa={
-                "processDefList":[{		//流程模板数组
-                    "name":"模板名称1",		//数据模板名称
-                    "description":"该流程模板用于公司出差的申请",	//数据模板描述
-                    "forRoleName":"角色1",		//模板使用角色
-                    "userDTOList":[{
-                        "id":"001",	//员工号
-                        "personalEmail":"01@163.com",	//邮件地址
-                        "personalPhoneCountryCode":"86",	//电话号码
-                        "personalPhone":"13438301111"		//电话号码
-                    }],
-                    "roleDTOList":[{
-                        "name":"部门名称1",		//模板使用角色名称
-                    }],
-                    "processDefStepDTOList":[
-                        {
-                            "end":false,	//是否结束节点
-                            "stepName":"一级审批",	//节点名称
-                            "stepNo":"1",	//节点顺序号
-                            "userDTO":{
-                                "id":"1",	//员工号
-                                "personalEmail":"1@163.com",	//邮件地址
-                                "personalPhoneCountryCode":"86",	//电话号码
-                                "personalPhone":"13438310001"		//电话号码
-                            },
-                            "roleDTO":{	//当前仅限制审批人为人员, 该值没有
-                                "name":"部门名称2",		//节点处理角色名称
-                            }
-                        }
-                    ],
-                    "processDefFieldDTOList":[
-                        {
-                            "name":"多选文本框",	//数据域名
-                            "seqNo":"1",	//数据域序列号
-                            "type":"TEXTAREA",		//数据域类型 TEXT, TEXTAREA, DATE, CHECKBOX, RADIO, ATTACHMENT, NUMBER, SELECTION
-                            "length":"80",	//数据域长度
-                            "isMandatory":"1",	//数据域是否必填
-                            "valueList":"",	//数据域可选值, 用于type为SELECTION, CHECKBOX, RADIO
-                            "defaultValue":"请输入"	//数据域默认值
-                        },
-                        {
-                            "name":"时间控件",	//数据域名
-                            "seqNo":"1",	//数据域序列号
-                            "type":"DATE",		//数据域类型 TEXT, TEXTAREA, DATE, CHECKBOX, RADIO, ATTACHMENT, NUMBER, SELECTION
-                            "length":"200",	//数据域长度
-                            "isMandatory":"2",	//数据域是否必填
-                            "valueList":"",	//数据域可选值, 用于type为SELECTION, CHECKBOX, RADIO
-                            "defaultValue":"请选择"	//数据域默认值
-                        },
-                        {
-                            "name":"CHECKBOX",	//数据域名
-                            "seqNo":"1",	//数据域序列号
-                            "type":"TEXTAREA",		//数据域类型 TEXT, TEXTAREA, DATE, CHECKBOX, RADIO, ATTACHMENT, NUMBER, SELECTION
-                            "length":"1",	//数据域长度
-                            "isMandatory":"1",	//数据域是否必填
-                            "valueList":[{name:'男'},{name:'女'}],	//数据域可选值, 用于type为SELECTION, CHECKBOX, RADIO
-                            "defaultValue":"男"	//数据域默认值
-                        }
-                    ]
-                }]
-
-            }
-
-            //5.7.7	B0017-查询发起的流程
-            $scope.xxx={
-                "processes":[{
-                    "processesId":'01',
-                    "name":"流程模板1",	//流程模板名称
-                    "title":"回家请假3天",		//流程实例Title
-                    "description":"该流程用于公司出差的申请，其中涉及到出差地、出差人员、出差相关费用（交通费、住宿费、餐费等等）。",	//流程模板描述
-                    "processType":"休假",	//流程模板类型
-                    "status":"审批中",	//流程状态
-
-                    "currentStepNo":"2",	//流程当前在哪个节点
-                    "launchUserDTO":{	//发起员工
-                        "id":"001",	//员工号
-                        "personalEmail":"01@163.com",	//邮件地址
-                        "personalPhoneCountryCode":"86",	//电话号码
-                        "personalPhone":"13438301111"		//电话号码
-                    },
-                    processFieldDTOList:[
-                        {	//流程数据, 数组
-                            "name":"多选文本框",	//数据名称
-                            "value":"1111111111",	//数据值
-                            "seqNo":"1"	//数据序列号
-                        },
-                        {	//流程数据, 数组
-                            "name":"单选",	//数据名称
-                            "value":"1111111111",	//数据值
-                            "seqNo":"2"	//数据序列号
-                        },
-                        {	//流程数据, 数组
-                            "name":"checkbox",	//数据名称
-                            "value":"男",	//数据值
-                            "seqNo":"3"	//数据序列号
-                        }
-                    ],
-                    processStepDTOList:[
-                        {	//流程节点, 数组
-                            "status":"APPROVED",	//APPROVED, REJECTED, PENDING
-                            "message":"",	//拒绝理由
-                            "stepName":"一级审批  欧倩怡",	//流程节点名称
-                            "stepNo":"1"	//流程节点序列号
-                        },
-                        {	//流程节点, 数组
-                            "status":"APPROVED",	//APPROVED, REJECTED, PENDING
-                            "message":"",	//拒绝理由
-                            "stepName":"一级审批 欧倩怡",	//流程节点名称
-                            "stepNo":"2"	//流程节点序列号
-                        },
-                        {	//流程节点, 数组
-                            "status":"PENDING",	//APPROVED, REJECTED, PENDING
-                            "message":"",	//拒绝理由
-                            "stepName":"三级审批  王二麻",	//流程节点名称
-                            "stepNo":"3"	//流程节点序列号
-                        }
-                    ]
-                }]
-
-            }
 
             $scope.selectstaffyuan=function(){
                 var modalInstance = $modal.open({
@@ -989,7 +869,6 @@ function selectdepyuan($timeout){
                     $scope.cancel = function () {
                         $modalInstance.dismiss('cancel');
                     };
-
 
                     //tree
                     $scope.ignoreChanges = false;

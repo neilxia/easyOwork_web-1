@@ -1,4 +1,4 @@
-<div id="page-wrapper" ng-controller="addsetpcsCtrl">
+<div id="page-wrapper" ng-controller="addsetpcsCtrl" ng-init="initFun()">
     <!--主要内容-->
     <div class="payetilebox">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
@@ -12,17 +12,24 @@
         <li class="active">添加流程</li>
     </ol>
     <div class="nose-panel">
+        <!--流程模板-->
         <div class="p30 pb10 addpcs-config">
             <!--<button ng-show="!tableisDisabled" ng-click="changeeditable()" class="btn btn-default editbtn">配置该流程</button>-->
             <!--<button ng-show="tableisDisabled" ng-click="changeeditable()" class="btn btn-primary editbtn">保存流程配置</button>-->
             <div class="pct60 f12">
                 <div class="cf mb10">
+                    <div class="col-xs-2 t_r pt7 g9">流程类型</div>
+                    <div class="col-xs-10 form-inline">
+                        <button ng-repeat="data in prosclasslist" class="btn btn-default mr5" ng-model="$parent.pcsclass" btn-radio="'{{data.name}}'">{{data.name}}</button>
+                    </div>
+                </div>
+                <div class="cf mb10">
                     <div class="col-xs-2 t_r pt7 g9">流程名称</div>
-                    <div class="col-xs-10"><input type="text" class="form-control" placeholder="输入流程名称"></div>
+                    <div class="col-xs-10"><input type="text" class="form-control" placeholder="输入流程名称" ng-model="processmodal.name"></div>
                 </div>
                 <div class="cf mb10">
                     <div class="col-xs-2 t_r pt7 g9">流程描述</div>
-                    <div class="col-xs-10"><textarea class="form-control" cols="6" placeholder="输入简要的流程描述"></textarea></div>
+                    <div class="col-xs-10"><textarea class="form-control" cols="6" placeholder="输入简要的流程描述" ng-model="processmodal.description"></textarea></div>
                 </div>
                 <div class="cf mb10">
                     <div class="col-xs-2 t_r pt7 g9">适用人员</div>
@@ -31,8 +38,9 @@
                             <li ng-repeat="selected in staffselected" class="bdrs4" id="{{selected.id}}">{{selected.text}}</li>
                             <li class="bdrs4 addbtn fadecj" ng-click="selectstaff()"><i class="iconfont icon-add f12"></i></li>
                         </ul>-->
-                        {{selectedallarr}}
-                        <div selectdepyuan myselected="user.orgList" selectedallarr="selectedallarr"></div>
+
+                        <div selectdepyuan myselected="theapply.orgList" selectedallarr="theapply.selectedallarr"></div>
+                        <div class="red">(注:不选择则表示适用公司所有人员)</div>
                     </div>
                 </div>
                 <!--{{objs.datas}}-->
@@ -44,17 +52,24 @@
             </div>
             <div class="pct60 f12">
                 <div class="cf fadecj addrow mb10" ng-repeat="obj in objs.datas">
-                    <div ng-switch on="obj.clas">
-                        <div class="popover-wrapper" ng-switch-when="input">
+                    <div ng-switch on="obj.type">
+                        <div class="popover-wrapper" ng-switch-when="TEXT">
                             <form editable-form name="inputForm" onshow="DisabledFun(this)" style="padding-left: 15px; padding-right: 15px; margin-left: -150px;bottom: 65px;" ng-show="inputForm.$visible">
                                 <table class="line28td" cellspacing="0" cellpadding="0" width="100%">
                                     <tr>
                                         <td class="g9 pr10">显示标题</td>
-                                        <td><span editable-text="obj.title"   onbeforesave="checkName($data)"></span></td>
+                                        <td><span editable-text="obj.name" onbeforesave="checkName($data)"></span></td>
                                     </tr>
                                     <tr>
                                         <td class="g9">提示文字</td>
                                         <td><span editable-text="obj.placeholder"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">是否必填</td>
+                                        <td>
+                                            <label><input icheck type="radio" value="0"  ng-model="obj.isMandatory"> 否</label>
+                                            <label class="ml10"><input icheck type="radio" value="1" ng-model="obj.isMandatory"> 是</label>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>&nbsp;</td>
@@ -67,22 +82,63 @@
                             </form>
                             <div ng-click="inputForm.$show()"  ng-disabled="inputForm.$waiting">
                                 <span class="closebtn red bdrs50" ng-show="tableisDisabled" ng-click="objs.deleFun($index)"><i class="iconfont icon-close f12"></i></span>
-                                <div class="col-xs-2 t_r pt7 g9">{{obj.title || '无'}}</div>
+                                <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.isMandatory==1">*</span>{{obj.name || '无'}}</div>
                                 <div class="col-xs-10"><input type="text" class="form-control wd200" placeholder="{{obj.placeholder || '无'}}" ng-model="obj.value" disabled></div>
                             </div>
 
 
                         </div>
-                        <div class="popover-wrapper" ng-switch-when="textarea">
-                            <form editable-form name="textareaForm" style="padding-left: 15px; padding-right: 15px; margin-left: -150px;bottom: 86px;" ng-show="textareaForm.$visible">
+                        <div class="popover-wrapper" ng-switch-when="NUMBER">
+                            <form editable-form name="NUMBERForm" onshow="DisabledFun(this)" style="padding-left: 15px; padding-right: 15px; margin-left: -150px;bottom: 65px;" ng-show="NUMBERForm.$visible">
                                 <table class="line28td" cellspacing="0" cellpadding="0" width="100%">
                                     <tr>
                                         <td class="g9 pr10">显示标题</td>
-                                        <td><span editable-text="obj.title" onbeforesave="checkName($data)"></span></td>
+                                        <td><span editable-text="obj.name"   onbeforesave="checkName($data)"></span></td>
                                     </tr>
                                     <tr>
                                         <td class="g9">提示文字</td>
                                         <td><span editable-text="obj.placeholder"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">是否必填</td>
+                                        <td>
+                                            <label><input icheck type="radio" value="0"  ng-model="obj.isMandatory"> 否</label>
+                                            <label class="ml10"><input icheck type="radio" value="1" ng-model="obj.isMandatory"> 是</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>
+                                            <button type="submit" ng-disabled="NUMBERForm.$waiting" class="btn btn-primary btn-sm">保存</button>
+                                            <button type="button" ng-disabled="NUMBERForm.$waiting" ng-click="NUMBERForm.$cancel()" class="btn btn-default btn-sm">取消</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+                            <div ng-click="NUMBERForm.$show()"  ng-disabled="NUMBERForm.$waiting">
+                                <span class="closebtn red bdrs50" ng-show="tableisDisabled" ng-click="objs.deleFun($index)"><i class="iconfont icon-close f12"></i></span>
+                                <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.isMandatory==1">*</span>{{obj.name || '无'}}</div>
+                                <div class="col-xs-10"><input type="number" class="form-control wd200" placeholder="{{obj.placeholder || '无'}}" ng-model="obj.value" disabled></div>
+                            </div>
+                        </div>
+
+                        <div class="popover-wrapper" ng-switch-when="TEXTAREA">
+                            <form editable-form name="textareaForm" style="padding-left: 15px; padding-right: 15px; margin-left: -150px;bottom: 86px;" ng-show="textareaForm.$visible">
+                                <table class="line28td" cellspacing="0" cellpadding="0" width="100%">
+                                    <tr>
+                                        <td class="g9 pr10">显示标题</td>
+                                        <td><span editable-text="obj.name" onbeforesave="checkName($data)"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">提示文字</td>
+                                        <td><span editable-text="obj.placeholder"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">是否必填</td>
+                                        <td>
+                                            <label><input icheck type="radio" value="0"  ng-model="obj.isMandatory"> 否</label>
+                                            <label class="ml10"><input icheck type="radio" value="1" ng-model="obj.isMandatory"> 是</label>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>&nbsp;</td>
@@ -95,19 +151,19 @@
                             </form>
                             <div ng-click="textareaForm.$show()" ng-disabled="textareaForm.$waiting">
                                 <span class="closebtn red bdrs50" ng-show="tableisDisabled" ng-click="objs.deleFun($index)"><i class="iconfont icon-close f12"></i></span>
-                                <div class="col-xs-2 t_r pt7 g9">{{obj.title || '无'}}</div>
+                                <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.isMandatory==1">*</span>{{obj.name || '无'}}</div>
                                 <div class="col-xs-10"><textarea class="form-control wd300" placeholder="{{obj.placeholder || '无'}}" ng-model="obj.value" disabled></textarea></div>
                             </div>
 
                         </div>
 
-                        <div class="popover-wrapper" ng-switch-when="select">
+                        <div class="popover-wrapper" ng-switch-when="SELECTION">
                             <form editable-form name="inputForm" style="padding-left: 15px; padding-right: 15px; margin-left: -150px;bottom: 65px;" ng-show="inputForm.$visible">
 
                                 <table class="line28td" cellspacing="0" cellpadding="0" width="100%">
                                     <tr>
                                         <td class="g9 pr10">显示标题</td>
-                                        <td><span editable-text="obj.title" onbeforesave="checkName($data)"></span></td>
+                                        <td><span editable-text="obj.name" onbeforesave="checkName($data)"></span></td>
                                     </tr>
                                     <tr>
                                         <td class="g9" valign="top">选择项</td>
@@ -117,11 +173,18 @@
                                                     <table>
                                                         <tr>
                                                             <td width="125"><span editable-text="item.value"></span></td>
-                                                            <td><a class="btn btn-primary btn-xs ml5" ng-click="addselectItem(obj.$$hashKey)"><i class="iconfont icon-add f10"></i></a><a class="btn btn-danger btn-xs ml5" ng-click="deleselectItem($index)"><i class="iconfont icon-jian f10"></i></a></td>
+                                                            <td><a class="btn btn-primary btn-xs ml5" ng-click="addselectItem(obj.$$hashKey)"><i class="iconfont icon-add f10"></i></a><a class="btn btn-danger btn-xs ml5" ng-click="deleselectItem(obj,$index)"><i class="iconfont icon-jian f10"></i></a></td>
                                                         </tr>
                                                     </table>
                                                 </li>
                                             </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">是否必选</td>
+                                        <td>
+                                            <label><input icheck type="radio" value="0"  ng-model="obj.isMandatory"> 否</label>
+                                            <label class="ml10"><input icheck type="radio" value="1" ng-model="obj.isMandatory"> 是</label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -135,21 +198,28 @@
                             </form>
                             <div ng-click="inputForm.$show()" ng-disabled="inputForm.$waiting">
                                 <span class="closebtn red bdrs50" ng-show="tableisDisabled" ng-click="objs.deleFun($index)"><i class="iconfont icon-close f12"></i></span>
-                                <div class="col-xs-2 t_r pt7 g9">{{obj.title || '无'}}</div>
+                                <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.isMandatory==1">*</span>{{obj.name || '无'}}</div>
                                 <div class="col-xs-10"><select class="form-control wd200" ng-model="obj.selectItem[0]" ng-options="x.value for x in obj.selectItem" disabled></select></div>
                             </div>
                         </div>
-                        <div class="popover-wrapper" ng-switch-when="datetime">
+                        <div class="popover-wrapper" ng-switch-when="DATE">
 
                             <form editable-form name="sampleDateForm" style="padding-left: 15px; padding-right: 15px; margin-left: -150px;bottom:65px;" ng-show="sampleDateForm.$visible">
                                 <table class="line28td" cellspacing="0" cellpadding="0" width="100%">
                                     <tr>
                                         <td class="g9 pr10">显示标题</td>
-                                        <td><span editable-text="obj.title" onbeforesave="checkName($data)"></span></td>
+                                        <td><span editable-text="obj.name" onbeforesave="checkName($data)"></span></td>
                                     </tr>
                                     <tr>
                                         <td class="g9">提示文字</td>
                                         <td><span editable-text="obj.placeholder"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">是否必选</td>
+                                        <td>
+                                            <label><input icheck type="radio" value="0"  ng-model="obj.isMandatory"> 否</label>
+                                            <label class="ml10"><input icheck type="radio" value="1" ng-model="obj.isMandatory"> 是</label>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>&nbsp;</td>
@@ -162,7 +232,7 @@
                             </form>
                             <div ng-click="sampleDateForm.$show()" ng-disabled="sampleDateForm.$waiting">
                                 <span class="closebtn red bdrs50" ng-show="tableisDisabled" ng-click="objs.deleFun($index)"><i class="iconfont icon-close f12"></i></span>
-                                <div class="col-xs-2 t_r pt7 g9">{{obj.title}}</div>
+                                <div class="col-xs-2 t_r pt7 g9">{{obj.name}}</div>
                                 <div class="col-xs-10">
                                     <div class="qiyi-group wd160">
                                         <input type="datetime" class="form-control" placeholder="{{obj.placeholder}}" date-time ng-model="sampleDate" view="date"  step="5" auto-close="true">
@@ -173,12 +243,12 @@
 
 
                         </div>
-                        <div class="popover-wrapper" ng-switch-when="daterange">
+                        <!--<div class="popover-wrapper" ng-switch-when="daterange">
                             <form editable-form name="daterangeForm" style="padding-left: 15px; padding-right: 15px; margin-left: -150px;bottom:65px;" ng-show="daterangeForm.$visible">
                                 <table class="line28td" cellspacing="0" cellpadding="0" width="100%">
                                     <tr>
                                         <td class="g9 pr10">显示标题</td>
-                                        <td><span editable-text="obj.title" onbeforesave="checkName($data)"></span></td>
+                                        <td><span editable-text="obj.name" onbeforesave="checkName($data)"></span></td>
                                     </tr>
                                     <tr>
                                         <td class="g9">提示文字1</td>
@@ -199,7 +269,7 @@
                             </form>
                             <div ng-click="daterangeForm.$show()" ng-disabled="daterangeForm.$waiting">
                                 <span class="closebtn red bdrs50" ng-show="tableisDisabled" ng-click="objs.deleFun($index)"><i class="iconfont icon-close f12"></i></span>
-                                <div class="col-xs-2 t_r pt7 g9">{{obj.title}}</div>
+                                <div class="col-xs-2 t_r pt7 g9">{{obj.name}}</div>
                                 <div class="col-xs-10">
                                     <div class="qiyi-group wd160 f_l">
                                         <input type="datetime" class="form-control" placeholder="{{obj.sctitema}}" date-time ng-model="obj.valuea" view="date"  step="5" auto-close="true" disabled>
@@ -213,18 +283,21 @@
                                 </div>
                             </div>
 
-                        </div>
-                        <div class="popover-wrapper" ng-switch-when="upload">
+                        </div>-->
+                        <div class="popover-wrapper" ng-switch-when="ATTACHMENT">
                             <form editable-form name="uploadForm" style="padding-left: 15px; padding-right: 15px; margin-left: -150px;bottom:65px;" ng-show="uploadForm.$visible">
                                 <table class="line28td" cellspacing="0" cellpadding="0" width="100%">
                                     <tr>
                                         <td class="g9 pr10">显示标题</td>
-                                        <td><span editable-text="obj.title" onbeforesave="checkName($data)"></span></td>
+                                        <td><span editable-text="obj.name" onbeforesave="checkName($data)"></span></td>
                                     </tr>
-<!--                                    <tr>
-                                        <td class="g9">上传文字</td>
-                                        <td><span editable-text="obj.placeholder"></span></td>
-                                    </tr>-->
+                                    <tr>
+                                        <td class="g9">是否必选</td>
+                                        <td>
+                                            <label><input icheck type="radio" value="0"  ng-model="obj.isMandatory"> 否</label>
+                                            <label class="ml10"><input icheck type="radio" value="1" ng-model="obj.isMandatory"> 是</label>
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <td>&nbsp;</td>
                                         <td>
@@ -236,17 +309,17 @@
                             </form>
                             <div ng-click="uploadForm.$show()" ng-disabled="uploadForm.$waiting">
                                 <span class="closebtn red bdrs50" ng-show="tableisDisabled" ng-click="objs.deleFun($index)"><i class="iconfont icon-close f12"></i></span>
-                                <div class="col-xs-2 t_r pt7 g9">{{obj.title}}</div>
+                                <div class="col-xs-2 t_r pt7 g9">{{obj.name}}</div>
                                 <div class="col-xs-10"><a disabled websim-uploader divid='upload{{$index + 1}}'  type="image" options="upheadoptions"  upload-success="uploadSuccess(file,response)" upload-error="uploadError(file,reason)" ></a></div>
                             </div>
 
                         </div>
-                        <div class="popover-wrapper" ng-switch-when="checkbox">
+                        <div class="popover-wrapper" ng-switch-when="CHECKBOX">
                             <form editable-form name="checkboxForm" style="padding-left: 15px; padding-right: 15px; margin-left: -150px;bottom:65px;" ng-show="checkboxForm.$visible">
                                 <table class="line28td" cellspacing="0" cellpadding="0" width="100%">
                                     <tr>
                                         <td class="g9 pr10">显示标题</td>
-                                        <td><span editable-text="obj.title" onbeforesave="checkName($data)"></span></td>
+                                        <td><span editable-text="obj.name" onbeforesave="checkName($data)"></span></td>
                                     </tr>
                                     <tr>
                                         <td class="g9">提示文字1</td>
@@ -255,6 +328,13 @@
                                     <tr>
                                         <td class="g9">提示文字2</td>
                                         <td><span editable-text="obj.sctitemb"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">是否必选</td>
+                                        <td>
+                                            <label><input icheck type="radio" value="0"  ng-model="obj.isMandatory"> 否</label>
+                                            <label class="ml10"><input icheck type="radio" value="1" ng-model="obj.isMandatory"> 是</label>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>&nbsp;</td>
@@ -267,7 +347,7 @@
                             </form>
                             <div ng-click="checkboxForm.$show()" ng-disabled="checkboxForm.$waiting">
                                 <span class="closebtn red bdrs50" ng-show="tableisDisabled" ng-click="objs.deleFun($index)"><i class="iconfont icon-close f12"></i></span>
-                                <div class="col-xs-2 t_r pt7 g9">{{obj.title}}</div>
+                                <div class="col-xs-2 t_r pt7 g9">{{obj.name}}</div>
                                 <div class="col-xs-10 pt5">
                                     <label><input icheck type="checkbox" ng-model="obj.valuea" disabled> {{obj.sctitema}}</label>
                                     <label class="ml10"><input icheck type="checkbox" ng-model="obj.valueb" disabled> {{obj.sctitemb}}</label>
@@ -275,12 +355,12 @@
                             </div>
 
                         </div>
-                        <div class="popover-wrapper" ng-switch-when="radio">
+                        <div class="popover-wrapper" ng-switch-when="RADIO">
                             <form editable-form name="checkboxForm" style="padding-left: 15px; padding-right: 15px; margin-left: -150px;bottom:65px;" ng-show="checkboxForm.$visible">
                                 <table class="line28td" cellspacing="0" cellpadding="0" width="100%">
                                     <tr>
                                         <td class="g9 pr10">显示标题</td>
-                                        <td><span editable-text="obj.title" onbeforesave="checkName($data)"></span></td>
+                                        <td><span editable-text="obj.name" onbeforesave="checkName($data)"></span></td>
                                     </tr>
                                     <tr>
                                         <td class="g9">提示文字1</td>
@@ -289,6 +369,13 @@
                                     <tr>
                                         <td class="g9">提示文字2</td>
                                         <td><span editable-text="obj.sctitemb"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="g9">是否必选</td>
+                                        <td>
+                                            <label><input icheck type="radio" value="0"  ng-model="obj.isMandatory"> 否</label>
+                                            <label class="ml10"><input icheck type="radio" value="1" ng-model="obj.isMandatory"> 是</label>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>&nbsp;</td>
@@ -301,7 +388,7 @@
                             </form>
                             <div ng-click="checkboxForm.$show()" ng-disabled="checkboxForm.$waiting">
                                 <span class="closebtn red bdrs50" ng-show="tableisDisabled" ng-click="objs.deleFun($index)"><i class="iconfont icon-close f12"></i></span>
-                                <div class="col-xs-2 t_r pt7 g9">{{obj.title}}</div>
+                                <div class="col-xs-2 t_r pt7 g9">{{obj.name}}</div>
                                 <div class="col-xs-10 pt5">
                                     <label><input icheck type="radio" name="radioTest" ng-model="obj.value" disabled> {{obj.sctitema}}</label>
                                     <label class="ml10"><input icheck type="radio" name="radioTest" ng-model="obj.value" disabled> {{obj.sctitemb}}</label>
@@ -317,9 +404,9 @@
                 <div class="add-box fadecj poi" ng-click="addpcsdata()"><i class="iconfont icon-add f14"></i> 流程数据</div>
             </div>
         </div>
-
-
+        <!--审批人-->
         <div class="nose-panel-body">
+
             <table class="table table-hover bte bbe tr" cellspacing="0" cellpadding="0" width="100%;">
                 <thead>
                 <tr>
@@ -330,12 +417,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td class="pl20"><span class="pl5">1</span></td>
-                    <td>第一级审批</td>
-                    <td>{{user.name || '无' }}</span></td>
-                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editapprover()"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete()"><i class="iconfont icon-del f14"></i></button></td>
+                <tr ng-repeat="data in processmodal.processDefStepDTOList | orderBy:data.stepNo">
+                    <td class="pl20"><span class="pl5">{{data.stepNo}}</span></td>
+                    <td>{{data.stepName}}</td>
+                    <td>{{data.userDTO.name}}</span></td>
+                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editapprover(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deleteapprover($index)"><i class="iconfont icon-del f14"></i></button></td>
                 </tr>
+                <!--
                 <tr>
                     <td class="pl20"><span class="pl5">2</span></td>
                     <td>第二级审批</td>
@@ -346,8 +434,8 @@
                     <td class="pl20"><span class="pl5">3</span></td>
                     <td>第三级审批</td>
                     <td>{{user.name || '无' }}</span></td>
-                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editapprover()"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete()"><i class="iconfont icon-del f14"></i></button></td>
-                </tr>
+                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editapprover(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deleteapprover($index)"><i class="iconfont icon-del f14"></i></button></td>
+                </tr>-->
                 </tbody>
             </table>
         </div>
@@ -356,7 +444,7 @@
         </div>
         <div class="nose-panel-footer cf">
             <button class="btn btn-default wd80">取消</button>
-            <button class="btn btn-primary wd80">提交</button>
+            <button ng-click="addprocessmodalFun()" class="btn btn-primary wd80">提交</button>
         </div>
     </div>
 
@@ -376,25 +464,23 @@
             <div class="col-xs-6">
                 <div class="cf addrow active pl20 pr20 form-inline">
                     <input type="text" class="form-control wd180" value="单行文本框" disabled>
-                    <button class="btn btn-default" ng-model="radioitem" btn-radio="'input'" ng-click="selected.item = 'input'">点击添加</button>
+                    <button class="btn btn-default" ng-model="radioitem" btn-radio="'TEXT'" ng-click="selected.item = 'TEXT'">点击添加</button>
+                </div>
+                <div class="cf addrow active pl20 pr20 form-inline mt10">
+                    <input type="number" class="form-control wd180" placeholder="数量框" disabled>
+                    <button class="btn btn-default" ng-model="radioitem" btn-radio="'NUMBER'" ng-click="selected.item = 'NUMBER'">点击添加</button>
                 </div>
                 <div class="cf addrow pl20 pr20 form-inline mt10">
                     <textarea class="form-control h34 wd180" disabled>多行文本框</textarea>
-                    <button class="btn btn-default" ng-model="radioitem" btn-radio="'textarea'" ng-click="selected.item = 'textarea'">点击添加</button>
+                    <button class="btn btn-default" ng-model="radioitem" btn-radio="'TEXTAREA'" ng-click="selected.item = 'TEXTAREA'">点击添加</button>
                 </div>
                 <div class="cf addrow pl20 pr20 form-inline mt10">
                     <select class="form-control wd180" disabled>
                         <option>下拉选择框</option>
                     </select>
-                    <button class="btn btn-default" ng-model="radioitem" btn-radio="'select'" ng-click="selected.item = 'select'">点击添加</button>
+                    <button class="btn btn-default" ng-model="radioitem" btn-radio="'SELECTION'" ng-click="selected.item = 'SELECTION'">点击添加</button>
                 </div>
-                <div class="cf addrow pl20 pr20 form-inline mt10">
-                    <div class="wd180 dib">
-                        <label> <input icheck type="checkbox" ng-model="demo.checkOne" disabled> 未选中</label>
-                        <label> <input icheck type="checkbox" ng-model="demo.checkTwo" disabled> 已选中</label>
-                    </div>
-                    <button class="btn btn-default" ng-model="radioitem" btn-radio="'checkbox'" ng-click="selected.item = 'checkbox'">点击添加</button>
-                </div>
+
             </div>
             <div class="col-xs-6">
                 <div class="cf addrow pl20 pr20 form-inline">
@@ -404,8 +490,9 @@
                             <span class="abs_r"><i class="iconfont icon-rili"></i></span>
                         </div>
                     </div>
-                    <button class="btn btn-default" ng-model="radioitem" btn-radio="'datetime'" ng-click="selected.item = 'datetime'">点击添加</button>
+                    <button class="btn btn-default" ng-model="radioitem" btn-radio="'DATE'" ng-click="selected.item = 'DATE'">点击添加</button>
                 </div>
+                <!--
                 <div class="cf addrow pl20 pr20 form-inline mt10">
                     <div class="wd180 dib">
                         <div class="qiyi-group">
@@ -414,17 +501,24 @@
                         </div>
                     </div>
                     <button class="btn btn-default" ng-model="radioitem" btn-radio="'daterange'" ng-click="selected.item = 'daterange'">点击添加</button>
-                </div>
+                </div>-->
                 <div class="cf addrow pl20 pr20 form-inline mt10">
                     <button class="btn btn-white wd180" disabled><i class="iconfont icon-fujian blue"></i> 附件上传</button>
-                    <button class="btn btn-default"  ng-model="radioitem" btn-radio="'upload'" ng-click="selected.item = 'upload'">点击添加</button>
+                    <button class="btn btn-default"  ng-model="radioitem" btn-radio="'ATTACHMENT'" ng-click="selected.item = 'ATTACHMENT'">点击添加</button>
+                </div>
+                <div class="cf addrow pl20 pr20 form-inline mt10">
+                    <div class="wd180 dib">
+                        <label> <input icheck type="checkbox" ng-model="demo.checkOne" disabled> 未选中</label>
+                        <label> <input icheck type="checkbox" ng-model="demo.checkTwo" disabled> 已选中</label>
+                    </div>
+                    <button class="btn btn-default" ng-model="radioitem" btn-radio="'CHECKBOX'" ng-click="selected.item = 'CHECKBOX'">点击添加</button>
                 </div>
                 <div class="cf addrow pl20 pr20 form-inline mt10">
                     <div class="wd180 dib">
                         <label> <input icheck type="radio" name="radioTest" ng-model="demo.check8" disabled> 未选中</label>
                         <label> <input icheck type="radio" name="radioTest" ng-model="demo.check8" disabled> 已选中</label>
                     </div>
-                    <button class="btn btn-default" ng-model="radioitem" btn-radio="'radio'" ng-click="selected.item = 'radio'">点击添加</button>
+                    <button class="btn btn-default" ng-model="radioitem" btn-radio="'RADIO'" ng-click="selected.item = 'RADIO'">点击添加</button>
                 </div>
             </div>
 
@@ -436,68 +530,60 @@
     </div>
 </script>
 
-<!--选择部门/员工-->
-<script type="text/ng-template" id="selectstaff.html">
-    <div class="whitemodal smbox">
-        <div class="modal-header">
-            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
-            <div class="f16">选择部门/员工</div>
-        </div>
-        <div class="modal-body cf bte bbe">
-            <div class="row">
-                <div class="col-xs-6 bre pr5 pt10 pb10">
-                    <div slim-scroll box-height="330">
-                        <div style="outline: none" js-tree="treeConfig" should-apply="applyModelChanges()" ng-model="treeData" tree="treeInstance" tree-events="changed:changedCB"></div>
-                    </div>
-                </div>
-                <div class="col-xs-6 pr5 pt10 pb10">
-                    <div slim-scroll box-height="330" class="addpcs-jstree-com">
-                        <div style="outline: none" js-tree="staffConfig" should-apply="applyModelChanges()" ng-model="stafftreeData" tree="stafftree" tree-events="changed:changedstaff"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
-            <button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>
-        </div>
-    </div>
-</script>
 
 <!--新增审批人-->
 <script type="text/ng-template" id="addapprover.html">
     <div class="whitemodal">
         <div class="modal-header">
             <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
-            <div class="f16">新增审批人</div>
+            <div class="f16">{{approvername}}审批人</div>
         </div>
+        <form role="baseForm" name="baseForm"  ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
         <div class="modal-body">
             <table cellpadding="0" cellspacing="0" width="100%" class="line30td">
                 <tr>
                     <td width="60" class="g9">排序号</td>
-                    <td class="pl5"><input type="text" class="form-control" placeholder="请输入序号"></td>
+                    <td class="pl5">
+                        <div class="nose-group" ng-class="{'has-error':baseForm.stepNo.$dirty && baseForm.stepNo.$invalid}">
+                            <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.stepNo.$dirty && baseForm.stepNo.$invalid" popover="请输入序号" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                            <input type="number" class="form-control" name="stepNo" ng-model="processDefStep.stepNo"  placeholder="请输入序号" required />
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td class="g9">级别名称</td>
-                    <td class="pl5"><input type="text" class="form-control" placeholder="请输入名称"></td>
+                    <td class="pl5">
+                        <div class="nose-group"  ng-class="{'has-error':baseForm.stepName.$dirty && baseForm.stepName.$invalid}">
+                            <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.stepName.$dirty && baseForm.stepName.$invalid" popover="请输入名称" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                            <input type="text" class="form-control" name="stepName" ng-model="processDefStep.stepName"  placeholder="请输入名称" required />
+                        </div>
+                    </td>
                 </tr>
                 <tr>
-                    <td class="g9">审批人</td>
+                    <td class="g9" valign="top">审批人</td>
                     <td class="pl5">
-                        <span ng-repeat="sele in staffselected" class="bdrs4" id="{{sele.id}}">{{sele.text}}</span>
-                        <button class="btn btn-default btn-sm" ng-click="selectstaff()">选择</button>
+                        <div selectdepyuan yuangong="1" myselected="processDefStep.myselected" selectedallarr="processDefStep.selectedallarr"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="g9">最后节点</td>
+                    <td class="pl5">
+                        <label><input icheck type="radio" value="false" ng-init="processDefStep.end='false'"  ng-model="processDefStep.end"> 否</label>
+                        <label class="ml10"><input icheck type="radio" value="true" ng-model="processDefStep.end"> 是</label>
                     </td>
                 </tr>
             </table>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary" ng-click="ok()">保存</button>
             <button type="button" class="btn btn-white" ng-click="cancel()">关闭</button>
+            <button type="submit" class="btn btn-primary">保存</button>
         </div>
+        </form>
     </div>
 </script>
 
 <!--编辑审批人-->
+<!--
 <script type="text/ng-template" id="eidtapprover.html">
     <div class="whitemodal">
         <div class="modal-header">
@@ -529,4 +615,5 @@
         </div>
     </div>
 </script>
+-->
 
