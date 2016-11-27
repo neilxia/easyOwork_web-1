@@ -605,6 +605,7 @@ function addsetpcsCtrl(){
             "processDefStepDTOList":$rootScope.$stateParams.pcsRow.processDefStepDTOList || [],
             "processDefFieldDTOList":$rootScope.$stateParams.pcsRow.processDefFieldDTOList || []
         }
+
         // 增加
         $scope.objs.addFun = function(classname) {
             switch(classname){

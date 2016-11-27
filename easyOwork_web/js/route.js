@@ -527,7 +527,8 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
 angular
     .module('qiyi.route',[])
     .config(config)
-    .run(function($rootScope, $state,editableOptions) {
+    .run(function($rootScope, $state,$stateParams,editableOptions) {
         $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
         editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
     });
