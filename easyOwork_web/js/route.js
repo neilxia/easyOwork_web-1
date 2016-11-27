@@ -304,7 +304,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
 
         })
         .state('processmsg.addsetpcs', {
-            url: "/addsetpcs",
+            url: "/addsetpcs:pcsRow",
             templateUrl: 'modules/processmsg/tmp/addsetpcs.html',
             data: { pageTitle: '添加流程'},
             resolve:{

@@ -27,7 +27,7 @@ function addpcsCtrl(){
         $scope.pcsitem=0;
         //增加框
         $scope.objs = new Object();
-        //$scope.objs.datas = [{clas:'select', title:'下拉选择框',selectItem:[{id:1,value:'选择1'},{id:2,value:'选择2'}]}];
+        //$scope.objs.datas = [{clas:'select', title:'下拉选择框',valueList:[{id:1,value:'选择1'},{id:2,value:'选择2'}]}];
         $scope.objs.datas = [];
         // 增加
         $scope.objs.addFun = function(classname) {
@@ -43,7 +43,7 @@ function addpcsCtrl(){
                     break;
                 }
                 case 'select':{
-                    $scope.objs.datas.push({clas:classname, title:'下拉选择框',selectItem:[{id:1,value:'选择项1'},{id:2,value:'选择项2'}],value:''});
+                    $scope.objs.datas.push({clas:classname, title:'下拉选择框',valueList:[{id:1,value:'选择项1'},{id:2,value:'选择项2'}],value:''});
                     break;
                 }
                 case 'datetime':{
@@ -70,18 +70,18 @@ function addpcsCtrl(){
             }
         };
         // select选项增加
-        $scope.addselectItem = function(hashkey) {
+        $scope.addvalueList = function(hashkey) {
             angular.forEach($scope.objs.datas, function(obj, key) {
                 if(obj.$$hashKey===hashkey){
-                    obj.selectItem.push({id: obj.selectItem.length+1,value: ''});
+                    obj.valueList.push({id: obj.valueList.length+1,value: ''});
                 }
             })
         };
         // select选项减少
-        $scope.deleselectItem = function($index) {
+        $scope.delevalueList = function($index) {
             angular.forEach($scope.objs.datas, function(obj, key) {
-                if(obj.selectItem.length > 1){
-                    obj.selectItem.splice($index, 1);
+                if(obj.valueList.length > 1){
+                    obj.valueList.splice($index, 1);
                 }
             })
 
@@ -566,7 +566,7 @@ function myauditdetailCtrl(){
 }
 /*====================添加流程=================================*/
 function addsetpcsCtrl(){
-    return['$scope','$modal','editableOptions','processService','LocalStorage','MsgService',function($scope,$modal,editableOptions,processService,LocalStorage,MsgService){
+    return['$rootScope','$scope','$modal','editableOptions','processService','LocalStorage','MsgService',function($rootScope,$scope,$modal,editableOptions,processService,LocalStorage,MsgService){
 
         var userinfo=LocalStorage.getObject('userinfo');
 
@@ -596,71 +596,78 @@ function addsetpcsCtrl(){
 
         //增加框
         $scope.objs = new Object();
-        //$scope.objs.datas = [{clas:'select', title:'下拉选择框',selectItem:[{id:1,value:'选择1'},{id:2,value:'选择2'}]}];
-        $scope.objs.datas = [];
+        $scope.processmodal={
+            "actionType":$rootScope.$stateParams.pcsRow.actionType || 'ADD',		//ADD, MODIFY, DELETE
+            "name":$rootScope.$stateParams.pcsRow.name || "",		//数据模板名称
+            "description":$rootScope.$stateParams.pcsRow.description || "",		//数据模板描述
+            "userDTOList":$rootScope.$stateParams.pcsRow.userDTOList || [],
+            "roleDTOList":$rootScope.$stateParams.pcsRow.roleDTOList || [], //如果userDTOList和roleDTOList都不传入则表示适用公司所有人员
+            "processDefStepDTOList":$rootScope.$stateParams.pcsRow.processDefStepDTOList || [],
+            "processDefFieldDTOList":$rootScope.$stateParams.pcsRow.processDefFieldDTOList || []
+        }
         // 增加
         $scope.objs.addFun = function(classname) {
             switch(classname){
                 case 'TEXT':{
                     //$scope.objs.datas.push({clas:'input',key:'',value:''});
-                    $scope.objs.datas.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'单行文本框',placeholder:'请输入',value:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'单行文本框',placeholder:'请输入',value:''});
                     break;
                 }
                 case 'NUMBER':{
-                    //$scope.objs.datas.push({type:'input',key:'',value:''});
-                    $scope.objs.datas.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'数量框',placeholder:'请输入',value:''});
+                    //$scope.processmodal.processDefFieldDTOList.push({type:'input',key:'',value:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'数量框',placeholder:'请输入',value:''});
                     break;
                 }
                 case 'TEXTAREA':{
-                    $scope.objs.datas.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'多行文本框',placeholder:'请输入',value:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'多行文本框',placeholder:'请输入',value:''});
                     break;
                 }
                 case 'SELECTION':{
-                    $scope.objs.datas.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'下拉选择框',selectItem:[{id:1,value:'选择项1'},{id:2,value:'选择项2'}],value:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'下拉选择框',valueList:[{id:1,value:'选择项1'},{id:2,value:'选择项2'}],value:''});
                     break;
                 }
                 case 'DATE':{
-                    $scope.objs.datas.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'时间选择',placeholder:'请选择时间',value:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'时间选择',placeholder:'请选择时间',value:''});
                     break;
                 }
 /*                case 'daterange':{
-                    $scope.objs.datas.push({type:classname, seqNo:" , length:"n, isMandatory:"a,defaultValue:"m,e:'时间范围选择',sctitema:'选择开始时间',sctitemb:'选择结束时间',valuea:'',valueb:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:" , length:"n, isMandatory:"a,defaultValue:"m,e:'时间范围选择',sctitema:'选择开始时间',sctitemb:'选择结束时间',valuea:'',valueb:''});
 
                     break;
                 }*/
                 case 'ATTACHMENT':{
-                    $scope.objs.datas.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'附件上传',placeholder:'本地上传',value:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'附件上传',placeholder:'本地上传',value:''});
                     break;
                 }
                 case 'CHECKBOX':{
-                    $scope.objs.datas.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'流程名称',sctitema:'选择项1',sctitemb:'选择项2',valuea:'',valueb:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'流程名称',valueList:[{id:1,name:'选择项1',value:''},{id:2,name:'选择项2',value:'选择项2'}]});
                     break;
                 }
                 case 'RADIO':{
-                    $scope.objs.datas.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'流程名称',sctitema:'选择项1',sctitemb:'选择项2',value:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'流程名称',valueList:[{id:1,name:'选择项1',value:''},{id:2,name:'选择项2',value:''}]});
                     break;
                 }
             }
         };
         // select选项增加
-        $scope.addselectItem = function(hashkey) {
-            angular.forEach($scope.objs.datas, function(obj, key) {
+        $scope.addvalueList = function(hashkey) {
+            angular.forEach($scope.processmodal.processDefFieldDTOList, function(obj, key) {
                 if(obj.$$hashKey===hashkey){
-                    obj.selectItem.push({id: obj.selectItem.length+1,value: ''});
+                    obj.valueList.push({id: obj.valueList.length+1,value: ''});
                 }
             })
         };
         // select选项减少
-        $scope.deleselectItem = function(thisobj,$index) {
-            if(thisobj.selectItem.length > 1){
-                thisobj.selectItem.splice($index, 1);
+        $scope.delevalueList = function(thisobj,$index) {
+            if(thisobj.valueList.length > 1){
+                thisobj.valueList.splice($index, 1);
             }
 
         };
         // 减少
         $scope.objs.deleFun = function($index) {
-            //if ($scope.objs.datas.length > 1) {
-            $scope.objs.datas.splice($index, 1);
+            //if ($scope.processmodal.processDefFieldDTOList.length > 1) {
+            $scope.processmodal.processDefFieldDTOList.splice($index, 1);
             //}
         };
 
@@ -722,15 +729,7 @@ function addsetpcsCtrl(){
             }
         };
 
-        $scope.processmodal={
-            "actionType":"",		//ADD, MODIFY, DELETE
-            "name":"",		//数据模板名称
-            "description":"",		//数据模板描述
-            "userDTOList":[],
-            "roleDTOList":[], //如果userDTOList和roleDTOList都不传入则表示适用公司所有人员
-            "processDefStepDTOList":[],
-            "processDefFieldDTOList":[]
-        }
+
         $scope.theapply={};
     //    总流程添加
         $scope.addprocessmodalFun=function(){
@@ -761,8 +760,11 @@ function addsetpcsCtrl(){
                 $scope.processmodal.userDTOList=userDTOList;
                 $scope.processmodal.roleDTOList=roleDTOList;
             }
-            $scope.processmodal.processDefFieldDTOList=$scope.objs.datas || [];
-
+            angular.forEach($scope.processmodal.processDefStepDTOList,function(val,ind){
+                if(($scope.processmodal.processDefStepDTOList.length-1)==ind){
+                    val.end=true;
+                }
+            })
             var promise = processService.changeProcessModel($scope.processmodal);
             promise.success(function(data, status, headers, config){
                 debugger;
@@ -793,7 +795,6 @@ function addsetpcsCtrl(){
                 $scope.processDefStep={};
                 $scope.ok = function (state) {
                     if(!state)return;
-                    debugger;
                     var row={
                         "stepName":$scope.processDefStep.stepName,	//节点名称
                         "stepNo":$scope.processDefStep.stepNo,	//节点顺序号
