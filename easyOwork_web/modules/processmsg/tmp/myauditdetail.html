@@ -16,13 +16,13 @@
     <div class="nose-panel">
         <div class="p30">
             <ul class="mypcsdetail-pcs f12">
-                <li ng-repeat="data in pcsdetail.processStepDTOList" ng-class="{'sucs':data.status=='APPROVED','jing':data.status=='Pending'}">
+                <li ng-repeat="data in pcsdetail.processStepDTOList" ng-class="{'sucs':data.status=='APPROVED','jing':data.status=='PENDING'}">
                     <span class="sign"></span>
                     <div class="textbox" ng-if="data.status=='APPROVED'">
-                        {{data.stepName}} <span class="green ml10">同意</span> <span class="g9 ml10">08-12 12:30</span>
+                        {{data.stepName}} | {{data.processUserDTO.name}} <span class="green ml10">同意</span> <span class="g9 ml10">{{data.actionDate}}</span>
                     </div>
-                    <div class="textbox" ng-if="data.status=='Pending'">
-                        {{data.stepName}}<span class="orange ml10">等待处理</span>
+                    <div class="textbox" ng-if="data.status=='PENDING'&&data.stepNo==pcsdetail.currentStepNo">
+                        {{data.stepName}} | {{data.processUserDTO.name}} <span class="orange ml10">待处理</span> 
                         <button class="btn btn-primary btn-xs ml10" ng-click="agreedproFun()">同意</button>
                         <button class="btn btn-default btn-xs ml10" ng-click="jujuetoggle()">拒绝</button>
                         <div class="wd300 pt5" ng-show="jujue">
@@ -32,8 +32,11 @@
                             </form>
                         </div>
                     </div>
-                    <div class="textbox" ng-if="data.status=='PENDING'">
-                        {{data.stepName}}
+                    <div class="textbox" ng-if="data.status=='PENDING'&&data.stepNo!=pcsdetail.currentStepNo">
+                        {{data.stepName}} | {{data.processUserDTO.name}}
+                    </div>
+                    <div class="textbox" ng-if="data.status=='REJECTED'">
+                        {{data.stepName}} | {{data.processUserDTO.name}} <span class="red ml10">拒绝</span> <span class="g9 ml10">{{data.actionDate}}</span>
                     </div>
                 </li>
 
@@ -64,30 +67,22 @@
                 </li>-->
 
             </ul>
-            <table class="line40td mt10 f12" cellpadding="0" cellspacing="0" width="100%">
+             <table class="line40td mt10 f12" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                     <td width="80" class="t_r">审批编号：</td>
-                    <td class="pl10">xiny-2016-0010</td>
+                    <td class="pl10">{{pcsdetail.processUuid}}</td>
                 </tr>
-                <!--<tr>
-                    <td width="80" class="t_r">审批结果：</td>
-                    <td class="pl10"><span class="orange">审批中</span></td>
-                </tr>-->
                 <tr>
-                    <td width="80" class="t_r">申请部门：</td>
-                    <td class="pl10">小今成长史</td>
+                    <td width="80" class="t_r">申请人：</td>
+                    <td class="pl10">{{pcsdetail.launchUserDTO.name}}</td>
                 </tr>
                 <tr>
                     <td width="80" class="t_r">申请时间：</td>
-                    <td class="pl10">08-12 14:55</td>
+                    <td class="pl10">{{pcsdetail.createDate}}</td>
                 </tr>
                 <tr>
                     <td width="80" class="t_r">申请流程：</td>
                     <td class="pl10">{{pcsdetail.title}}</td>
-                </tr>
-                <tr>
-                    <td width="80" class="t_r">流程说明：</td>
-                    <td class="pl10">{{pcsdetail.description}}</td>
                 </tr>
                 <tr>
                     <td width="80" class="t_r" valign="top">申请内容：</td>
@@ -96,11 +91,6 @@
                             {{data.name}}：{{data.value}}
                         </div>
                     </td>
-                </tr>
-
-                <tr>
-                    <td width="80" class="t_r">相关附件：</td>
-                    <td class="pl10"><img class="mr5 mv" src="./images/office01.png" alt="">相关报表附件.rar</td>
                 </tr>
 
             </table>

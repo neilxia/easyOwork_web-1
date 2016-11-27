@@ -14,10 +14,10 @@
     <div class="btnbox">
         <form class="f_r form-inline">
             <button class="btn btn-default btn-sm" ng-model="Processstatus" btn-radio="">全部</button>
-            <button class="btn btn-default btn-sm" ng-model="Processstatus" btn-radio="'审批中'">审批中</button>
-            <button class="btn btn-default btn-sm" ng-model="Processstatus" btn-radio="'已通过'">已通过</button>
-            <button class="btn btn-default btn-sm" ng-model="Processstatus" btn-radio="'已拒绝'">已拒绝</button>
-            <button class="btn btn-default btn-sm" ng-model="Processstatus" btn-radio="'已撤回'">已撤回</button>
+            <button class="btn btn-default btn-sm" ng-model="Processstatus" btn-radio="'INPROGRESS'">审批中</button>
+            <button class="btn btn-default btn-sm" ng-model="Processstatus" btn-radio="'COMPLETED'">已同意</button>
+            <button class="btn btn-default btn-sm" ng-model="Processstatus" btn-radio="'REJECTED'">已拒绝</button>
+            <button class="btn btn-default btn-sm" ng-model="Processstatus" btn-radio="'WITHDRAW'">已撤回</button>
             <select class="form-control input-sm" ng-model="selectedproclass" ng-options="x.name for x in prosclasslist"></select>
             <span class="form-group-sm search-group">
                 <input type="text" class="form-control wd180" ng-model="processtitle" placeholder="申请内容关键词">
@@ -32,10 +32,11 @@
                 <thead>
                     <tr>
                         <th width="80"><span class="pl15">类别</span></th>
-                        <th>申请内容</th>
+                        <th>申请名称</th>
+                        <th>编号</th>
                         <th width="150">申请时间</th>
-                        <th width="120">审批人</th>
-                        <th width="100">审批结果</th>
+                        <th width="120">当前审批人</th>
+                        <th width="100">审批状态</th>
                         <th width="90">操作</th>
                     </tr>
                 </thead>
@@ -43,9 +44,10 @@
                     <tr ng-repeat="data in inquiryProcessesData | filter:{'status':Processstatus,'processType':selectedproclass.name,'title':processtitle}">
                         <td><span class="pl15">{{data.processType}}</span></td>
                         <td>{{data.title}}</td>
-                        <td>2016-09-23  20:30</td>
-                        <td>{{data.processStepDTOList[data.currentStepNo].stepName}}</td>
-                        <td><span ng-class="{'orange':data.status=='审批中','green':data.status=='已通过','red':data.status=='已拒绝','g9':data.status=='已撤回'}">{{data.status}}</span></td>
+                        <td>{{data.processUuid}}</td>
+                        <td>{{data.createDate}}</td>
+                        <td>{{data.processStepDTOList[data.currentStepNo-1].processUserDTO.name}}</td>
+                        <td><span ng-class="{'orange':data.status=='审批中','green':data.status=='已同意','red':data.status=='已拒绝','g9':data.status=='已撤回'}">{{data.statusDesc}}</span></td>
                         <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="chakanFun(data)"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs h30 ml5" title="撤回" ng-click="changeProcessFun(data)"><i class="iconfont icon-fanhui f14"></i></button></td>
                     </tr>
 <!--
