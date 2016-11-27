@@ -338,16 +338,16 @@ function mypcsCtrl(){
             };
             var promise = processService.inquiryCreatedProcesses({body:$scope.options});
             promise.success(function(data, status, headers, config){
-                if(status==200){
+                /*if(status==200){
                     $scope.inquiryProcessesData=data.processes;
-                }
+                }*/
                 //远程开启下面的
-                /*var sts=data.body.status;
+                var sts=data.body.status;
                 if(sts.statusCode==0){
-                    $scope.inquiryProcessesData=data.body.data;
+                    $scope.inquiryProcessesData=data.body.data.processes;
                 }else{
                     MsgService.errormsg(data);
-                }*/
+                }
             });
             promise.error(function(data, status, headers, config){
                 MsgService.errormsg(data);
@@ -365,8 +365,7 @@ function mypcsCtrl(){
                 //批准/拒绝/撤回流程
                 $scope.options={
                     "actionType":"WITHDRAW"	,	//APPROVE, REJECT, WITHDRAW
-                    "name":row.name,	//流程模板名称
-                    "title":row.title,		//流程实例Title
+                    "processUuid":row.processUuid,	//流程编号
                     "message":''	//批准拒绝时添加的信息
                 };
                 var promise = processService.changeProcess({body:$scope.options});
@@ -389,7 +388,7 @@ function mypcsCtrl(){
 }
 /*====================我的申请详情=================================*/
 function mypcsdetailCtrl(){
-    return['$rootScope','$scope','LocalStorage','Common',function($rootScope,$scope,LocalStorage,Common){
+    return['$rootScope','$scope','LocalStorage','Common','processService',function($rootScope,$scope,LocalStorage,Common,processService){
         $scope.pcsdetail = LocalStorage.getObject('pcsdetail');
         //撤回流程
         $scope.changeProcessFun=function(row){
@@ -397,10 +396,8 @@ function mypcsdetailCtrl(){
             Common.openConfirmWindow('','您确定要撤回申请么？').then(function() {
                 //批准/拒绝/撤回流程
                 $scope.options={
-                    "actionType":"WITHDRAW"	,	//APPROVE, REJECT, WITHDRAW
-                    "name":row.name,	//流程模板名称
-                    "title":row.title,		//流程实例Title
-                    "message":''	//批准拒绝时添加的信息
+                    "actionType":"WITHDRAW"	,
+                    "processUuid":row.processUuid	//流程编号
                 };
                 var promise = processService.changeProcess({body:$scope.options});
                 promise.success(function(data, status, headers, config){
@@ -421,7 +418,7 @@ function mypcsdetailCtrl(){
 }
 /*====================我的审批=================================*/
 function myauditCtrl(){
-    return['$rootScope','$scope', '$modal','Common','processService','LocalStorage',function($rootScope,$scope,$modal,Common,processService,LocalStorage){
+    return['$rootScope','$scope', '$modal','Common','processService','LocalStorage','processService',function($rootScope,$scope,$modal,Common,processService,LocalStorage,processService){
 
         $scope.bigTotalItems = 11;
         $scope.bigCurrentPage = 1;
@@ -468,16 +465,16 @@ function myauditCtrl(){
             };
             var promise = processService.inquiryHandlingProcesses({body:$scope.options});
             promise.success(function(data, status, headers, config){
-                if(status==200){
+                /*if(status==200){
                     $scope.inquiryProcessesData=data.processes;
-                }
+                }*/
                 //远程开启下面的
-                /*var sts=data.body.status;
+                var sts=data.body.status;
                  if(sts.statusCode==0){
-                 $scope.inquiryProcessesData=data.body.data;
+                 $scope.inquiryProcessesData=data.body.data.processes;
                  }else{
                  MsgService.errormsg(data);
-                 }*/
+                 }
             });
             promise.error(function(data, status, headers, config){
                 MsgService.errormsg(data);
@@ -494,10 +491,8 @@ function myauditCtrl(){
             Common.openConfirmWindow('','您确定要撤回申请么？').then(function() {
                 //批准/拒绝/撤回流程
                 $scope.options={
-                    "actionType":"WITHDRAW"	,	//APPROVE, REJECT, WITHDRAW
-                    "name":row.name,	//流程模板名称
-                    "title":row.title,		//流程实例Title
-                    "message":''	//批准拒绝时添加的信息
+                    "actionType":"WITHDRAW"	,	
+                    "processUuid":row.processUuid	//流程编号
                 };
                 var promise = processService.changeProcess({body:$scope.options});
                 promise.success(function(data, status, headers, config){
@@ -544,8 +539,7 @@ function myauditdetailCtrl(){
             //批准/拒绝/撤回流程
             $scope.options={
                 "actionType":change	,	//APPROVE, REJECT, WITHDRAW
-                "name":row.name,	//流程模板名称
-                "title":row.title,		//流程实例Title
+                "processUuid":row.processUuid,	//流程编号
                 "message":$scope.rejectMsg	//批准拒绝时添加的信息
             };
             var promise = processService.changeProcess({body:$scope.options});

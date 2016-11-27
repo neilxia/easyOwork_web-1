@@ -181,13 +181,13 @@ function processService(){
             },
             //POST 5.6.7	B0017-查询发起的流程
             inquiryCreatedProcesses:function(form){
-                //return $http.post(AppConfig.BASE_URL+'work/rest/inquiryCreatedProcesses',form)
-                return $http.get('./modules/processmsg/json/inquiryCreatedProcesses.json',form)
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryCreatedProcesses',form)
+                //return $http.get('./modules/processmsg/json/inquiryCreatedProcesses.json',form)
             },
             //POST 5.6.8	B0018-查询待审批的流程
             inquiryHandlingProcesses:function(form){
-                //return $http.post(AppConfig.BASE_URL+'work/rest/inquiryHandlingProcesses',form)
-                return $http.get('./modules/processmsg/json/inquiryHandlingProcesses.json',form)
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryHandlingProcesses',form)
+                //return $http.get('./modules/processmsg/json/inquiryHandlingProcesses.json',form)
             }
         }
     }];
