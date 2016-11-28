@@ -83,7 +83,7 @@
                             </form>
                             <div ng-click="inputForm.$show()"  ng-disabled="inputForm.$waiting">
                                 <span class="closebtn red bdrs50" ng-show="tableisDisabled" ng-click="objs.deleFun($index)"><i class="iconfont icon-close f12"></i></span>
-                                <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.isMandatory==1">*</span>{{obj.name || '无'}}</div>
+                                <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.mandatory==true">*</span>{{obj.name || '无'}}</div>
                                 <div class="col-xs-10"><input type="text" class="form-control wd200" placeholder="{{obj.placeholder || '无'}}" ng-model="obj.value" disabled></div>
                             </div>
 
@@ -103,8 +103,8 @@
                                     <tr>
                                         <td class="g9">是否必填</td>
                                         <td>
-                                            <label><input icheck type="radio" value="0"  ng-model="obj.isMandatory"> 否</label>
-                                            <label class="ml10"><input icheck type="radio" value="1" ng-model="obj.isMandatory"> 是</label>
+                                            <label><input icheck type="radio" value="false"  ng-model="obj.mandatory"> 否</label>
+                                            <label class="ml10"><input icheck type="radio" value="true" ng-model="obj.mandatory"> 是</label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -118,7 +118,7 @@
                             </form>
                             <div ng-click="NUMBERForm.$show()"  ng-disabled="NUMBERForm.$waiting">
                                 <span class="closebtn red bdrs50" ng-show="tableisDisabled" ng-click="objs.deleFun($index)"><i class="iconfont icon-close f12"></i></span>
-                                <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.isMandatory==1">*</span>{{obj.name || '无'}}</div>
+                                <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.mandatory==true">*</span>{{obj.name || '无'}}</div>
                                 <div class="col-xs-10"><input type="number" class="form-control wd200" placeholder="{{obj.placeholder || '无'}}" ng-model="obj.value" disabled></div>
                             </div>
                         </div>
@@ -137,8 +137,8 @@
                                     <tr>
                                         <td class="g9">是否必填</td>
                                         <td>
-                                            <label><input icheck type="radio" value="0"  ng-model="obj.isMandatory"> 否</label>
-                                            <label class="ml10"><input icheck type="radio" value="1" ng-model="obj.isMandatory"> 是</label>
+                                            <label><input icheck type="radio" value="false"  ng-model="obj.mandatory"> 否</label>
+                                            <label class="ml10"><input icheck type="radio" value="true" ng-model="obj.mandatory"> 是</label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -152,7 +152,7 @@
                             </form>
                             <div ng-click="textareaForm.$show()" ng-disabled="textareaForm.$waiting">
                                 <span class="closebtn red bdrs50" ng-show="tableisDisabled" ng-click="objs.deleFun($index)"><i class="iconfont icon-close f12"></i></span>
-                                <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.isMandatory==1">*</span>{{obj.name || '无'}}</div>
+                                <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.mandatory==true">*</span>{{obj.name || '无'}}</div>
                                 <div class="col-xs-10"><textarea class="form-control wd300" placeholder="{{obj.placeholder || '无'}}" ng-model="obj.value" disabled></textarea></div>
                             </div>
 
@@ -184,8 +184,8 @@
                                     <tr>
                                         <td class="g9">是否必选</td>
                                         <td>
-                                            <label><input icheck type="radio" value="0"  ng-model="obj.isMandatory"> 否</label>
-                                            <label class="ml10"><input icheck type="radio" value="1" ng-model="obj.isMandatory"> 是</label>
+                                            <label><input icheck type="radio" value="false"  ng-model="obj.mandatory"> 否</label>
+                                            <label class="ml10"><input icheck type="radio" value="true" ng-model="obj.mandatory"> 是</label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -199,7 +199,7 @@
                             </form>
                             <div ng-click="inputForm.$show()" ng-disabled="inputForm.$waiting">
                                 <span class="closebtn red bdrs50" ng-show="tableisDisabled" ng-click="objs.deleFun($index)"><i class="iconfont icon-close f12"></i></span>
-                                <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.isMandatory==1">*</span>{{obj.name || '无'}}</div>
+                                <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.mandatory==true">*</span>{{obj.name || '无'}}</div>
                                 <div class="col-xs-10"><select class="form-control wd200" ng-model="obj.valueList[0]" ng-options="x.value for x in obj.valueList" disabled></select></div>
                             </div>
                         </div>
@@ -218,8 +218,8 @@
                                     <tr>
                                         <td class="g9">是否必选</td>
                                         <td>
-                                            <label><input icheck type="radio" value="0"  ng-model="obj.isMandatory"> 否</label>
-                                            <label class="ml10"><input icheck type="radio" value="1" ng-model="obj.isMandatory"> 是</label>
+                                            <label><input icheck type="radio" value="false"  ng-model="obj.mandatory"> 否</label>
+                                            <label class="ml10"><input icheck type="radio" value="true" ng-model="obj.mandatory"> 是</label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -233,7 +233,7 @@
                             </form>
                             <div ng-click="sampleDateForm.$show()" ng-disabled="sampleDateForm.$waiting">
                                 <span class="closebtn red bdrs50" ng-show="tableisDisabled" ng-click="objs.deleFun($index)"><i class="iconfont icon-close f12"></i></span>
-                                <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.isMandatory==1">*</span>{{obj.name || '无'}}</div>
+                                <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.mandatory==true">*</span>{{obj.name || '无'}}</div>
                                 <div class="col-xs-10">
                                     <div class="qiyi-group wd160">
                                         <input type="datetime" class="form-control" placeholder="{{obj.placeholder}}" date-time ng-model="sampleDate" view="date"  step="5" auto-close="true">
@@ -295,8 +295,8 @@
                                     <tr>
                                         <td class="g9">是否必选</td>
                                         <td>
-                                            <label><input icheck type="radio" value="0"  ng-model="obj.isMandatory"> 否</label>
-                                            <label class="ml10"><input icheck type="radio" value="1" ng-model="obj.isMandatory"> 是</label>
+                                            <label><input icheck type="radio" value="false"  ng-model="obj.mandatory"> 否</label>
+                                            <label class="ml10"><input icheck type="radio" value="true" ng-model="obj.mandatory"> 是</label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -310,7 +310,7 @@
                             </form>
                             <div ng-click="uploadForm.$show()" ng-disabled="uploadForm.$waiting">
                                 <span class="closebtn red bdrs50" ng-show="tableisDisabled" ng-click="objs.deleFun($index)"><i class="iconfont icon-close f12"></i></span>
-                                <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.isMandatory==1">*</span>{{obj.name || '无'}}</div>
+                                <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.mandatory==true">*</span>{{obj.name || '无'}}</div>
                                 <div class="col-xs-10"><a disabled websim-uploader divid='upload{{$index + 1}}'  type="image" options="upheadoptions"  upload-success="uploadSuccess(file,response)" upload-error="uploadError(file,reason)" ></a></div>
                             </div>
 
@@ -329,8 +329,8 @@
                                     <tr>
                                         <td class="g9">是否必选</td>
                                         <td>
-                                            <label><input icheck type="radio" value="0"  ng-model="obj.isMandatory"> 否</label>
-                                            <label class="ml10"><input icheck type="radio" value="1" ng-model="obj.isMandatory"> 是</label>
+                                            <label><input icheck type="radio" value="false"  ng-model="obj.mandatory"> 否</label>
+                                            <label class="ml10"><input icheck type="radio" value="true" ng-model="obj.mandatory"> 是</label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -344,7 +344,7 @@
                             </form>
                             <div ng-click="checkboxForm.$show()" ng-disabled="checkboxForm.$waiting">
                                 <span class="closebtn red bdrs50" ng-show="tableisDisabled" ng-click="objs.deleFun($index)"><i class="iconfont icon-close f12"></i></span>
-                                <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.isMandatory==1">*</span>{{obj.name || '无'}}</div>
+                                <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.mandatory==true">*</span>{{obj.name || '无'}}</div>
                                 <div class="col-xs-10 pt5">
                                     <label class="mr10" ng-repeat="data in obj.valueList"><input icheck type="checkbox" ng-model="data.value" disabled> {{data.name}}</label>
                                 </div>
@@ -365,8 +365,8 @@
                                     <tr>
                                         <td class="g9">是否必选</td>
                                         <td>
-                                            <label><input icheck type="radio" value="0"  ng-model="obj.isMandatory"> 否</label>
-                                            <label class="ml10"><input icheck type="radio" value="1" ng-model="obj.isMandatory"> 是</label>
+                                            <label><input icheck type="radio" value="false"  ng-model="obj.mandatory"> 否</label>
+                                            <label class="ml10"><input icheck type="radio" value="true" ng-model="obj.mandatory"> 是</label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -380,7 +380,7 @@
                             </form>
                             <div ng-click="checkboxForm.$show()" ng-disabled="checkboxForm.$waiting">
                                 <span class="closebtn red bdrs50" ng-show="tableisDisabled" ng-click="objs.deleFun($index)"><i class="iconfont icon-close f12"></i></span>
-                                <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.isMandatory==1">*</span>{{obj.name || '无'}}</div>
+                                <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.mandatory==true">*</span>{{obj.name || '无'}}</div>
                                 <div class="col-xs-10 pt5">
                                     <label class="mr10" ng-repeat="data in obj.valueList"><input icheck type="radio" ng-model="data.value" disabled> {{data.name}}</label>
                                 </div>

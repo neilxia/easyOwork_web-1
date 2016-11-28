@@ -605,24 +605,24 @@ function addsetpcsCtrl(){
             switch(classname){
                 case 'TEXT':{
                     //$scope.objs.datas.push({clas:'input',key:'',value:''});
-                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"0",defaultValue:"", name:'单行文本框',placeholder:'请输入',value:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"false",defaultValue:"", name:'单行文本框',placeholder:'请输入',value:''});
                     break;
                 }
                 case 'NUMBER':{
                     //$scope.processmodal.processDefFieldDTOList.push({type:'input',key:'',value:''});
-                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"0",defaultValue:"", name:'数量框',placeholder:'请输入',value:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"false",defaultValue:"", name:'数量框',placeholder:'请输入',value:''});
                     break;
                 }
                 case 'TEXTAREA':{
-                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"0",defaultValue:"", name:'多行文本框',placeholder:'请输入',value:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"false",defaultValue:"", name:'多行文本框',placeholder:'请输入',value:''});
                     break;
                 }
                 case 'SELECTION':{
-                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"0",defaultValue:"", name:'下拉选择框',valueList:[{id:1,value:'选择项1'},{id:2,value:'选择项2'}],value:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"false",defaultValue:"", name:'下拉选择框',valueList:[{id:1,value:'选择项1'},{id:2,value:'选择项2'}],value:''});
                     break;
                 }
                 case 'DATE':{
-                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"0",defaultValue:"", name:'时间选择',placeholder:'请选择时间',value:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"false",defaultValue:"", name:'时间选择',placeholder:'请选择时间',value:''});
                     break;
                 }
 /*                case 'daterange':{
@@ -631,15 +631,15 @@ function addsetpcsCtrl(){
                     break;
                 }*/
                 case 'ATTACHMENT':{
-                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"0",defaultValue:"", name:'附件上传',placeholder:'本地上传',value:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"false",defaultValue:"", name:'附件上传',placeholder:'本地上传',value:''});
                     break;
                 }
                 case 'CHECKBOX':{
-                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"0",defaultValue:"", name:'流程名称',valueList:[{id:1,name:'选择项1',value:''},{id:2,name:'选择项2',value:'选择项2'}]});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"false",defaultValue:"", name:'多选框',valueList:[{id:1,name:'选择项1',value:''},{id:2,name:'选择项2',value:'选择项2'}]});
                     break;
                 }
                 case 'RADIO':{
-                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"0",defaultValue:"", name:'流程名称',valueList:[{id:1,name:'选择项1',value:''},{id:2,name:'选择项2',value:''}]});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"false",defaultValue:"", name:'单选框',valueList:[{id:1,name:'选择项1',value:''},{id:2,name:'选择项2',value:''}]});
                     break;
                 }
             }
