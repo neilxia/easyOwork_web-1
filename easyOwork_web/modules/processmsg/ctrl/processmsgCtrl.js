@@ -605,41 +605,41 @@ function addsetpcsCtrl(){
             switch(classname){
                 case 'TEXT':{
                     //$scope.objs.datas.push({clas:'input',key:'',value:''});
-                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'单行文本框',placeholder:'请输入',value:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"0",defaultValue:"", name:'单行文本框',placeholder:'请输入',value:''});
                     break;
                 }
                 case 'NUMBER':{
                     //$scope.processmodal.processDefFieldDTOList.push({type:'input',key:'',value:''});
-                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'数量框',placeholder:'请输入',value:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"0",defaultValue:"", name:'数量框',placeholder:'请输入',value:''});
                     break;
                 }
                 case 'TEXTAREA':{
-                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'多行文本框',placeholder:'请输入',value:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"0",defaultValue:"", name:'多行文本框',placeholder:'请输入',value:''});
                     break;
                 }
                 case 'SELECTION':{
-                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'下拉选择框',valueList:[{id:1,value:'选择项1'},{id:2,value:'选择项2'}],value:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"0",defaultValue:"", name:'下拉选择框',valueList:[{id:1,value:'选择项1'},{id:2,value:'选择项2'}],value:''});
                     break;
                 }
                 case 'DATE':{
-                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'时间选择',placeholder:'请选择时间',value:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"0",defaultValue:"", name:'时间选择',placeholder:'请选择时间',value:''});
                     break;
                 }
 /*                case 'daterange':{
-                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:" , length:"n, isMandatory:"a,defaultValue:"m,e:'时间范围选择',sctitema:'选择开始时间',sctitemb:'选择结束时间',valuea:'',valueb:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:" , length:"n, mandatory:"a,defaultValue:"m,e:'时间范围选择',sctitema:'选择开始时间',sctitemb:'选择结束时间',valuea:'',valueb:''});
 
                     break;
                 }*/
                 case 'ATTACHMENT':{
-                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'附件上传',placeholder:'本地上传',value:''});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"0",defaultValue:"", name:'附件上传',placeholder:'本地上传',value:''});
                     break;
                 }
                 case 'CHECKBOX':{
-                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'流程名称',valueList:[{id:1,name:'选择项1',value:''},{id:2,name:'选择项2',value:'选择项2'}]});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"0",defaultValue:"", name:'流程名称',valueList:[{id:1,name:'选择项1',value:''},{id:2,name:'选择项2',value:'选择项2'}]});
                     break;
                 }
                 case 'RADIO':{
-                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", isMandatory:"0",defaultValue:"", name:'流程名称',valueList:[{id:1,name:'选择项1',value:''},{id:2,name:'选择项2',value:''}]});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"0",defaultValue:"", name:'流程名称',valueList:[{id:1,name:'选择项1',value:''},{id:2,name:'选择项2',value:''}]});
                     break;
                 }
             }
@@ -732,6 +732,8 @@ function addsetpcsCtrl(){
                 MsgService.tomsg('流程类型、流程名称为必填项哦！');
                 return;
             }
+            //流程类型需要传入接口
+            $scope.processmodal.processType=$scope.pcsclass;
             if($scope.theapply.selectedallarr){
                 var userDTOList=[];
                 var roleDTOList=[];
@@ -760,13 +762,13 @@ function addsetpcsCtrl(){
                     val.end=true;
                 }
             })
-            var promise = processService.changeProcessModel($scope.processmodal);
+            var promise = processService.changeProcessModel({'body':$scope.processmodal});
             promise.success(function(data, status, headers, config){
                 debugger;
 
                 var sts=data.body.status;
                 if(sts.statusCode==0){
-
+                	$rootScope.$state.go('processmsg.setpcs');
                 }else{
                     MsgService.errormsg(data);
                 }
