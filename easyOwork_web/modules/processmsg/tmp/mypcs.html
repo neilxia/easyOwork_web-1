@@ -18,7 +18,9 @@
             <button class="btn btn-default btn-sm" ng-model="Processstatus" btn-radio="'COMPLETED'">已同意</button>
             <button class="btn btn-default btn-sm" ng-model="Processstatus" btn-radio="'REJECTED'">已拒绝</button>
             <button class="btn btn-default btn-sm" ng-model="Processstatus" btn-radio="'WITHDRAW'">已撤回</button>
-            <select class="form-control input-sm" ng-model="selectedproclass" ng-options="x.name for x in prosclasslist"></select>
+            <select class="form-control input-sm" ng-model="selectedproclass" ng-options="x.name for x in prosclasslist">
+                <option value="">全部</option>
+            </select>
             <span class="form-group-sm search-group">
                 <input type="text" class="form-control wd180" ng-model="processtitle" placeholder="申请内容关键词">
                 <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>

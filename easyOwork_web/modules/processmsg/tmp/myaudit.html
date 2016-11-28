@@ -13,7 +13,9 @@
     </ol>
     <div class="btnbox">
         <form class="f_r form-inline">
-            <select class="form-control input-sm" ng-model="selectedproclass" ng-options="x.name for x in prosclasslist"></select>
+            <select class="form-control input-sm" ng-model="selectedproclass" ng-options="x.name for x in prosclasslist">
+                <option value="">全部</option>
+            </select>
             <span class="form-group-sm search-group">
                 <input type="text" class="form-control wd180" ng-model="processtitle" placeholder="申请内容关键词">
                 <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>

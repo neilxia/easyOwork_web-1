@@ -567,8 +567,7 @@ function addsetpcsCtrl(){
         $scope.initFun=function(){
             inquiryProcessModelTypeFun()
         }
-        //默认选择类型
-        $scope.pcsclass='';
+
         //查询流程模板类型
         function inquiryProcessModelTypeFun(){
             $scope.options={
@@ -590,14 +589,34 @@ function addsetpcsCtrl(){
 
         //增加框
         $scope.objs = new Object();
-        $scope.processmodal={
-            "actionType":$rootScope.$stateParams.pcsRow.actionType || 'ADD',		//ADD, MODIFY, DELETE
-            "name":$rootScope.$stateParams.pcsRow.name || "",		//数据模板名称
-            "description":$rootScope.$stateParams.pcsRow.description || "",		//数据模板描述
-            "userDTOList":$rootScope.$stateParams.pcsRow.userDTOList || [],
-            "roleDTOList":$rootScope.$stateParams.pcsRow.roleDTOList || [], //如果userDTOList和roleDTOList都不传入则表示适用公司所有人员
-            "processDefStepDTOList":$rootScope.$stateParams.pcsRow.processDefStepDTOList || [],
-            "processDefFieldDTOList":$rootScope.$stateParams.pcsRow.processDefFieldDTOList || []
+        //默认选择类型
+        var pcsRowData=$rootScope.$stateParams.pcsRow;
+        if(pcsRowData){
+            $scope.pcsclass=pcsRowData.processType;
+            $scope.processmodal={
+                "actionType":'MODIFY',		//ADD, MODIFY, DELETE
+                "name":pcsRowData.name || "",		//数据模板名称
+                "description":pcsRowData.description || "",		//数据模板描述
+                "userDTOList":pcsRowData.userDTOList || [],
+                "roleDTOList":pcsRowData.roleDTOList || [], //如果userDTOList和roleDTOList都不传入则表示适用公司所有人员
+                "processDefStepDTOList":pcsRowData.processDefStepDTOList || [],
+                "processDefFieldDTOList":pcsRowData.processDefFieldDTOList || []
+            }
+            $scope.theapply={
+                orgList:pcsRowData.roleDTOList.concat(pcsRowData.userDTOList)
+            };
+        }else{
+            $scope.pcsclass="";
+            $scope.processmodal={
+                "actionType":'ADD',		//ADD, MODIFY, DELETE
+                "name":"",		//数据模板名称
+                "description":"",		//数据模板描述
+                "userDTOList":[],
+                "roleDTOList":[], //如果userDTOList和roleDTOList都不传入则表示适用公司所有人员
+                "processDefStepDTOList":[],
+                "processDefFieldDTOList":[]
+            }
+            $scope.theapply={};
         }
 
         // 增加
@@ -725,7 +744,6 @@ function addsetpcsCtrl(){
         };
 
 
-        $scope.theapply={};
     //    总流程添加
         $scope.addprocessmodalFun=function(){
             if($scope.pcsclass=='' || $scope.processmodal.name==''){
@@ -857,24 +875,77 @@ function addsetpcsCtrl(){
 }
 /*====================流程设置=================================*/
 function setpcsCtrl(){
-    return['$scope','$modal',function($scope,$modal){
-        //删除
-        $scope.delete=function(){
-            var modalInstance = $modal.open({
-                templateUrl: 'delete.html',
-                size:'sm',
-                controller: modalCtrl
-            });
-            function modalCtrl ($scope, $modalInstance) {
-                $scope.ok = function () {
-                    $modalInstance.close();
-                };
+    return['$scope','$modal','LocalStorage','processService',"Common",function($scope,$modal,LocalStorage,processService,Common){
+        var userinfo=LocalStorage.getObject('userinfo');
+        $scope.initFun=function(){
+            inquiryProcessModelTypeFun();
+            inquiryProcessModelFun();//查询流程模板
+        }
 
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            }
+        //查询流程模板
+        function inquiryProcessModelFun(){
+            $scope.options={
+                "name":""		//流程模板名称, 如查询所有模板就不用传入该值
+            };
+            var promise = processService.inquiryProcessModel({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    $scope.inquiryProcessModelData=data.body.data.processDefList;
+                }else{
+                    MsgService.errormsg(data);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.errormsg(data);
+            });
         };
+
+        //查询流程模板类型
+        function inquiryProcessModelTypeFun(){
+            $scope.options={
+                "entId":userinfo.entId		//8位企业号
+            };
+            var promise = processService.inquiryProcessModelType({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    //data.body.data.processDefTypes.unshift({name:'全部'});
+                    $scope.prosclasslist=data.body.data.processDefTypes;
+                }else{
+                    MsgService.errormsg(data);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.errormsg(data);
+            });
+        };
+
+        //删除
+        $scope.delete=function(row){
+            Common.openConfirmWindow().then(function() {
+                changeProcessModelFun();
+                function changeProcessModelFun(){
+                    $scope.options={
+                        "actionType":"DELETE",		//ADD, MODIFY, DELETE
+                        "name":row.name
+                    };
+                    var promise = processService.changeProcessModel({body:$scope.options});
+                    promise.success(function(data, status, headers, config){
+                        var sts=data.body.status;
+                        if(sts.statusCode==0){
+                            inquiryProcessModelFun();
+                        }else{
+                            MsgService.errormsg(data);
+                        }
+                    });
+                    promise.error(function(data, status, headers, config){
+                        MsgService.errormsg(data);
+                    });
+                };
+            });
+        };
+
     }]
 }
 

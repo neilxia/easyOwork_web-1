@@ -169,7 +169,8 @@ function processService(){
             },
             //POST 5.6.4	B0014-查询流程模板
             inquiryProcessModel:function(form){
-                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryProcessModel',form)
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryProcessModel',form);
+                //return $http.get('./modules/processmsg/json/changeProcessModel.json',form)
             },
             //POST 5.6.5	B0015-发起流程
             createProcess:function(form){
