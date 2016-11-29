@@ -598,12 +598,12 @@ function addsetpcsCtrl(){
                 "name":pcsRowData.name || "",		//数据模板名称
                 "description":pcsRowData.description || "",		//数据模板描述
                 "userDTOList":pcsRowData.userDTOList || [],
-                "roleDTOList":pcsRowData.roleDTOList || [], //如果userDTOList和roleDTOList都不传入则表示适用公司所有人员
+                "orgDTOList":pcsRowData.orgDTOList || [], //如果userDTOList和orgDTOList都不传入则表示适用公司所有人员
                 "processDefStepDTOList":pcsRowData.processDefStepDTOList || [],
                 "processDefFieldDTOList":pcsRowData.processDefFieldDTOList || []
             }
             $scope.theapply={
-                orgList:pcsRowData.roleDTOList.concat(pcsRowData.userDTOList)
+                orgList:pcsRowData.orgDTOList.concat(pcsRowData.userDTOList)
             };
         }else{
             $scope.pcsclass="";
@@ -612,7 +612,7 @@ function addsetpcsCtrl(){
                 "name":"",		//数据模板名称
                 "description":"",		//数据模板描述
                 "userDTOList":[],
-                "roleDTOList":[], //如果userDTOList和roleDTOList都不传入则表示适用公司所有人员
+                "orgDTOList":[], //如果userDTOList和orgDTOList都不传入则表示适用公司所有人员
                 "processDefStepDTOList":[],
                 "processDefFieldDTOList":[]
             }
@@ -654,11 +654,11 @@ function addsetpcsCtrl(){
                     break;
                 }
                 case 'CHECKBOX':{
-                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"false",defaultValue:"", name:'多选框',valueList:[{id:1,name:'选择项1',value:''},{id:2,name:'选择项2',value:'选择项2'}]});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"false",defaultValue:"", name:'多选框',valueList:[{value:'选择项1'},{value:'选择项2'}]});
                     break;
                 }
                 case 'RADIO':{
-                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"false",defaultValue:"", name:'单选框',valueList:[{id:1,name:'选择项1',value:''},{id:2,name:'选择项2',value:''}]});
+                    $scope.processmodal.processDefFieldDTOList.push({type:classname, seqNo:"", length:"", mandatory:"false",defaultValue:"", name:'单选框',valueList:[{value:'选择项1'},{value:'选择项2'}]});
                     break;
                 }
             }
@@ -754,7 +754,7 @@ function addsetpcsCtrl(){
             $scope.processmodal.processType=$scope.pcsclass;
             if($scope.theapply.selectedallarr){
                 var userDTOList=[];
-                var roleDTOList=[];
+                var orgDTOList=[];
                 if($scope.theapply.selectedallarr[1].length>0){
                     angular.forEach($scope.theapply.selectedallarr[1],function(val,ind){
                         userDTOList.push({		//适用人员
@@ -767,13 +767,13 @@ function addsetpcsCtrl(){
                 }
                 if($scope.theapply.selectedallarr[0].length>0){
                     angular.forEach($scope.theapply.selectedallarr[0],function(val,ind){
-                        roleDTOList.push({		//适用角色
+                        orgDTOList.push({		//适用角色
                             "name":$scope.theapply.selectedallarr[0][ind].text || ''
                         })
                     });
                 }
                 $scope.processmodal.userDTOList=userDTOList;
-                $scope.processmodal.roleDTOList=roleDTOList;
+                $scope.processmodal.orgDTOList=orgDTOList;
             }
             angular.forEach($scope.processmodal.processDefStepDTOList,function(val,ind){
                 if(($scope.processmodal.processDefStepDTOList.length-1)==ind){

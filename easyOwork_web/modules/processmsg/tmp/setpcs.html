@@ -39,7 +39,7 @@
                         <td><span class="pl15">{{data.processType}}</span></td>
                         <td>{{data.name}}</td>
                         <td>
-                            <span class="mr5" ng-repeat="role in data.roleDTOList">{{role.name}}</span>
+                            <span class="mr5" ng-repeat="org in data.orgDTOList">{{org.name}}</span>
                             <span class="mr5" ng-repeat="userDTO in data.userDTOList">{{userDTO.name}}</span>
                         </td>
                         <td><button class="btn btn-default btn-xs h30" title="编辑" ui-sref="processmsg.addsetpcs({pcsRow:data,actionType:'MODIFY'})"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>

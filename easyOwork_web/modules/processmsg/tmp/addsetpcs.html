@@ -53,6 +53,7 @@
 
             <div class="pct60 f12">
                 <div class="cf fadecj addrow mb10" ng-repeat="obj in processmodal.processDefFieldDTOList">
+                	<span class="pace-inactive">{{obj.seqNo=$index+1}}</span>
                     <div ng-switch on="obj.type">
                         <div class="popover-wrapper" ng-switch-when="TEXT">
                             <form editable-form name="inputForm" onshow="DisabledFun(this)" style="padding-left: 15px; padding-right: 15px; margin-left: -150px;bottom: 65px;" ng-show="inputForm.$visible">
@@ -324,7 +325,7 @@
                                     </tr>
                                     <tr ng-repeat="data in obj.valueList">
                                         <td class="g9">提示文字</td>
-                                        <td><span editable-text="data.name"></span></td>
+                                        <td><span editable-text="data.value"></span></td>
                                     </tr>
                                     <tr>
                                         <td class="g9">是否必选</td>
@@ -346,7 +347,7 @@
                                 <span class="closebtn red bdrs50" ng-show="tableisDisabled" ng-click="objs.deleFun($index)"><i class="iconfont icon-close f12"></i></span>
                                 <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.mandatory==true">*</span>{{obj.name || '无'}}</div>
                                 <div class="col-xs-10 pt5">
-                                    <label class="mr10" ng-repeat="data in obj.valueList"><input icheck type="checkbox" ng-model="data.value" disabled> {{data.name}}</label>
+                                    <label class="mr10" ng-repeat="data in obj.valueList"><input icheck type="checkbox" ng-model="data.value" disabled> {{data.value}}</label>
                                 </div>
                             </div>
 
@@ -360,7 +361,7 @@
                                     </tr>
                                     <tr ng-repeat="data in obj.valueList">
                                         <td class="g9">提示文字</td>
-                                        <td><span editable-text="data.name"></span></td>
+                                        <td><span editable-text="data.value"></span></td>
                                     </tr>
                                     <tr>
                                         <td class="g9">是否必选</td>
@@ -382,7 +383,7 @@
                                 <span class="closebtn red bdrs50" ng-show="tableisDisabled" ng-click="objs.deleFun($index)"><i class="iconfont icon-close f12"></i></span>
                                 <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.mandatory==true">*</span>{{obj.name || '无'}}</div>
                                 <div class="col-xs-10 pt5">
-                                    <label class="mr10" ng-repeat="data in obj.valueList"><input icheck type="radio" ng-model="data.value" disabled> {{data.name}}</label>
+                                    <label class="mr10" ng-repeat="data in obj.valueList"><input icheck type="radio" ng-model="data.value" disabled> {{data.value}}</label>
                                 </div>
                             </div>
 
