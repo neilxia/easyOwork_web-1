@@ -340,6 +340,53 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             data: { pageTitle: '类别设置'}
 
         })
+        /*****************决策分析***************************/
+        .state('analysis', {
+            abstract: true,
+            url: "/analysis",
+            data: { pageTitle: '决策分析' },
+            views: {
+                '': {
+                    templateUrl: 'modules/common/content.html'
+                },
+                'main@analysis': {
+                    templateUrl: 'modules/common/myContent.html'
+                },
+                'menu@analysis': {
+                    templateUrl: 'modules/analysis/tmp/menu.html'
+                }
+            }
+        })
+        .state('analysis.list', {
+            url: "/list",
+            templateUrl: 'modules/analysis/tmp/list.html',
+            data: { pageTitle: '决策分析'}
+
+        })
+        .state('analysis.employee', {
+            url: "/employee",
+            templateUrl: 'modules/analysis/tmp/list.html',
+            data: { pageTitle: '决策分析'}
+
+        })
+        .state('analysis.customer', {
+            url: "/customer",
+            templateUrl: 'modules/analysis/tmp/list.html',
+            data: { pageTitle: '决策分析'}
+
+        })
+        .state('analysis.project', {
+            url: "/project",
+            templateUrl: 'modules/analysis/tmp/list.html',
+            data: { pageTitle: '决策分析'}
+
+        })
+        .state('analysis.recruit', {
+            url: "/recruit",
+            templateUrl: 'modules/analysis/tmp/list.html',
+            data: { pageTitle: '决策分析'}
+
+        })
 
         /*========我的模块=============================================================================================== */
        /* .state('my', {

@@ -25,8 +25,8 @@
         'qiyi.permissions', //权限
         'qiyi.login',
         //'qiyi.demo',
-        'qiyi.directives'
-
+        'qiyi.directives',
+        'qiyi.analysis'
     ]);
     //var myApp= angular.module("demo", [ 'ui.router', 'oc.lazyLoad', 'ui.bootstrap']);
 })();
