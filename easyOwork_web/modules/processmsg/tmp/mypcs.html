@@ -48,7 +48,7 @@
                         <td>{{data.title}}</td>
                         <td>{{data.processUuid}}</td>
                         <td>{{data.createDate}}</td>
-                        <td>{{data.processStepDTOList[data.currentStepNo-1].processUserDTO.name}}</td>
+                        <td>{{data.processStepDTOList[data.currentStepNo-1].userDTO.name}}</td>
                         <td><span ng-class="{'orange':data.status=='审批中','green':data.status=='已同意','red':data.status=='已拒绝','g9':data.status=='已撤回'}">{{data.statusDesc}}</span></td>
                         <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="chakanFun(data)"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs h30 ml5" title="撤回" ng-click="changeProcessFun(data)"><i class="iconfont icon-fanhui f14"></i></button></td>
                     </tr>

@@ -3,7 +3,7 @@
  */
 /*====================我的申请=================================*/
 function addpcsCtrl(){
-    return['$rootScope','$scope','$modal','editableOptions','processService','LocalStorage','MsgService',function($rootScope,$scope,$modal,editableOptions,processService,LocalStorage,MsgService){
+    return['$rootScope','$scope','$modal','editableOptions','processService','LocalStorage','MsgService','$state',function($rootScope,$scope,$modal,editableOptions,processService,LocalStorage,MsgService,$state){
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.initFun=function(){
             inquiryProcessModelTypeFun();
@@ -19,6 +19,28 @@ function addpcsCtrl(){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                     $scope.inquiryProcessModelData=data.body.data.processDefList;
+                    //转化为可使用添加流程可使用的数据结构
+                    $scope.processList = [];
+                    angular.forEach($scope.inquiryProcessModelData, function(obj, key) {
+                    	var process = {
+        	            	"name":obj.name,
+        	            	"title":obj.title,
+        	            	"description":obj.description,
+        	            	"processType":obj.processType,
+        	            	"launchUserDTO":{
+        	                    "id":userinfo.id,	//员工号
+        	                    "personalEmail":userinfo.personalEmail,	//邮件地址
+        	                    "personalPhoneCountryCode":userinfo.personalPhoneCountryCode,	//电话号码
+        	                    "personalPhone":userinfo.personalPhone		//电话号码
+        	                },
+        	            	"processFieldDTOList":[],
+        	            	"processStepDTOList":obj.processDefStepDTOList
+                    	};
+                    	angular.forEach(obj.processDefFieldDTOList, function(obj1, key1) {
+                    		process.processFieldDTOList.push({'name':obj1.name,'value':'','valueList':obj1.valueList,'type':obj1.type});
+                    	});
+                    	$scope.processList.push(process);
+                    })
                 }else{
                     MsgService.errormsg(data);
                 }
@@ -46,19 +68,33 @@ function addpcsCtrl(){
                 MsgService.errormsg(data);
             });
         };
-
-
-        //发起流程
-        $scope.createProcessFun=function(){
-            if($scope.processmodal.title){
-                MsgService.tomsg('新建流程名称为必填！');
-                return;
-            }
-            $scope.processmodal.launchUserDTO={
+        /*
+        $scope.processmodal = {
+        	"name":"",
+        	"title":"",
+        	"launchUserDTO":{
                 "id":userinfo.id,	//员工号
                 "personalEmail":userinfo.personalEmail,	//邮件地址
                 "personalPhoneCountryCode":userinfo.personalPhoneCountryCode,	//电话号码
                 "personalPhone":userinfo.personalPhone		//电话号码
+            },
+        	"processFieldDTOList":[]
+        };
+        
+        //选择流程
+        $scope.selectProcessModal = function(selectedProcessModal){
+        	$scope.processmodal.name = selectedProcessModal.name;
+        	 $scope.processmodal.processFieldDTOList = [];	//先清空再添加
+        	 angular.forEach(selectedProcessModal.processDefFieldDTOList, function(obj, key) {
+    			 $scope.processmodal.processFieldDTOList.push({'name':obj.name,'value':'','valueList':obj.valueList,'type':obj.type});
+             })
+        }
+        */
+        //发起流程
+        $scope.createProcessFun=function(){
+            if($scope.processmodal.title==''||$scope.processmodal.title==undefined){
+                MsgService.tomsg('新建流程名称为必填！');
+                return;
             }
             debugger;
             var promise = processService.createProcess({body:$scope.processmodal});
@@ -66,7 +102,7 @@ function addpcsCtrl(){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
 
-                    debugger;
+                	$state.go('processmsg/mypcs');
                 }else{
                     MsgService.errormsg(data);
                 }
@@ -209,7 +245,7 @@ function mypcsdetailCtrl(){
 }
 /*====================我的审批=================================*/
 function myauditCtrl(){
-    return['$rootScope','$scope', '$modal','Common','processService','LocalStorage','processService',function($rootScope,$scope,$modal,Common,processService,LocalStorage,processService){
+    return['$rootScope','$scope', '$modal','Common','processService','LocalStorage',function($rootScope,$scope,$modal,Common,processService,LocalStorage){
 
         $scope.bigTotalItems = 11;
         $scope.bigCurrentPage = 1;
@@ -305,7 +341,7 @@ function myauditCtrl(){
 }
 /*====================审批详情=================================*/
 function myauditdetailCtrl(){
-    return['$rootScope','$scope','LocalStorage','Common',function($rootScope,$scope,LocalStorage,Common){
+    return['$rootScope','$scope','LocalStorage','Common','processService',function($rootScope,$scope,LocalStorage,Common,processService){
         $scope.pcsdetail = LocalStorage.getObject('pcsdetail');
         //撤回流程
         $scope.jujue=false;
@@ -315,14 +351,14 @@ function myauditdetailCtrl(){
         //批准同意
         $scope.agreedproFun=function(){
             Common.openConfirmWindow('','您确定要批准同意申请么？').then(function() {
-                changeProcessFun('APPROVE',$scope.pcsdetail)
+                $scope.changeProcessFun('APPROVE',$scope.pcsdetail)
             });
         }
         //批准拒绝
         $scope.rejectdproFun=function(state){
             if(!state) return;
             Common.openConfirmWindow('','您确定要批准拒绝申请么？').then(function() {
-                changeProcessFun('REJECT',$scope.pcsdetail)
+            	$scope.changeProcessFun('REJECT',$scope.pcsdetail)
             });
         }
         $scope.rejectMsg="";
@@ -351,7 +387,7 @@ function myauditdetailCtrl(){
 }
 /*====================添加流程=================================*/
 function addsetpcsCtrl(){
-    return['$rootScope','$scope','$modal','editableOptions','processService','LocalStorage','MsgService',function($rootScope,$scope,$modal,editableOptions,processService,LocalStorage,MsgService){
+    return['$rootScope','$scope','$modal','editableOptions','processService','LocalStorage','MsgService','$state',function($rootScope,$scope,$modal,editableOptions,processService,LocalStorage,MsgService,$state){
 
         var userinfo=LocalStorage.getObject('userinfo');
 
@@ -577,7 +613,7 @@ function addsetpcsCtrl(){
 
                 var sts=data.body.status;
                 if(sts.statusCode==0){
-                	$rootScope.$state.go('processmsg.setpcs');
+                	$state.go('processmsg.setpcs');
                 }else{
                     MsgService.errormsg(data);
                 }

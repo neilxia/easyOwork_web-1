@@ -19,10 +19,10 @@
                 <li ng-repeat="data in pcsdetail.processStepDTOList" ng-class="{'sucs':data.status=='APPROVED','jing':data.status=='PENDING'}">
                     <span class="sign"></span>
                     <div class="textbox" ng-if="data.status=='APPROVED'">
-                        {{data.stepName}} | {{data.processUserDTO.name}} <span class="green ml10">同意</span> <span class="g9 ml10">{{data.actionDate}}</span>
+                        {{data.stepName}} | {{data.userDTO.name}} <span class="green ml10">同意</span> <span class="g9 ml10">{{data.actionDate}}</span>
                     </div>
                     <div class="textbox" ng-if="data.status=='PENDING'&&data.stepNo==pcsdetail.currentStepNo">
-                        {{data.stepName}} | {{data.processUserDTO.name}} <span class="orange ml10">待处理</span> 
+                        {{data.stepName}} | {{data.userDTO.name}} <span class="orange ml10">待处理</span> 
                         <button class="btn btn-primary btn-xs ml10" ng-click="agreedproFun()">同意</button>
                         <button class="btn btn-default btn-xs ml10" ng-click="jujuetoggle()">拒绝</button>
                         <div class="wd300 pt5" ng-show="jujue">
@@ -33,10 +33,10 @@
                         </div>
                     </div>
                     <div class="textbox" ng-if="data.status=='PENDING'&&data.stepNo!=pcsdetail.currentStepNo">
-                        {{data.stepName}} | {{data.processUserDTO.name}}
+                        {{data.stepName}} | {{data.userDTO.name}}
                     </div>
                     <div class="textbox" ng-if="data.status=='REJECTED'">
-                        {{data.stepName}} | {{data.processUserDTO.name}} <span class="red ml10">拒绝</span> <span class="g9 ml10">{{data.actionDate}}</span>
+                        {{data.stepName}} | {{data.userDTO.name}} <span class="red ml10">拒绝</span> <span class="g9 ml10">{{data.actionDate}}</span>
                     </div>
                 </li>
 

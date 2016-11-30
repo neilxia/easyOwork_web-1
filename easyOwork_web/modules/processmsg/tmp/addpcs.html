@@ -25,13 +25,14 @@
                     <div class="col-xs-2 t_r pt7 g9">选择流程</div>
                     <div class="col-xs-10 form-inline">
                         <!--{{processmodal}}-->
-                        <button class="btn btn-default mr5" ng-repeat="ModelData in inquiryProcessModelData | filter:{'processType':pcsclass}" ng-model="$parent.processmodal" btn-radio="{{ModelData}}">{{ModelData.name}}</button>
+                        <button class="btn btn-default mr5" ng-repeat="ModelData in processList | filter:{'processType':pcsclass}" ng-model="$parent.processmodal" btn-radio="{{ModelData}}">{{ModelData.name}}</button>
                     </div>
                 </div>
                 <div class="cf mb10">
                     <div class="col-xs-2 t_r pt7 g9">流程描述</div>
-                    <div class="col-xs-10"><textarea class="form-control" cols="6" disabled placeholder="简要的流程描述" ng-model="processmodal.description"></textarea></div>
+                    <div class="col-xs-10"><textarea class="form-control" cols="6" disabled ng-model="processmodal.description"></textarea></div>
                 </div>
+                <!-- 
                 <div class="cf mb10">
                     <div class="col-xs-2 t_r pt7 g9">适用人员</div>
                     <div class="col-xs-10">
@@ -41,6 +42,7 @@
                         </ul>
                     </div>
                 </div>
+                 -->
                 <div class="cf mb10">
                     <div class="col-xs-2 t_r pt7 g9">流程名称</div>
                     <div class="col-xs-10">
@@ -48,13 +50,8 @@
                     </div>
                 </div>
             </div>
-            <div class="mb15 f12 bg-fafafa">
-                <div class="cf pt5 pb10">
-                    <div class="col-xs-2 t_r pt7 f16">流程数据</div>
-                </div>
-            </div>
             <div class="pct60 f12">
-                <div class="cf fadecj addrow mb10" ng-repeat="obj in processmodal.processDefFieldDTOList">
+                <div class="cf mb10" ng-repeat="obj in processmodal.processFieldDTOList">
                     <span class="pace-inactive">{{obj.seqNo=$index+1}}</span>
                     <div ng-switch on="obj.type">
                         <div ng-switch-when="TEXT">
@@ -74,7 +71,7 @@
                         <div ng-switch-when="SELECTION">
                             
                             <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.mandatory==true">*</span>{{obj.name || '无'}}</div>
-                            <div class="col-xs-10"><select class="form-control wd200" ng-model="obj.valueList[0]" ng-options="x.value for x in obj.valueList"></select></div>
+                            <div class="col-xs-10"><select class="form-control wd200" ng-model="obj.selectedValue" ng-options="x.value for x in obj.valueList"></select></div>
                         </div>
                         <div ng-switch-when="DATE">
                             
@@ -96,14 +93,14 @@
                             
                             <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.mandatory==true">*</span>{{obj.name || '无'}}</div>
                             <div class="col-xs-10 pt5">
-                                <label class="mr10" ng-repeat="data in obj.valueList"><input icheck type="checkbox" ng-model="data.value"> {{data.value}}</label>
+                                <label class="mr10" ng-repeat="data in obj.valueList"><input icheck type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="data.checked"> {{data.value}}</label>
                             </div>
                         </div>
                         <div ng-switch-when="RADIO">
                             
                             <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.mandatory==true">*</span>{{obj.name || '无'}}</div>
                             <div class="col-xs-10 pt5">
-                                <label class="mr10" ng-repeat="data in obj.valueList"><input icheck type="radio" ng-model="data.value"> {{data.value}}</label>
+                                <label class="mr10" ng-repeat="data in obj.valueList"><input name="{{obj.name}}" value="{{data.value}}" icheck type="radio" ng-model="obj.value"> {{data.value}}</label>
                             </div>
                         </div>
                     </div>
@@ -129,7 +126,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="data in processmodal.processDefStepDTOList | orderBy:data.stepNo">
+                <tr ng-repeat="data in processmodal.processStepDTOList | orderBy:data.stepNo">
                     <td class="pl20"><span class="pl5">{{data.stepNo=$index+1}}</span></td>
                     <td>{{data.stepName}}</td>
                     <td>{{data.userDTO.name}}</span></td>
