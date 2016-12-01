@@ -26,7 +26,8 @@
         'qiyi.login',
         //'qiyi.demo',
         'qiyi.directives',
-        'qiyi.analysis'
+        'qiyi.analysis',
+        'angularFileUpload'
     ]);
     //var myApp= angular.module("demo", [ 'ui.router', 'oc.lazyLoad', 'ui.bootstrap']);
 })();

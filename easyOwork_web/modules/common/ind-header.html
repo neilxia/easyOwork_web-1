@@ -2,8 +2,8 @@
     <div class="{{$state.current.data.widthClass}}" ng-init="inithdFun()">
         <ul class="rightbox">
             <li class="search-group">
-                <input type="text" class="form-control wd220 bdrs20" placeholder="搜索同事">
-                <span ui-sref="sysmsg.search" class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
+                <input type="text" class="form-control wd220 bdrs20" placeholder="搜索同事" ng-model="searchText">
+                <span ng-click="searchFun()" class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
             </li>
             <li class="dropdown ml15 mr15" collapse-h options="collapsehset">
                 <a class="dropdown-toggle count-info" id="infobtn">

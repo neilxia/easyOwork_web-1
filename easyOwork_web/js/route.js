@@ -82,12 +82,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             data: { pageTitle: '系统设置-参数设置'}
 
         })
-        .state('sysmsg.search', {
-            url: "/search",
-            templateUrl: 'modules/sysmsg/tmp/search.html',
-            data: { pageTitle: '员工搜索'}
 
-        })
         /*========组织结构=============================================================================================== */
         .state('structuremsg', {
             abstract: true,
@@ -181,6 +176,12 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                     ])
                 }
             }
+
+        })
+        .state('staffmsg.search', {
+            url: "/search?name",
+            templateUrl: 'modules/sysmsg/tmp/search.html',
+            data: { pageTitle: '员工搜索'}
 
         })
         /*========职务权限=============================================================================================== */

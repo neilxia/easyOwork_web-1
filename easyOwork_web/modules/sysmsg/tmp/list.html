@@ -41,8 +41,13 @@
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
                     <td class="pl20">
-                        <div><img src="./images/mo01.jpg" alt=""></div>
-                        <div class="wd220 t_c mt10"><button class="btn btn-primary btn-xs">上传营业执照</button></div>
+                        <div><img src="{{EPinfo.licenceUrl || './images/mo01.jpg'}}" alt=""></div>
+                        <div class="wd220 t_c mt10">
+                            <!--<button class="btn btn-primary btn-xs">上传营业执照</button>-->
+                            <div  class="btn btn-primary btn-xs upheadbtn">
+                                <input type="file" name="certificate" nv-file-select accept="image/*" uploader="uploader"/>上传营业执照
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </table>
@@ -56,8 +61,13 @@
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
                     <td class="pl20">
-                        <div><span class="g6 f12">企业标志：</span>未设置<button class="btn btn-default btn-xs ml5">本地上传</button><span class="g6 f12 ml5">请上传800x800，大小1mb以内，支持jpg和png格式</span></div>
-                        <div class="pl60 mt10"><img src="./images/mo02.jpg" alt=""></div>
+                        <div><span class="g6 f12">企业标志：</span>未设置
+                            <div  class="btn btn-default btn-xs upheadbtn">
+                            <input type="file" name="certificate" nv-file-select accept="image/*" uploader="uploader"/>本地上传
+                        </div><span class="g6 f12 ml5">请上传800x800，大小1mb以内，支持jpg和png格式</span></div>
+                        <div class="pl60 mt10">
+                            <img src="{{EPinfo.logoUrl || './images/mo02.jpg'}}" alt="">
+                        </div>
                     </td>
                 </tr>
                 <tr>

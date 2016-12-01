@@ -83,7 +83,7 @@ angular.module('qiyi')
     }
 
 }])
-    .controller('headerCtrl',['$scope','$state','LocalStorage','publicService','MsgService',function($scope,$state,LocalStorage,publicService,MsgService){
+    .controller('headerCtrl',['$rootScope','$scope','$state','LocalStorage','publicService','MsgService',function($rootScope,$scope,$state,LocalStorage,publicService,MsgService){
         $scope.inithdFun=function(){
             loginstate(); //登录状态设置
         };
@@ -105,6 +105,11 @@ angular.module('qiyi')
                     MsgService.errormsg(data);
                 }
             });
+        }
+        //$scope.searchText=$rootScope.$stateParams.name;
+        $scope.searchFun=function(){
+            if(!$scope.searchText)return;
+            $state.go("staffmsg.search",{name:$scope.searchText})
         }
     }])
 ;

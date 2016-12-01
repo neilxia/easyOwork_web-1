@@ -1,4 +1,4 @@
-<div id="page-wrapper"  ng-controller="searchCtrl">
+<div id="page-wrapper"  ng-controller="searchCtrl" ng-init="initFun()">
     <!--主要内容-->
     <div class="payetilebox">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
@@ -10,7 +10,8 @@
         <li>工作面板</li>
         <li class="active">员工搜索</li>
     </ol>
-    <div class="btnbox">
+    <div class="btnbox line28">
+        搜索“ <span class="red">{{searchText}}</span> ”，共搜索到<span class="red">{{searchcount}}</span>条记录
     </div>
     <div class="nose-panel">
         <div class="nose-panel-body">
@@ -27,23 +28,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td><span class="p15">王晓红</span></td>
-                    <td>女</td>
-                    <td>HR</td>
-                    <td>管理员</td>
-                    <td>jammy@gieo.cn</td>
-                    <td>13458639887</td>
-                    <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="staffbase()"><i class="iconfont icon-chakan f14"></i></button></td>
-                </tr>
-                <tr>
-                    <td><span class="p15">王晓红</span></td>
-                    <td>女</td>
-                    <td>HR</td>
-                    <td>管理员</td>
-                    <td>jammy@gieo.cn</td>
-                    <td>13458639887</td>
-                    <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="staffbase()"><i class="iconfont icon-chakan f14"></i></button></td>
+                <tr ng-repeat="data in datalist | filter:sltorgList[0].text | filter:sltroleList[0].text | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                    <td><span class="p15">{{data.name}}</span></td>
+                    <td>{{data.sex}}</td>
+                    <td>{{data.orgList[0].name}}</td>
+                    <td>{{data.roleList[0].name}}</td>
+                    <td>{{data.personalEmail}}</td>
+                    <td>{{data.personalPhone}}</td>
+                    <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="staffbase(data)"><i class="iconfont icon-chakan f14"></i></button></td>
                 </tr>
                 </tbody>
             </table>
@@ -72,23 +64,24 @@
                 <table cellpadding="0" cellspacing="0" width="100%" class="line40td">
                     <tr>
                         <td width="60" class="g9">员工姓名</td>
-                        <td class="pl5">李晓明</td>
+                        <td class="pl5">{{user.name}}</td>
                     </tr>
                     <tr>
                         <td width="60" class="g9">性别</td>
-                        <td class="pl5">男</td>
+                        <td class="pl5">{{user.sex}}</td>
                     </tr>
                     <tr>
                         <td class="g9">出生日期</td>
-                        <td class="pl5">1984-09-22</td>
+                        <td class="pl5">{{user.birthDate}}</td>
                     </tr>
+
                     <tr>
                         <td class="g9">电子邮箱</td>
-                        <td class="pl5">xxxx@163.com</td>
+                        <td class="pl5">{{user.personalEmail}}</td>
                     </tr>
                     <tr>
                         <td class="g9">联系电话</td>
-                        <td class="pl5">13411112222</td>
+                        <td class="pl5">{{user.personalPhone}}</td>
                     </tr>
 <!--                    <tr>
                         <td class="g9">员工编号</td>
@@ -96,21 +89,21 @@
                     </tr>-->
                     <tr>
                         <td class="g9">所属岗位</td>
-                        <td class="pl5">行政部</td>
+                        <td class="pl5">{{user.orgList[0].name}}</td>
                     </tr>
                     <tr>
                         <td class="g9">入职日期</td>
-                        <td class="pl5">2016-08-21</td>
+                        <td class="pl5">{{user.joiningDate}}</td>
                     </tr>
                     <tr>
                         <td class="g9">毕业院校</td>
-                        <td class="pl5">四川XXXXX大学</td>
+                        <td class="pl5">{{user.university}}</td>
                     </tr>
                 </table>
             </div>
             <div class="col-xs-3 pl20 pt5 t_c">
                 <div class="headportbox bdrs4 mauto">
-                    <img src="./images/headportrait01.png" width="120" alt="">
+                    <img src="{{user.photoUrl || './images/headportrait01.png'}}" width="120" alt="">
                 </div>
                 <!--<div class="mt10"><button class="btn btn-default btn-xs">更改头像</button></div>-->
             </div>

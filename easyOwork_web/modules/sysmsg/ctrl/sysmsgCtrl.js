@@ -2,7 +2,7 @@
  * Created by Nose on 2016/9/7.
  */
 function listCtrl(){
-    return['$scope', '$modal' ,'LocalStorage','companyService',function($scope,$modal,LocalStorage,companyService){
+    return['$scope', '$modal' ,'LocalStorage','companyService','FileUploader',function($scope,$modal,LocalStorage,companyService,FileUploader){
         var companyinfo;
         $scope.initFun=function(){
             companyinfo=LocalStorage.getObject('companyinfo');
@@ -49,6 +49,44 @@ function listCtrl(){
         };
 
 
+        //上传开始
+        var uploader = $scope.uploader = new FileUploader({
+            url: '../upload', //上传的路径
+            queueLimit: 1,     //文件个数
+            removeAfterUpload: true,   //上传后删除文件
+            autoUpload:true
+        });
+        uploader.onSuccessItem = function(fileItem, response, status, headers) {
+
+            localPhoto();
+            function localPhoto(){
+                var options={
+                    id:$scope.Perdata.id,
+                    photo:response.data
+                };
+                var promise = companyService.editcustomer(options);
+                promise.success(function (data, status, headers, config) {
+                    if (data.code == 201) {
+                        $scope.Perdata.photo='./images/headportrait02.jpg';
+                    } else {
+                        $scope.Perdata.photo = response.data;
+                        LocalStorage.setObject('usrinfo',$scope.Perdata);
+                    }
+                });
+                promise.error(function (data, status, headers, config) {
+                    ////alert(data.msg);
+                });
+            }
+
+            //$scope.Perdata = angular.extend(data.data.photo,LocalStorage.getObject('usrinfo'));
+        };
+        uploader.onErrorItem = function(fileItem, response, status, headers) {
+            debugger;
+            console.info('onErrorItem', fileItem, response, status, headers);
+        };
+
+
+
     }]
 }
 
@@ -88,7 +126,6 @@ function cssetCtrl(){
         };
 
         //修改系统参数
-
         $scope.changeParameterFun=function (data,name){
             $scope.options={
                 "settings":[		//数组, 一次可修改多个参数
@@ -117,14 +154,46 @@ function cssetCtrl(){
     }]
 }
 function searchCtrl(){
-    return['$scope','$modal',function($scope,$modal){
-        $scope.staffbase=function(){
+    return['$rootScope','$scope','$modal','employeesService',function($rootScope,$scope,$modal,employeesService){
+        $scope.searchText=$rootScope.$stateParams.name;
+        $scope.initFun=function(){
+            inquiryEmployeeFun();
+        }
+        //查询本人/其他员工信息列表
+        $scope.thispages={
+            total:null,
+            pageNum:1,
+            pageSize:10
+        };
+        function inquiryEmployeeFun(){
+            $scope.options={
+                "type":"NAME",
+                "name":$rootScope.$stateParams.name
+            };
+            var promise = employeesService.inquiryEmployee({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    $scope.datalist=data.body.data.userList;
+                    $scope.searchcount=$scope.datalist.length;
+                    //$scope.thispages.total=$scope.datalist.length;//分页总数
+                }else{
+                    MsgService.errormsg(data);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.errormsg(data);
+            });
+        };
+
+        $scope.staffbase=function(row){
             var modalInstance = $modal.open({
                 templateUrl: 'staffbase.html',
                 //size:'md',
                 controller: modalCtrl
             });
             function modalCtrl ($scope, $modalInstance) {
+                $scope.user=row;
                 $scope.ok = function () {
                     $modalInstance.close();
                 };
