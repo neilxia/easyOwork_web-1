@@ -36,21 +36,24 @@
          -->
         <div class="pt10 pb10 bbe">
             <table class="line28td" cellpadding="0" cellspacing="0" width="100%">
-                <!-- 
+                
                 <tr>
-                    <td width="60" align="right">资质信息</td>
-                    <td class="pl20"><span class="g6 f12">参与企业实名认证，享受更多优质服务。</span></td>
+                    <td width="60" align="right">营业执照</td>
+                    <td class="pl20">
+                    <div class="wd220">
+                    	<div  class="btn btn-primary btn-xs upheadbtn">
+                             <input type="file" id="licence" nv-file-select accept="image/*" uploader="uploader"/>上传营业执照
+                         </div>
+                         </div>
+                     </td>
                 </tr>
-                 -->
+                 
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
                     <td class="pl20">
-                        <div><img src="{{EPinfo.licenceUrl || './images/mo01.jpg'}}" alt=""></div>
-                        <div class="wd220 t_c mt10">
+                        <div><img src="{{EPinfo.actualLicenceUrl || './images/mo01.jpg'}}" alt="" style="max-width: 200px; max-height: 200px"></div>
+                        
                             <!--<button class="btn btn-primary btn-xs">上传营业执照</button>-->
-                            <div  class="btn btn-primary btn-xs upheadbtn">
-                                <input type="file" name="certificate" nv-file-select accept="image/*" uploader="uploader"/>上传营业执照
-                            </div>
                         </div>
                     </td>
                 </tr>
@@ -61,17 +64,17 @@
             <table class="line30td" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                     <td width="60" align="right">公司信息</td>
-                    <td class="pl20"><span class="g6 f12">企业号：</span><span class="f16">21141819</span></td>
+                    <td class="pl20"><span class="g6 f12">企业号：</span><span class="f16">{{EPinfo.entId}}</span></td>
                 </tr>
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
                     <td class="pl20">
-                        <div><span class="g6 f12">企业标志：</span>未设置
-                            <div  class="btn btn-default btn-xs upheadbtn">
-                            <input type="file" name="certificate" nv-file-select accept="image/*" uploader="uploader"/>本地上传
-                        </div><span class="g6 f12 ml5">请上传800x800，大小1mb以内，支持jpg和png格式</span></div>
+                        <div><span class="g6 f12">企业标志：</span>
+                            <div  class="btn btn-primary btn-xs upheadbtn">
+                            <input type="file" id="logo" nv-file-select accept="image/*" uploader="logoUploader"/>本地上传
+                        </div><span class="g6 f12 ml5">支持jpg和png格式</span></div>
                         <div class="pl60 mt10">
-                            <img src="{{EPinfo.logoUrl || './images/mo02.jpg'}}" alt="">
+                            <img src="{{EPinfo.actualLogoUrl || './images/mo02.jpg'}}" alt="" style="max-width: 150px; max-height: 150px">
                         </div>
                     </td>
                 </tr>

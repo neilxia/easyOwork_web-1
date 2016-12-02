@@ -2,7 +2,7 @@
  * Created by Nose on 2016/9/7.
  */
 function listCtrl(){
-    return['$scope', '$modal' ,'LocalStorage','companyService','FileUploader',function($scope,$modal,LocalStorage,companyService,FileUploader){
+    return['$scope', '$modal' ,'LocalStorage','companyService','FileUploader','OSSService',function($scope,$modal,LocalStorage,companyService,FileUploader,OSSService){
         var companyinfo;
         $scope.initFun=function(){
             companyinfo=LocalStorage.getObject('companyinfo');
@@ -15,7 +15,9 @@ function listCtrl(){
                 "contactName":companyinfo.contactName,		//联系人姓名
                 "contactPhone":companyinfo.contactPhone,	//联系人电话
                 "logoUrl":companyinfo.logoUrl,		//logo图片地址
-                "licenceUrl":companyinfo.licenceUrl		//营业执照图片地址
+                "actualLogoUrl":companyinfo.actualLogoUrl,	//logo图片实际地址
+                "licenceUrl":companyinfo.licenceUrl,		//营业执照图片地址
+                "actualLicenceUrl":companyinfo.actualLicenceUrl		//营业执照图片实际地址
             }
         }
 
@@ -51,11 +53,30 @@ function listCtrl(){
 
         //上传开始
         var uploader = $scope.uploader = new FileUploader({
-            url: '../upload', //上传的路径
+            url: '', //不使用默认URL上传
             queueLimit: 1,     //文件个数
             removeAfterUpload: true,   //上传后删除文件
-            autoUpload:true
+            autoUpload:false
         });
+        uploader.onAfterAddingFile = function(fileItem){
+        	uploader.cancelAll();
+        	var file = $("#licence").get(0).files[0];
+        	var filePath = $scope.EPinfo.entId+'/company/licence';
+        	var key= filePath+file.name;
+        	var promise = OSSService.uploadFile(filePath,file);
+        	promise.success(function (data, status, headers, config) {
+        		 var urlPromise = OSSService.getUrl({'body':{'key':key}});
+        		 urlPromise.success(function (data, status, headers, config) {
+        			 var sts=data.body.status;
+                     if(sts.statusCode==0){
+                    	 $scope.EPinfo.actualLicenceUrl = data.body.data.url;
+                    	 LocalStorage.setObject('companyinfo',$scope.EPinfo);
+                     }
+        		 });
+        		 $scope.changeCompanyInfoFun(key,'licenceUrl');
+        	})
+        };
+        /*
         uploader.onSuccessItem = function(fileItem, response, status, headers) {
 
             localPhoto();
@@ -84,7 +105,31 @@ function listCtrl(){
             debugger;
             console.info('onErrorItem', fileItem, response, status, headers);
         };
-
+		*/
+        var logoUploader = $scope.logoUploader = new FileUploader({
+            url: '', //不使用默认URL上传
+            queueLimit: 1,     //文件个数
+            removeAfterUpload: true,   //上传后删除文件
+            autoUpload:false
+        });
+        logoUploader.onAfterAddingFile = function(fileItem){
+        	logoUploader.cancelAll();
+        	var file = $("#logo").get(0).files[0];
+        	var filePath = $scope.EPinfo.entId+'/company/logo';
+        	var key= filePath+file.name;
+        	var promise = OSSService.uploadFile(filePath,file);
+        	promise.success(function (data, status, headers, config) {
+        		 var urlPromise = OSSService.getUrl({'body':{'key':key}});
+        		 urlPromise.success(function (data, status, headers, config) {
+        			 var sts=data.body.status;
+                     if(sts.statusCode==0){
+                    	 $scope.EPinfo.actualLogoUrl = data.body.data.url;
+                    	 LocalStorage.setObject('companyinfo',$scope.EPinfo);
+                     }
+        		 });
+        		 $scope.changeCompanyInfoFun(key,'logoUrl');
+        	})
+        };
 
 
     }]

@@ -437,6 +437,9 @@ function OSSService(){
             },
             getOssInfo:function(){
             	return ossInfo;
+            },
+            getUrl:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/getUrl',form)
             }
         }
     }];
