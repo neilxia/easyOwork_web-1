@@ -39,6 +39,7 @@
                         <td><span class="pl15">{{data.processType}}</span></td>
                         <td>{{data.name}}</td>
                         <td>
+                        	<span class="mr5" ng-if="data.orgDTOList.length == 0 && data.userDTOList.length == 0">所有人员</span>
                             <span class="mr5" ng-repeat="org in data.orgDTOList">{{org.name}}</span>
                             <span class="mr5" ng-repeat="userDTO in data.userDTOList">{{userDTO.name}}</span>
                         </td>

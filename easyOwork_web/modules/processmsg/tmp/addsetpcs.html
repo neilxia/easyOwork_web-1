@@ -17,15 +17,15 @@
             <!--<button ng-show="!tableisDisabled" ng-click="changeeditable()" class="btn btn-default editbtn">配置该流程</button>-->
             <!--<button ng-show="tableisDisabled" ng-click="changeeditable()" class="btn btn-primary editbtn">保存流程配置</button>-->
             <div class="pct60 f12">
+				<div class="cf mb10">
+                    <div class="col-xs-2 t_r pt7 g9">流程名称</div>
+                    <div class="col-xs-10"><input type="text" class="form-control" placeholder="输入流程名称" ng-model="processmodal.name"></div>
+                </div>
                 <div class="cf mb10">
                     <div class="col-xs-2 t_r pt7 g9">流程类型</div>
                     <div class="col-xs-10 form-inline">
                         <button ng-repeat="data in prosclasslist" class="btn btn-default mr5" ng-model="$parent.pcsclass" btn-radio="'{{data.name}}'">{{data.name}}</button>
                     </div>
-                </div>
-                <div class="cf mb10">
-                    <div class="col-xs-2 t_r pt7 g9">流程名称</div>
-                    <div class="col-xs-10"><input type="text" class="form-control" placeholder="输入流程名称" ng-model="processmodal.name"></div>
                 </div>
                 <div class="cf mb10">
                     <div class="col-xs-2 t_r pt7 g9">流程描述</div>
