@@ -227,7 +227,15 @@
                             </tbody>
                         </table>
                         <a class="addinfobox t_c mt10" ng-click="addPayclass()"><i class="iconfont icon-add "></i></a>
-                        <div class="mt10">员工合同<i class="iconfont icon-fujian blue ml5"></i> 尔康互动员工雇佣合同.doc <a href="" class="a_prime ml5">重新上传</a></div>
+                        <div class="mt10">
+                            员工合同
+                            <i class="iconfont icon-fujian blue ml5"></i>
+                            {{data.contractUrl}}
+                            <div class="btn btn-primary btn-xs upheadbtn">
+                                <input type="file" id="licence" nv-file-select accept="image/*" uploader="htUploader"/>合同上传
+                            </div>
+                            <!--<i class="iconfont icon-fujian blue ml5"></i> 尔康互动员工雇佣合同.doc <a href="" class="a_prime ml5">重新上传</a>-->
+                        </div>
                     </div>
                     <div class="pt20 pb20 t_r">
                         <!--<button type="button" class="btn btn-white f_l" ui-sref="staffmsg.set" ng-click="cancel()">配置薪酬及社保</button>-->

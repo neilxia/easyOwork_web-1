@@ -20,23 +20,6 @@ interceptors.factory('HttpInterceptor', ["$q","$rootScope","LocalStorage",'noseS
                     "entId":userinfo.entId
                 }
             }
-            //config.headers["accessToken"] =  LocalStorage.getToken();
-/*            config.headers = config.headers || {};
-            if($cookies.get('token')){
-                config.headers.authorization = 'Bearer ' + $cookies.get('token');
-                //config.headers["accessToken"] =  LocalStorage.getToken();
-            }*/
-/*            var token = LocalStorage.getToken();
-            if(token){
-                var url = config.url;
-                if(url.indexOf("html") <0 ){
-                    if(url.indexOf("?") <0){
-                        config.url = config.url +'?accessToken='+token;
-                    }else{
-                        config.url = config.url +'&accessToken='+token;
-                    }
-                }
-            }*/
             return config;
         },
         'requestError': function(rejection) {
@@ -47,6 +30,16 @@ interceptors.factory('HttpInterceptor', ["$q","$rootScope","LocalStorage",'noseS
 
         'response': function(response) {
             $rootScope.loading = false;
+            if(typeof(response.data)=='object'){
+                var sts=response.data.body.status;
+                if((sts.erroCode)){
+                //if((sts.erroCode=="ErrorCode.common.0002" || sts.erroCode=="ErrorCode.common.0004")){
+                    $rootScope.$state.go('login');
+                    LocalStorage.setObject('userinfo',"");
+                    LocalStorage.setObject('companyinfo',"");
+                    return $q.reject(response);
+                }
+            }
             // response your $rootscope messagin should be here?
             return response;
         },

@@ -147,7 +147,33 @@ function staffmsgCtrl(){
                 size:'md',
                 controller: modalCtrl
             });
-            function modalCtrl ($scope, $modalInstance) {
+            function modalCtrl ($scope, $modalInstance,FileUploader) {
+                var htUploader = $scope.htUploader = new FileUploader({
+                    url: '', //不使用默认URL上传
+                    queueLimit: 1,     //文件个数
+                    removeAfterUpload: true,   //上传后删除文件
+                    autoUpload:false
+                });
+                htUploader.onAfterAddingFile = function(fileItem){
+                    debugger;
+                    /*                    logoUploader.cancelAll();
+                     var file = $("#logo").get(0).files[0];
+                     var filePath = $scope.EPinfo.entId+'/company/logo';
+                     var key= filePath+file.name;
+                     var promise = OSSService.uploadFile(filePath,file);
+                     promise.success(function (data, status, headers, config) {
+                     var urlPromise = OSSService.getUrl({'body':{'key':key}});
+                     urlPromise.success(function (data, status, headers, config) {
+                     var sts=data.body.status;
+                     if(sts.statusCode==0){
+                     $scope.EPinfo.actualLogoUrl = data.body.data.url;
+                     LocalStorage.setObject('companyinfo',$scope.EPinfo);
+                     }
+                     });
+                     $scope.changeCompanyInfoFun(key,'logoUrl');
+                     })*/
+                };
+
                  $scope.user={
                      "id":"",		//员工编号
                      "photoUrl":"",		//头像地址
@@ -165,8 +191,10 @@ function staffmsgCtrl(){
                      "contractUrl":"",		//合同文件地址
                      "salaryTypeList":[]
                  };
+
                 $scope.ok = function(state) {
                     if(!state){return;}
+
                     changeEmployeeFun('ADD',$scope.user,$modalInstance);
                 };
                 $scope.cancel = function () {

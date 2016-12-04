@@ -84,90 +84,20 @@
                     </div>-->
                     <div tabset class="towntabbox01 towntabbox02" >
                         <div tab>
-                            <div tab-heading>我的待处理申请(3)</div>
+                            <div tab-heading>我的待处理申请({{inquiryProcessesData.length}})</div>
                             <div class="ind-medo_com" slim-scroll box-height="300">
                                 <table  width="98%" cellpadding="0" cellspacing="0">
-                                    <tr>
+                                    <tr class="poi" ng-repeat="data in inquiryProcessesData" ng-click="chakanpcsFun(data)">
                                         <td width="70">
                                             <div class="imgheader head-sm">
-                                                <span class="bdrs50"><img src="./images/headportrait01.png" alt=""></span>
+                                                <span class="bdrs50"><img src="{{userinfoall.photoUrl || './images/headportrait02.jpg'}}" alt=""></span>
                                             </div>
                                         </td>
                                         <td class="pl15 pr15">
                                             <div class="h40 ovh">
-                                                <a href="">回北京老家探望老人，三年未回家需请假7天，望领导批准，谢谢！这
-                                                    里最多显示共两行，如果内容超过两行，请大神阁下使用符号代替...</a>
+                                                <a href="">{{data.title}}</a>
                                             </div>
-                                            <div class="g9 f12 mt10"><span class="f_r">2016-09-24 16:57</span>张肖尔</div>
-                                        </td>
-                                        <td width="12"><i class="iconfont icon-right f12"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="70">
-                                            <div class="imgheader head-sm">
-                                                <span class="bdrs50"><img src="./images/headportrait01.png" alt=""></span>
-                                            </div>
-                                        </td>
-                                        <td class="pl15 pr15">
-                                            <div class="h40 ovh">
-                                                <a href="">回北京老家探望老人，三年未回家需请假7天，望领导批准，谢谢！这
-                                                    里最多显示共两行，如果内容超过两行，请大神阁下使用符号代替...</a>
-                                            </div>
-                                            <div class="g9 f12 mt10"><span class="f_r">2016-09-24 16:57</span>张肖尔</div>
-                                        </td>
-                                        <td width="12"><i class="iconfont icon-right f12"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="70">
-                                            <div class="imgheader head-sm">
-                                                <span class="bdrs50"><img src="./images/headportrait01.png" alt=""></span>
-                                            </div>
-                                        </td>
-                                        <td class="pl15 pr15">
-                                            <div class="h40 ovh">
-                                                <a href="">回北京老家探望老人，三年未回家需请假7天，望领导批准，谢谢！这
-                                                    里最多显示共两行，如果内容超过两行，请大神阁下使用符号代替...</a>
-                                            </div>
-                                            <div class="g9 f12 mt10"><span class="f_r">2016-09-24 16:57</span>张肖尔</div>
-                                        </td>
-                                        <td width="12"><i class="iconfont icon-right f12"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="70">
-                                            <div class="imgheader head-sm">
-                                                <span class="bdrs50"><img src="./images/headportrait01.png" alt=""></span>
-                                            </div>
-                                        </td>
-                                        <td class="pl15 pr15">
-                                            <div class="h40 ovh">回北京老家探望老人，三年未回家需请假7天，望领导批准，谢谢！这
-                                                里最多显示共两行，如果内容超过两行，请大神阁下使用符号代替...</div>
-                                            <div class="g9 f12 mt10"><span class="f_r">2016-09-24 16:57</span>张肖尔</div>
-                                        </td>
-                                        <td width="12"><i class="iconfont icon-right f12"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="70">
-                                            <div class="imgheader head-sm">
-                                                <span class="bdrs50"><img src="./images/headportrait01.png" alt=""></span>
-                                            </div>
-                                        </td>
-                                        <td class="pl15 pr15">
-                                            <div class="h40 ovh">回北京老家探望老人，三年未回家需请假7天，望领导批准，谢谢！这
-                                                里最多显示共两行，如果内容超过两行，请大神阁下使用符号代替...</div>
-                                            <div class="g9 f12 mt10"><span class="f_r">2016-09-24 16:57</span>张肖尔</div>
-                                        </td>
-                                        <td width="12"><i class="iconfont icon-right f12"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="70">
-                                            <div class="imgheader head-sm">
-                                                <span class="bdrs50"><img src="./images/headportrait01.png" alt=""></span>
-                                            </div>
-                                        </td>
-                                        <td class="pl15 pr15">
-                                            <div class="h40 ovh">回北京老家探望老人，三年未回家需请假7天，望领导批准，谢谢！这
-                                                里最多显示共两行，如果内容超过两行，请大神阁下使用符号代替...</div>
-                                            <div class="g9 f12 mt10"><span class="f_r">2016-09-24 16:57</span>张肖尔</div>
+                                            <div class="g9 f12 mt10"><span class="f_r">{{data.createDate}}</span>审批人:{{data.processStepDTOList[data.currentStepNo-1].userDTO.name}}</div>
                                         </td>
                                         <td width="12"><i class="iconfont icon-right f12"></i></td>
                                     </tr>
@@ -175,9 +105,24 @@
                             </div>
                         </div>
                         <div tab>
-                            <div tab-heading>我的待处理审批(7)</div>
-                            <div class="panel-body">
-2222
+                            <div tab-heading>我的待处理审批({{inquiryHandData.length}})</div>
+                            <div class="ind-medo_com" slim-scroll box-height="300">
+                                <table  width="98%" cellpadding="0" cellspacing="0">
+                                    <tr class="poi" ng-repeat="data in inquiryHandData" ng-click="chakanauditFun(data)">
+                                        <td width="70">
+                                            <div class="imgheader head-sm">
+                                                <span class="bdrs50"><img src="{{userinfoall.photoUrl || './images/headportrait02.jpg'}}" alt=""></span>
+                                            </div>
+                                        </td>
+                                        <td class="pl15 pr15">
+                                            <div class="h40 ovh">
+                                                <a href="">{{data.title}}</a>
+                                            </div>
+                                            <div class="g9 f12 mt10"><span class="f_r">{{data.createDate}}</span>审批人:{{data.processStepDTOList[data.currentStepNo-1].userDTO.name}}</div>
+                                        </td>
+                                        <td width="12"><i class="iconfont icon-right f12"></i></td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                     </div>

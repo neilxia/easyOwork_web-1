@@ -101,8 +101,7 @@ function addpcsCtrl(){
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
-
-                	$state.go('processmsg/mypcs');
+                	$state.go('processmsg.mypcs');
                 }else{
                     MsgService.errormsg(data);
                 }
@@ -281,7 +280,7 @@ function myauditCtrl(){
         };
 
         function inquiryHandlingProcessesFun(){
-            //查询发起的流程
+            //查询审批
             $scope.options={
                 "launchUserDTO":{
                     "id":userinfo.id,	//员工号

@@ -84,10 +84,10 @@ app.factory('MsgService',['$rootScope','notify',function($rootScope,notify){
         errormsg:function(data){
             var status=data.body.status;
             notify({ message: status.errorDesc, classes: 'orange iconfont icon-one', templateUrl:'modules/common/prompt.html' ,prompt:true});
-            if((status.erroCode=="ErrorCode.login.0004")){
+/*            if((status.erroCode=="ErrorCode.login.0004")){
             //if((status.erroCode=="ErrorCode.common.0002" || status.erroCode=="ErrorCode.login.0004")){
                 $rootScope.$state.go('login');
-            }
+            }*/
         }
     }
 }]);
