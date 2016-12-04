@@ -33,7 +33,7 @@ interceptors.factory('HttpInterceptor', ["$q","$rootScope","LocalStorage",'noseS
             if(typeof(response.data)=='object'){
                 var sts=response.data.body.status;
                 //if((sts.erroCode)){
-                if((sts.erroCode=="ErrorCode.common.0002" || sts.erroCode=="ErrorCode.common.0004")){
+                if(sts.erroCode=="ErrorCode.common.0002" || sts.erroCode=="ErrorCode.common.0003" || sts.erroCode=="ErrorCode.common.0004"){
                     $rootScope.$state.go('login');
                     LocalStorage.setObject('userinfo',"");
                     LocalStorage.setObject('companyinfo',"");
