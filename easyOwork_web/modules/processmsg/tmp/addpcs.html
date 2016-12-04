@@ -126,7 +126,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="data in processmodal.processStepDTOList | orderBy:data.stepNo">
+                <tr ng-repeat="data in processmodal.processStepDTOList | orderBy:['stepNo']">
                     <td class="pl20"><span class="pl5">{{data.stepNo=$index+1}}</span></td>
                     <td>{{data.stepName}}</td>
                     <td>{{data.userDTO.name}}</span></td>
