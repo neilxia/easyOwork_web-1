@@ -237,7 +237,7 @@
                                 <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.mandatory==true">*</span>{{obj.name || '无'}}</div>
                                 <div class="col-xs-10">
                                     <div class="qiyi-group wd160">
-                                        <input type="datetime" class="form-control" placeholder="{{obj.placeholder}}" date-time ng-model="sampleDate" view="date"  step="5" auto-close="true">
+                                        <input type="datetime" class="form-control" placeholder="{{obj.placeholder}}" date-time ng-model="sampleDate" view="date"  step="5" auto-close="true" disabled>
                                         <span class="abs_r"><i class="iconfont icon-rili"></i></span>
                                     </div>
                                 </div>
@@ -409,8 +409,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="data in processmodal.processDefStepDTOList | orderBy:data.stepNo">
-                    <td class="pl20"><span class="pl5">{{data.stepNo=$index+1}}</span></td>
+
+                <tr ng-repeat="data in processmodal.processDefStepDTOList | orderBy:['stepNo']">
+                    <td class="pl20"><span class="pl5">{{data.stepNo}}</span></td>
                     <td>{{data.stepName}}</td>
                     <td>{{data.userDTO.name}}</span></td>
                     <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editapprover(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deleteapprover($index)"><i class="iconfont icon-del f14"></i></button></td>

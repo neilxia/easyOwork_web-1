@@ -119,10 +119,6 @@ function addpcsCtrl(){
 function mypcsCtrl(){
     return['$rootScope','$scope', '$modal','Common','processService','LocalStorage',function($rootScope,$scope,$modal,Common,processService,LocalStorage){
 
-        $scope.bigTotalItems = 11;
-        $scope.bigCurrentPage = 1;
-        $scope.maxSize = 5;
-        $scope.singleModel = 1;
         //$scope.active=true;
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.initFun=function(){
@@ -151,7 +147,12 @@ function mypcsCtrl(){
                 MsgService.errormsg(data);
             });
         };
-
+        //分页
+        $scope.thispages={
+            total:null,
+            pageNum:1,
+            pageSize:10
+        };
         function inquiryCreatedProcessesFun(){
             //查询发起的流程
             $scope.options={
@@ -171,6 +172,7 @@ function mypcsCtrl(){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                     $scope.inquiryProcessesData=data.body.data.processes;
+                    $scope.thispages.total=$scope.inquiryProcessesData.length;//分页总数
                 }else{
                     MsgService.errormsg(data);
                 }
@@ -246,10 +248,6 @@ function mypcsdetailCtrl(){
 function myauditCtrl(){
     return['$rootScope','$scope', '$modal','Common','processService','LocalStorage',function($rootScope,$scope,$modal,Common,processService,LocalStorage){
 
-        $scope.bigTotalItems = 11;
-        $scope.bigCurrentPage = 1;
-        $scope.maxSize = 5;
-        $scope.singleModel = 1;
         //$scope.active=true;
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.initFun=function(){
@@ -279,6 +277,12 @@ function myauditCtrl(){
             });
         };
 
+        //分页
+        $scope.thispages={
+            total:null,
+            pageNum:1,
+            pageSize:10
+        };
         function inquiryHandlingProcessesFun(){
             //查询审批
             $scope.options={
@@ -297,7 +301,8 @@ function myauditCtrl(){
                 //远程开启下面的
                 var sts=data.body.status;
                  if(sts.statusCode==0){
-                 $scope.inquiryProcessesData=data.body.data.processes;
+                    $scope.inquiryProcessesData=data.body.data.processes;
+                     $scope.thispages.total=$scope.inquiryProcessesData.length;//分页总数
                  }else{
                  MsgService.errormsg(data);
                  }
@@ -631,6 +636,7 @@ function addsetpcsCtrl(){
                 size:'sm',
                 controller: modalCtrl
             });
+            var processDefStepDTOList=$scope.processmodal.processDefStepDTOList;
             function modalCtrl ($scope, $modalInstance) {
                 $scope.approvername='新增';
                 $scope.processDefStep={};
@@ -638,7 +644,7 @@ function addsetpcsCtrl(){
                     if(!state)return;
                     var row={
                         "stepName":$scope.processDefStep.stepName,	//节点名称
-                        "stepNo":$scope.processDefStep.stepNo,	//节点顺序号
+                        "stepNo":processDefStepDTOList.length+1,	//节点顺序号
                         "end":$scope.processDefStep.end || false,		//是否最后一个节点 TRUE or FALSE
                         "userDTO":{	//审批人
                             "name":$scope.processDefStep.selectedallarr[1][0].name,
@@ -651,6 +657,7 @@ function addsetpcsCtrl(){
                             "name":$scope.processDefStep.selectedallarr[0].text,		//节点处理角色名称
                         }*/
                     }
+                    debugger;
                     approverchage(row);
                     $modalInstance.close();
                 };

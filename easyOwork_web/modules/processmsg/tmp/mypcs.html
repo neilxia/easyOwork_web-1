@@ -43,7 +43,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="data in inquiryProcessesData | filter:{'status':Processstatus,'processType':selectedproclass.name,'title':processtitle}">
+                    <tr ng-repeat="data in inquiryProcessesData | filter:{'status':Processstatus,'processType':selectedproclass.name,'title':processtitle} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
                         <td><span class="pl15">{{data.processType}}</span></td>
                         <td>{{data.title}}</td>
                         <td>{{data.processUuid}}</td>
@@ -52,38 +52,14 @@
                         <td><span ng-class="{'orange':data.status=='审批中','green':data.status=='已同意','red':data.status=='已拒绝','g9':data.status=='已撤回'}">{{data.statusDesc}}</span></td>
                         <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="chakanFun(data)"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs h30 ml5" title="撤回" ng-click="changeProcessFun(data)"><i class="iconfont icon-fanhui f14"></i></button></td>
                     </tr>
-<!--
-                    <tr>
-                        <td><span class="pl15">休假</span></td>
-                        <td>回家请假3天</td>
-                        <td>2016-09-23  20:30</td>
-                        <td>王坤</td>
-                        <td><span class="green">已通过</span></td>
-                        <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="processmsg.mypcsdetail"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs h30 ml5" title="撤回" ng-click="delete()"><i class="iconfont icon-fanhui f14"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td><span class="pl15">休假</span></td>
-                        <td>回家请假3天</td>
-                        <td>2016-09-23  20:30</td>
-                        <td>王坤</td>
-                        <td><span class="red">已拒绝</span></td>
-                        <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="processmsg.mypcsdetail"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs h30 ml5" title="撤回" ng-click="delete()"><i class="iconfont icon-fanhui f14"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td><span class="pl15">休假</span></td>
-                        <td>回家请假3天</td>
-                        <td>2016-09-23  20:30</td>
-                        <td>王坤</td>
-                        <td><span class="g9">已回撤</span></td>
-                        <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="processmsg.mypcsdetail"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs h30 ml5" title="撤回" ng-click="delete()"><i class="iconfont icon-fanhui f14"></i></button></td>
-                    </tr>-->
                 </tbody>
             </table>
         </div>
         <div class="nose-panel-footer cf bte">
-            <pagination class="pagination-sm yi-page m0 f_r" total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize"  boundary-links="true"></pagination>
-            <div class="g9">共 {{inquiryProcessesData.length}}条数据</div>
+            <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+            <div class="g9">共 {{thispages.total}} 条数据</div>
         </div>
+
     </div>
 
     <!--删除-->

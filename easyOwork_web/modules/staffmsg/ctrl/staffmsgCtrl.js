@@ -35,7 +35,6 @@ function staffmsgCtrl(){
                     }
                     $scope.datalist=datalist;
                     $scope.thispages.total=$scope.datalist.length;//分页总数
-                    $modalInstance.close();
                 }else{
                     MsgService.errormsg(data);
                 }

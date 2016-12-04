@@ -32,12 +32,12 @@ interceptors.factory('HttpInterceptor', ["$q","$rootScope","LocalStorage",'noseS
             $rootScope.loading = false;
             if(typeof(response.data)=='object'){
                 var sts=response.data.body.status;
-                if((sts.erroCode)){
-                //if((sts.erroCode=="ErrorCode.common.0002" || sts.erroCode=="ErrorCode.common.0004")){
+                //if((sts.erroCode)){
+                if((sts.erroCode=="ErrorCode.common.0002" || sts.erroCode=="ErrorCode.common.0004")){
                     $rootScope.$state.go('login');
                     LocalStorage.setObject('userinfo',"");
                     LocalStorage.setObject('companyinfo',"");
-                    return $q.reject(response);
+                    //return $q.reject(response);
                 }
             }
             // response your $rootscope messagin should be here?

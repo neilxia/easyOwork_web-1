@@ -7,10 +7,9 @@ function loginCtrl(){
         function Funlogin(options,$modalInstance){
             var promise = publicService.login({body:options});
             promise.success(function(data, status, headers, config){
-                var status=data.body.status;
+                var sts=data.body.status;
                 var header=data.header;
-                debugger;
-                if(status.statusCode==0){
+                if(sts.statusCode==0){
                     //getusrinfo();
                     $scope.Perdata={
                         "tokenId":header.tokenId,

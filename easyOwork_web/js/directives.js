@@ -781,6 +781,7 @@ function selectdepyuan($timeout){
          },*/
         //replace: true,
         controller:['$scope','$attrs','$modal','employeesService','companyService','LocalStorage','MsgService',function($scope,$attrs,$modal,employeesService,companyService,LocalStorage,MsgService){
+            var yuangong=$scope.yuangong;
             var userinfo=LocalStorage.getObject('userinfo');
             var pmData=[];
             var yuanData=[];
@@ -835,7 +836,6 @@ function selectdepyuan($timeout){
                     MsgService.errormsg(data);
                 });
             };
-
 
             $scope.selectstaffyuan=function(){
                 var modalInstance = $modal.open({
@@ -909,9 +909,13 @@ function selectdepyuan($timeout){
                             "whole_node" : false,
                             "tie_selection": false
                         },
-                        plugins : ['checkbox']
+                        //plugins : ['checkbox']
                         //plugins : ["wholerow",'checkbox']
                     };
+
+                    if(!yuangong){
+                        $scope.treeConfig.plugins =['checkbox'];
+                    }
                     $scope.changedCB=function(e,item){
                         $scope.thisbm=[{"name":item.node.text}];
                         //inquiryEmployeeFun(item.node.text);
@@ -928,7 +932,12 @@ function selectdepyuan($timeout){
 
                     $scope.yourCtrl=function ()  {
                         //var selected_nodes = this.treeInstance.jstree(true).get_selected('full');
-                        var selected_nodes = $scope.treeInstance.jstree(true).get_checked('full');
+                        var selected_nodes;
+                        if(!yuangong){
+                            selected_nodes = $scope.treeInstance.jstree(true).get_checked('full');
+                        }else{
+                            selected_nodes = [];
+                        }
                         var selectedItems=[];
                         var datalist = $scope.stafftreeData;
                         angular.forEach(datalist, function(item) {
