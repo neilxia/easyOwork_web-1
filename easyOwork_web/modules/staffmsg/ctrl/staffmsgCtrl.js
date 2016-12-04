@@ -2,7 +2,7 @@
  * Created by Nose on 2016/9/7.
  */
 function staffmsgCtrl(){
-    return['$scope', '$modal','$filter' ,'companyService','LocalStorage','Common','employeesService','MsgService','salaryService',function($scope,$modal,$filter,companyService,LocalStorage,Common,employeesService,MsgService,salaryService){
+    return['$scope', '$modal','$filter' ,'companyService','LocalStorage','Common','employeesService','MsgService','salaryService','FileUploader','OSSService',function($scope,$modal,$filter,companyService,LocalStorage,Common,employeesService,MsgService,salaryService,FileUploader,OSSService){
         $scope.singleModel = 1;
         $scope.initFun=function(){
             inquiryEmployeeFun();
@@ -156,22 +156,20 @@ function staffmsgCtrl(){
                 });
                 htUploader.onAfterAddingFile = function(fileItem){
                     debugger;
-                    /*                    logoUploader.cancelAll();
-                     var file = $("#logo").get(0).files[0];
-                     var filePath = $scope.EPinfo.entId+'/company/logo';
+                    htUploader.cancelAll();
+                     var file = $("#contract").get(0).files[0];
+                     var filePath = LocalStorage.getObject('userinfo').entId+'/employee/contract/';
                      var key= filePath+file.name;
                      var promise = OSSService.uploadFile(filePath,file);
                      promise.success(function (data, status, headers, config) {
-                     var urlPromise = OSSService.getUrl({'body':{'key':key}});
-                     urlPromise.success(function (data, status, headers, config) {
-                     var sts=data.body.status;
-                     if(sts.statusCode==0){
-                     $scope.EPinfo.actualLogoUrl = data.body.data.url;
-                     LocalStorage.setObject('companyinfo',$scope.EPinfo);
-                     }
-                     });
-                     $scope.changeCompanyInfoFun(key,'logoUrl');
-                     })*/
+	                     var urlPromise = OSSService.getUrl({'body':{'key':key}});
+	                     urlPromise.success(function (data, status, headers, config) {
+	                     var sts=data.body.status;
+	                     if(sts.statusCode==0){
+	                    	 $scope.user.contractUrl = data.body.data.url;
+	                     }
+	                     });
+                     })
                 };
 
                  $scope.user={
@@ -218,6 +216,30 @@ function staffmsgCtrl(){
                 $scope.depoptions='bm';
                 $scope.gwoptions='gw';
                 var oldrow=angular.copy(row);
+                var htUploader = $scope.htUploader = new FileUploader({
+                    url: '', //不使用默认URL上传
+                    queueLimit: 1,     //文件个数
+                    removeAfterUpload: true,   //上传后删除文件
+                    autoUpload:false
+                });
+                htUploader.onAfterAddingFile = function(fileItem){
+                    debugger;
+                    htUploader.cancelAll();
+                     var file = $("#contract").get(0).files[0];
+                     var filePath = LocalStorage.getObject('userinfo').entId+'/employee/contract/';
+                     var key= filePath+file.name;
+                     var promise = OSSService.uploadFile(filePath,file);
+                     promise.success(function (data, status, headers, config) {
+	                     var urlPromise = OSSService.getUrl({'body':{'key':key}});
+	                     urlPromise.success(function (data, status, headers, config) {
+	                     var sts=data.body.status;
+	                     if(sts.statusCode==0){
+	                    	 $scope.user.contractUrl = data.body.data.url;
+	                     }
+	                     });
+                     })
+                };
+                
                 $scope.user=row;
 /*                $scope.bbbb=function(){
                     $scope.user.orgList;

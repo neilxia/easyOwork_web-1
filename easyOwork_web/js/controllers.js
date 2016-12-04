@@ -20,28 +20,9 @@ angular.module('qiyi')
         });
         $scope.$on('to-parent2', function(event,data) {
             $scope.userinfoall=LocalStorage.getObject('userinfo');
-            getUserFunction();//权限控制
             inquiryCreatedProcessesFun();//查询发起的流程
             inquiryHandlingProcessesFun();//查询审批
         });
-        function getUserFunction(){	//得到用户所有权限并用于权限控制
-            var options={
-                "id":$scope.userinfoall.id,
-                "personalEmail":$scope.userinfoall.personalEmail,
-                "personalPhoneCountryCode":$scope.userinfoall.personalPhoneCountryCode,
-                "personalPhone":$scope.userinfoall.personalPhone
-            }
-            var promise = roleService.inquiryUserFunction({body:options});
-            promise.success(function(data, status, headers, config){
-                var datas=data.body.data;
-                var sts=data.body.status;
-                if(sts.statusCode==0){
-                    accessService.setAccessList(datas.functionList);
-                }else{
-                    //MsgService.tomsg("获取用户权限失败");
-                }
-            });
-        }
 
         function inquiryCreatedProcessesFun(){
             //查询发起的流程

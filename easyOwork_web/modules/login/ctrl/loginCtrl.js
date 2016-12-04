@@ -2,7 +2,7 @@
  * Created by Nose on 2016/8/30.
  */
 function loginCtrl(){
-    return['$scope','$modal','$state','publicService','noseService','LocalStorage','MsgService',function($scope,$modal,$state,publicService,noseService,LocalStorage,MsgService){
+    return['$scope','$modal','$state','publicService','noseService','LocalStorage','MsgService','roleService','accessService',function($scope,$modal,$state,publicService,noseService,LocalStorage,MsgService,roleService,accessService){
         //公用登录方法
         function Funlogin(options,$modalInstance){
             var promise = publicService.login({body:options});
@@ -22,8 +22,32 @@ function loginCtrl(){
                         "personalPhone":options.personalPhone
                     };
                     LocalStorage.setObject('userinfo',$scope.Perdata);
-                    $state.go('index');
-                    $modalInstance.close();
+                    //获取用户权限, 确保该数据在主页显示前加载
+                    var permissionOptions={
+                            "id":$scope.Perdata.id,
+                            "personalEmail":$scope.Perdata.personalEmail,
+                            "personalPhoneCountryCode":$scope.Perdata.personalPhoneCountryCode,
+                            "personalPhone":$scope.Perdata.personalPhone
+                    }
+                    var permissionPromise = roleService.inquiryUserFunction({body:permissionOptions});
+                    permissionPromise.success(function(data, status, headers, config){
+                        debugger;
+                    	var datas=data.body.data;
+                        var sts=data.body.status;
+                        if(sts.statusCode==0){
+                            accessService.setAccessList(datas.functionList);
+                            $state.go('index');
+                            $modalInstance.close();
+                        }else{
+                        	$state.go('index');
+                            $modalInstance.close();
+                        }
+                    });
+                    promise.error(function(data, status, headers, config){
+                    	$state.go('index');
+                        $modalInstance.close();
+                    });
+                    
                 }else{
                     MsgService.errormsg(data);
                 }

@@ -951,21 +951,66 @@ function selectdepyuan($timeout){
 function accessId(accessService){
 	  return {
 	    link: function(scope, element, attrs) {
-	      var value = attrs.accessid.trim();
-	      var notAccessFlag = value[0] === '!';
-	      if(notAccessFlag) {
-	        value = value.slice(1).trim();
+	    	debugger;
+	      var isShow;
+	      if(attrs.accessid.trim().indexOf("||")>=0){
+	    	  var valueArray = attrs.accessid.trim().split("||");
+	    	  for(var i in valueArray){
+		    	  
+		    	  var value = valueArray[i];
+			      var notAccessFlag = value[0] === '!';
+			      if(notAccessFlag) {
+			        value = value.slice(1).trim();
+			      }
+			      toggleVisibilityBasedOnAccess();
+			      if(isShow){
+			    	  element.show();
+			    	  return;
+			      }
+		      }
+	    	  element.hide();
 	      }
-	  
+	      else if(attrs.accessid.trim().indexOf("&&")>=0){
+	    	  var valueArray = attrs.accessid.trim().split("&&");
+	    	  for(var i in valueArray){
+		    	  
+		    	  var value = valueArray[i];
+			      var notAccessFlag = value[0] === '!';
+			      if(notAccessFlag) {
+			        value = value.slice(1).trim();
+			      }
+			      toggleVisibilityBasedOnAccess();
+			      if(!isShow){
+			    	  element.hide();
+			    	  return;
+			      }
+		      }
+	    	  element.show();
+	      }
+	      else{
+	    	  var value = attrs.accessid.trim();
+		      var notAccessFlag = value[0] === '!';
+		      if(notAccessFlag) {
+		        value = value.slice(1).trim();
+		      }
+		      toggleVisibilityBasedOnAccess();
+		      if(isShow)
+		    	  element.show();
+		      else
+		    	  element.hide();
+	      }
+	    	  
+	      
+	      
+	      
 	      function toggleVisibilityBasedOnAccess() {
-	        var hasAccess = accessService.hasAccess(value);
-	  
-	        if(hasAccess && !notAccessFlag || !hasAccess && notAccessFlag)
-	          element.show();
-	        else
-	          element.hide();
-	      }
-	      toggleVisibilityBasedOnAccess();
+		        var hasAccess = accessService.hasAccess(value);
+		  
+		        if(hasAccess && !notAccessFlag || !hasAccess && notAccessFlag)
+		        	isShow = true;
+		        else
+		            isShow = false;
+		  }
 	      //scope.$on('permissionsChanged', toggleVisibilityBasedOnPermission);
 	    }
 	  }
