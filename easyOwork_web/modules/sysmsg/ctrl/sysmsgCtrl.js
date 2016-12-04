@@ -15,9 +15,7 @@ function listCtrl(){
                 "contactName":companyinfo.contactName,		//联系人姓名
                 "contactPhone":companyinfo.contactPhone,	//联系人电话
                 "logoUrl":companyinfo.logoUrl,		//logo图片地址
-                "actualLogoUrl":companyinfo.actualLogoUrl,	//logo图片实际地址
-                "licenceUrl":companyinfo.licenceUrl,		//营业执照图片地址
-                "actualLicenceUrl":companyinfo.actualLicenceUrl		//营业执照图片实际地址
+                "licenceUrl":companyinfo.licenceUrl		//营业执照图片地址
             }
         }
 
@@ -61,7 +59,7 @@ function listCtrl(){
         uploader.onAfterAddingFile = function(fileItem){
         	uploader.cancelAll();
         	var file = $("#licence").get(0).files[0];
-        	var filePath = $scope.EPinfo.entId+'/company/licence';
+        	var filePath = $scope.EPinfo.entId+'/company/licence/';
         	var key= filePath+file.name;
         	var promise = OSSService.uploadFile(filePath,file);
         	promise.success(function (data, status, headers, config) {
@@ -69,11 +67,12 @@ function listCtrl(){
         		 urlPromise.success(function (data, status, headers, config) {
         			 var sts=data.body.status;
                      if(sts.statusCode==0){
-                    	 $scope.EPinfo.actualLicenceUrl = data.body.data.url;
+                    	 $scope.EPinfo.licenceUrl = data.body.data.url;
                     	 LocalStorage.setObject('companyinfo',$scope.EPinfo);
+                    	 $scope.changeCompanyInfoFun($scope.EPinfo.licenceUrl,'licenceUrl');
                      }
         		 });
-        		 $scope.changeCompanyInfoFun(key,'licenceUrl');
+        		 
         	})
         };
         /*
@@ -115,7 +114,7 @@ function listCtrl(){
         logoUploader.onAfterAddingFile = function(fileItem){
         	logoUploader.cancelAll();
         	var file = $("#logo").get(0).files[0];
-        	var filePath = $scope.EPinfo.entId+'/company/logo';
+        	var filePath = $scope.EPinfo.entId+'/company/logo/';
         	var key= filePath+file.name;
         	var promise = OSSService.uploadFile(filePath,file);
         	promise.success(function (data, status, headers, config) {
@@ -123,11 +122,11 @@ function listCtrl(){
         		 urlPromise.success(function (data, status, headers, config) {
         			 var sts=data.body.status;
                      if(sts.statusCode==0){
-                    	 $scope.EPinfo.actualLogoUrl = data.body.data.url;
+                    	 $scope.EPinfo.logoUrl = data.body.data.url;
                     	 LocalStorage.setObject('companyinfo',$scope.EPinfo);
+                    	 $scope.changeCompanyInfoFun($scope.EPinfo.logoUrl,'logoUrl');
                      }
         		 });
-        		 $scope.changeCompanyInfoFun(key,'logoUrl');
         	})
         };
 
