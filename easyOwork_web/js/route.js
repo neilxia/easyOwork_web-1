@@ -341,6 +341,86 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             data: { pageTitle: '类别设置'}
 
         })
+        /*****************工作报告***************************/
+        .state('report', {
+            abstract: true,
+            url: "/report",
+            data: { pageTitle: '工作报告' },
+            views: {
+                '': {
+                    templateUrl: 'modules/common/content.html'
+                },
+                'main@report': {
+                    templateUrl: 'modules/common/myContent.html'
+                },
+                'menu@report': {
+                    templateUrl: 'modules/report/tmp/menu.html'
+                }
+            }
+        })
+        .state('report.receivelist', {
+            url: "/receivelist",
+            templateUrl: 'modules/report/tmp/receivelist.html',
+            data: { pageTitle: '收到的报告'}
+
+        })
+        .state('report.sendlist', {
+            url: "/sendlist",
+            templateUrl: 'modules/report/tmp/sendlist.html',
+            data: { pageTitle: '撰写的报告'}
+
+        })
+        .state('report.addreport', {
+            url: "/add",
+            templateUrl: 'modules/report/tmp/addreport.html',
+            data: { pageTitle: '写报告'},
+            resolve:{
+                loadPlugin:function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            //时间控件
+                            name: 'datePicker',
+                            files: ['plugins/datapicker/angular-datapicker.css','plugins/datapicker/angular-datepicker.js']
+                        }
+                    ])
+                }
+            }
+
+        })
+        .state('report.editreport', {
+            url: "/edit/:selectedReport",
+            templateUrl: 'modules/report/tmp/addreport.html',
+            data: { pageTitle: '修改报告'},
+            resolve:{
+                loadPlugin:function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            //时间控件
+                            name: 'datePicker',
+                            files: ['plugins/datapicker/angular-datapicker.css','plugins/datapicker/angular-datepicker.js']
+                        }
+                    ])
+                }
+            }
+
+        })
+        .state('report.viewreport', {
+            url: "/view/:selectedReport",
+            templateUrl: 'modules/report/tmp/viewreport.html',
+            data: { pageTitle: '查看报告'},
+            resolve:{
+                loadPlugin:function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            //时间控件
+                            name: 'datePicker',
+                            files: ['plugins/datapicker/angular-datapicker.css','plugins/datapicker/angular-datepicker.js']
+                        }
+                    ])
+                }
+            }
+
+        })
         /*****************决策分析***************************/
         .state('analysis', {
             abstract: true,

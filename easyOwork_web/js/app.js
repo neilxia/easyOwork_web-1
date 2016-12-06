@@ -27,6 +27,7 @@
         //'qiyi.demo',
         'qiyi.directives',
         'qiyi.analysis',
+        'qiyi.report',
         'angularFileUpload'
     ]);
     //var myApp= angular.module("demo", [ 'ui.router', 'oc.lazyLoad', 'ui.bootstrap']);

@@ -14,6 +14,7 @@ app.factory('attendanceService', attendanceService());//考勤
 app.factory('CustomerService', CustomerService());//客户/销售
 app.factory('projectService', projectService());//项目
 app.factory('OSSService',OSSService());//阿里云OSS服务
+app.factory('reportService',reportService());//工作报告
 /*========公共接口=====================================================================*/
 function publicService(){
     return ['$http','AppConfig',function($http,AppConfig){
@@ -440,6 +441,26 @@ function OSSService(){
             },
             getUrl:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/getUrl',form)
+            }
+        }
+    }];
+}
+
+/*=============================================================================*/
+function reportService(){
+    return ['$http','AppConfig',function($http,AppConfig){
+        return {
+            changeReport:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changeReport',form)
+            },
+            deleteReports:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/deleteReports',form)
+            },
+            inquiryCreatedReports:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryCreatedReports',form)
+            },
+            inquiryAssignedReports:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryAssignedReports',form)
             }
         }
     }];

@@ -1,0 +1,128 @@
+<div id="page-wrapper" ng-controller="addreportCtrl" ng-init="init()">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="init()" title="刷新"></a></div>
+        <ul>
+            <li class="active">写报告</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li class="active">写报告</li>
+    </ol>
+    <!-- 
+    <div class="btnbox">
+        <form class="f_r form-inline">
+            <span class="form-group-sm search-group">
+            </span>
+        </form>
+    </div>
+     -->
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <div class="pct60  f12">
+                <div class="cf mb10 mt10">
+                    <div class="col-xs-2 t_r pt7 g9">报告类型</div>
+                    <div class="col-xs-10 form-inline">
+                        <select class="form-control wd50" ng-model="report.reportType">
+                        	<option value="日报">日报</option>
+                        	<option value="周报">周报</option>
+                        	<option value="月报">月报</option>
+                        	<option value="季报">季报</option>
+                        	<option value="年报">年报</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="cf mb10" ng-show="report.reportType=='日报'">
+                    <div class="col-xs-2 t_r pt7 g9">日期</div>
+                    <div class="col-xs-4">
+                        <div class="qiyi-group wd160">
+                            <input type="datetime" class="form-control" date-time ng-model="report.startDate" view="date" min-view="date" format="yyyy-MM-dd" auto-close="true">
+                            <span class="abs_r"><i class="iconfont icon-rili"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cf mb10" ng-show="report.reportType=='周报'">
+                    <div class="col-xs-2 t_r pt7 g9">周期</div>
+                    <div class="col-xs-4">
+                        <div class="qiyi-group wd160">
+                            <input type="datetime" class="form-control" date-time ng-model="report.startDate" view="date" min-view="date" format="yyyy-MM-dd" auto-close="true">
+                            <span class="abs_r"><i class="iconfont icon-rili"></i></span>
+                        </div>
+                    </div>
+                     <div class="col-xs-2 t_c pt7 g9">到</div>
+                    <div class="col-xs-4">
+                        <div class="qiyi-group wd160">
+                            <input type="datetime" class="form-control" date-time ng-model="report.endDate" view="date" min-view="date" format="yyyy-MM-dd" auto-close="true">
+                            <span class="abs_r"><i class="iconfont icon-rili"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cf mb10" ng-show="report.reportType=='月报'">
+                    <div class="col-xs-2 t_r pt7 g9">月份</div>
+                    <div class="col-xs-4">
+                        <div class="qiyi-group wd160">
+                            <input type="datetime" class="form-control" date-time ng-model="report.month" view="month" min-view="month" format="yyyy-MM" auto-close="true">
+                            <span class="abs_r"><i class="iconfont icon-rili"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cf mb10" ng-show="report.reportType=='季报'">
+                    <div class="col-xs-2 t_r pt7 g9">年份</div>
+                    <div class="col-xs-4">
+                        <div class="qiyi-group wd160">
+                            <input type="datetime" class="form-control" date-time ng-model="report.year" view="year" min-view="year" format="yyyy" auto-close="true">
+                            <span class="abs_r"><i class="iconfont icon-rili"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-xs-2 t_r pt7 g9">季度</div>
+                    <div class="col-xs-4">
+                        <div class="qiyi-group wd160">
+                            <select class="form-control wd50" ng-model="report.quarter">
+	                        	<option value="1">一季度</option>
+	                        	<option value="2">二季度</option>
+	                        	<option value="3">三季度</option>
+	                        	<option value="4">四季度</option>
+	                        </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="cf mb10" ng-show="report.reportType=='年报'">
+                    <div class="col-xs-2 t_r pt7 g9">年份</div>
+                    <div class="col-xs-4">
+                        <div class="qiyi-group wd160">
+                            <input type="datetime" class="form-control" date-time ng-model="report.year" view="year" min-view="year" format="yyyy" auto-close="true">
+                            <span class="abs_r"><i class="iconfont icon-rili"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cf mb10">
+                    <div class="col-xs-2 t_r pt7 g9">报告标题</div>
+                    <div class="col-xs-10">
+                        <input type="text" class="form-control" ng-model="report.title"></input>
+                    </div>
+                </div>
+                <div class="cf mb10">
+                    <div class="col-xs-2 t_r pt7 g9">提交给</div>
+                    <div class="col-xs-10">
+                        <div selectdepyuan myselected="theapply.userDTOList" selectedallarr="theapply.selectedallarr"></div>
+                    </div>
+                </div>
+                <div class="cf mb10">
+                    <div class="col-xs-2 t_r pt7 g9">报告内容</div>
+                    <div class="col-xs-10">
+                        <textarea class="form-control" ng-model="report.content" cols="6" rows="7"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nose-panel-footer cf bte">
+        <button class="btn btn-default wd80" ui-sref="report.sendlist">取消</button>
+        <button class="btn btn-primary wd80" ng-click="submit()">提交</button>
+    </div>
+
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
