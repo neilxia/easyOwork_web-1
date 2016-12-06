@@ -1,0 +1,61 @@
+<div id="page-wrapper" ng-controller="receivetaskCtrl" ng-init="init()">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="init()" title="刷新"></a></div>
+        <ul>
+            <li class="active">收到的报告</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li class="active">收到的任务</li>
+    </ol>
+    <div class="btnbox">
+        <form class="f_r form-inline">
+        	<select class="form-control input-sm" ng-model="selectedTaskStatus">
+                <option value="">全部</option>
+                <option value="未分配">未分配</option>
+               	<option value="已分配">已分配</option>
+               	<option value="已开始">已开始</option>
+               	<option value="已拒绝">已拒绝</option>
+               	<option value="已完成">已完成</option>
+            </select>
+            <span class="form-group-sm search-group">
+                <input type="text" class="form-control wd180" ng-model="form.searchValue" placeholder="任务发起人/标题关键词">
+                <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
+            </span>
+        </form>
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
+                <thead>
+                <tr>
+                    <th width="200" class="t_l">起止时间</th>
+                    <th>标题</th>
+                    <th width="300">分配人姓名</th>
+                    <th width="100">状态</th>
+                    <th width="100">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="task in tasklist | filter:{status:selectedTaskStatus} | filter:form.searchValue | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                    <td class="t_l"> {{task.startDate}} 到 {{task.endDate}}</td>
+                    <td>{{task.title}}</td>
+                    <td><span class="mr5">{{task.userDTO.name}}</span></td>
+                    <td>{{task.status}}</td>
+                    <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="viewTask(task)"><i class="iconfont icon-chakan f14"></i></button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="nose-panel-footer cf bte">
+            <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+            <div class="g9">共 {{thispages.total}} 条数据</div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>

@@ -421,6 +421,86 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             }
 
         })
+        /*****************工作任务***************************/
+        .state('task', {
+            abstract: true,
+            url: "/task",
+            data: { pageTitle: '工作任务' },
+            views: {
+                '': {
+                    templateUrl: 'modules/common/content.html'
+                },
+                'main@task': {
+                    templateUrl: 'modules/common/myContent.html'
+                },
+                'menu@task': {
+                    templateUrl: 'modules/task/tmp/menu.html'
+                }
+            }
+        })
+        .state('task.receivelist', {
+            url: "/receivelist",
+            templateUrl: 'modules/task/tmp/receivelist.html',
+            data: { pageTitle: '收到的任务'}
+
+        })
+        .state('task.sendlist', {
+            url: "/sendlist",
+            templateUrl: 'modules/task/tmp/sendlist.html',
+            data: { pageTitle: '分配的任务'}
+
+        })
+        .state('task.addtask', {
+            url: "/add",
+            templateUrl: 'modules/task/tmp/addtask.html',
+            data: { pageTitle: '分配任务'},
+            resolve:{
+                loadPlugin:function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            //时间控件
+                            name: 'datePicker',
+                            files: ['plugins/datapicker/angular-datapicker.css','plugins/datapicker/angular-datepicker.js']
+                        }
+                    ])
+                }
+            }
+
+        })
+        .state('task.edittask', {
+            url: "/edit/:selectedTask",
+            templateUrl: 'modules/task/tmp/addtask.html',
+            data: { pageTitle: '修改任务'},
+            resolve:{
+                loadPlugin:function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            //时间控件
+                            name: 'datePicker',
+                            files: ['plugins/datapicker/angular-datapicker.css','plugins/datapicker/angular-datepicker.js']
+                        }
+                    ])
+                }
+            }
+
+        })
+        .state('task.viewtask', {
+            url: "/view/:selectedTask",
+            templateUrl: 'modules/task/tmp/viewtask.html',
+            data: { pageTitle: '查看任务'},
+            resolve:{
+                loadPlugin:function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            //时间控件
+                            name: 'datePicker',
+                            files: ['plugins/datapicker/angular-datapicker.css','plugins/datapicker/angular-datepicker.js']
+                        }
+                    ])
+                }
+            }
+
+        })
         /*****************决策分析***************************/
         .state('analysis', {
             abstract: true,

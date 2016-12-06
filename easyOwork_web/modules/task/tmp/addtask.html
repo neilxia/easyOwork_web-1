@@ -1,0 +1,69 @@
+<div id="page-wrapper" ng-controller="addtaskCtrl" ng-init="init()">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="init()" title="刷新"></a></div>
+        <ul>
+            <li class="active">分配任务</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li class="active">分配任务</li>
+    </ol>
+    <!-- 
+    <div class="btnbox">
+        <form class="f_r form-inline">
+            <span class="form-group-sm search-group">
+            </span>
+        </form>
+    </div>
+     -->
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <div class="pct60  f12">
+                <div class="cf mb10 mt10">
+                    <div class="col-xs-2 t_r pt7 g9">任务标题</div>
+                    <div class="col-xs-10">
+                        <input type="text" class="form-control" ng-model="task.title"></input>
+                    </div>
+                </div>
+                <div class="cf mb10">
+                    <div class="col-xs-2 t_r pt7 g9">起止时间</div>
+                    <div class="col-xs-4">
+                        <div class="qiyi-group wd160">
+                            <input type="datetime" class="form-control" date-time ng-model="task.startDate" view="date" min-view="date" format="yyyy-MM-dd" auto-close="true">
+                            <span class="abs_r"><i class="iconfont icon-rili"></i></span>
+                        </div>
+                    </div>
+                     <div class="col-xs-2 t_c pt7 g9">到</div>
+                    <div class="col-xs-4">
+                        <div class="qiyi-group wd160">
+                            <input type="datetime" class="form-control" date-time ng-model="task.endDate" view="date" min-view="date" format="yyyy-MM-dd" auto-close="true">
+                            <span class="abs_r"><i class="iconfont icon-rili"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cf mb10">
+                    <div class="col-xs-2 t_r pt7 g9">分配给</div>
+                    <div class="col-xs-10">
+                        <div selectdepyuan myselected="theapply.userDTOList" selectedallarr="theapply.selectedallarr"></div>
+                    </div>
+                </div>
+                <div class="cf mb10">
+                    <div class="col-xs-2 t_r pt7 g9">任务内容</div>
+                    <div class="col-xs-10">
+                        <textarea class="form-control" ng-model="task.content" cols="6" rows="7"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nose-panel-footer cf bte">
+        <button class="btn btn-default wd80" ui-sref="task.sendlist">取消</button>
+        <button class="btn btn-primary wd80" ng-click="submit()">提交</button>
+    </div>
+
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>

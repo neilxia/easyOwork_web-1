@@ -15,6 +15,7 @@ app.factory('CustomerService', CustomerService());//客户/销售
 app.factory('projectService', projectService());//项目
 app.factory('OSSService',OSSService());//阿里云OSS服务
 app.factory('reportService',reportService());//工作报告
+app.factory('taskService',taskService());//工作任务
 /*========公共接口=====================================================================*/
 function publicService(){
     return ['$http','AppConfig',function($http,AppConfig){
@@ -446,7 +447,7 @@ function OSSService(){
     }];
 }
 
-/*=============================================================================*/
+/*===============================工作报告========================================*/
 function reportService(){
     return ['$http','AppConfig',function($http,AppConfig){
         return {
@@ -461,6 +462,25 @@ function reportService(){
             },
             inquiryAssignedReports:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryAssignedReports',form)
+            }
+        }
+    }];
+}
+/*===============================工作任务========================================*/
+function taskService(){
+    return ['$http','AppConfig',function($http,AppConfig){
+        return {
+            changeTask:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changeTask',form)
+            },
+            deleteTasks:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/deleteTasks',form)
+            },
+            inquiryCreatedTasks:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryCreatedTasks',form)
+            },
+            inquiryAssignedTasks:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryAssignedTasks',form)
             }
         }
     }];

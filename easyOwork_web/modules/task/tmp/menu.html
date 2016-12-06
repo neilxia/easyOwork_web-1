@@ -1,0 +1,17 @@
+<nav class="navbar-default navbar-static-side" id="navbar-default" role="navigation">
+    <!-- <div class="sidebar-collapse" accessid="A002-001"> -->
+    <div class="sidebar-collapse">
+        <ul side-navigation class="nav metismenu" id="side-menu">
+        	<li ui-sref-active="active" ng-class="{active: $state.includes('task.addtask')}">
+                <a ui-sref="task.addtask"><i class="iconfont icon-peizhi f18"></i> <span class="nav-label">分配任务</span> </a>
+            </li>
+            <li ui-sref-active="active" ng-class="{active: $state.includes('task.sendtask')}">
+                <a ui-sref="task.sendlist"><i class="iconfont icon-peizhi f18"></i> <span class="nav-label">分配的任务</span> </a>
+            </li>
+            <li ui-sref-active="active" ng-class="{active: $state.includes('task.receivetask')}">
+                <a ui-sref="task.receivelist"><i class="iconfont icon-peizhi f18"></i> <span class="nav-label">收到的任务</span> </a>
+            </li>
+            </ul>
+            
+    </div>
+</nav>
