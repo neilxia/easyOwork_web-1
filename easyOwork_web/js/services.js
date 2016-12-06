@@ -149,17 +149,18 @@ app.factory('Common', ['$q','$modal',
             }
         }
     }]);
-app.factory('accessService',['$rootScope',function($rootScope){
-	var permissionList;
+app.factory('accessService',['LocalStorage',function(LocalStorage){
 	return{
         setAccessList:function(accessList){
-        	permissionList = accessList;
+        	LocalStorage.setObject('permissionList',accessList);
         },
         hasAccess:function(accessId){
-        	for(permission in permissionList){
-        		if(permissionList[permission].functionCode == accessId)
-        			return true
-        	}
+        	var permissionList = LocalStorage.getObject('permissionList');
+        	if(permissionList != undefined)
+	        	for(permission in permissionList){
+	        		if(permissionList[permission].functionCode == accessId)
+	        			return true
+	        	}
         	return false;
         }
     }
