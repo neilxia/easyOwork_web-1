@@ -228,10 +228,12 @@
                         </table>
                         <a class="addinfobox t_c mt10" ng-click="addPayclass()"><i class="iconfont icon-add "></i></a>
                         <div class="mt10">
-                            员工合同
+							<div class="col-xs-10" ng-show="user.contract">
+							 员工合同
                             <i class="iconfont icon-fujian blue ml5"></i>
-                            {{user.contractUrl}}
-                            <div class="btn btn-primary btn-xs upheadbtn">
+                            <a ng-href="{{user.contract.url}}">{{user.contract.fileName}}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{user.contract.size+' Byte'}}
+                            </div>
+							<div class="col-xs-2 btn btn-primary btn-xs upheadbtn">
                                 <input type="file" id="contract" nv-file-select uploader="htUploader"/>合同上传
                             </div>
                             <!--<i class="iconfont icon-fujian blue ml5"></i> 尔康互动员工雇佣合同.doc <a href="" class="a_prime ml5">重新上传</a>-->

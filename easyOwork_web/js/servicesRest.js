@@ -405,11 +405,11 @@ OSSService.uploadFile(filePath, uploadFile);
 //uploadFile: 为文件元素,可以用$("#uploadFile").get(0).files[0]得到该参数值 - uploadFile为html中为file设置的id值
 */
 function OSSService(){
-    return ['$http','AppConfig',function($http,AppConfig){
-    	var ossInfo;
+    return ['$http','AppConfig','LocalStorage',function($http,AppConfig,LocalStorage){
         return {
             uploadFile:function(filePath,file){
             	var ossBucketUrl = AppConfig.OSS_BUCKET_URL;
+            	var ossInfo = this.getOssInfo();
             	return $http.post(ossBucketUrl,null,{
                	 "headers":{'Content-Type':undefined},
                	 "transformRequest":function(data) {
@@ -430,7 +430,7 @@ function OSSService(){
             					var status=data.body.status;
             	                var data=data.body.data;
             	                if(status.statusCode==0){
-            	                	ossInfo = data;
+            	                	LocalStorage.setObject('ossInfo',data);
             	                }
             				})
             				.error(function(data, status, headers, config){
@@ -438,7 +438,7 @@ function OSSService(){
             				})
             },
             getOssInfo:function(){
-            	return ossInfo;
+            	return LocalStorage.getObject('ossInfo');
             },
             getUrl:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/getUrl',form)

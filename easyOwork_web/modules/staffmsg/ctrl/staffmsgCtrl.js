@@ -2,7 +2,7 @@
  * Created by Nose on 2016/9/7.
  */
 function staffmsgCtrl(){
-    return['$scope', '$modal','$filter' ,'companyService','LocalStorage','Common','employeesService','MsgService','salaryService','FileUploader','OSSService',function($scope,$modal,$filter,companyService,LocalStorage,Common,employeesService,MsgService,salaryService,FileUploader,OSSService){
+    return['$scope', '$modal','$filter' ,'companyService','LocalStorage','Common','employeesService','MsgService','salaryService','FileUploader','OSSService','noseService',function($scope,$modal,$filter,companyService,LocalStorage,Common,employeesService,MsgService,salaryService,FileUploader,OSSService,noseService){
         $scope.singleModel = 1;
         $scope.initFun=function(){
             inquiryEmployeeFun();
@@ -75,9 +75,12 @@ function staffmsgCtrl(){
                 "orgList":orgList,		//所属部门名称
                 "joiningDate":joiningDate || "",		//入职日期
                 "roleList":roleList,	//角色数组, 可多个角色
-                "contractUrl":row.contractUrl || "",		//合同文件地址
+                //"contractUrl":row.contractUrl || "",		//合同文件地址
+                //"contract":row.contract,
                 "salaryTypeList":salaryTypeList
             };
+            if(row.isContractModified)
+            	$scope.options.contract = row.contract;
             var promise = employeesService.changeEmployee({body:$scope.options});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
@@ -157,7 +160,7 @@ function staffmsgCtrl(){
                     debugger;
                     htUploader.cancelAll();
                      var file = $("#contract").get(0).files[0];
-                     var filePath = LocalStorage.getObject('userinfo').entId+'/employee/contract/';
+                     var filePath = LocalStorage.getObject('userinfo').entId+'/employee/contract/'+noseService.randomWord(false, 32)+'_';
                      var key= filePath+file.name;
                      var promise = OSSService.uploadFile(filePath,file);
                      promise.success(function (data, status, headers, config) {
@@ -165,10 +168,15 @@ function staffmsgCtrl(){
 	                     urlPromise.success(function (data, status, headers, config) {
 	                     var sts=data.body.status;
 	                     if(sts.statusCode==0){
-	                    	 $scope.user.contractUrl = data.body.data.url;
+	                    	 $scope.user.contract={"url":data.body.data.url,"fileName":file.name,"ossKey":filePath+file.name,"size":file.size};
+	                    	 $scope.user.isContractModified = true;
+	                    	 MsgService.tomsg('合同上传成功');
 	                     }
 	                     });
-                     })
+                     });
+                     promise.error(function (data, status, headers, config) {
+                    	 MsgService.tomsg('合同上传失败');
+                     });
                 };
 
                  $scope.user={
@@ -185,7 +193,8 @@ function staffmsgCtrl(){
                      "orgList":[],		//所属部门名称
                      "joiningDate":"",		//入职日期
                      "roleList":[],	//角色数组, 可多个角色
-                     "contractUrl":"",		//合同文件地址
+                     //"contractUrl":"",		//合同文件地址
+                     //"contract":{},
                      "salaryTypeList":[]
                  };
 
@@ -225,7 +234,7 @@ function staffmsgCtrl(){
                     debugger;
                     htUploader.cancelAll();
                      var file = $("#contract").get(0).files[0];
-                     var filePath = LocalStorage.getObject('userinfo').entId+'/employee/contract/';
+                     var filePath = LocalStorage.getObject('userinfo').entId+'/employee/contract/'+noseService.randomWord(false, 32)+'_';
                      var key= filePath+file.name;
                      var promise = OSSService.uploadFile(filePath,file);
                      promise.success(function (data, status, headers, config) {
@@ -233,10 +242,15 @@ function staffmsgCtrl(){
 	                     urlPromise.success(function (data, status, headers, config) {
 	                     var sts=data.body.status;
 	                     if(sts.statusCode==0){
-	                    	 $scope.user.contractUrl = data.body.data.url;
+	                    	 $scope.user.contract={"url":data.body.data.url,"fileName":file.name,"ossKey":filePath+file.name,"size":file.size};
+	                    	 $scope.user.isContractModified = true;
+	                    	 MsgService.tomsg('合同上传成功');
 	                     }
 	                     });
-                     })
+                     });
+                     promise.error(function (data, status, headers, config) {
+                    	 MsgService.tomsg('合同上传失败');
+                     });
                 };
                 
                 $scope.user=row;
