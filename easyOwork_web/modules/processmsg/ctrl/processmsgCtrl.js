@@ -3,8 +3,36 @@
  */
 /*====================我的申请=================================*/
 function addpcsCtrl(){
-    return['$rootScope','$scope','$modal','editableOptions','processService','LocalStorage','MsgService','$state',function($rootScope,$scope,$modal,editableOptions,processService,LocalStorage,MsgService,$state){
+    return['$rootScope','$scope','$modal','editableOptions','processService','LocalStorage','MsgService','$state','noseService','OSSService','FileUploader',function($rootScope,$scope,$modal,editableOptions,processService,LocalStorage,MsgService,$state,noseService,OSSService,FileUploader){
         var userinfo=LocalStorage.getObject('userinfo');
+        var attachmentUploader = $scope.attachmentUploader = new FileUploader({
+            url: '', //不使用默认URL上传
+            queueLimit: 1,     //文件个数
+            removeAfterUpload: true,   //上传后删除文件
+            autoUpload:false
+        });
+        attachmentUploader.onAfterAddingFile = function(fileItem){
+            debugger;
+            attachmentUploader.cancelAll();
+             var file = $("#attachment").get(0).files[0];
+             var filePath = LocalStorage.getObject('userinfo').entId+'/process/attachment/'+noseService.randomWord(false, 32)+'_';
+             var key= filePath+file.name;
+             var promise = OSSService.uploadFile(filePath,file);
+             promise.success(function (data, status, headers, config) {
+                 var urlPromise = OSSService.getUrl({'body':{'key':key}});
+                 urlPromise.success(function (data, status, headers, config) {
+                 var sts=data.body.status;
+                 if(sts.statusCode==0){
+                	 if(!$scope.processmodal.attachmentList)
+                		 $scope.processmodal.attachmentList = [];
+                	 $scope.processmodal.attachmentList.push({"url":data.body.data.url,"fileName":file.name,"ossKey":filePath+file.name,"size":file.size});
+                 }
+                 });
+             });
+             promise.error(function (data, status, headers, config) {
+            	 MsgService.tomsg('附件上传失败');
+             });
+        }
         $scope.initFun=function(){
             inquiryProcessModelTypeFun();
             inquiryProcessModelFun();//查询流程模板
@@ -110,6 +138,10 @@ function addpcsCtrl(){
                 MsgService.errormsg(data);
             });
         };
+        
+        $scope.deleteAttachment=function($index){
+            $scope.processmodal.attachmentList.splice($index, 1);
+        }
 
 
     }]

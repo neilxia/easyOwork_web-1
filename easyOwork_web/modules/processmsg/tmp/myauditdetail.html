@@ -92,6 +92,14 @@
                         </div>
                     </td>
                 </tr>
+                <tr>
+                    <td width="80" class="t_r" style="text-align:right">附件：</td>
+                    <td class="pl10">
+                    	<div ng-repeat="attachmentItem in pcsdetail.attachmentList">
+                            <a ng-href="{{attachmentItem.url}}">{{attachmentItem.fileName}}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{attachmentItem.size+' Byte'}}
+                        </div>
+                    </td>
+                </tr>
 
             </table>
         </div>

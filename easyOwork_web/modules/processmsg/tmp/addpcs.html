@@ -78,7 +78,7 @@
                             <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.mandatory==true">*</span>{{obj.name || '无'}}</div>
                             <div class="col-xs-10">
                                 <div class="qiyi-group wd160">
-                                    <input type="datetime" class="form-control" placeholder="{{obj.placeholder}}" date-time ng-model="sampleDate" view="date"  step="5" auto-close="true">
+                                    <input type="datetime" class="form-control" placeholder="{{obj.placeholder}}" date-time ng-model="obj.value" view="date"  step="5" auto-close="true">
                                     <span class="abs_r"><i class="iconfont icon-rili"></i></span>
                                 </div>
                             </div>
@@ -103,6 +103,16 @@
                                 <label class="mr10" ng-repeat="data in obj.valueList"><input name="{{obj.name}}" value="{{data.value}}" icheck type="radio" ng-model="obj.value"> {{data.value}}</label>
                             </div>
                         </div>
+                    </div>
+                </div>
+            	<div class="cf mb10" ng-show="processmodal">
+                    <div class="col-xs-2 t_r pt7 g9">
+                        <div class="btn btn-primary btn-xs upheadbtn"><input type="file" id="attachment" nv-file-select uploader="attachmentUploader"/>上传附件</div>
+                    </div>
+                    <div class="col-xs-10 t_r pt7 g9">
+                    <div class="t_l g9" ng-repeat="attachmentItem in processmodal.attachmentList">
+                        <a ng-href="{{attachmentItem.url}}">{{attachmentItem.fileName}}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{attachmentItem.size+' Byte'}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a ng-click="deleteAttachment($index)">删除</a> 
+                    </div>
                     </div>
                 </div>
             </div>
