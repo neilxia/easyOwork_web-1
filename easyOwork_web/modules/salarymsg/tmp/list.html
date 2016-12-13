@@ -1,0 +1,182 @@
+<div id="page-wrapper" ng-controller="salarymsglistCtrl" ng-init="init()">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="init()" title="刷新"></a></div>
+        <ul>
+            <li class="active">工资单查询</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li>工资管理</li>
+        <li class="active">工资单查询</li>
+    </ol>
+    <div class="btnbox">
+        <!--<div class="line28 f_l">搜索“ <span class="red ng-binding">1</span> ”，共搜索到<span class="red ng-binding">1</span>条记录</div>-->
+        <form class="f_r form-inline">
+            <span class="form-group-sm search-group">
+                <input type="text" class="form-control wd180" ng-model="form.searchValue" placeholder="关键词">
+                <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
+            </span>
+        </form>
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
+                <thead>
+                <tr>
+                    <th><span class="pl15">姓名</span></th>
+                    <th width="100">员工编号</th>
+                    <th width="200">部门</th>
+                    <th width="60">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr >
+                    <td><span class="pl15">将之前</span></td>
+                    <td>01111</td>
+                    <td>人力资源部</td>
+                    <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="s_issueDetail()"><i class="iconfont icon-chakan f14"></i></button></td>
+                </tr>
+                <tr ng-repeat="report in reportlist | filter:form.searchValue | filter:{reportType:selectedReportType} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                    <td><span class="pl15">{{report.title}}</span></td>
+                    <td>{{report.userDTO.name}}</td>
+                    <td>{{report.userDTO.name}}</td>
+                    <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="s_issueDetail(data)"><i class="iconfont icon-chakan f14"></i></button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="nose-panel-footer cf bte">
+            <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+            <div class="g9">共 {{thispages.total}} 条数据</div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
+
+<!--工资单明细-->
+<script type="text/ng-template" id="s_issueDetail.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">{{thisname}}部门</div>
+        </div>
+        <!--{{baseForm.$valid}}-->
+        <form role="baseForm" name="baseForm"  ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+            <div class="modal-body bte">
+                <div>
+                    <div class="mt15">
+                        <span class="f16">建造师</span>
+                        <span class="label label-sm label-primary ml5">未定薪</span>
+                        <span class="label label label-success ml5">已定薪</span>
+                    </div>
+                    <table cellpadding="0" cellspacing="0" width="80%" class="line40td mt5">
+                        <tr>
+                            <td width="100" class="f16 pr10 t_r"><input type="text" class="form-control" value="15000,00"></td>
+                            <td width="60" class="f12 g9">总收入</td>
+                            <td class="f16 pr10 t_r">15000,00</td>
+                            <td width="60" class="g9">上级部门</td>
+                        </tr>
+                        <tr>
+                            <td class="f16 pr10 t_r">10000,00</td>
+                            <td width="60" class="f12 g9">到账金额</td>
+                            <td class="f16 pr10 t_r">&nbsp;</td>
+                            <td width="60" class="g9">&nbsp;</td>
+                        </tr>
+                    </table>
+                    <div class="salary_line01"><span>收入明显页</span></div>
+                    <table cellpadding="0" cellspacing="0" width="80%" class="line40td">
+                        <tr>
+                            <td  width="100" class="f16 pr10 t_r">5000,00</td>
+                            <td width="60" class="f12 g9">基本工资</td>
+                            <td class="f16 pr10 t_r">300,00</td>
+                            <td width="60" class="g9">岗位补贴</td>
+                        </tr>
+                        <tr>
+                            <td class="f16 pr10 t_r">600,00</td>
+                            <td width="60" class="f12 g9">交通补助</td>
+                            <td class="f16 pr10 t_r">&nbsp;</td>
+                            <td width="60" class="g9">&nbsp;</td>
+                        </tr>
+                    </table>
+                    <div class="salary_line01"><span>扣除明显页</span></div>
+                    <table cellpadding="0" cellspacing="0" width="80%" class="line40td">
+                        <tr>
+                            <td width="100" class="f16 pr10 t_r">600,00</td>
+                            <td width="60" class="f12 g9">公积金</td>
+                            <td class="f16 pr10 t_r">180</td>
+                            <td width="60" class="g9">失业保险</td>
+                        </tr>
+                        <tr>
+                            <td class="f16 pr10 t_r">300,00</td>
+                            <td width="60" class="f12 g9">迟到</td>
+                            <td class="f16 pr10 t_r">300,00</td>
+                            <td width="60" class="g9">养老保险</td>
+                        </tr>
+
+                    </table>
+                </div>
+                <div class="dn">
+                    <div class="mt15">
+                        <span class="f16">建造师</span>
+                        <span class="label label-sm label-primary ml5">未定薪</span>
+                        <span class="label label label-success ml5">已定薪</span>
+                    </div>
+                    <table cellpadding="0" cellspacing="0" width="80%" class="line40td mt5">
+                        <tr>
+                            <td width="100" class="f16 pr10 t_r">15000,00</td>
+                            <td width="60" class="f12 g9">总收入</td>
+                            <td class="f16 pr10 t_r">15000,00</td>
+                            <td width="60" class="g9">上级部门</td>
+                        </tr>
+                        <tr>
+                            <td class="f16 pr10 t_r">10000,00</td>
+                            <td width="60" class="f12 g9">到账金额</td>
+                            <td class="f16 pr10 t_r">&nbsp;</td>
+                            <td width="60" class="g9">&nbsp;</td>
+                        </tr>
+                    </table>
+                    <div class="salary_line01"><span>收入明显页</span></div>
+                    <table cellpadding="0" cellspacing="0" width="80%" class="line40td">
+                        <tr>
+                            <td  width="100" class="f16 pr10 t_r">5000,00</td>
+                            <td width="60" class="f12 g9">基本工资</td>
+                            <td class="f16 pr10 t_r">300,00</td>
+                            <td width="60" class="g9">岗位补贴</td>
+                        </tr>
+                        <tr>
+                            <td class="f16 pr10 t_r">600,00</td>
+                            <td width="60" class="f12 g9">交通补助</td>
+                            <td class="f16 pr10 t_r">&nbsp;</td>
+                            <td width="60" class="g9">&nbsp;</td>
+                        </tr>
+                    </table>
+                    <div class="salary_line01"><span>扣除明显页</span></div>
+                    <table cellpadding="0" cellspacing="0" width="80%" class="line40td">
+                        <tr>
+                            <td width="100" class="f16 pr10 t_r">600,00</td>
+                            <td width="60" class="f12 g9">公积金</td>
+                            <td class="f16 pr10 t_r">180</td>
+                            <td width="60" class="g9">失业保险</td>
+                        </tr>
+                        <tr>
+                            <td class="f16 pr10 t_r">300,00</td>
+                            <td width="60" class="f12 g9">迟到</td>
+                            <td class="f16 pr10 t_r">300,00</td>
+                            <td width="60" class="g9">养老保险</td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">修改</button>
+                <button type="submit" class="btn btn-primary wd80">定薪</button>
+            </div>
+        </form>
+    </div>
+</script>

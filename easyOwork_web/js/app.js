@@ -29,6 +29,10 @@
         'qiyi.analysis',
         'qiyi.report',
         'qiyi.task',
+        'qiyi.notice',
+        'qiyi.salarymsg',
+        'qiyi.clockingIn',
+        'qiyi.my',
         'angularFileUpload'
     ]);
     //var myApp= angular.module("demo", [ 'ui.router', 'oc.lazyLoad', 'ui.bootstrap']);

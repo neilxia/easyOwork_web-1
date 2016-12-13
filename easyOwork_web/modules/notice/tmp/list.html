@@ -1,0 +1,86 @@
+<div id="page-wrapper" ng-controller="noticelistCtrl" ng-init="init()">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="init()" title="刷新"></a></div>
+        <ul>
+            <li class="active">公告管理</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li class="active">公告管理</li>
+    </ol>
+    <div class="btnbox">
+        <button class="btn btn-default btn-sm" ng-click="addnoticeFun()">发布公告</button>
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
+                <thead>
+                <tr>
+                    <th><span class="pl10">公告标题</span></th>
+                    <th width="100">部门</th>
+                    <th width="120">发布时间</th>
+                    <th width="90">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><span class="pl10">222</span></td>
+                    <td>33</td>
+                    <td>22</td>
+                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editstaff(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                </tr>
+                <tr ng-repeat="report in reportlist | filter:form.searchValue | filter:{reportType:selectedReportType} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                    <td><span class="pl10">{{report.title}}</span></td>
+                    <td>{{report.userDTO.name}}</td>
+                    <td>{{report.userDTO.name}}</td>
+                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editstaff(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="nose-panel-footer cf bte">
+            <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+            <div class="g9">共 {{thispages.total}} 条数据</div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
+
+
+<!--发布公告-->
+<script type="text/ng-template" id="addnotice.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">发布公告</div>
+        </div>
+        <!--{{baseForm.$valid}}-->
+        <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+            <div class="modal-body bte">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
+                    <tr>
+                        <td width="60">公告标题</td>
+                        <td class="pl10"><input type="text" class="form-control" placeholder="请输入公告标题"></td>
+                    </tr>
+                    <tr>
+                        <td width="60">部门选择</td>
+                        <td class="pl10"><span selectdep options="'bm'" myselected="user.orgList" class="wd190 f_l" title="选择部门"></span>
+                            <span selectdep options="'gw'" myselected="user.roleList" class="wd190 f_l ml10" title="选择岗位"></span></td>
+                    </tr>
+                    <tr>
+                        <td width="60" valign="top">公告详情</td>
+                        <td class="pl10"><textarea class="form-control" rows="8" placeholder="请输入公告详情，不大于200字"></textarea></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </form>
+    </div>
+</script>

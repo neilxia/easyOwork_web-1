@@ -1,0 +1,119 @@
+<div id="page-wrapper" ng-controller="listCtrl" ng-init="initFun()">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
+        <ul>
+            <li class="active">个人中心</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li class="active">个人中心</li>
+    </ol>
+    <div class="p20 rel">
+    <!-- 
+        <div class="row">
+            <div class="col-xs-6">
+                <dl class="sysmsg-info-htab cf bdrs4">
+                    <dt><i class="iconfont icon-yirenzheng green f36"></i></dt>
+                    <dd>
+                        <div>已认证企业</div>
+                        <div class="mt10 g6 f12">上传营业执照，参与企业实名认证，享受更多优质服务。</div>
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-xs-6">
+                <dl class="sysmsg-info-htab cf bdrs4 graybox">
+                    <dt><i class="iconfont icon-weirenzheng red f36"></i></dt>
+                    <dd>
+                        <div>已认证企业</div>
+                        <div class="mt10 g6 f12">上传营业执照，参与企业实名认证，享受更多优质服务。</div>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+         -->
+        <div class="mysetheadpic">
+            <div class="imgbox bdrs50"><img src="./images/headportrait02.jpg" alt=""></div>
+            <div class="mt10">
+                <div  class="btn btn-default btn-xs upheadbtn">
+                    <input type="file" id="licence" nv-file-select accept="image/*" uploader="uploader"/>上传头像
+                </div>
+            </div>
+        </div>
+        <div class="pb10">
+            <table class="line40td" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                    <td width="60" align="right">基本信息</td>
+                    <td class="pl20"><span class="g6 f12">员工姓名：</span><span class="f16">{{EPinfo.entId}}</span></td>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">出生日期：</span>
+                        <span editable-text="EPinfo.name" e-form="name" onbeforesave="changeCompanyInfoFun($data,'name')">{{EPinfo.name || '无'}}</span> <span class="ml5 orange poi" ng-click="name.$show()" ng-hide="name.$visible">修改</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">所属部门：</span>
+                        <span editable-text="EPinfo.shortName" e-form="textBtnForm" onbeforesave="changeCompanyInfoFun($data,'shortName')">{{EPinfo.shortName || '无'}}</span> <span class="ml5 orange poi" ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible">修改</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20"><span class="g6 f12">任职岗位：</span>
+                        <span editable-text="EPinfo.contactName" e-form="contactName" onbeforesave="changeCompanyInfoFun($data,'contactName')">{{EPinfo.contactName || '无'}}</span> <span class="ml5 orange poi" ng-click="contactName.$show()" ng-hide="contactName.$visible">修改</span></td>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">入职日期：</span>
+                        <span editable-text="EPinfo.entPhone" e-form="entPhone" onbeforesave="changeCompanyInfoFun($data,'entPhone')">{{EPinfo.entPhone || '无'}}</span> <span class="ml5 orange poi" ng-click="entPhone.$show()" ng-hide="entPhone.$visible">修改</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20"><span class="g6 f12">毕业院校：</span>
+                        <span editable-text="EPinfo.contactPhone" e-form="contactPhone" onbeforesave="changeCompanyInfoFun($data,'contactPhone')">{{EPinfo.contactPhone || '无'}}</span> <span class="ml5 orange poi" ng-click="contactPhone.$show()" ng-hide="contactPhone.$visible">修改</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="pt10 pb10">
+            <table class="line40td" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                    <td width="60" align="right">账号信息</td>
+                    <td class="pl20"><span class="g6 f12">员工编号：</span><span class="f16">{{EPinfo.entId}}</span></td>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">E-Mail：</span>
+                        <span editable-text="EPinfo.entEmail" e-form="entEmail" onbeforesave="changeCompanyInfoFun($data,'entEmail')">{{EPinfo.entEmail || '无'}}</span> <span class="ml5 orange poi" ng-click="entEmail.$show()" ng-hide="entEmail.$visible">修改</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20"><span class="g6 f12">联系电话：</span>
+                        <span editable-text="EPinfo.contactPhone" e-form="contactPhone" onbeforesave="changeCompanyInfoFun($data,'contactPhone')">{{EPinfo.contactPhone || '无'}}</span>
+                        <span class="ml5 orange poi" ng-click="contactPhone.$show()" ng-hide="contactPhone.$visible">修改</span>
+                        <span class="g9 ml10 f12">邮箱和l联系电话必填其一</span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">登录密码：</span>
+                        <span editable-text="EPinfo.entEmail" e-form="entEmail" onbeforesave="changeCompanyInfoFun($data,'entEmail')">{{EPinfo.entEmail || '无'}}</span> <span class="ml5 orange poi" ng-click="entEmail.$show()" ng-hide="entEmail.$visible">修改</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>

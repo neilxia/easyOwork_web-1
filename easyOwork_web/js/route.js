@@ -155,7 +155,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                         {
                             //时间控件
                             name: 'datePicker',
-                            files: ['plugins/datapicker/angular-datapicker.css','plugins/datapicker/angular-datepicker.js'],
+                            files: ['plugins/datapicker/angular-datapicker.css','plugins/datapicker/angular-datepicker.js']
                         }
                     ])
                 }
@@ -554,9 +554,100 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             data: { pageTitle: '决策分析'}
 
         })
+        /*========公告========================================================== */
+        .state('notice', {
+            abstract: true,
+            url: "/notice",
+            data: { pageTitle: '公告'},
+            views: {
+                '': {
+                    templateUrl: 'modules/common/content.html'
+                },
+                'main@notice': {
+                    templateUrl: 'modules/common/myContent.html'
+                },
+                'menu@notice': {
+                    templateUrl: 'modules/notice/tmp/menu.html'
+                }
+            }
+        })
+        .state('notice.list', {
+            url: "/list",
+            templateUrl: 'modules/notice/tmp/list.html',
+            data: { pageTitle: '公告列表'}
+        })
+        .state('notice.view', {
+            url: "/view",
+            templateUrl: 'modules/notice/tmp/view.html',
+            data: { pageTitle: '公告详情'}
+        })
+        /*========工资管理========================================================== */
+        .state('salarymsg', {
+            abstract: true,
+            url: "/salarymsg",
+            data: { pageTitle: '公告'},
+            views: {
+                '': {
+                    templateUrl: 'modules/common/content.html'
+                },
+                'main@salarymsg': {
+                    templateUrl: 'modules/common/myContent.html'
+                },
+                'menu@salarymsg': {
+                    templateUrl: 'modules/salarymsg/tmp/menu.html'
+                }
+            }
+        })
+        .state('salarymsg.issue', {
+            url: "/issue",
+            templateUrl: 'modules/salarymsg/tmp/issue.html',
+            data: { pageTitle: '工资发放'}
+        })
+        .state('salarymsg.issueview', {
+            url: "/issueview",
+            templateUrl: 'modules/salarymsg/tmp/view.html',
+            data: { pageTitle: '工资发放详情'}
+        })
+        .state('salarymsg.list', {
+            url: "/list",
+            templateUrl: 'modules/salarymsg/tmp/list.html',
+            data: { pageTitle: '工资单查询'}
+        })
 
-        /*========我的模块=============================================================================================== */
-       /* .state('my', {
+        /*========考勤========================================================== */
+        .state('clockingIn', {
+            abstract: true,
+            url: "/clockingIn",
+            data: { pageTitle: '考勤'},
+            views: {
+                '': {
+                    templateUrl: 'modules/common/content.html'
+                },
+                'main@clockingIn': {
+                    templateUrl: 'modules/common/myContent.html'
+                },
+                'menu@clockingIn': {
+                    templateUrl: 'modules/clockingIn/tmp/menu.html'
+                }
+            }
+        })
+        .state('clockingIn.list', {
+            url: "/list",
+            templateUrl: 'modules/clockingIn/tmp/list.html',
+            data: { pageTitle: '考勤列表'}
+        })
+        .state('clockingIn.view', {
+            url: "/view",
+            templateUrl: 'modules/clockingIn/tmp/view.html',
+            data: { pageTitle: '考勤详情'}
+        })
+        .state('clockingIn.set', {
+            url: "/set",
+            templateUrl: 'modules/clockingIn/tmp/set.html',
+            data: { pageTitle: '考勤设置'}
+        })
+        /*========我的模块========================================================== */
+        .state('my', {
             abstract: true,
             url: "/my",
             data: { pageTitle: '我的', specialClass: 'bgf2' },
@@ -568,17 +659,17 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                     templateUrl: 'modules/common/myContent.html'
                 },
                 'menu@my': {
-                    templateUrl: 'modules/my/tmp/myMenu.html'
+                    templateUrl: 'modules/my/tmp/menu.html'
                 }
             }
         })
         .state('my.set', {
             url: "/set",
-            templateUrl: 'modules/my/tmp/mySet.html',
-            data: { pageTitle: '我的账户设置'}
-        })*/
+            templateUrl: 'modules/my/tmp/set.html',
+            data: { pageTitle: '个人中心'}
+        })
 
-        /*========demo=============================================================================================== */
+        /*========demo============================================================== */
         .state('demo1', {
             //abstract: true,
             url: "/demo1",

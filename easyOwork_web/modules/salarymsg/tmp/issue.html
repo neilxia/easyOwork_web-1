@@ -1,0 +1,70 @@
+<div id="page-wrapper" ng-controller="salarymsgissueCtrl" ng-init="init()">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="init()" title="刷新"></a></div>
+        <ul>
+            <li class="active">工资发放</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li>工资管理</li>
+        <li class="active">工资发放</li>
+    </ol>
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <div class="p30">
+                <ul class="salary_issue f20">
+                    <li class="jing">
+                        <span class="sign bdrs50">11 <span class="f12 ml-5">/月</span></span>
+                        <div class="textbox row">
+                            <div class="col-lg-2">0/40<span class="f12 g9 ml5">已发放</span></div>
+                            <div class="col-lg-2">0.00<span class="f12 g9 ml5">总金额</span></div>
+                            <div class="col-lg-2">0.00<span class="f12 g9 ml5">税</span></div>
+                            <div class="col-lg-2">0.00<span class="f12 g9 ml5">五险一金</span></div>
+                            <div class="col-lg-2"><button class="btn btn-default ">发放工资</button></div>
+                        </div>
+                    </li>
+                    <li class="waing">
+                        <span class="sign bdrs50 f20">10 <span class="f12 ml-5">/月</span></span>
+                        <div class="textbox row">
+                            <div class="col-lg-2">30/40<span class="f12 g9 ml5">已发放</span></div>
+                            <div class="col-lg-2">245550.00<span class="f12 g9 ml5">总金额</span></div>
+                            <div class="col-lg-2">3000.00<span class="f12 g9 ml5">税</span></div>
+                            <div class="col-lg-2">957.00<span class="f12 g9 ml5">五险一金</span></div>
+                            <div class="col-lg-2"><button class="btn btn-default" ui-sref="salarymsg.issueview">查看明细</button></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="sign bdrs50 f20">9 <span class="f12 ml-5">/月</span></span>
+                        <div class="textbox row">
+                            <div class="col-lg-2">40/40<span class="f12 g9 ml5">已发放</span></div>
+                            <div class="col-lg-2">300000.00<span class="f12 g9 ml5">总金额</span></div>
+                            <div class="col-lg-2">3000.00<span class="f12 g9 ml5">税</span></div>
+                            <div class="col-lg-2">957.00<span class="f12 g9 ml5">五险一金</span></div>
+                            <div class="col-lg-2"><button class="btn btn-default ">查看明细</button></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="sign bdrs50 f20">8 <span class="f12 ml-5">/月</span></span>
+                        <div class="textbox row">
+                            <div class="col-lg-2">40/40<span class="f12 g9 ml5">已发放</span></div>
+                            <div class="col-lg-2">300000.00<span class="f12 g9 ml5">总金额</span></div>
+                            <div class="col-lg-2">3000.00<span class="f12 g9 ml5">税</span></div>
+                            <div class="col-lg-2">957.00<span class="f12 g9 ml5">五险一金</span></div>
+                            <div class="col-lg-2"><button class="btn btn-default ">查看明细</button></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="nose-panel-footer cf bte">
+            <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+            <div class="g9">共 {{thispages.total}} 条数据</div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>

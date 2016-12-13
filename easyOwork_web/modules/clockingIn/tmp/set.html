@@ -1,0 +1,60 @@
+<div id="page-wrapper" ng-controller="salarymsgissueCtrl" ng-init="init()">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="init()" title="刷新"></a></div>
+        <ul>
+            <li class="active">考勤设置</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li>考勤管理</li>
+        <li class="active">考勤设置</li>
+    </ol>
+    <div class="btnbox">
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <table class="table table-hover bbe editwd60" cellspacing="0" cellpadding="0" width="100%;">
+                <thead>
+                <tr>
+                    <th width="150" class="pl15">名称</th>
+                    <th >值</th>
+                    <th width="300">描述</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <tr ng-repeat="data in dataslist">
+                    <td class="pl15">{{data.nameas}}</td>
+                    <td>
+                        <span editable-text="data.value" e-form="Vcode" onbeforesave="changeParameterFun($data,data.name)">{{data.value || '无'}}</span> <span class="ml5 poi orange" ng-click="Vcode.$show()" ng-hide="Vcode.$visible">修改</span>
+
+                    </td>
+                    <td>{{data.description}}</td>
+                </tr>
+                <tr>
+                    <td class="pl15">工作日自定义</td>
+                    <td>
+                        <label><input icheck type="checkbox" ng-model="demo.checkOne"> 星期一</label>
+                        <label class="ml5"><input icheck type="checkbox" ng-model="demo.checkOne"> 星期二</label>
+                        <label class="ml5"><input icheck type="checkbox" ng-model="demo.checkOne"> 星期三</label>
+                        <label class="ml5"><input icheck type="checkbox" ng-model="demo.checkOne"> 星期四</label>
+                        <label class="ml5"><input icheck type="checkbox" ng-model="demo.checkOne"> 星期五</label>
+                        <label class="ml5"><input icheck type="checkbox" ng-model="demo.checkOne"> 星期六</label>
+                        <label class="ml5"><input icheck type="checkbox" ng-model="demo.checkOne"> 星期日</label>
+                    </td>
+                    <td>{{data.description}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--<div class="nose-panel-footer cf bte">
+            <pagination class="pagination-sm yi-page m0 f_r" total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize"  boundary-links="true"></pagination>
+            <div class="g9">共 3625 条数据</div>
+        </div>-->
+    </div>
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>

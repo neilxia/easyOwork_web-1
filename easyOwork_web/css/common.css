@@ -240,7 +240,7 @@ textarea{resize: none;}
 .topnav .rightbox .usrbox .imgbox img{ width: 100%;}
 .topnav .rightbox .usrbox .dropdown-menu{ min-width: 65px;}
 
-.topmenu{ height: 44px; background-color: #f7941d; padding: 0 20px;}
+.topmenu{ height: 44px; background-color: #f7941d; padding: 0 20px; overflow: hidden;}
 .topmenu a{ float: left; padding: 10px 0; min-width: 100px; text-align: center;}
 .topmenu a.active{ background-color: #f89f34;}
 

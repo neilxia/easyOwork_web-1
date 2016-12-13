@@ -59,7 +59,7 @@
                 <div class="dropdown pull-right ml10 mt10" dropdown>
                     <span dropdown-toggle>{{userinfoall.name || '暂无'}} <span class="caret"></span></span>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="">个人中心</a></li>
+                        <li><a ui-sref="my.set">个人中心</a></li>
                         <li class="divider"></li>
                         <li><a ng-click="logout()">退出系统</a></li>
                     </ul>
@@ -86,5 +86,12 @@
         <a ui-sref-active="active" ui-sref="report.sendlist">工作报告</a>
         <a ui-sref-active="active" ui-sref="task.sendlist">任务分配</a>
         <a ui-sref-active="active" ui-sref="analysis.list">决策分析</a>
+        <a ui-sref-active="active" ui-sref="notice.list">公告管理</a>
+        <a ui-sref-active="active" ui-sref="clockingIn.list">考勤管理</a>
+        <a ui-sref-active="active" ui-sref="salarymsg.list">工资管理</a>
+        <a ui-sref-active="active" ui-sref="">项目管理</a>
+        <a ui-sref-active="active" ui-sref="">销售管理</a>
+        <a ui-sref-active="active" ui-sref="">招聘</a>
+        <a ui-sref-active="active" ui-sref="">资产</a>
     </div>
 </div>

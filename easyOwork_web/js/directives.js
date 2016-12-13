@@ -960,7 +960,7 @@ function selectdepyuan($timeout){
 function accessId(accessService){
 	  return {
 	    link: function(scope, element, attrs) {
-	    	debugger;
+	    	//debugger;
 	      var isShow;
 	      if(attrs.accessid.trim().indexOf("||")>=0){
 	    	  var valueArray = attrs.accessid.trim().split("||");
