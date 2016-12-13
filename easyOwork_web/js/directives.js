@@ -1025,6 +1025,19 @@ function accessId(accessService){
 	  }
 	}
 
+/*==============================用户信息保护=====================================*/
+function protectedId(accessService){
+	  return {
+	    link: function(scope, element, attrs) {
+	    	  var isShow;
+	    	  var value = attrs.protectedid.trim();
+	    	  if(value==''||accessService.hasUser(value))
+	    		  element.show();
+		      else
+		    	  element.hide();
+	    }
+	  }
+	}
 
 angular.module("nose.tpls", ["selectdep.html","selectdepyuan.html","custom-template"]);
 
@@ -1109,4 +1122,5 @@ angular
     .directive('selectdep', selectdep) //选择部门
     .directive('selectdepyuan', selectdepyuan) //选择部门员工
     .directive('accessid', ['accessService',accessId]) //权限控制是否显示元素
+    .directive('protectedid', ['accessService',protectedId]) //权限控制是否显示元素
 ;

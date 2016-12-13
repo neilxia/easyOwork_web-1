@@ -628,3 +628,53 @@ function setCtrl(){
 
     }]
 }
+
+function searchlistCtrl(){
+    return['$rootScope','$scope','$modal','employeesService','LocalStorage',function($rootScope,$scope,$modal,employeesService,LocalStorage){
+        $scope.initFun=function(){
+            inquiryEmployeeFun();
+        }
+        //查询本人/其他员工信息列表
+        $scope.thispages={
+            total:null,
+            pageNum:1,
+            pageSize:10
+        };
+        function inquiryEmployeeFun(){
+        	var options={
+                    "type":'ALL'
+        	}
+            var promise = employeesService.inquiryEmployee({body:options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    $scope.datalist=data.body.data.userList;
+                    $scope.thispages.total=$scope.datalist.length;
+                }else{
+                    MsgService.errormsg(data);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.errormsg(data);
+            });
+        };
+
+        $scope.staffbase=function(row){
+            var modalInstance = $modal.open({
+                templateUrl: 'staffbase.html',
+                //size:'md',
+                controller: modalCtrl
+            });
+            function modalCtrl ($scope, $modalInstance) {
+                $scope.user=row;
+                $scope.ok = function () {
+                    $modalInstance.close();
+                };
+
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            }
+        };
+    }]
+}

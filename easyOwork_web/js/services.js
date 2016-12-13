@@ -154,11 +154,23 @@ app.factory('accessService',['LocalStorage',function(LocalStorage){
         setAccessList:function(accessList){
         	LocalStorage.setObject('permissionList',accessList);
         },
+        setUserList:function(userList){
+        	LocalStorage.setObject('userList',userList);
+        },
         hasAccess:function(accessId){
         	var permissionList = LocalStorage.getObject('permissionList');
         	if(permissionList != undefined)
 	        	for(permission in permissionList){
 	        		if(permissionList[permission].functionCode == accessId)
+	        			return true
+	        	}
+        	return false;
+        },
+        hasUser:function(userUuid){
+        	var userList = LocalStorage.getObject('userList');
+        	if(userList != undefined)
+	        	for(user in userList){
+	        		if(userList[user].userUuid == userUuid)
 	        			return true
 	        	}
         	return false;

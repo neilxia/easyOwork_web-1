@@ -184,6 +184,12 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             data: { pageTitle: '员工搜索'}
 
         })
+        .state('staffmsg.searchlist', {
+            url: "/orglist",
+            templateUrl: 'modules/staffmsg/tmp/searchlist.html',
+            data: { pageTitle: '员工查询'}
+
+        })
         /*========职务权限=============================================================================================== */
         .state('permissions', {
             abstract: true,

@@ -16,6 +16,7 @@ app.factory('projectService', projectService());//项目
 app.factory('OSSService',OSSService());//阿里云OSS服务
 app.factory('reportService',reportService());//工作报告
 app.factory('taskService',taskService());//工作任务
+app.factory('analysisService',analysisService());//决策分析
 /*========公共接口=====================================================================*/
 function publicService(){
     return ['$http','AppConfig',function($http,AppConfig){
@@ -481,6 +482,22 @@ function taskService(){
             },
             inquiryAssignedTasks:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryAssignedTasks',form)
+            }
+        }
+    }];
+}
+/*===============================决策分析========================================*/
+function analysisService(){
+    return ['$http','AppConfig',function($http,AppConfig){
+        return {
+        	getOrgEmployeeChart:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/getOrgEmployeeChart',form)
+            },
+            getSalaryEmployeeChart:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/getSalaryEmployeeChart',form)
+            },
+            getRoleEmployeeChart:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/getRoleEmployeeChart',form)
             }
         }
     }];

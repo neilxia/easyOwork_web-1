@@ -78,7 +78,7 @@
                             <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.mandatory==true">*</span>{{obj.name || '无'}}</div>
                             <div class="col-xs-10">
                                 <div class="qiyi-group wd160">
-                                    <input type="datetime" class="form-control" placeholder="{{obj.placeholder}}" date-time ng-model="obj.value" view="date"  step="5" auto-close="true">
+                                    <input type="datetime" class="form-control" placeholder="{{obj.placeholder}}" date-time ng-model="obj.value" view="date" min-view="date" format="yyyy-MM-dd" step="5" auto-close="true">
                                     <span class="abs_r"><i class="iconfont icon-rili"></i></span>
                                 </div>
                             </div>

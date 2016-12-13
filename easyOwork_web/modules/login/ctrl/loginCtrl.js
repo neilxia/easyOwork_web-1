@@ -35,6 +35,7 @@ function loginCtrl(){
                         var sts=data.body.status;
                         if(sts.statusCode==0){
                             accessService.setAccessList(datas.functionList);
+                            accessService.setUserList(datas.userList);
                             $state.go('index');
                             $modalInstance.close();
                         }else{
@@ -62,8 +63,8 @@ function loginCtrl(){
             });
             function loginModalCtrl ($scope, $modalInstance) {
                 $scope.Zh={
-                    registername:null,
-                    registerPassword:null
+                    registername:'luochangqing@qinghuiyang.com',
+                    registerPassword:'password'
                 };
 
                 $scope.ok = function (state) {
