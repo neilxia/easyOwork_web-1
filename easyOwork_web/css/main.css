@@ -23,7 +23,7 @@
 .ind-flexslider .flex-control-paging li a{ width: 10px; height: 10px;}
 /*看板*/
 .ind-kanban{}
-.ind-kanban li{ float: left; width: 20%;}
+.ind-kanban li{ float: left; width: 16.6%;}
 /*我的办理*/
 .ind-medo_com{}
 .ind-medo_com table tr{ border-bottom: #eee dashed 1px;}

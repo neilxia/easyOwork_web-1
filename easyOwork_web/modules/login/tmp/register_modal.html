@@ -1,6 +1,6 @@
 <div class="inmodal login-modal" ng-show="firstbox">
     <div class="modal-header t_c">
-        <div class="modal-title white f22">新用户注册</div>
+        <div class="modal-title white f22">新企业注册</div>
         <div class="f16 g9" >补充必要的信息完成注册</div>
     </div>
     <div class="modal-body">
@@ -19,9 +19,10 @@
                         <input type="text"  name="registername" ng-model="Zh.registername" required  multiple-email class="form-control input-lg" placeholder="手机号码 / 邮箱">
                     </div>
 
-                    <div class="nose-group mt10"  ng-class="{'has-error':form.name.$dirty && form.name.$error.required}">
+                    <div class="nose-group mt10"  ng-class="{'has-error':form.name.$dirty && form.name.$invalid}">
                         <i class="iconfont icon-tishi f20 abs_r" ng-show="form.name.$dirty && form.name.$error.required" popover="请输入企业名称" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                        <input type="text" class="form-control input-lg" name="name" ng-model="user.name" placeholder="请输入企业名称" required />
+                        <i class="iconfont icon-tishi f20 abs_r" ng-show="form.name.$dirty && form.name.$error.maxlength" popover="企业名称长度最大60个字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                        <input type="text" class="form-control input-lg" name="name" ng-model="user.name" ng-maxlength="60" placeholder="请输入企业名称" required />
                     </div>
 
                     <div class="form-inline nose-group mt10" ng-class="{'has-error':form.verificationCode.$dirty && form.verificationCode.$error.required}">
@@ -39,7 +40,7 @@
                         <input type="password" class="form-control input-lg"  name="confirmPassword" pw-check="registerPassword" ng-model="Zh.confirmPassword" placeholder="确认密码" required />
                     </div>
                     <div class="mt10"><span class="f_r">已有帐号， <a class="a_prime" ng-click="loginbox()">直接登录</a></span><input icheck type="checkbox" ng-model="checkedbox"> 我已阅读并接受 <a class="a_prime" href="">服务条款</a></div>
-                    <div class="mt10"><button class="btn btn-primary btn-lg btn-block" type="submit" ng-disabled="">完成注册</button></div>
+                    <div class="mt10"><button class="btn btn-primary btn-lg btn-block" type="submit" ng-disabled="!checkedbox">完成注册</button></div>
                     </form>
                 </div>
             </div>

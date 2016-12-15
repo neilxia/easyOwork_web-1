@@ -136,6 +136,7 @@ function loginCtrl(){
                     registername:null,
                     cpId:1
                 };
+                $scope.checkedbox=true;
                 //注册实现
                 $scope.secondStep=function(state){
                     if(!state){return;}
@@ -167,7 +168,7 @@ function loginCtrl(){
                     promise.success(function(data, status, headers, config){
                         var status=data.body.status;
                         if(status.statusCode==0){
-                            MsgService.tomsg();
+                            //MsgService.tomsg();
                         }else{
                             MsgService.errormsg(data);
                         }
