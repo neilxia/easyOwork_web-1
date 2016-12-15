@@ -60,6 +60,10 @@ function publicService(){
             //POST  /work/rest/markNoteRead	G0011-修改消息为已读状态
             markNoteRead:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/markNoteRead',form)
+            },
+            //POST  /work/rest/deleteNote	删除消息
+            deleteNote:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/deleteNote',form)
             }
         }
     }];

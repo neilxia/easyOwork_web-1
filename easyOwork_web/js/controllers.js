@@ -91,12 +91,28 @@ angular.module('qiyi')
 
 
     }])
-    .controller('headerCtrl',['$rootScope','$scope','$state','LocalStorage','publicService','MsgService','companyService','employeesService',function($rootScope,$scope,$state,LocalStorage,publicService,MsgService,companyService,employeesService){
+    .controller('headerCtrl',['$rootScope','$scope','$state','LocalStorage','publicService','MsgService','companyService','employeesService','$timeout',function($rootScope,$scope,$state,LocalStorage,publicService,MsgService,companyService,employeesService,$timeout){
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.inithdFun=function(){
             getCompanyInfo();
-            getUserInfo()
-
+            getUserInfo();
+            getNotes();
+        };
+        function getNotes(){
+        	var options={
+                        "id":userinfo.id,	//员工号
+                        "personalEmail":userinfo.personalEmail,	//邮件地址
+                        "personalPhoneCountryCode":userinfo.personalPhoneCountryCode,	//电话号码
+                        "personalPhone":userinfo.personalPhone		//电话号码
+                };
+        	var promise = publicService.inquiryNotes({body:options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    $scope.notes=data.body.data.notes;
+                    $scope.unreadCount = data.body.data.unreadCount;
+                }
+            });
         };
         function getCompanyInfo(){
             $scope.userinfo=userinfo;
@@ -139,6 +155,19 @@ angular.module('qiyi')
                     //MsgService.errormsg(data);
                 }
             });
+        }
+        $scope.markRead = function(note){
+        	if(note.noteStatus=='UNREAD'){
+        		note.noteStatus='READ';
+        		$scope.unreadCount = $scope.unreadCount - 1;
+            	publicService.markNoteRead({body:{"noteUuid":note.noteUuid}});
+        	}
+        }
+        $scope.deleteNote = function(note,$index){
+        	$scope.notes.splice($index, 1);
+        	if(note.noteStatus=='UNREAD')
+        		$scope.unreadCount = $scope.unreadCount - 1;
+            publicService.deleteNote({body:{"noteUuid":note.noteUuid}});
         }
 
         $scope.logout=function(){
