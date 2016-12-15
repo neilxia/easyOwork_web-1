@@ -7,7 +7,7 @@
             </li>
             <li class="dropdown ml15 mr15" collapse-h options="collapsehset">
                 <a class="dropdown-toggle count-info" id="infobtn">
-                    <i class="iconfont icon-tixing"></i> <span class="badge badge-primary">8</span>
+                    <i class="iconfont icon-tixing"></i> <span class="badge badge-primary" ng-if="unreadCount>0">{{unreadCount}}</span>
                 </a>
                 <!--消息提醒-->
                 <div class="topinfo-com ">
@@ -17,35 +17,13 @@
                     </div>
                     <div class="combox">
                         <ul>
-                            <li>
+                            <li ng-repeat="note in notes">
                                 <a>
                                     <table cellpadding="0" cellspacing="0" width="100%">
                                         <tr>
-                                            <td width="16" valign="top"><i class="iconfont icon-tixing orange"></i></td>
-                                            <td class="pl10 f12">用户消息列表未读样式默认显示两行鼠标移入出现删除图标，多余请用...</td>
-                                            <td width="16" class="pl10"><i class="iconfont icon-close f12"></i></td>
-                                        </tr>
-                                    </table>
-                                </a>
-                            </li>
-                            <li class="g9 nothover">
-                                <a>
-                                    <table cellpadding="0" cellspacing="0" width="100%">
-                                        <tr>
-                                            <td width="16" valign="top"><i class="iconfont icon-tixing"></i></td>
-                                            <td class="pl10 f12">用户消息列表未读样式默认显示两行鼠标移入出现删除图标，多余请用...</td>
-                                            <td width="16" class="pl10"><i class="iconfont icon-close f12"></i></td>
-                                        </tr>
-                                    </table>
-                                </a>
-                            </li>
-                            <li>
-                                <a>
-                                    <table cellpadding="0" cellspacing="0" width="100%">
-                                        <tr>
-                                            <td width="16" valign="top"><i class="iconfont icon-tixing orange"></i></td>
-                                            <td class="pl10 f12">用户消息列表未读样式默认显示两行鼠标移入出现删除图标，多余请用...</td>
-                                            <td width="16" class="pl10"><i class="iconfont icon-close f12"></i></td>
+                                            <td width="16" valign="top"><i class="iconfont icon-tixing" ng-class="{'UNREAD': 'orange'}[note.noteStatus]"></i></td>
+                                            <td class="pl10 f12" ng-click="markRead(note)">{{note.content}}</td>
+                                            <td width="16" class="pl10"><i ng-click="deleteNote(note,$index)" class="iconfont icon-close f12"></i></td>
                                         </tr>
                                     </table>
                                 </a>
