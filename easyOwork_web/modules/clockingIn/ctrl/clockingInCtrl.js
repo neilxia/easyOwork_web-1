@@ -35,3 +35,9 @@ function clockingInviewCtrl(){
 
     }]
 }
+
+function clockingInsetCtrl(){
+    return['$scope',function($scope){
+
+    }]
+}

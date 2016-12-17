@@ -134,7 +134,7 @@ function loginCtrl(){
                 $scope.Zh={
                     name:$scope.user.name,
                     registername:null,
-                    cpId:1
+                    cpId:null
                 };
                 $scope.checkedbox=true;
                 //注册实现
@@ -145,12 +145,13 @@ function loginCtrl(){
                     $scope.user.registerMobileNo=typearr[1][1];
                     var promise = companyService.registerCompany({body:$scope.user});
                     promise.success(function(data, status, headers, config){
-                        var status=data.body.status;
-                        if(status.statusCode==0){
+                        var sts=data.body.status;
+                        if(sts.statusCode==0){
+                            $scope.Zh.cpId=data.header.entId;
                             $scope.firstbox =! $scope.firstbox;
                             $scope.secondbox =! $scope.secondbox;
                         }else{
-                            console.log(status.errorDesc);
+                            MsgService.tomsg(sts.errorDesc);
                         }
                     });
                 };
@@ -166,11 +167,11 @@ function loginCtrl(){
                     };
                     var promise = publicService.sendVerificationCode({body:$scope.sendmsg});
                     promise.success(function(data, status, headers, config){
-                        var status=data.body.status;
-                        if(status.statusCode==0){
+                        var sts=data.body.status;
+                        if(sts.statusCode==0){
                             //MsgService.tomsg();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(sts.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
@@ -241,8 +242,8 @@ function loginCtrl(){
                     };
                     var promise = publicService.sendVerificationCode({body:$scope.sendmsg});
                     promise.success(function(data, status, headers, config){
-                        var status=data.body.status;
-                        if(status.statusCode==0){
+                        var sts=data.body.status;
+                        if(sts.statusCode==0){
                             MsgService.tomsg();
                         }else{
                             MsgService.errormsg(data);
@@ -290,8 +291,8 @@ function loginCtrl(){
                     };
                     var promise = publicService.resetPassword({body:$scope.options});
                     promise.success(function(data, status, headers, config){
-                        var status=data.body.status;
-                        if(status.statusCode==0){
+                        var sts=data.body.status;
+                        if(sts.statusCode==0){
                             $scope.step2 =false;
                             $scope.step3 =true;
                         }else{

@@ -22,7 +22,8 @@
                     <div class="nose-group mt10"  ng-class="{'has-error':form.name.$dirty && form.name.$invalid}">
                         <i class="iconfont icon-tishi f20 abs_r" ng-show="form.name.$dirty && form.name.$error.required" popover="请输入企业名称" popover-placement="bottom" popover-trigger="mouseenter"></i>
                         <i class="iconfont icon-tishi f20 abs_r" ng-show="form.name.$dirty && form.name.$error.maxlength" popover="企业名称长度最大60个字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                        <input type="text" class="form-control input-lg" name="name" ng-model="user.name" ng-maxlength="60" placeholder="请输入企业名称" required />
+                        <i class="iconfont icon-tishi f20 abs_r" ng-show="form.name.$dirty && form.name.$error.pattern" popover="输入的企业名称不正确" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                        <input type="text" class="form-control input-lg" name="name" ng-model="user.name" ng-maxlength="60" ng-pattern="/^[a-zA-Z0-9\u4e00-\u9fa5\\(\\)\\-]+$/" placeholder="请输入企业名称" required />
                     </div>
 
                     <div class="form-inline nose-group mt10" ng-class="{'has-error':form.verificationCode.$dirty && form.verificationCode.$error.required}">

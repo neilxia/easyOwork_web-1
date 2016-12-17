@@ -7,9 +7,9 @@ function permissionsCtrl(){
     	function FuncListAllRoles(){
         	var promise = roleService.inquiryRole({body:{}});
         	promise.success(function(data, status, headers, config){
-        		 var status=data.body.status;
+        		 var sts=data.body.status;
                  var data=data.body.data;
-                 if(status.statusCode==0){
+                 if(sts.statusCode==0){
                 	 $scope.fullRoles = data.roles;
                 	 $scope.roles = $scope.fullRoles;
                  }else{
@@ -69,9 +69,9 @@ function permissionsCtrl(){
 	                    };
                     	var promise = roleService.changeRole({body:body});
                         promise.success(function(data, status, headers, config){
-                   		 	var status=data.body.status;
+                   		 	var sts=data.body.status;
                             var data=data.body.data;
-                            if(status.statusCode==0){
+                            if(sts.statusCode==0){
                             	FuncListAllRoles();//refresh the list
                             }
                         })
@@ -88,9 +88,9 @@ function permissionsCtrl(){
     	                    };
                         	var promise = roleService.deleteRoles({body:body});
                             promise.success(function(data, status, headers, config){
-                       		 	var status=data.body.status;
+                       		 	var sts=data.body.status;
                                 var data=data.body.data;
-                                if(status.statusCode==0){
+                                if(sts.statusCode==0){
                                 	FuncListAllRoles();//refresh the list
                                 }
                             })
@@ -144,9 +144,9 @@ function permissionsaddCtrl(){
     	$scope.FuncListAllFunctions = function(){
         	var promise = roleService.inquiryFunction({body:{}});
         	promise.success(function(data, status, headers, config){
-        		 var status=data.body.status;
+        		 var sts=data.body.status;
                  var data=data.body.data;
-                 if(status.statusCode==0){
+                 if(sts.statusCode==0){
                 	 $scope.functionList = data.functionList;
                 	 $scope.populateTreeGrid();
                 	 $scope.functionGrid = $("#functionGrid").TreeGrid($scope.treegirdoptions);
@@ -154,8 +154,8 @@ function permissionsaddCtrl(){
                 	//如果从编辑页面过来, 则默认填充职位名称和描述, 以及相关的权限
                 	 //var selectedRole = $stateParams.selectedRole;
                  	 if($scope.editMode){	//编辑模式
-                 		$scope.form.roleName = $scope.selectedRole.roleName;
-                 		$scope.form.roleDesc = $scope.selectedRole.roleDesc;
+                 		$scope.thisform.roleName = $scope.selectedRole.roleName;
+                 		$scope.thisform.roleDesc = $scope.selectedRole.roleDesc;
                  		//$('input:checkbox[name=selectedFunction]:checked')
                  		var roleFunctionList = $scope.selectedRole.functionList;
                  		for(var i=0; i<roleFunctionList.length; i++){
@@ -198,10 +198,11 @@ function permissionsaddCtrl(){
  			   }
      		}
         }
-        $scope.form = {
+        $scope.thisform = {
         		"roleName":"",
         		"roleDesc":""
         	};
+		//$scope.thisform=$scope.thisform;
         $scope.init = function(){
         	$scope.editMode = false;
         	var selectedRole = $stateParams.selectedRole;
@@ -232,20 +233,20 @@ function permissionsaddCtrl(){
             //构造服务器调用参数
             var body = {
             		"actionType":"ADD",
-            		"roleName":$scope.form.roleName,
-            		"roleDesc":$scope.form.roleDesc,
+            		"roleName":$scope.thisform.roleName,
+            		"roleDesc":$scope.thisform.roleDesc,
             		"functionList":selectedFunctionList
             };
             if($scope.editMode){
             	body.actionType = "MODIFY";
             	body.roleName = $scope.selectedRole.roleName;
-            	body.newRoleName = $scope.form.roleName;
+            	body.newRoleName = $scope.thisform.roleName;
             }
             var promise = roleService.changeRole({body:body});
             promise.success(function(data, status, headers, config){
-       		 	var status=data.body.status;
+       		 	var sts=data.body.status;
                 var data=data.body.data;
-                if(status.statusCode==0){
+                if(sts.statusCode==0){
                 	$state.go('permissions.list');
                 }else{
                     notify({ message: status.errorDesc, classes: 'orange iconfont icon-one', templateUrl:'modules/common/prompt.html' ,prompt:true});

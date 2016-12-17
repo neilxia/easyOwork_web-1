@@ -15,20 +15,20 @@
         <div class="p30 pb10 addpcs-config">
             <div class="pct60  f12">
                 <div class="cf mb10">
-                    <div class="col-xs-2 t_r pt7 g9">流程类型</div>
+                    <div class="col-xs-2 t_r pt7 g9">选择流程类型</div>
                     <div class="col-xs-10 form-inline">
                         <button class="btn btn-default mr5" ng-repeat="data in prosclasslist" ng-model="$parent.pcsclass" btn-radio="'{{data.name}}'">{{data.name}}</button>
                     </div>
 
                 </div>
-                <div class="cf mb10">
+                <div class="cf mb10" ng-show="pcsclass">
                     <div class="col-xs-2 t_r pt7 g9">选择流程</div>
                     <div class="col-xs-10 form-inline">
                         <!--{{processmodal}}-->
                         <button class="btn btn-default mr5" ng-repeat="ModelData in processList | filter:{'processType':pcsclass}" ng-model="$parent.processmodal" btn-radio="{{ModelData}}">{{ModelData.name}}</button>
                     </div>
                 </div>
-                <div class="cf mb10">
+                <div class="cf mb10" ng-show="processmodal">
                     <div class="col-xs-2 t_r pt7 g9">流程描述</div>
                     <div class="col-xs-10"><textarea class="form-control" cols="6" disabled ng-model="processmodal.description"></textarea></div>
                 </div>
@@ -43,12 +43,12 @@
                     </div>
                 </div>
                  -->
-                <div class="cf mb10">
+<!--                <div class="cf mb10">
                     <div class="col-xs-2 t_r pt7 g9">流程名称</div>
                     <div class="col-xs-10">
                         <input type="text" class="form-control" ng-model="processmodal.title" placeholder="输入您新建的流程名称">
                     </div>
-                </div>
+                </div>-->
             </div>
             <div class="pct60 f12">
                 <div class="cf mb10" ng-repeat="obj in processmodal.processFieldDTOList">
@@ -106,13 +106,19 @@
                     </div>
                 </div>
             	<div class="cf mb10" ng-show="processmodal">
-                    <div class="col-xs-2 t_r pt7 g9">
-                        <div class="btn btn-primary btn-xs upheadbtn"><input type="file" id="attachment" nv-file-select uploader="attachmentUploader"/>上传附件</div>
-                    </div>
-                    <div class="col-xs-10 t_r pt7 g9">
+                    <div class="col-xs-2 t_r pt7 g9">上传</div>
+                    <div class="col-xs-10 pt5">
+                        <table cellspacing="0" cellpadding="0" width="100%">
+                            <tr>
+                                <td width="60"></td>
+                            </tr>
+                        </table>
+
                     <div class="t_l g9" ng-repeat="attachmentItem in processmodal.attachmentList">
-                        <a ng-href="{{attachmentItem.url}}">{{attachmentItem.fileName}}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{attachmentItem.size+' Byte'}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a ng-click="deleteAttachment($index)">删除</a> 
+                        <a ng-href="{{attachmentItem.url}}">{{attachmentItem.fileName}}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{attachmentItem.size+' Byte'}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="red" ng-click="deleteAttachment($index)">删除</span>
                     </div>
+                        <div class="btn btn-primary btn-xs upheadbtn"><input type="file" id="attachment" nv-file-select uploader="attachmentUploader"/>上传附件</div>
+
                     </div>
                 </div>
             </div>
@@ -126,7 +132,7 @@
         </div>
 
 
-        <div class="nose-panel-body">
+        <div class="nose-panel-body" >
             <table class="table table-hover bte bbe tr" cellspacing="0" cellpadding="0" width="100%;">
                 <thead>
                 <tr>
@@ -145,7 +151,7 @@
             </table>
 
         </div>
-        <div class="nose-panel-footer cf">
+        <div class="nose-panel-footer cf" ng-show="processmodal">
             <button class="btn btn-default wd80" ui-sref="processmsg.mypcs">取消</button>
             <button class="btn btn-primary wd80" ng-click="createProcessFun()">提交</button>
         </div>

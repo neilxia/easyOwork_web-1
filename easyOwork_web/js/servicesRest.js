@@ -432,9 +432,9 @@ function OSSService(){
             inquiryOSSInfo:function(form){
             	return $http.post(AppConfig.BASE_URL+'work/rest/inquiryOSSInfo',form)
             				.success(function(data, status, headers, config){
-            					var status=data.body.status;
+            					var sts=data.body.status;
             	                var data=data.body.data;
-            	                if(status.statusCode==0){
+            	                if(sts.statusCode==0){
             	                	LocalStorage.setObject('ossInfo',data);
             	                }
             				})

@@ -2,7 +2,7 @@
  * Created by Nose on 2016/9/7.
  */
 function listCtrl(){
-    return['$scope', '$modal' ,'LocalStorage','companyService','FileUploader','OSSService',function($scope,$modal,LocalStorage,companyService,FileUploader,OSSService){
+    return['$scope', '$modal' ,'LocalStorage','companyService','FileUploader','OSSService','MsgService',function($scope,$modal,LocalStorage,companyService,FileUploader,OSSService,MsgService){
         var companyinfo;
         $scope.initFun=function(){
             companyinfo=LocalStorage.getObject('companyinfo');
@@ -23,12 +23,64 @@ function listCtrl(){
         $scope.changeCompanyInfoFun=function (data,name){
             if(!data){return;}
             switch(name){
-                case 'name':{$scope.EPinfo.name=data; break;}
-                case 'shortName':{$scope.EPinfo.shortName=data; break;}
-                case 'entPhone':{$scope.EPinfo.entPhone=data; break;}
-                case 'entEmail':{$scope.EPinfo.entEmail=data; break;}
-                case 'contactName':{$scope.EPinfo.contactName=data; break;}
-                case 'contactPhone':{$scope.EPinfo.contactPhone=data; break;}
+                case 'name':{
+                    if(data.length>60){
+                        MsgService.tomsg('最大60个字符！');
+                        return false;
+                    }else {
+                        $scope.EPinfo.name=data;
+                        break;
+                    }
+                }
+                case 'shortName':{
+                    if(data.length>20){
+                        MsgService.tomsg('最大60个字符！');
+                        return false;
+                    }else {
+                        $scope.EPinfo.shortName=data;
+                        break;
+                    }
+                }
+                case 'entPhone':{
+                    //区号+座机号码
+                    var regexp=/(\(\d{3,4}\)|\d{3,4}-|\s)?\d{8}/;
+                    if(!regexp.test(data) || data.length>17){
+                        MsgService.tomsg('请输入正确的企业电话！');
+                        return false;
+                    }else {
+                        $scope.EPinfo.entPhone=data;
+                        break;
+                    }
+                }
+                case 'entEmail':{
+                    var regexp = /^([a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*[;；]?)+$/i;
+                    if(!regexp.test(data)){
+                        MsgService.tomsg('请输入正确的邮箱！');
+                        return false;
+                    }else {
+                        $scope.EPinfo.entEmail=data;
+                        break;
+                    }
+                }
+                case 'contactName':{
+                    if(data.length>4){
+                        MsgService.tomsg('最大4个字符！');
+                        return false;
+                    }else {
+                        $scope.EPinfo.contactName=data;
+                        break;
+                    }
+                }
+                case 'contactPhone':{
+                    var regexp = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+                    if(!regexp.test(data)){
+                        MsgService.tomsg('请输入正确的手机号码！');
+                        return false;
+                    }else {
+                        $scope.EPinfo.contactPhone=data;
+                        break;
+                    }
+                }
                 case 'logoUrl':{$scope.EPinfo.logoUrl=data; break;}
                 case 'licenceUrl':{$scope.EPinfo.licenceUrl=data; break;}
             }
@@ -39,11 +91,12 @@ function listCtrl(){
                     LocalStorage.setObject('companyinfo',$scope.EPinfo);
                     //MsgService.tomsg();
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(sts.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                var sts=data.body.status;
+                MsgService.tomsg(sts.errorDesc);
             });
             return promise;
         };
@@ -138,7 +191,7 @@ function listCtrl(){
 
 
 function cssetCtrl(){
-    return['$scope','publicService',function($scope,publicService){
+    return['$scope','publicService','MsgService',function($scope,publicService,MsgService){
         $scope.initFun=function(){
             inquiryParameterFun();
         }
@@ -171,29 +224,34 @@ function cssetCtrl(){
 
         //修改系统参数
         $scope.changeParameterFun=function (data,name){
-            $scope.options={
-                "settings":[		//数组, 一次可修改多个参数
-                    {
-                        "name":name,	//必填项 , 参数名
-                        "value":data		//必填项 , 参数值
+            if(data<0){
+                MsgService.tomsg('请输入大于0的数！');
+                return false;
+            }else{
+                $scope.options={
+                    "settings":[		//数组, 一次可修改多个参数
+                        {
+                            "name":name,	//必填项 , 参数名
+                            "value":data		//必填项 , 参数值
+                        }
+                    ]
+                };
+                var promise = publicService.changeParameter({body:$scope.options});
+                promise.success(function(data, status, headers, config){
+                    var sts=data.body.status;
+                    if(sts.statusCode==0){
+                        //MsgService.tomsg();
+                        $modalInstance.close();
+                    }else{
+                        MsgService.errormsg(data);
                     }
-                ]
-            };
-            var promise = publicService.changeParameter({body:$scope.options});
-            promise.success(function(data, status, headers, config){
-                var sts=data.body.status;
-                if(sts.statusCode==0){
-                    MsgService.tomsg();
-                    $modalInstance.close();
-                }else{
+                });
+                promise.error(function(data, status, headers, config){
                     MsgService.errormsg(data);
-                }
-            });
-            promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
-            });
-            return promise;
-        };
+                });
+                return promise;
+            };
+        }
 
     }]
 }

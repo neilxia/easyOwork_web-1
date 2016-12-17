@@ -31,7 +31,6 @@ function structuremsgCtrl(){
             promise.success(function(data, status, headers, config){
                 var datas=data.body;
                 if(datas.status.statusCode==0){
-                    debugger;
                     $scope.treegirdoptions.data=getNewarr(data.body.data.orgs);
                     $scope.treedataisready=!$scope.treedataisready;
                     //getNewarr(datas.data.orgs,'#');
@@ -48,7 +47,8 @@ function structuremsgCtrl(){
         $scope.treegirdoptions={
             columns:[
                 {headerText: "部门名称", dataField: "name", width:'200'},
-                {headerText: "部门描述", dataField: "desc",width:'auto'}
+                {headerText: "部门描述", dataField: "desc",width:'auto'},
+                {headerText: "部门经理", dataField: "managerUserName",width:'100'}
             ],
             data:[],
             itemClick:function(id,date){
@@ -114,7 +114,8 @@ function structuremsgCtrl(){
                 "name":oldrow.name,		//部门名称,必填项
                 "newName":row.name || '',		//新部门名称, 如有修改传入修改后的值, 如没有修改则不要包含在request里
                 "desc":row.desc || '',			//新部门描述
-                "parentOrgName":parentOrgName//上级部门名称
+                "parentOrgName":parentOrgName ,//上级部门名称
+                "managerUserId":row.managerUser.id || '',		//部门经理员工号,
 
 /*                 如有修改传入修改后的值, 如没有修改则不要包含在request里
                 "managerUserId":row.managerUserId || '',		//部门经理员工号, 如有修改传入修改后的值, 如没有修改则不要包含在request里
@@ -153,7 +154,8 @@ function structuremsgCtrl(){
                 $scope.theform={
                     "name":"",		//部门名称,必填项
                     "desc":"",			//新部门描述
-                    "parentOrgName":""		//上级部门名称, 如有修改传入修改后的值,
+                    "parentOrgName":"",		//上级部门名称, 如有修改传入修改后的值,
+                    "managerUser":$scope.managerUser
                 };
                 //提交增加
                 $scope.ok = function (state) {
@@ -178,10 +180,11 @@ function structuremsgCtrl(){
                 $scope.thisname="编辑";
                 //修改公司部门
                 $scope.theform=row;
-                debugger;
+                $scope.theform.managerUser=$scope.managerUser;
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
+
                     changeDPmentFun('MODIFY',$scope.theform,$modalInstance,oldrow);
                     //$modalInstance.close();
                 };

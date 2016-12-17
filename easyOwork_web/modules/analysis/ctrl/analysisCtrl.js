@@ -43,9 +43,9 @@ function analysisCtrl(){
     		var type = $stateParams.type;
 	        var promise = analysisService.getOrgEmployeeChart({body:{}});
         	promise.success(function(data, status, headers, config){
-        		 var status=data.body.status;
+        		 var sts=data.body.status;
                  var data=data.body.data;
-                 if(status.statusCode==0){
+                 if(sts.statusCode==0){
                 	 option.legend.data = data.nameArray;
                 	 option.series[0].data=data.dataList;
                 	 myChart.setOption(option);
@@ -56,9 +56,9 @@ function analysisCtrl(){
     		var type = $stateParams.type;
 	        var promise = analysisService.getRoleEmployeeChart({body:{}});
         	promise.success(function(data, status, headers, config){
-        		 var status=data.body.status;
+        		 var sts=data.body.status;
                  var data=data.body.data;
-                 if(status.statusCode==0){
+                 if(sts.statusCode==0){
                 	 option.legend.data = data.nameArray;
                 	 option.series[0].data=data.dataList;
                 	 myChart.setOption(option);
@@ -68,9 +68,9 @@ function analysisCtrl(){
     	$scope.getSalaryEmployeeChart = function(){
 	        var promise = analysisService.getSalaryEmployeeChart({body:{}});
         	promise.success(function(data, status, headers, config){
-        		 var status=data.body.status;
+        		 var sts=data.body.status;
                  var data=data.body.data;
-                 if(status.statusCode==0){
+                 if(sts.statusCode==0){
                 	 option.legend.data = data.nameArray;
                 	 option.series[0].data=data.dataList;
                 	 myChart.setOption(option);

@@ -11,16 +11,29 @@
         <li>职务权限</li>
         <li class="active">新增职务</li>
     </ol>
-    <form>
+    <form name="form" novalidate="novalidate">
     <div class="p20 f12">
         <table cellspacing="0" cellpadding="0" width="100%" class="line30td">
             <tr>
                 <td width="70"><span class="g9">职务名称</span></td>
-                <td><input name="roleName" type="text" class="form-control wd400" placeholder="输入职务名称" ng-model="form.roleName" required ng-maxlength="20"></td>
+                <td>
+                    <div class="nose-group wd400"  ng-class="{'has-error':form.roleName.$dirty && form.roleName.$invalid}">
+                        <i class="iconfont icon-tishi f20 abs_r" ng-show="form.roleName.$dirty && form.roleName.$error.required" popover="输入职务名称" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                        <i class="iconfont icon-tishi f20 abs_r" ng-show="form.roleName.$dirty && form.roleName.$error.maxlength" popover="最大20个字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                        <input type="text" class="form-control wd400" name="roleName"  placeholder="输入职务名称" ng-model="thisform.roleName" ng-maxlength="20" required>
+                    </div>
+
+                </td>
             </tr>
             <tr>
                 <td valign="top"><span class="g9">职务描述</span></td>
-                <td><textarea name="roleDesc" type="text" class="form-control wd400" rows="4" placeholder="输入职务描述信息" ng-model="form.roleDesc" ng-maxlength="200"></textarea></td>
+                <td>
+                    <div class="nose-group wd400" ng-class="{'has-error':form.roleDesc.$dirty && form.roleDesc.$invalid}">
+                        <i class="iconfont icon-tishi f20 abs_r" ng-show="form.roleDesc.$dirty && form.roleDesc.$error.maxlength" popover="最大200个字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                        <textarea name="roleDesc" type="text" class="form-control" rows="4" placeholder="输入职务描述信息" ng-model="thisform.roleDesc" ng-maxlength="200"></textarea>
+                    </div>
+
+                </td>
             </tr>
         </table>
     </div>
