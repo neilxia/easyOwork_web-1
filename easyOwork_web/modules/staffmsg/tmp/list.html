@@ -200,11 +200,12 @@
                             <tbody>
                             <tr>
                                 <td><span class="pl20">基本工资</span></td>
-                                <td><input type="text" class="form-control input-sm" value="1200"></td>
+                                <td><input type="text" class="form-control input-sm" ng-model="user.currentSalary"></td>
                                 <td>月</td>
                                 <td>是</td>
-                                <td>---</td>
-                                <td>---</td>
+                                <td><input type="datetime" class="form-control" date-time ng-model="user.currentSalaryStartDate" view="date" min-view="date" format="yyyy-MM-dd" step="5" auto-close="true">
+                                    </td>
+                                <td></td>
                             </tr>
                             <tr ng-repeat="data in user.salaryTypeList" ng-show="data.shownd">
                                 <td><span class="pl20">{{data.name}}</span></td>
@@ -242,7 +243,7 @@
                                     <td width="60">员工合同</td>
                                     <td>
                                         <i class="iconfont icon-fujian blue ml5"></i>
-                                        <a ng-href="{{user.contract.url}}">{{user.contract.fileName}}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{user.contract.size+' Byte'}}  <span class="red">删除</span>
+                                        <a ng-href="{{user.contract.url}}">{{user.contract.fileName}}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{user.contract.size+' Byte'}}  <span class="red" ng-click="deleteContract()">删除</span>
                                     </td>
                                 </tr>
                                 <tr>

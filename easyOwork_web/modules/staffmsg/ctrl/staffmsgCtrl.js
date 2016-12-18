@@ -77,7 +77,9 @@ function staffmsgCtrl(){
                 "roleList":roleList,	//角色数组, 可多个角色
                 //"contractUrl":row.contractUrl || "",		//合同文件地址
                 //"contract":row.contract,
-                "salaryTypeList":salaryTypeList
+                "salaryTypeList":salaryTypeList,
+                "currentSalary":row.currentSalary,
+                "currentSalaryStartDate":row.currentSalaryStartDate
             };
             if(row.isContractModified)
             	$scope.options.contract = row.contract;
@@ -195,7 +197,9 @@ function staffmsgCtrl(){
                      "roleList":[],	//角色数组, 可多个角色
                      //"contractUrl":"",		//合同文件地址
                      //"contract":{},
-                     "salaryTypeList":[]
+                     "salaryTypeList":[],
+                     "currentSalary":"",
+                 	 "currentSalaryStartDate":""
                  };
 
                 $scope.ok = function(state) {
@@ -206,6 +210,10 @@ function staffmsgCtrl(){
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                 };
+                $scope.deleteContract = function(){
+                	$scope.user.contract=null;
+                	$scope.user.isContractModified = true;
+                }
 
 
             }
@@ -267,6 +275,11 @@ function staffmsgCtrl(){
                     angular.copy(oldrow, row);
                     $modalInstance.dismiss('cancel');
                 };
+                
+                $scope.deleteContract = function(){
+                	$scope.user.contract=null;
+                	$scope.user.isContractModified = true;
+                }
             };
         };
 
