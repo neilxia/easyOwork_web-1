@@ -35,25 +35,18 @@
                     <th width="100">星期</th>
                     <th width="100">上班签到</th>
                     <th width="100">下班签到</th>
-                    <th width="100">迟到</th>
-                    <th width="100">早退</th>
+                    <th width="100">状态</th>
+                    <!--<th width="100">早退</th>-->
                 </tr>
                 </thead>
                 <tbody>
-                <tr >
-                    <td><span class="pl15">2016-10-11</span></td>
-                    <td>星期二</td>
-                    <td>9:43</td>
-                    <td>18:43</td>
-                    <td><span class="red">00:03</span></td>
-                    <td><span class="red">00:07</span></td>
-                </tr>
-                <tr ng-repeat="data in datalist | filter:sltorgList[0].text | filter:sltroleList[0].text | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
-                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
-                    <td>{{report.title}}</td>
-                    <td>{{report.userDTO.name}}</td>
-                    <td>{{report.userDTO.name}}</td>
-                    <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="s_issueDetail(data)"><i class="iconfont icon-chakan f14"></i></button></td>
+                <tr ng-repeat="data in datas">
+                    <td><span class="pl15">{{data.attendanceDay}}</span></td>
+                    <td>{{data.week}}</td>
+                    <td>{{data.inHour}}:{{data.inMinute}}</td>
+                    <td>{{data.outHour}}:{{data.outMinute}}</td>
+                    <td><span class="red">{{data.result}}</span></td>
+                    <!--<td><span class="red">00:07</span></td>-->
                 </tr>
                 </tbody>
             </table>

@@ -637,7 +637,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             data: { pageTitle: '考勤列表'}
         })
         .state('clockingIn.view', {
-            url: "/view",
+            url: "/view:row",
             templateUrl: 'modules/clockingIn/tmp/view.html',
             data: { pageTitle: '考勤详情'}
         })

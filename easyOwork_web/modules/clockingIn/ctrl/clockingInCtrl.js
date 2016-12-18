@@ -38,6 +38,17 @@ function clockingInlistCtrl(){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                     $scope.attendanceslist=data.body.data.attendances;
+                    $scope.attendanceslist=[
+                        {
+                            "name":"将之前",
+                            "id":"01111",
+                            "orgList":"人力资源部",
+                            "time":"2016-11",
+                            "datey":"18",
+                            "chidao":"2",
+                            "zhaotui":"2"
+                        }
+                    ]
                     $scope.thispages.total=$scope.attendanceslist.length;	//分页
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
@@ -52,9 +63,11 @@ function clockingInlistCtrl(){
 }
 
 function clockingInviewCtrl(){
-    return['$scope', '$modal' ,'$compile','$state','attendanceService','MsgService','reportService','LocalStorage','Common',function($scope,$modal,$compile,$state,attendanceService,MsgService,reportService,LocalStorage,Common){
-        var userinfo=LocalStorage.getObject('userinfo');
-        $scope.thispages={
+    return['$scope','$rootScope',function($scope,$rootScope){
+        //var userinfo=LocalStorage.getObject('userinfo');
+        $scope.datas=$rootScope.$stateParams.row;
+
+/*        $scope.thispages={
             total:null,
             pageNum:1,
             pageSize:10
@@ -93,7 +106,7 @@ function clockingInviewCtrl(){
             promise.error(function(data, status, headers, config){
                 MsgService.tomsg(data.body.status.errorDesc);
             });
-        }
+        }*/
 
     }]
 }
@@ -117,7 +130,6 @@ function clockingInsetCtrl(){
                     var datalist=data.body.data.settings;
                     debugger;
                     angular.forEach(datalist,function(val,ind){
-
                         if(val.name=='WORKING_FROM_TIME'){
                             val.nameas='上班时间';
                         }else if(val.name=='WORKING_TO_TIME'){
@@ -141,14 +153,14 @@ function clockingInsetCtrl(){
         $scope.setWorkingTimeFun=function (data,name){
             var dataArr = data.split(':');
             switch (name){
-                case 'workingFrom':{
+                case 'WORKING_FROM_TIME':{
                     $scope.options={
                         "workingFromHour":dataArr[0],	//工作起始时间-小时
                         "workingFromMin":dataArr[1]	//工作起始时间-分钟
                     };
                     break;
                 }
-                case 'workingTo':{
+                case 'WORKING_TO_TIME':{
                     $scope.options={
                         "workingToHour":dataArr[0],	//工作结束时间-小时
                         "workingToMin":dataArr[1]		//工作结束时间-分钟

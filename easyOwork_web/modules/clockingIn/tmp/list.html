@@ -29,30 +29,23 @@
                     <th width="100">部门</th>
                     <th width="100">年/月</th>
                     <th width="80">出勤天数</th>
-                    <th width="80">缺勤天数</th>
+                    <!--<th width="80">缺勤天数</th>-->
                     <th width="80">迟到</th>
                     <th width="80">早退</th>
                     <th width="60">操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr >
-                    <td><span class="pl15">将之前</span></td>
-                    <td>01111</td>
-                    <td>人力资源部</td>
-                    <td>2016-11</td>
-                    <td>18</td>
-                    <td class="red">2</td>
-                    <td class="red">1</td>
-                    <td class="red">1</td>
-                    <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="clockingIn.view"><i class="iconfont icon-chakan f14"></i></button></td>
-                </tr>
-<!--| filter:form.searchValue | filter:{reportType:selectedReportType} |-->
+<!--| filter:form.searchValue | filter:{dataType:selectedReportType} |-->
                 <tr ng-repeat="data in attendanceslist | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
-                    <td><span class="pl15">{{report.title}}</span></td>
-                    <td>{{report.userDTO.name}}</td>
-                    <td>{{report.userDTO.name}}</td>
-                    <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="s_issueDetail(data)"><i class="iconfont icon-chakan f14"></i></button></td>
+                    <td><span class="pl15">{{data.name}}</span></td>
+                    <td>{{data.id}}</td>
+                    <td>{{data.orgList}}</td>
+                    <td>{{data.time}}</td>
+                    <td>{{data.datey}}</td>
+                    <td>{{data.chidao}}</td>
+                    <td>{{data.zhaotui}}</td>
+                    <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="clockingIn.view({row:data})"><i class="iconfont icon-chakan f14"></i></button></td>
                 </tr>
                 </tbody>
             </table>
