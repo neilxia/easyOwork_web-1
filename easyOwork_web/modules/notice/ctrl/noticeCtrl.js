@@ -71,9 +71,14 @@ function noticelistCtrl(){
 
             };
         };
+        //删除
         $scope.delete=function(row){
+            Common.openConfirmWindow().then(function() {
+                row.orgList=[{text:row.sentName}];
+                changeconfigFun('DELETE',row);
+            });
+        };
 
-        }
         function changeconfigFun(change,row,$modalInstance,oldrow){
             if(oldrow==undefined){oldrow=row}
             //添加/修改公告
@@ -129,7 +134,31 @@ function noticelistCtrl(){
 }
 
 function noticeviewCtrl(){
-    return['$scope', '$modal' ,'$compile','$state','roleService','MsgService','reportService','LocalStorage','Common',function($scope,$modal,$compile,$state,roleService,MsgService,reportService,LocalStorage,Common){
+    return['$scope', '$modal' ,'$compile','$state','noticeService','MsgService','reportService','LocalStorage','Common',function($scope,$modal,$compile,$state,noticeService,MsgService,reportService,LocalStorage,Common){
+        $scope.initFun=function(){
+            inquiryAnnouncementsFun();
+        }
+//查询公告
+        function inquiryAnnouncementsFun(){
+            var promise = noticeService.inquiryAnnouncements({body:{}});
+            promise.success(function(data, status, headers, config){
+                //远程开启下面的
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    $scope.inquiryAnnouncementsData=data.body.data.announcements;
+                    $scope.rowview(data.body.data.announcements[0])
+                }else{
+                    MsgService.tomsg(sts.errorDesc);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                var sts=data.body.status;
+                MsgService.tomsg(sts.errorDesc);
+            });
+        };
 
+        $scope.rowview=function(row){
+            $scope.rowviewdetail=row;
+        }
     }]
 }

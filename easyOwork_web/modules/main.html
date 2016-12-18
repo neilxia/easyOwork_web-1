@@ -141,7 +141,7 @@
             </div>
             <!--考勤-->
             <div class="panel mt15">
-                <div class="panel-heading"><span class="f_r"><i class="iconfont icon-right f14"></i></span><span class="f16">考勤</span></div>
+                <div class="panel-heading"><span class="f_r poi" ui-sref="clockingIn.list"><i class="iconfont icon-right f14"></i></span><span class="f16">考勤</span></div>
                 <div class="panel-body">
                     <table class="t_c" cellspacing="0" cellpadding="0" width="100%">
                         <tr>
@@ -150,9 +150,9 @@
                                 <div class="g9">09:00</div>
                             </td>
                             <td rowspan='2'>
-                                <div class="g9">星期五</div>
-                                <div class="f36">08:47</div>
-                                <div class="g9">2016-09-23</div>
+                                <div class="g9">{{currentDate.cweek}}</div>
+                                <div class="f36"><span current-time="'HH:mm'"></span></div>
+                                <div class="g9">{{currentDate.cdate}}</div>
                             </td>
                         </tr>
                         <tr>
@@ -162,7 +162,7 @@
                             </td>
                         </tr>
                     </table>
-                    <div class="mt15"><button class="btn btn-primary btn-block">上班打卡</button></div>
+                    <div class="mt15"><button class="btn btn-primary btn-block" ng-click="signInOutFun()">上班打卡</button></div>
                 </div>
             </div>
             <!--公告-->

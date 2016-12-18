@@ -146,6 +146,66 @@ app.factory('Common', ['$q','$modal',
                 },function(){
                 });
                 return deferred.promise;
+            },
+            getduanDate:function (start,end) {
+                var datearr=[];
+                var date = new Date();
+                for(var i=0;i>parseInt(start);i--){
+                    var startdate = new Date(date.getTime() + 24*60*60*1000*(parseInt(start)-i));  //向前
+                    var ddate=getthedata(startdate);
+                    datearr.push(ddate);
+                }
+                for(var i=0;i<parseInt(end);i++){
+                    var enddate = new Date(date.getTime() + 24*60*60*1000*i);  //向前
+                    var ddate=getthedata(enddate);
+                    if(i==0){
+                        ddate.thisweek=ddate.cweekhao;
+                    }
+                    datearr.push(ddate);
+                }
+
+                function getthedata(thisdata){
+                    var thedata={};
+                    var arrweek=['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
+                    var theweek=thisdata.getDay();
+                    var seperator1 = "-";//"-";
+                    var seperator2 = ":";//':'
+                    var month = thisdata.getMonth() + 1;
+                    var strDate = thisdata.getDate();
+                    if (month >= 1 && month <= 9) {
+                        month = "0" + month;
+                    }
+                    if (strDate >= 0 && strDate <= 9) {
+                        strDate = "0" + strDate;
+                    }
+                    var cdate = thisdata.getFullYear() + seperator1  +  month + seperator1 + strDate;
+
+                    thedata.cdate=cdate;
+                    thedata.cweek=arrweek[theweek];
+                    thedata.cweekhao=theweek;
+
+                    return thedata;
+                }
+                return datearr;
+            },
+            timecompareTo:function compareTo(beginTime,endTime){
+                //var beginTime = "2009-09-21 00:00:02";
+                //var endTime    = "2009-09-21 00:00:01";
+                var val;
+                //var beginTimes = beginTime.substring(0,10).split('-');
+                //var endTimes   =  endTime.substring(0,10).split('-');
+                //beginTime = beginTimes[1]+'-'+beginTimes[2]+'-'+beginTimes[0]+' '+beginTime.substring(10,19);
+                //endTime    = endTimes[1]+'-'+endTimes[2]+'-'+endTimes[0]+' '+endTime.substring(10,19);
+                var a =(Date.parse(endTime)-Date.parse(beginTime))/3600/1000;
+                //alert(a);
+                if(a<0){
+                    val=0; //endTime小
+                }else if (a>0){
+                    val=1; //endTime大
+                }else if (a==0){
+                    val=2; //时间相等
+                }
+                return val;
             }
         }
     }]);

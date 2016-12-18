@@ -1,4 +1,4 @@
-<div id="page-wrapper" ng-controller="salarymsglistCtrl" ng-init="init()">
+<div id="page-wrapper" ng-controller="clockingInlistCtrl" ng-init="init()">
     <!--主要内容-->
     <div class="payetilebox">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="init()" title="刷新"></a></div>
@@ -42,12 +42,13 @@
                     <td>人力资源部</td>
                     <td>2016-11</td>
                     <td>18</td>
-                    <td>2</td>
-                    <td>1</td>
-                    <td>1</td>
+                    <td class="red">2</td>
+                    <td class="red">1</td>
+                    <td class="red">1</td>
                     <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="clockingIn.view"><i class="iconfont icon-chakan f14"></i></button></td>
                 </tr>
-                <tr ng-repeat="report in reportlist | filter:form.searchValue | filter:{reportType:selectedReportType} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+<!--| filter:form.searchValue | filter:{reportType:selectedReportType} |-->
+                <tr ng-repeat="data in attendanceslist | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
                     <td><span class="pl15">{{report.title}}</span></td>
                     <td>{{report.userDTO.name}}</td>
                     <td>{{report.userDTO.name}}</td>

@@ -25,7 +25,7 @@
                 </thead>
                 <tbody>
                 <tr>
-                <tr ng-repeat="data in dataslist">
+                <tr ng-repeat="data in dataslist | limitTo:2">
                     <td class="pl20">{{data.nameas}}</td>
                     <td>
                         <span editable-number="data.value" e-form="Vcode" onbeforesave="changeParameterFun($data,data.name)" >{{data.value || '无'}}</span> <span class="ml5 poi orange" ng-click="Vcode.$show()" ng-hide="Vcode.$visible">修改</span>

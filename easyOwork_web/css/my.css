@@ -32,12 +32,12 @@
 
 /*公告管理*/
 .nt_detail_lf{ max-height: 730px; overflow:hidden;}
-.nt_detail_lf dl{ padding:20px 15px; border-bottom: #eee solid 1px; margin-top: -1px; cursor: pointer;}
-.nt_detail_lf dl:hover{ background-color: #f9f9f9; }
-.nt_detail_lf dl.active{ background-color: #f7941e; color: #fff;}
+.nt_detail_lf li{ padding:20px 15px; border-bottom: #eee solid 1px; margin-top: -1px; cursor: pointer;}
+.nt_detail_lf li:hover{ background-color: #f9f9f9; }
+.nt_detail_lf li.active{ background-color: #f7941e; color: #fff;}
 
 .nt_detail_lf .iyuan{ width: 8px; height: 8px; display: inline-block; background-color: #f7941e;}
-.nt_detail_lf dl dd{ color: #999;}
-.nt_detail_lf dl.active dd{ color: #fff;}
+.nt_detail_lf li .dd{ color: #999;}
+.nt_detail_lf li.active .dd{ color: #fff;}
 
 .nt_detail_rf{ padding: 15px; }

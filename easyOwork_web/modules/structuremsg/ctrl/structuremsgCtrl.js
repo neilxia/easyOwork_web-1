@@ -181,6 +181,7 @@ function structuremsgCtrl(){
                 controller: modalCtrl
             });
             function modalCtrl ($scope, $modalInstance) {
+                $scope.managerUsersallarr=[[],[{text:row.managerName}]];
                 $scope.thisname="编辑";
                 //修改公司部门
                 $scope.theform=row;

@@ -1094,7 +1094,43 @@ angular.module('custom-template', []).run(["$templateCache", function($templateC
         '<button type="button" class="btn btn-white btn-sm wd80" ng-click="cancel()">取消</button>' +
         '<button type="button" class="btn btn-primary btn-sm wd80 ml10" ng-click="ok()">确定</button>' +
         '</div></div></div>');
-}]);
+}])
+
+.directive('currentTime', function($timeout, dateFilter) {
+    // return the directive link function. (compile function not needed)
+    return function(scope, element, attrs) {
+        var format,  // date format
+            timeoutId; // timeoutId, so that we can cancel the time updates
+
+        // used to update the UI
+        function updateTime() {
+            element.text(dateFilter(new Date(), format));
+        }
+
+        // watch the expression, and update the UI on change.
+        scope.$watch(attrs.currentTime, function(value) {
+            format = value;
+            updateTime();
+        });
+
+        // schedule update in one second
+        function updateLater() {
+            // save the timeoutId for canceling
+            timeoutId = $timeout(function() {
+                updateTime(); // update DOM
+                updateLater(); // schedule another update
+            }, 1000);
+        }
+
+        // listen on DOM destroy (removal) event, and cancel the next UI update
+        // to prevent updating time ofter the DOM element was removed.
+        element.bind('$destroy', function() {
+            $timeout.cancel(timeoutId);
+        });
+
+        updateLater(); // kick off the UI update process.
+    }
+});
 
 /**
  *
@@ -1121,6 +1157,7 @@ angular
     .directive('ngenter', ngenter) //回车事件
     .directive('selectdep', selectdep) //选择部门
     .directive('selectdepyuan', selectdepyuan) //选择部门员工
+    .directive('currentTime', currentTime) //当前时间
     .directive('accessid', ['accessService',accessId]) //权限控制是否显示元素
     .directive('protectedid', ['accessService',protectedId]) //权限控制是否显示元素
 ;

@@ -47,7 +47,8 @@ app.filter('characters', function () {
             if (input) {
                 var inputWords = input.split(/\s+/);
                 if (inputWords.length > words) {
-                    input = inputWords.slice(0, words).join(' ') + '…';
+                    //input = inputWords.slice(0, words).join(' ') + '…';
+                    input = inputWords.slice(0, words).join(' ');
                 }
             }
             return input;

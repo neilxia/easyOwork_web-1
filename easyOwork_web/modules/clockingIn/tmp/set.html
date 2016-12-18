@@ -1,4 +1,4 @@
-<div id="page-wrapper" ng-controller="salarymsgissueCtrl" ng-init="init()">
+<div id="page-wrapper" ng-controller="clockingInsetCtrl" ng-init="initFun()">
     <!--主要内容-->
     <div class="payetilebox">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="init()" title="刷新"></a></div>
@@ -15,24 +15,44 @@
     </div>
     <div class="nose-panel">
         <div class="nose-panel-body">
-            <table class="table table-hover bbe editwd60" cellspacing="0" cellpadding="0" width="100%;">
+            <table class="table table-hover bbe editwd100" cellspacing="0" cellpadding="0" width="100%;">
                 <thead>
                 <tr>
                     <th width="150" class="pl15">名称</th>
                     <th >值</th>
-                    <th width="300">描述</th>
+                    <th width="350">描述</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                <tr ng-repeat="data in dataslist">
-                    <td class="pl15">{{data.nameas}}</td>
+                <!--<tr ng-repeat="data in dataslist">-->
+                <tr ng-repeat="data in dataslist | startFrom:2">
+                    <td class="pl20">{{data.nameas}}</td>
                     <td>
-                        <span editable-text="data.value" e-form="Vcode" onbeforesave="changeParameterFun($data,data.name)">{{data.value || '无'}}</span> <span class="ml5 poi orange" ng-click="Vcode.$show()" ng-hide="Vcode.$visible">修改</span>
+                        <span editable-time="data.value" e-form="Vcode" onbeforesave="setWorkingTimeFun($data,data.name)" >{{data.value || '无'}}</span> <span class="ml5 poi orange" ng-click="Vcode.$show()" ng-hide="Vcode.$visible">修改</span>
 
                     </td>
                     <td>{{data.description}}</td>
                 </tr>
+
+<!--
+
+                <tr>
+                    <td class="pl15">上班时间</td>
+                    <td>
+                        <span editable-time="workingFrom" e-form="Vcode"  onbeforesave="setWorkingTimeFun($data,'workingFrom')">{{workingFrom || '无'}}</span> <span class="ml5 poi orange" ng-click="Vcode.$show()" ng-hide="Vcode.$visible">修改</span>
+
+                    </td>
+                    <td>设置公司员工的上班打卡时间，此时间后打卡的算作迟到</td>
+                </tr>
+                <tr>
+                    <td class="pl15">下班时间</td>
+                    <td>
+                        <span editable-time="workingTo" e-form="Vcode2" onbeforesave="setWorkingTimeFun($data,'workingTo')">{{workingTo || '无'}}</span> <span class="ml5 poi orange" ng-click="Vcode2.$show()" ng-hide="Vcode2.$visible">修改</span>
+
+                    </td>
+                    <td>设置公司员工的下班打卡时间，此时间前打卡的算作早退</td>
+                </tr>-->
                 <tr>
                     <td class="pl15">工作日自定义</td>
                     <td>
