@@ -36,11 +36,11 @@ function staffmsgCtrl(){
                     $scope.datalist=datalist;
                     $scope.thispages.total=$scope.datalist.length;//分页总数
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
 
@@ -89,11 +89,11 @@ function staffmsgCtrl(){
                     inquiryEmployeeFun();
                     $modalInstance.close();
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
             return promise;
         }
@@ -135,11 +135,11 @@ function staffmsgCtrl(){
                 if(sts.statusCode==0){
                     inquiryEmployeeFun();
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         }
         //增加员工
@@ -324,11 +324,11 @@ function staffmsgCtrl(){
                     });
                     $scope.user.salaryTypeList=datalist;
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
 
@@ -383,11 +383,11 @@ function staffmsgCtrl(){
                     }
                     $scope.datalist2=datalist;
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
 
@@ -417,11 +417,11 @@ function setCtrl(){
                     }
                     $scope.datalist=datalist;
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
         //社保项列表
@@ -438,11 +438,11 @@ function setCtrl(){
                     }
                     $scope.datalist2=datalist;
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
 
@@ -467,11 +467,11 @@ function setCtrl(){
                     getconflistFun();
                     $modalInstance.close();
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
             return promise;
         }
@@ -559,11 +559,11 @@ function setCtrl(){
                     getsblistFun();
                     $modalInstance.close();
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
             return promise;
         }
@@ -651,11 +651,11 @@ function searchlistCtrl(){
                     $scope.datalist=data.body.data.userList;
                     $scope.thispages.total=$scope.datalist.length;
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
 

@@ -36,11 +36,11 @@ function structuremsgCtrl(){
                     //getNewarr(datas.data.orgs,'#');
 
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
 
@@ -134,11 +134,11 @@ function structuremsgCtrl(){
                     getCompanyOrg();
                     $modalInstance.close();
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
             return promise;
         }

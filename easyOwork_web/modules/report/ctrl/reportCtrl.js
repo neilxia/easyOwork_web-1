@@ -26,11 +26,11 @@ function sendreportCtrl(){
                     $scope.reportlist=data.body.data.reports;
                     $scope.thispages.total=$scope.reportlist.length;	//分页
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-            	MsgService.errormsg(data);
+            	MsgService.tomsg(data.body.status.errorDesc);
             });
     	}
     	$scope.deleteReport = function(report){
@@ -45,11 +45,11 @@ function sendreportCtrl(){
                     if(sts.statusCode==0){
                     	$scope.init();
                     }else{
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     }
                 });
                 promise.error(function(data, status, headers, config){
-                	MsgService.errormsg(data);
+                	MsgService.tomsg(data.body.status.errorDesc);
                 });
             })
     	}
@@ -73,11 +73,11 @@ function sendreportCtrl(){
                     if(sts.statusCode==0){
                     	$scope.init();
                     }else{
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     }
                 });
                 promise.error(function(data, status, headers, config){
-                	MsgService.errormsg(data);
+                	MsgService.tomsg(data.body.status.errorDesc);
                 });
             })
     	}
@@ -116,11 +116,11 @@ function receivereportCtrl(){
                     $scope.reportlist=data.body.data.reports;
                     $scope.thispages.total=$scope.reportlist.length;	//分页
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-            	MsgService.errormsg(data);
+            	MsgService.tomsg(data.body.status.errorDesc);
             });
     	}
     	
@@ -228,11 +228,11 @@ function addreportCtrl(){
                 if(sts.statusCode==0){
                 	$state.go('report.sendlist');
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-            	MsgService.errormsg(data);
+            	MsgService.tomsg(data.body.status.errorDesc);
             });
     	}
     	

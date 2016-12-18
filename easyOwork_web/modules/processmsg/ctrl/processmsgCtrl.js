@@ -70,11 +70,11 @@ function addpcsCtrl(){
                     	$scope.processList.push(process);
                     })
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
         //查询流程模板类型
@@ -89,11 +89,11 @@ function addpcsCtrl(){
                     //data.body.data.processDefTypes.unshift({name:'全部'});
                     $scope.prosclasslist=data.body.data.processDefTypes;
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
         /*
@@ -131,11 +131,11 @@ function addpcsCtrl(){
                 if(sts.statusCode==0){
                 	$state.go('processmsg.mypcs');
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
         
@@ -172,11 +172,11 @@ function mypcsCtrl(){
                 if(sts.statusCode==0){
                     $scope.prosclasslist=data.body.data.processDefTypes;
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
         //分页
@@ -206,11 +206,11 @@ function mypcsCtrl(){
                     $scope.inquiryProcessesData=data.body.data.processes;
                     $scope.thispages.total=$scope.inquiryProcessesData.length;//分页总数
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
 
@@ -234,11 +234,11 @@ function mypcsCtrl(){
                     if(sts.statusCode==0){
                         //成功
                     }else{
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     }
                 });
                 promise.error(function(data, status, headers, config){
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 });
             });
         };
@@ -266,11 +266,11 @@ function mypcsdetailCtrl(){
                         //成功
                         $rootScope.$state.go('processmsg.mypcs');
                     }else{
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     }
                 });
                 promise.error(function(data, status, headers, config){
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 });
             });
         };
@@ -301,11 +301,11 @@ function myauditCtrl(){
                 if(sts.statusCode==0){
                     $scope.prosclasslist=data.body.data.processDefTypes;
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
 
@@ -336,11 +336,11 @@ function myauditCtrl(){
                     $scope.inquiryProcessesData=data.body.data.processes;
                      $scope.thispages.total=$scope.inquiryProcessesData.length;//分页总数
                  }else{
-                 MsgService.errormsg(data);
+                 MsgService.tomsg(data.body.status.errorDesc);
                  }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
 
@@ -363,11 +363,11 @@ function myauditCtrl(){
                     if(sts.statusCode==0){
                         //成功
                     }else{
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     }
                 });
                 promise.error(function(data, status, headers, config){
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 });
             });
         };
@@ -412,11 +412,11 @@ function myauditdetailCtrl(){
                     //成功
                     $rootScope.$state.go('processmsg.mypcs');
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
     }]
@@ -442,11 +442,11 @@ function addsetpcsCtrl(){
                 if(sts.statusCode==0){
                     $scope.prosclasslist=data.body.data.processDefTypes;
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
 
@@ -651,11 +651,11 @@ function addsetpcsCtrl(){
                 if(sts.statusCode==0){
                 	$state.go('processmsg.setpcs');
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         }
 
@@ -758,11 +758,11 @@ function setpcsCtrl(){
                 if(sts.statusCode==0){
                     $scope.inquiryProcessModelData=data.body.data.processDefList;
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
 
@@ -778,11 +778,11 @@ function setpcsCtrl(){
                     //data.body.data.processDefTypes.unshift({name:'全部'});
                     $scope.prosclasslist=data.body.data.processDefTypes;
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
 
@@ -801,11 +801,11 @@ function setpcsCtrl(){
                         if(sts.statusCode==0){
                             inquiryProcessModelFun();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             });
@@ -837,11 +837,11 @@ function setpcsclassCtrl(){
                 if(sts.statusCode==0){
                     $scope.datalist=data.body.data.processDefTypes;
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
 
@@ -860,11 +860,11 @@ function setpcsclassCtrl(){
                     inquiryProcessModelTypeFun();
                     $modalInstance.close();
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
         //$scope.active=true;

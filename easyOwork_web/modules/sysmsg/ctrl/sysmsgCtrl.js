@@ -214,11 +214,11 @@ function cssetCtrl(){
                     })
                     $scope.dataslist=datalist;
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
 
@@ -243,11 +243,11 @@ function cssetCtrl(){
                         //MsgService.tomsg();
                         $modalInstance.close();
                     }else{
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     }
                 });
                 promise.error(function(data, status, headers, config){
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 });
                 return promise;
             };
@@ -280,11 +280,11 @@ function searchCtrl(){
                     $scope.searchcount=$scope.datalist.length;
                     //$scope.thispages.total=$scope.datalist.length;//分页总数
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
 

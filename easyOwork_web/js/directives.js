@@ -651,11 +651,11 @@ function selectdep($timeout){
                         getNewarr(datas.data.orgs,'#');
 
                     }else{
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     }
                 });
                 promise.error(function(data, status, headers, config){
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 });
             };
             //查询公司角色列表
@@ -671,11 +671,11 @@ function selectdep($timeout){
                             jseData.push({id:ind,parent:'#',text:val.roleName});
                         });
                     }else{
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     }
                 });
                 promise.error(function(data, status, headers, config){
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 });
             };
             $scope.selectstaff=function(){
@@ -806,11 +806,11 @@ function selectdepyuan($timeout){
                     if(datas.status.statusCode==0){
                         getNewarr(datas.data.orgs,'#');
                     }else{
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     }
                 });
                 promise.error(function(data, status, headers, config){
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 });
             };
             //查询员工列表
@@ -829,11 +829,11 @@ function selectdepyuan($timeout){
                         })
                         yuanData=datas.data.userList;
                     }else{
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     }
                 });
                 promise.error(function(data, status, headers, config){
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 });
             };
 

@@ -26,11 +26,11 @@ function sendtaskCtrl(){
                     $scope.tasklist=data.body.data.tasks;
                     $scope.thispages.total=$scope.tasklist.length;	//分页
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-            	MsgService.errormsg(data);
+            	MsgService.tomsg(data.body.status.errorDesc);
             });
     	}
     	$scope.deleteTask = function(task){
@@ -45,11 +45,11 @@ function sendtaskCtrl(){
                     if(sts.statusCode==0){
                     	$scope.init();
                     }else{
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     }
                 });
                 promise.error(function(data, status, headers, config){
-                	MsgService.errormsg(data);
+                	MsgService.tomsg(data.body.status.errorDesc);
                 });
             })
     	}
@@ -73,11 +73,11 @@ function sendtaskCtrl(){
                     if(sts.statusCode==0){
                     	$scope.init();
                     }else{
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     }
                 });
                 promise.error(function(data, status, headers, config){
-                	MsgService.errormsg(data);
+                	MsgService.tomsg(data.body.status.errorDesc);
                 });
             })
     	}
@@ -116,11 +116,11 @@ function receivetaskCtrl(){
                     $scope.tasklist=data.body.data.tasks;
                     $scope.thispages.total=$scope.tasklist.length;	//分页
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-            	MsgService.errormsg(data);
+            	MsgService.tomsg(data.body.status.errorDesc);
             });
     	}
     	
@@ -207,11 +207,11 @@ function addtaskCtrl(){
                 if(sts.statusCode==0){
                 	$state.go('task.sendlist');
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-            	MsgService.errormsg(data);
+            	MsgService.tomsg(data.body.status.errorDesc);
             });
     	}
     	
@@ -241,11 +241,11 @@ function viewtaskCtrl(){
                 if(sts.statusCode==0){
                 	$state.go('task.receivelist');
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-            	MsgService.errormsg(data);
+            	MsgService.tomsg(data.body.status.errorDesc);
             });
     	};
     	

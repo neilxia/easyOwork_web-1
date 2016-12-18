@@ -44,11 +44,11 @@ angular.module('qiyi')
                 if(sts.statusCode==0){
                     $scope.inquiryProcessesData=data.body.data.processes;
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
 
@@ -68,11 +68,11 @@ angular.module('qiyi')
                 if(sts.statusCode==0){
                     $scope.inquiryHandData=data.body.data.processes;
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(sts.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
 
@@ -129,7 +129,7 @@ angular.module('qiyi')
 
                     $scope.$emit('to-parent1', 'parent');//父级
                 }else{
-                    //MsgService.errormsg(data);
+                    //MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
 
@@ -152,7 +152,7 @@ angular.module('qiyi')
                     LocalStorage.setObject('userinfo',userinfoall);
                     $scope.$emit('to-parent2', 'parent');//父级
                 }else{
-                    //MsgService.errormsg(data);
+                    //MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
         }
@@ -179,7 +179,7 @@ angular.module('qiyi')
                     LocalStorage.setObject('companyinfo','');
                     $state.go('login');
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
         }

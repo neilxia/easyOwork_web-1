@@ -19,11 +19,11 @@ function salarymsglistCtrl(){
                     $scope.reportlist=data.body.data.reports;
                     $scope.thispages.total=$scope.reportlist.length;	//分页
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         }
 

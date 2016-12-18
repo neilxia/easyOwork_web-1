@@ -25,7 +25,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="data in notices">
+                <tr ng-repeat="data in inquiryAnnouncementsData| startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
                     <td><span class="pl10">{{data.name}}</span></td>
                     <td>{{data.sentName}}</td>
                     <td>{{data.announcementDate}}</td>
@@ -59,16 +59,29 @@
                 <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
                     <tr>
                         <td width="60">公告标题</td>
-                        <td class="pl10"><input type="text" class="form-control" placeholder="请输入公告标题"></td>
+                        <td class="pl10">
+                            <div class="nose-group" ng-class="{'has-error':baseForm.name.$dirty && baseForm.name.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.name.$dirty && baseForm.name.$invalid" popover="请输入公告标题" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="name" ng-model="notices.name" placeholder="请输入公告标题" required />
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td width="60">部门选择</td>
-                        <td class="pl10"><span selectdep options="'bm'" myselected="user.orgList" class="wd190 f_l" title="选择部门"></span>
-                            <span selectdep options="'gw'" myselected="user.roleList" class="wd190 f_l ml10" title="选择岗位"></span></td>
+                        <td class="pl10">
+                                <span selectdep options="'bm'" myselected="notices.orgList" class="wd190" title="选择部门"></span>
+                            <!--<span selectdep options="'gw'" myselected="notices.roleList" class="wd190 f_l ml10" title="选择岗位"></span></td>-->
                     </tr>
                     <tr>
                         <td width="60" valign="top">公告详情</td>
-                        <td class="pl10"><textarea class="form-control" rows="8" placeholder="请输入公告详情，不大于200字"></textarea></td>
+                        <td class="pl10">
+                            <div class="nose-group" ng-class="{'has-error':baseForm.content.$dirty && baseForm.content.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$invalid" popover="请输入公告详情" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$error.maxlength" popover="不大于200字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <textarea class="form-control" rows="8" name="content" placeholder="请输入公告详情，不大于200字" ng-maxlength="200" ng-model="notices.content" required></textarea>
+                            </div>
+
+                        </td>
                     </tr>
                 </table>
             </div>

@@ -158,11 +158,11 @@ function mySetCtrl(){
                     $scope.searchcount=$scope.datalist.length;
                     //$scope.thispages.total=$scope.datalist.length;//分页总数
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(data.body.status.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
-                MsgService.errormsg(data);
+                MsgService.tomsg(data.body.status.errorDesc);
             });
         };
     }]

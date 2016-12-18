@@ -36,11 +36,11 @@ function publicService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -63,11 +63,11 @@ function publicService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -91,11 +91,11 @@ function publicService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -111,11 +111,11 @@ function publicService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -140,11 +140,11 @@ function publicService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -164,11 +164,11 @@ function publicService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -196,11 +196,11 @@ function publicService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -219,11 +219,11 @@ function publicService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -245,11 +245,11 @@ function publicService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -268,11 +268,11 @@ function publicService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             }
@@ -303,11 +303,11 @@ function companyService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -334,11 +334,11 @@ function companyService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -357,11 +357,11 @@ function companyService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
 
@@ -383,11 +383,11 @@ function companyService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
 
@@ -418,11 +418,11 @@ function companyService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
 
@@ -470,11 +470,11 @@ function employeesService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
 
@@ -502,11 +502,11 @@ function employeesService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
 
@@ -539,11 +539,11 @@ function noticeService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -559,11 +559,11 @@ function noticeService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             }
@@ -589,11 +589,11 @@ function roleService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -621,11 +621,11 @@ function roleService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -644,11 +644,11 @@ function roleService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -669,11 +669,11 @@ function roleService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             }
@@ -701,11 +701,11 @@ function processService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -724,11 +724,11 @@ function processService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -783,11 +783,11 @@ function processService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -806,11 +806,11 @@ function processService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -841,11 +841,11 @@ function processService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -867,11 +867,11 @@ function processService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -895,11 +895,11 @@ function processService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -923,11 +923,11 @@ function processService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             }
@@ -950,11 +950,11 @@ function salaryService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -979,11 +979,11 @@ function salaryService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -999,11 +999,11 @@ function salaryService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -1025,11 +1025,11 @@ function salaryService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -1055,11 +1055,11 @@ function salaryService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -1094,11 +1094,11 @@ function salaryService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -1124,11 +1124,11 @@ function salaryService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -1148,11 +1148,11 @@ function salaryService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             }
@@ -1183,11 +1183,11 @@ function assetService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -1213,11 +1213,11 @@ function assetService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -1241,11 +1241,11 @@ function assetService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             }
@@ -1274,11 +1274,11 @@ function attendanceService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -1307,11 +1307,11 @@ function attendanceService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             },
@@ -1338,11 +1338,11 @@ function attendanceService(){
                             MsgService.tomsg();
                             $modalInstance.close();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(data.body.status.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(data.body.status.errorDesc);
                     });
                 };
             }
