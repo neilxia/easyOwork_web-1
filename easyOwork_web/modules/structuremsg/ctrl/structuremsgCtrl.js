@@ -16,9 +16,9 @@ function structuremsgCtrl(){
                 if(val.childOrgs.length>0){
                     //pmData.push({id:ind,name:val.name});
                     var children=getNewarr(val.childOrgs);
-                    pmData.push({id:ind,name:val.name,desc:val.desc,parentOrgName:[{text:val.parentOrgName}],children:children});
+                    pmData.push({id:ind,name:val.name,desc:val.desc,parentOrgName:[{text:val.parentOrgName}],managerName:val.managerName,children:children});
                 }else{
-                    pmData.push({id:ind,name:val.name,desc:val.desc,parentOrgName:[{text:val.parentOrgName}]});
+                    pmData.push({id:ind,name:val.name,desc:val.desc,parentOrgName:[{text:val.parentOrgName}],managerName:val.managerName});
                 }
             });
             return pmData;
@@ -46,9 +46,9 @@ function structuremsgCtrl(){
 
         $scope.treegirdoptions={
             columns:[
-                {headerText: "部门名称", dataField: "name", width:'20'},
+                {headerText: "部门名称", dataField: "name", width:'350'},
                 {headerText: "部门描述", dataField: "desc",width:'auto'},
-                {headerText: "部门经理", dataField: "managerUserName",width:'100'}
+                {headerText: "部门经理", dataField: "managerName",width:'100'}
             ],
             data:[],
             itemClick:function(id,date){
@@ -109,6 +109,7 @@ function structuremsgCtrl(){
             debugger;
             //修改公司部门
             var parentOrgName=typeof (row.parentOrgName)=="object"?row.parentOrgName[0].text:'';
+            var managerUuid=typeof (row.parentOrgName)=="object"?row.managerUser[0].userUuid:'';
             $scope.options={
                 "entId":userinfo.entId,		//必填项, 8位企业代码
                 "actionType":change,		//必填项, ADD, MODIFY, DELETE
@@ -116,7 +117,7 @@ function structuremsgCtrl(){
                 "newName":row.name || '',		//新部门名称, 如有修改传入修改后的值, 如没有修改则不要包含在request里
                 "desc":row.desc || '',			//新部门描述
                 "parentOrgName":parentOrgName ,//上级部门名称
-                "managerUserId":row.managerUser.id || '',		//部门经理员工号,
+                "managerUuid":managerUuid || ''		//部门经理员工号,
 
 /*                 如有修改传入修改后的值, 如没有修改则不要包含在request里
                 "managerUserId":row.managerUserId || '',		//部门经理员工号, 如有修改传入修改后的值, 如没有修改则不要包含在request里
@@ -162,6 +163,7 @@ function structuremsgCtrl(){
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
+                    $scope.theform.managerUser=$scope.managerUser;
                     changeDPmentFun('ADD',$scope.theform,$modalInstance);
                     //$modalInstance.close();
                 };
