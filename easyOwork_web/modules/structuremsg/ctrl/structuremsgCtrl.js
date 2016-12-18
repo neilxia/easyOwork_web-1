@@ -46,7 +46,7 @@ function structuremsgCtrl(){
 
         $scope.treegirdoptions={
             columns:[
-                {headerText: "部门名称", dataField: "name", width:'200'},
+                {headerText: "部门名称", dataField: "name", width:'20'},
                 {headerText: "部门描述", dataField: "desc",width:'auto'},
                 {headerText: "部门经理", dataField: "managerUserName",width:'100'}
             ],
@@ -106,6 +106,7 @@ function structuremsgCtrl(){
         //实现添加/修改/删除部门
         function changeDPmentFun(change,row,$modalInstance,oldrow){
             if(oldrow==undefined){oldrow=row}
+            debugger;
             //修改公司部门
             var parentOrgName=typeof (row.parentOrgName)=="object"?row.parentOrgName[0].text:'';
             $scope.options={
@@ -157,6 +158,7 @@ function structuremsgCtrl(){
                     "parentOrgName":"",		//上级部门名称, 如有修改传入修改后的值,
                     "managerUser":$scope.managerUser
                 };
+
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
@@ -180,11 +182,10 @@ function structuremsgCtrl(){
                 $scope.thisname="编辑";
                 //修改公司部门
                 $scope.theform=row;
-                $scope.theform.managerUser=$scope.managerUser;
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
-
+                    $scope.theform.managerUser=$scope.managerUser;
                     changeDPmentFun('MODIFY',$scope.theform,$modalInstance,oldrow);
                     //$modalInstance.close();
                 };

@@ -49,7 +49,7 @@ function loginCtrl(){
                     });
                     
                 }else{
-                    MsgService.errormsg(data);
+                    MsgService.tomsg(sts.errorDesc);
                 }
             });
             promise.error(function(data, status, headers, config){
@@ -246,11 +246,11 @@ function loginCtrl(){
                         if(sts.statusCode==0){
                             MsgService.tomsg();
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(sts.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){
-                        MsgService.errormsg(data);
+                        MsgService.tomsg(sts.errorDesc);
                     });
                 };
                 //检验验证码
@@ -272,7 +272,7 @@ function loginCtrl(){
                             $scope.step1 =false;
                             $scope.step2 =true;
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(sts.errorDesc);
                         }
                     });
 
@@ -296,7 +296,7 @@ function loginCtrl(){
                             $scope.step2 =false;
                             $scope.step3 =true;
                         }else{
-                            MsgService.errormsg(data);
+                            MsgService.tomsg(sts.errorDesc);
                         }
                     });
                     promise.error(function(data, status, headers, config){

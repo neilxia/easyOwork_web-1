@@ -6,6 +6,7 @@ app.factory('publicService', publicService()); //公共接口
 app.factory('companyService', companyService()); //公司
 app.factory('employeesService', employeesService()); //员工
 app.factory('noticeService', noticeService());//公告
+app.factory('MemoService', MemoService());//备忘录
 app.factory('roleService', roleService());//权限
 app.factory('processService', processService());//流程
 app.factory('salaryService', salaryService());//薪酬
@@ -13,6 +14,7 @@ app.factory('assetService', assetService());//资产
 app.factory('attendanceService', attendanceService());//考勤
 app.factory('CustomerService', CustomerService());//客户/销售
 app.factory('projectService', projectService());//项目
+app.factory('RecruitFlowService', RecruitFlowService());//招聘
 app.factory('OSSService',OSSService());//阿里云OSS服务
 app.factory('reportService',reportService());//工作报告
 app.factory('taskService',taskService());//工作任务
@@ -125,6 +127,22 @@ function noticeService(){
             //POST 5.2.2	B0024-查询公告
             inquiryAnnouncements:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryAnnouncements',form)
+                //return $http.get('./modules/notice/json/list.json',form)
+            }
+        }
+    }];
+}
+/*========备忘录=====================================================================*/
+function MemoService(){
+    return ['$http','AppConfig',function($http,AppConfig){
+        return {
+            //5.3.1	B0074-添加/删除备忘录
+            changeMemo:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changeMemo',form)
+            },
+            //5.3.2	B0075-查询备忘录
+            inquiryMemos:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryMemos',form)
             }
         }
     }];
@@ -286,7 +304,7 @@ function CustomerService(){
                 return $http.post(AppConfig.BASE_URL+'work/rest/changeCustomer',form)
             },
             //POST 5.10.2	B0036-查询(潜在)客户
-            changeCustomer:function(form){
+            inquiryCustomer:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/changeCustomer',form)
             },
             //POST 5.10.3	B0037-添加/修改/删除 销售活动
@@ -399,8 +417,64 @@ function projectService(){
         }
     }];
 }
+/*========招聘=======================================================*/
+function RecruitFlowService(){
+    return ['$http','AppConfig',function($http,AppConfig){
+        return {
+            //POST 5.13.1	B0062-添加/修改/删除招聘流程
+            changeRecruitFlow:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changeRecruitFlow',form)
+            },
+            //POST 5.13.2	B0063-查询招聘流程
+            inquiryRecruitFlow:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryRecruitFlow',form)
+            },
+            //POST 5.13.3	B0064-添加/修改/删除招聘渠道
+            changeRecruitChannel:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changeRecruitChannel',form)
+            },
+            //POST 5.13.4	B0065-查询招聘渠道
+            inquiryRecruitChannel:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryRecruitChannel',form)
+            },
+            //POST 5.13.5	B0066-添加/修改/删除招聘计划
+            changeRecruitPlan:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changeRecruitPlan',form)
+            },
+            //POST 5.13.6	B0067-添加/修改/删除招聘计划职位
+            changeRecruitPosition:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changeRecruitPosition',form)
+            },
+            //POST 5.13.7	B0068-发布招聘计划职位
+            sendRecruitPosition:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/sendRecruitPosition',form)
+            },
+            //POST 5.13.8	B0069-查询招聘计划
+            inquiryRecruitPlan:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryRecruitPlan',form)
+            },
+            //POST 5.13.9	B0070-添加/修改/删除简历
+            changeRecruitResume:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changeRecruitResume',form)
+            },
+            //POST 5.13.10	B0071-查询简历
+            inquiryRecruitResume:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryRecruitResume',form)
+            },
+            //POST 5.13.11	B0072-启动招聘流程
+            startRecruitFlow:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/startRecruitFlow',form)
+            },
+            //POST 5.13.12	B0073-通过/拒绝/待定招聘职位
+            tellResumeForPosition:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/tellResumeForPosition',form)
+            }
+        }
+    }];
+}
 
-/*========OSS服务=====================================================================*/
+
+/*========OSS服务=======================================================*/
 /*
 OSSService.inquiryOSSInfo
 //获取上传文件所需的accessKeyId, signature, policy

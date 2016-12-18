@@ -661,6 +661,17 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                 'menu@my': {
                     templateUrl: 'modules/my/tmp/menu.html'
                 }
+            },
+            resolve:{
+                loadPlugin:function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            //时间控件
+                            name: 'datePicker',
+                            files: ['plugins/datapicker/angular-datapicker.css','plugins/datapicker/angular-datepicker.js']
+                        }
+                    ])
+                }
             }
         })
         .state('my.set', {

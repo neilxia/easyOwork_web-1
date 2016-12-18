@@ -1,4 +1,4 @@
-<div id="page-wrapper" ng-controller="listCtrl" ng-init="initFun()">
+<div id="page-wrapper" ng-controller="mySetCtrl" ng-init="initFun()">
     <!--主要内容-->
     <div class="payetilebox">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
@@ -45,38 +45,62 @@
             <table class="line40td" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                     <td width="60" align="right">基本信息</td>
-                    <td class="pl20"><span class="g6 f12">员工姓名：</span><span class="f16">{{EPinfo.entId}}</span></td>
+                    <td class="pl20"><span class="g6 f12">员工姓名：</span><span class="f16">{{userinfo.name}}</span></td>
                 </tr>
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
                     <td class="pl20">
-                        <span class="g6 f12">出生日期：</span>
-                        <span editable-text="EPinfo.name" e-form="name" onbeforesave="changeCompanyInfoFun($data,'name')">{{EPinfo.name || '无'}}</span> <span class="ml5 orange poi" ng-click="name.$show()" ng-hide="name.$visible">修改</span>
+                        <span class="g6 f12 f_l">出生日期：</span>
+                        <span class="f_l" ng-show="birthDateshow">
+                            {{userinfo.birthDate}}
+                            <span class="ml5 orange poi" ng-click="birthDatetoggle()">修改</span>
+                        </span>
+                        <div class="qiyi-group nose-group line20td input-group-sm f_l" ng-show="!birthDateshow">
+                            <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.birthDate.$dirty && baseForm.birthDate.$invalid" popover="请选择出生日期" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                            <input type="datetime" name="birthDate" class="form-control" date-time ng-model="userinfo.birthDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true">
+                            <span class="abs_r" style="top: 2px;"><i class="iconfont icon-rili"></i></span>
+                        </div>
+                        <span class="ml5" ng-click="changeEmployeeFun(userinfo.birthDate,'birthDate')" ng-show="!birthDateshow"><button class="btn ml5 btn-sm btn-primary">确定</button></span>
+
                     </td>
                 </tr>
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
                     <td class="pl20">
                         <span class="g6 f12">所属部门：</span>
-                        <span editable-text="EPinfo.shortName" e-form="textBtnForm" onbeforesave="changeCompanyInfoFun($data,'shortName')">{{EPinfo.shortName || '无'}}</span> <span class="ml5 orange poi" ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible">修改</span>
+                        <span>{{userinfo.orgList[0].name}}</span>
+                        <!--<span editable-text="userinfo.shortName" e-form="textBtnForm" onbeforesave="changeEmployeeFun($data,'shortName')">{{userinfo.shortName || '无'}}</span> <span class="ml5 orange poi" ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible">修改</span>-->
                     </td>
                 </tr>
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
-                    <td class="pl20"><span class="g6 f12">任职岗位：</span>
-                        <span editable-text="EPinfo.contactName" e-form="contactName" onbeforesave="changeCompanyInfoFun($data,'contactName')">{{EPinfo.contactName || '无'}}</span> <span class="ml5 orange poi" ng-click="contactName.$show()" ng-hide="contactName.$visible">修改</span></td>
+                    <td class="pl20">
+                        <span class="g6 f12">任职岗位：</span>
+                        <span>{{userinfo.roleList[0].name}}</span>
+                        <!--<span editable-text="userinfo.contactName" e-form="contactName" onbeforesave="changeEmployeeFun($data,'contactName')">{{userinfo.contactName || '无'}}</span> <span class="ml5 orange poi" ng-click="contactName.$show()" ng-hide="contactName.$visible">修改</span></td>-->
                 </tr>
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
                     <td class="pl20">
-                        <span class="g6 f12">入职日期：</span>
-                        <span editable-text="EPinfo.entPhone" e-form="entPhone" onbeforesave="changeCompanyInfoFun($data,'entPhone')">{{EPinfo.entPhone || '无'}}</span> <span class="ml5 orange poi" ng-click="entPhone.$show()" ng-hide="entPhone.$visible">修改</span>
+                        <span class="g6 f12 f_l">入职日期：</span>
+                        <span class="f_l" ng-show="joiningDateshow">
+                            {{userinfo.joiningDate}}
+                            <span class="ml5 orange poi" ng-click="joiningDatetoggle()">修改</span>
+                        </span>
+                        <div class="qiyi-group nose-group line20td input-group-sm f_l" ng-show="!joiningDateshow">
+                            <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.joiningDate.$dirty && baseForm.joiningDate.$invalid" popover="请选择入职日期" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                            <input type="datetime" name="joiningDate" class="form-control" date-time ng-model="userinfo.joiningDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true">
+                            <span class="abs_r" style="top: 2px;"><i class="iconfont icon-rili"></i></span>
+                        </div>
+                        <span class="ml5" ng-click="changeEmployeeFun(userinfo.joiningDate,'joiningDate')" ng-show="!joiningDateshow"><button class="btn ml5 btn-sm btn-primary">确定</button></span>
+
+
                     </td>
                 </tr>
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
                     <td class="pl20"><span class="g6 f12">毕业院校：</span>
-                        <span editable-text="EPinfo.contactPhone" e-form="contactPhone" onbeforesave="changeCompanyInfoFun($data,'contactPhone')">{{EPinfo.contactPhone || '无'}}</span> <span class="ml5 orange poi" ng-click="contactPhone.$show()" ng-hide="contactPhone.$visible">修改</span>
+                        <span editable-text="userinfo.university" e-form="university" onbeforesave="changeEmployeeFun($data,'university')">{{userinfo.university || '无'}}</span> <span class="ml5 orange poi" ng-click="university.$show()" ng-hide="university.$visible">修改</span>
                     </td>
                 </tr>
             </table>
@@ -85,20 +109,20 @@
             <table class="line40td" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                     <td width="60" align="right">账号信息</td>
-                    <td class="pl20"><span class="g6 f12">员工编号：</span><span class="f16">{{EPinfo.entId}}</span></td>
+                    <td class="pl20"><span class="g6 f12">员工编号：</span><span class="f16">{{userinfo.id}}</span></td>
                 </tr>
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
                     <td class="pl20">
                         <span class="g6 f12">E-Mail：</span>
-                        <span editable-text="EPinfo.entEmail" e-form="entEmail" onbeforesave="changeCompanyInfoFun($data,'entEmail')">{{EPinfo.entEmail || '无'}}</span> <span class="ml5 orange poi" ng-click="entEmail.$show()" ng-hide="entEmail.$visible">修改</span>
+                        <span editable-text="userinfo.personalEmail" e-form="personalEmail" onbeforesave="changeEmployeeFun($data,'personalEmail')">{{userinfo.personalEmail || '无'}}</span> <span class="ml5 orange poi" ng-click="personalEmail.$show()" ng-hide="personalEmail.$visible">修改</span>
                     </td>
                 </tr>
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
                     <td class="pl20"><span class="g6 f12">联系电话：</span>
-                        <span editable-text="EPinfo.contactPhone" e-form="contactPhone" onbeforesave="changeCompanyInfoFun($data,'contactPhone')">{{EPinfo.contactPhone || '无'}}</span>
-                        <span class="ml5 orange poi" ng-click="contactPhone.$show()" ng-hide="contactPhone.$visible">修改</span>
+                        <span editable-text="userinfo.personalPhone" e-form="personalPhone" onbeforesave="changeEmployeeFun($data,'personalPhone')">{{userinfo.personalPhone || '无'}}</span>
+                        <span class="ml5 orange poi" ng-click="personalPhone.$show()" ng-hide="personalPhone.$visible">修改</span>
                         <span class="g9 ml10 f12">邮箱和l联系电话必填其一</span>
 
                     </td>
@@ -106,8 +130,20 @@
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
                     <td class="pl20">
-                        <span class="g6 f12">登录密码：</span>
-                        <span editable-text="EPinfo.entEmail" e-form="entEmail" onbeforesave="changeCompanyInfoFun($data,'entEmail')">{{EPinfo.entEmail || '无'}}</span> <span class="ml5 orange poi" ng-click="entEmail.$show()" ng-hide="entEmail.$visible">修改</span>
+                        <span class="g6 f12 f_l">登录密码：</span>
+                        <span class="f_l" ng-show="userpw">
+                            <span>xxxxxx</span>
+                            <span class="ml5 orange poi" ng-click="userpwtoggle()">修改</span>
+                        </span>
+                        <div class="f_l form-inline" ng-show="!userpw">
+                            <form role="baseForm" name="baseForm"  ng-submit="changePasswordFun(baseForm.$valid)" novalidate="novalidate">
+                            <div>旧密码：<input class="form-control input-sm" type="password" placeholder="请输入旧密码" ng-model="userchangepw.password"></div>
+                            <div class="mt5">新密码：<input class="form-control input-sm" type="password" placeholder="请输入新密码" ng-model="userchangepw.newPassword"></div>
+                            <div style="padding-left: 56px;" class="mt5">
+                                <a class="btn btn-sm btn-default"  ng-click="userpwtoggle()">取消</a> <button class="btn ml5 btn-sm btn-primary" type="submit">确定</button>
+                            </div>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             </table>

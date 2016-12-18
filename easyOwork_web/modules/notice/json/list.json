@@ -1,0 +1,22 @@
+{
+    "announcements":[
+        {
+        "name":"公告1",
+        "content":"公告内容公告内容公告内容公告内容公告内容",
+        "sentName":"admin",
+        "announcementDate":"2016-10-21"
+        },
+        {
+            "name":"公告2",
+            "content":"公告内容公告内容公告内容公告内容公告内容",
+            "sentName":"cj",
+            "announcementDate":"2016-10-21"
+        },
+        {
+            "name":"公告3",
+            "content":"公告内容公告内容公告内容公告内容公告内容",
+            "sentName":"nose",
+            "announcementDate":"2016-10-21"
+        }
+    ]
+}

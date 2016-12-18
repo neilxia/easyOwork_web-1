@@ -197,9 +197,9 @@ function mypcsCtrl(){
             };
             var promise = processService.inquiryCreatedProcesses({body:$scope.options});
             promise.success(function(data, status, headers, config){
-                /*if(status==200){
+                if(status==200){
                     $scope.inquiryProcessesData=data.processes;
-                }*/
+                }
                 //远程开启下面的
                 var sts=data.body.status;
                 if(sts.statusCode==0){
