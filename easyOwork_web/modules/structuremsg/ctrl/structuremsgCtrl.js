@@ -109,7 +109,7 @@ function structuremsgCtrl(){
             debugger;
             //修改公司部门
             var parentOrgName=typeof (row.parentOrgName)=="object"?row.parentOrgName[0].text:'';
-            var managerUuid=typeof (row.parentOrgName)=="object"?row.managerUser[0].userUuid:'';
+            var managerUuid=typeof (row.managerUser)=="object"?row.managerUser[0].userUuid:'';
             $scope.options={
                 "entId":userinfo.entId,		//必填项, 8位企业代码
                 "actionType":change,		//必填项, ADD, MODIFY, DELETE
