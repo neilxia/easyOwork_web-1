@@ -813,9 +813,7 @@ a:hover,a:active {
 
 .g-side .m-service {
 	width: 36px;
-	height: 85px;
 	color: #fff;
-	background-color: #f7941d;
 	-moz-border-top-left-radius: 4px;
 	border-top-left-radius: 4px;
 	-moz-border-bottom-left-radius: 4px;
@@ -836,17 +834,22 @@ a:hover,a:active {
 	margin: 0 auto;
 }
 
-.g-side .dialog {
-	position: absolute;
-	top: 50%;
-	right: 100%;
-	width: 138px;
-	height: 35px;
-	margin-top: -17.5px;
-	margin-right: 14px;
-	background-image: url(/res/img/home/service-dialog.png?eee9d3f770bfa6439ffe1b40b0d42382);
+.contact-side{
+	position: fixed;
+	top: 45%;
+	right: 0;
+	text-align: left;
+	z-index: 1;
+	color: #fff;
+    background: #f7941d;
+    padding:5px;
+    border-radius:5px 0 0 5px;
+    opacity:0;
+    -webkit-transition: opacity .5s ease-in-out;
+    -moz-transition: opacity .5s ease-in-out;
+    -o-transition: opacity .5s ease-in-out;
+    transition: opacity .5s ease-in-out;
 }
-
 .m-banner {
 	position: relative;
 	min-width: 1200px;
@@ -1440,6 +1443,46 @@ a:hover,a:active {
 	background-size:contain;
 }
 
+.u-spr-nav-icons.u-sprc-color {
+	background: url(/market/svg/color.svg) center no-repeat;
+	background-size:contain;
+}
+
+.u-spr-nav-icons-solid.u-sprc-color {
+	background: url(/market/svg/color.svg) center no-repeat;
+	background-size:contain;
+}
+
+.u-spr-nav-icons.u-sprc-server {
+	background: url(/market/svg/server.svg) center no-repeat;
+	background-size:contain;
+}
+
+.u-spr-nav-icons-solid.u-sprc-server {
+	background: url(/market/svg/server.svg) center no-repeat;
+	background-size:contain;
+}
+
+.u-spr-nav-icons.u-sprc-function {
+	background: url(/market/svg/function.svg) center no-repeat;
+	background-size:contain;
+}
+
+.u-spr-nav-icons-solid.u-sprc-function {
+	background: url(/market/svg/function.svg) center no-repeat;
+	background-size:contain;
+}
+
+.u-spr-nav-icons.u-sprc-cloud {
+	background: url(/market/svg/cloud.svg) center no-repeat;
+	background-size:contain;
+}
+
+.u-spr-nav-icons-solid.u-sprc-cloud {
+	background: url(/market/svg/cloud.svg) center no-repeat;
+	background-size:contain;
+}
+
 .u-spr-nav-icons.u-sprc-process {
 	background: url(/market/svg/process.svg) center no-repeat;
 	background-size:contain;
@@ -1713,8 +1756,33 @@ a:hover,a:active {
 	width: 100%;
 }
 
-.login_banner{ width: 100%;  height: 760px; position:relative; overflow: hidden;}
-.login-flexslider{ width: 100%;  height: 760px; left: 0; right: 0; z-index: 0;}
-.login-flexslider .slides li{ height: 760px;}
-.login-flexslider .slides li>a{ display: block; width: 100%; height: 760px; background-position: center center; background-repeat: no-repeat; background-size: 100% 100%;}
-.login-flexslider .flex-control-nav{ bottom: 90px; z-index: 2;}
+.price-desc{
+	position:absolute;
+	left:15%;
+	right:15%;
+	z-index:10;
+	top:140px;
+	text-align:center;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+.price-type{
+	
+}
+.price-type ul{
+	list-style:none;
+}
+.price-type ul li{
+	display:inline-block;
+	width:33%;
+	text-align:center;
+	padding:0 50px 0 50px;
+}
+.price-item{
+	height:300px;
+	border: 1px solid #f7941d;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+.cf{
+	color:#f7941d;
+}

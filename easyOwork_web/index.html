@@ -32,11 +32,12 @@
 	content="c7e738df9098dd46b9f1bc39f4b06e39">
 <meta name="sogou_site_verification" content="sIGmDok74I">
 <title>企易, 企业管理更容易</title>
-<link rel="stylesheet" href="./market/core.css">
+<link rel="stylesheet" href="./market/css/core.css">
 <link rel="stylesheet" href="./plugins/ui-bootstrap/bootstrap.css">
 
 <script src="./plugins/jquery/jquery1.12.0.min.js"></script>
 <script src="./plugins/ui-bootstrap/bootstrap.js"></script>
+<script src="/market/js/main.js"></script>
 <!--[if IE 8]>
 <style>
 .g-hd {
@@ -62,24 +63,24 @@ border: none;
 		<div class="wrapper">
 			<div class="gutter">
 				<h1 class="hd-logo">
-					<a href="https://qiye.yixin.im/"><img src="./market/logo.png"
-						alt="企业易信logo"><span class="text">企业易信</span></a>
+					<a><img src="./market/image/logo.png"
+						alt="企易"></a>
 				</h1>
 				<ul class="hd-nav evcat" id="nav" data-evcat="home-nav">
 					<li class="itm text"><a
 						href="index.html">产品<span></span></a></li>
 					<li class="itm text"><a
-						href="price.html">费用<span></span></a></li>
-					<li class="itm text"><a href="customize.html"
+						href="/market/view/price.html">费用<span></span></a></li>
+					<li class="itm text"><a href="/market/view/customize.html"
 						data-evact="to-open">定制服务<span></span></a></li>
-					<li class="itm text"><a
-						href="help.html">帮助<span></span></a></li>
-					<li class="itm"><a class="u-btn"
-						href="ind.html#/login" target="_blank"
+					<li class="itm text"><a>帮助<span></span></a></li>
+					<!-- <li class="itm"><a class="u-btn"
+						href="/ind.html#/login" target="_blank"
 						hidefocus="true" data-evact="to-login">登录</a></li>
+					 -->
 					<li class="itm"><a id="topReg" class="u-btn u-btn-solid"
-						href="https://my.qiye.yixin.im/register.htm" target="_blank"
-						hidefocus="true" data-evact="to-register">注册</a></li>
+						href="/ind.html#/login" target="_blank"
+						hidefocus="true" data-evact="to-register">进入应用</a></li>
 				</ul>
 			</div>
 		</div>
@@ -93,12 +94,20 @@ border: none;
     <!-- 轮播（Carousel）项目 -->
     <div class="carousel-inner">
         <div class="item active">
-            <img src="./market/login_bg01.jpg" alt="First slide">
-            <div class="carousel-caption"></div>
+            <img src="./market/image/login_bg01.jpg" alt="First slide">
+            <div class="price-desc">
+            	<h1 style="color:#fff">企易, 企业全角色工作平台</h1>
+            	<h2 style="color:#fff">免费试用30天</h2>
+            	<button class="btn btn-lg btn-primary" style="width:200px" onclick="javascript:window.open('/ind.html#/login')">立即试用</button>
+            </div>
         </div>
         <div class="item">
-            <img src="./market/login_bg02.jpg" alt="Second slide">
-            <div class="carousel-caption"></div>
+            <img src="./market/image/login_bg02.jpg" alt="Second slide">
+            <div class="price-desc">
+            	<h1 style="color:#fff">第一次使用? </h1>
+            	<h2 style="color:#fff">一步一步带你畅游</h2>
+            	<button class="btn btn-lg btn-primary" style="width:200px">观看使用视频</button>
+            </div>
         </div>
     </div>
 </div>
@@ -198,7 +207,7 @@ border: none;
 					<p>公司收入支出</p>
 				</div>
 				<div class="sect-img">
-					<img src="./market/analysis.png" alt="决策分析">
+					<img src="./market/image/analysis.png" alt="决策分析">
 				</div>
 			</div>
 		</div>
@@ -212,7 +221,7 @@ border: none;
 					<p>自定义流程满足企业定制化需求</p>
 				</div>
 				<div class="sect-img">
-					<img src="./market/process.png" alt="审批流程">
+					<img src="./market/image/process.png" alt="审批流程">
 				</div>
 			</div>
 		</div>
@@ -228,7 +237,7 @@ border: none;
 					<p>文档管理</p>
 				</div>
 				<div class="sect-img">
-					<img src="./market/project.png" alt="项目管理">
+					<img src="./market/image/project.png" alt="项目管理">
 				</div>
 			</div>
 		</div>
@@ -244,7 +253,7 @@ border: none;
 					<p>销售目标制定与完成</p>
 				</div>
 				<div class="sect-img">
-					<img src="./market/customer.png" alt="客户及销售">
+					<img src="./market/image/customer.png" alt="客户及销售">
 				</div>
 			</div>
 		</div>
@@ -258,7 +267,7 @@ border: none;
 					<p>全面的工资福利设定</p>
 				</div>
 				<div class="sect-img">
-					<img src="./market/salary.png" alt="薪酬及社保">
+					<img src="./market/image/salary.png" alt="薪酬及社保">
 				</div>
 			</div>
 		</div>
@@ -273,7 +282,7 @@ border: none;
 					<p>简历库</p>
 				</div>
 				<div class="sect-img">
-					<img src="./market/recruit.png" alt="招聘">
+					<img src="./market/image/recruit.png" alt="招聘">
 				</div>
 			</div>
 		</div>
@@ -286,7 +295,7 @@ border: none;
 					<p>日报, 周报, 月报, 年报</p>
 				</div>
 				<div class="sect-img">
-					<img src="./market/report.png" alt="日常报告">
+					<img src="./market/image/report.png" alt="日常报告">
 				</div>
 			</div>
 		</div>
@@ -301,7 +310,7 @@ border: none;
 					<p>完成比例</p>
 				</div>
 				<div class="sect-img">
-					<img src="./market/task.png" alt="任务">
+					<img src="./market/image/task.png" alt="任务">
 				</div>
 			</div>
 		</div>
@@ -316,14 +325,17 @@ border: none;
 					<p>回收</p>
 				</div>
 				<div class="sect-img">
-					<img src="./market/asset.png" alt="资产">
+					<img src="./market/image/asset.png" alt="资产">
 				</div>
 			</div>
 		</div>
-
+	<div class="contact-side">
+		<p>服务电话        400-888-888</p>
+		<p>服务邮箱        service.qinghuiyang.com</p>
+	</div>
 	<div class="g-side">
-		<div class="m-service hover-show" id="csphone">
-			<span class="text">客服电话</span>
+		<div class="m-service hover-show" id="csphone" onclick="showcontact()">
+			<image src="/market/svg/phone.svg"/>
 		</div>
 		<span class="dialog"></span>
 	</div>
