@@ -1623,119 +1623,6 @@ a:hover,a:active {
 	opacity: 0.8;
 }
 
-#watch-close-btn .u-icon {
-	font-size: 22px;
-}
-
-.video-js .vjs-control:before {
-	line-height: 32px;
-}
-
-.video-js .vjs-control-bar {
-	height: 32px;
-	background-color: #292f37;
-}
-
-.video-js .vjs-play-control {
-	width: 34px;
-	font-size: 14px;
-}
-
-.video-js .vjs-time-control {
-	min-width: 0;
-	height: 32px;
-	line-height: 32px;
-	padding: 0;
-}
-
-.video-js .vjs-duration {
-	display: inline-block;
-	vertical-align: baseline;
-	zoom: 1;
-	*display: inline;
-	*vertical-align: auto;
-}
-
-.video-js .vjs-current-time {
-	display: inline-block;
-	vertical-align: baseline;
-	zoom: 1;
-	*display: inline;
-	*vertical-align: auto;
-}
-
-.video-js .vjs-time-divider {
-	display: inline-block;
-	vertical-align: baseline;
-	zoom: 1;
-	*display: inline;
-	*vertical-align: auto;
-	padding: 0 4px;
-	font-size: 12px;
-}
-
-.video-js .vjs-remaining-time {
-	display: none;
-}
-
-.video-js .vjs-progress-control {
-	margin-left: 16px;
-}
-
-.video-js .vjs-slider {
-	background-color: #000e1c;
-}
-
-.video-js .vjs-load-progress {
-	background-color: #666;
-}
-
-.video-js .vjs-volume-bar {
-	margin-top: 14px;
-	margin-bottom: 14px;
-}
-
-.video-js .vjs-volume-bar.vjs-slider-horizontal {
-	width: 6em;
-}
-
-.video-js .vjs-volume-menu-button {
-	width: 12em;
-}
-
-.video-js .vjs-volume-menu-button .vjs-menu {
-	display: block;
-	filter: alpha(opacity = 100);
-	opacity: 1;
-}
-
-.video-js .vjs-menu-button-inline .vjs-menu {
-	left: 45px;
-}
-
-.video-js .vjs-fullscreen-control {
-	width: 32px;
-	font-size: 14px;
-}
-
-.video-js .vjs-big-play-button {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top: -0.75em;
-	margin-left: -1.5em;
-}
-
-.video-js.vjs-no-flex .vjs-progress-control {
-	width: 75%;
-}
-
-.video-js .vjs-no-js {
-	width: 500px;
-	padding-top: 50px;
-	font-size: 18px;
-	line-height: 20px;
-}
 
 .m-partners {
 	position: relative;
@@ -1785,4 +1672,45 @@ a:hover,a:active {
 }
 .cf{
 	color:#f7941d;
+}
+.buy-section{
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 40px;
+    background-color: #fafafa;
+}
+.pay-section{
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 40px;
+    background-color: #fafafa;
+}
+.buy-section-right{
+    border: 1px solid #f7941d;
+    border-radius: 10px;
+    margin-top:20px;
+}
+.pay-section-right{
+    border: 1px solid #f7941d;
+    border-radius: 10px;
+    margin-top:20px;
+}
+.login-section-right{
+    margin-top:20px;
+    background-size:cover;
+    background-color:#1a263b;
+    height:350px;
+    border-radius:10px;
+    text-align:center;
+}
+
+.pay-section-mid{
+	margin-left:50px;
+	margin-right:50px;
+}
+.input-error{
+	color:#f7941d;
+	text-align:left;
 }

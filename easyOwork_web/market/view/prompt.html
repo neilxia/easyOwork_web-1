@@ -1,0 +1,14 @@
+<div class="inspinia-prompt">
+    <div class="promptcom">
+        <div ng-show="!$messageTemplate">
+            <i ng-class="$classes"></i> {{$message}}
+        </div>
+
+        <div ng-show="$messageTemplate" class="cg-notify-message-template">
+
+        </div>
+    </div>
+    <div class="promptbtn">
+        <button type="button" class="btn btn-primary btn-sm" ng-click="$close()">关闭</button>
+    </div>
+</div>

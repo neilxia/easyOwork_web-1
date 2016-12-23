@@ -1,0 +1,42 @@
+
+	<div style="height: 90px; width: 100%; background-color: #1a263b">
+
+	</div>
+	<div class="buy-section clearfix" ng-controller="loginCtrl">
+		<div class="col-xs-8" style="padding-top:40px">
+			
+			<form class="form-horizontal" role="form">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"></label>
+					<div class="col-sm-4">
+						<h2 style="color:#f7941d">企易登录</h2>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">用户</label>
+					<div class="col-sm-4 market-group" ng-class="{'has-error':form.user.$dirty && form.user.$invalid}">
+						<i class="iconfont icon-tishi f20 abs_r" ng-show="form.user.$dirty && form.user.$invalid" popover="请输入11位手机号或者正确的邮箱地址" popover-placement="bottom" popover-trigger="mouseenter"></i>
+						<input type="text" ng-model="form.user" class="form-control" placeholder="手机号码/电子邮箱" ng-change="validateUser()">
+					</div>
+					<span class="col-sm-5 control-label input-error" style="text-align:left">{{userError}}</span>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">密码</label>
+					<div class="col-sm-4">
+						<input type="password" ng-model="form.password" ng-change="validatePassword()" class="form-control">
+					</div>
+					<span class="col-sm-5 control-label input-error" style="text-align:left">{{passwordError}}</span>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-3 col-sm-4">
+						<button type="submit" class="btn btn-primary btn-block" ng-click="login()">登录</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-xs-3 login-section-right">
+			<h2 style="color:#fff">企易安全保护</h2>
+			<h5 style="color:#fff">从此不在担心信息泄漏</h5>
+			<image src="/market/svg/safe.svg"></image>
+		</div>
+	</div>
