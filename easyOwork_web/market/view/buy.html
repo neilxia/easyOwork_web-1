@@ -1,0 +1,90 @@
+
+<div style="height: 90px; width: 100%; background-color: #1a263b">
+
+</div>
+<div class="buy-section clearfix" ng-controller="buyCtrl"
+	ng-init="init()">
+	<div class="col-xs-8">
+		<form class="form-horizontal" role="form">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">企业名称</label>
+				<div class="col-sm-9">
+					<p class="form-control-static">{{form.entName}}</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">企业号</label>
+				<div class="col-sm-9">
+					<p class="form-control-static">{{form.entId}}</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">姓名</label>
+				<div class="col-sm-9">
+					<p class="form-control-static">{{form.name}}</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail3" class="col-sm-3 control-label">产品</label>
+				<div class="col-sm-9">
+					<p class="form-control-static">企易办公平台</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail3" class="col-sm-3 control-label">套餐类型</label>
+				<div class="col-sm-9">
+					<label class="radio-inline"> <input type="radio"
+						ng-model="form.productType" name="inlineRadioOptions"
+						id="inlineRadio1" value="chuangye"> 创业型(79元/月)
+					</label> <label class="radio-inline"> <input type="radio"
+						ng-model="form.productType" name="inlineRadioOptions"
+						id="inlineRadio2" value="fazhan"> 发展型(109元/月)
+					</label> <label class="radio-inline"> <input type="radio"
+						ng-model="form.productType" name="inlineRadioOptions"
+						id="inlineRadio3" value="chengshu"> 成熟型(149元/月)
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">购买时长(月)</label>
+				<div class="col-sm-2">
+					<select class="form-control" ng-model="form.period" ng-change="calTotal()">
+						<option ng-repeat="x in period" value="{{x.value}}">{{x.label}}</option>
+					</select>
+				</div>
+				<span class="col-sm-7 control-label input-error" style="text-align:left">{{periodError}}</span>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">价格</label>
+				<div class="col-sm-9">
+					<p class="form-control-static"
+						style="font-size: 25px; color: #f7941d">¥{{form.total}}</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-3 col-sm-4">
+					<button class="btn btn-default" ng-click="cancel()">取消</button>
+					<button type="submit" class="btn btn-primary" ng-click="pay()">去支付</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="col-xs-3 buy-section-right">
+		<h2>常见问题</h2>
+		<p>
+			<a>购买后什么时候生效 ?</a>
+		</p>
+		<p>
+			<a>是否可以在未到期前购买?</a>
+		</p>
+		<p>
+			<a>任何人都可以为企业购买吗?</a>
+		</p>
+		<p>
+			<a>哪里可以看到购买成功后使用期限延长?</a>
+		</p>
+		<p>
+			<a>购买后公司员工数量变化会影响使用使用期限吗?<a>
+		</p>
+	</div>
+</div>

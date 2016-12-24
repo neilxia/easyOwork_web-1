@@ -56,8 +56,10 @@
                 <tr>
                     <!--<th width="40" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll2"></th>-->
                     <th><span class="pl20">社保公积金项</span></th>
-                    <th width="100">基数(¥)</th>
-                    <th width="60">比例</th>
+                    <th width="150">按实际工资缴纳</th>
+                    <th width="150">基数(¥)</th>
+                    <th width="150">缴纳比例(员工)</th>
+                    <th width="150">缴纳比例(公司)</th>
                     <th width="90">操作</th>
                 </tr>
                 </thead>
@@ -65,8 +67,11 @@
                 <tr ng-repeat="data in datalist2">
                     <!--<td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList2" ng-model="data.checked"></td>-->
                     <td><span class="pl20">{{data.name}}</span></td>
+                    <td ng-show="data.actualPay">是</td>
+                    <td ng-show="!data.actualPay">否</td>
                     <td>{{data.amount}}</td>
                     <td>{{data.rate}}%</td>
+                    <td>{{data.entRate}}%</td>
                     <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editconfigitem2(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete2(data)"><i class="iconfont icon-del f14"></i></button></td>
                 </tr>
                 </tbody>
@@ -223,7 +228,7 @@
                 <div class="modal-body">
                     <table cellpadding="0" cellspacing="0" width="100%" class="line30td">
                         <tr>
-                            <td width="60" class="g9">项名</td>
+                            <td width="100" class="g9">项名</td>
                             <td class="pl5">
                                 <div class="nose-group"  ng-class="{'has-error':thisform.name.$dirty && thisform.name.$invalid}">
                                     <i class="iconfont icon-tishi f20 abs_r" ng-show="thisform.name.$dirty && thisform.name.$invalid" popover="请输入名称" popover-placement="bottom" popover-trigger="mouseenter"></i>
@@ -231,21 +236,42 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+						<tr>
+                            <td class="g9">按实际工资缴纳</td>
+                            <td class="pl5">
+                                <div class="nose-group"  ng-class="{'has-error':thisform.amount.$dirty && thisform.amount.$invalid}">
+                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="thisform.actualPay.$dirty && thisform.actualPay.$invalid" popover="请输入金额" popover-placement="bottom" popover-trigger="mouseenter"></i>
+									<select class="form-control" name="actualPay" ng-model="addconfigform.actualPay" ng-options="x.value as x.label for x in yesno" required>
+										<option>请选择</option>
+									</select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-show="addconfigform.actualPay=='false'">
                             <td class="g9">基数(¥)</td>
                             <td class="pl5">
                                 <div class="nose-group"  ng-class="{'has-error':thisform.amount.$dirty && thisform.amount.$invalid}">
                                     <i class="iconfont icon-tishi f20 abs_r" ng-show="thisform.amount.$dirty && thisform.amount.$invalid" popover="请输入金额" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                    <input type="text" class="form-control" name="amount" ng-model="addconfigform.amount" placeholder="请输入金额" required />
+                                    <input type="text" class="form-control" name="amount" ng-model="addconfigform.amount" placeholder="请输入金额" />
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td class="g9">比例(%)</td>
+                            <td class="g9">员工比例(%)</td>
                             <td class="pl5">
                                 <div class="nose-group"  ng-class="{'has-error':thisform.rate.$dirty && thisform.rate.$invalid}">
                                     <i class="iconfont icon-tishi f20 abs_r" ng-show="thisform.rate.$dirty && thisform.rate.$invalid" popover="请输比例" popover-placement="bottom" popover-trigger="mouseenter"></i>
                                     <input type="text" class="form-control" name="rate" ng-model="addconfigform.rate" placeholder="请输比例" required />
+                                </div>
+
+                            </td>
+                        </tr>
+ 						<tr>
+                            <td class="g9">公司比例(%)</td>
+                            <td class="pl5">
+                                <div class="nose-group"  ng-class="{'has-error':thisform.rate.$dirty && thisform.rate.$invalid}">
+                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="thisform.entRate.$dirty && thisform.entRate.$invalid" popover="请输比例" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                    <input type="text" class="form-control" name="entRate" ng-model="addconfigform.entRate" placeholder="请输比例" required />
                                 </div>
 
                             </td>

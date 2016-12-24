@@ -563,7 +563,9 @@ function setCtrl(){
                 "name":oldrow.name,		//项名
                 "newName":row.name,		//项名 - MODIFY
                 "rate":row.rate,		//比例
-                "amount":row.amount		//基数
+                "entRate":row.entRate,	//公司缴纳比例
+                "amount":row.amount,		//基数
+                "actualPay":row.actualPay	//是否按实际工资缴纳
             };
             var promise = salaryService.changeSocialSecurity({body:$scope.options});
             promise.success(function(data, status, headers, config){
@@ -588,9 +590,12 @@ function setCtrl(){
                 controller: modalCtrl
             });
             function modalCtrl ($scope, $modalInstance) {
-                $scope.addconfigform={
+                $scope.yesno = [{label:'是',value:'true'},{label:'否',value:'false'}];
+            	$scope.addconfigform={
                     "name":"",		//项名
+                    "actualPay":"true",	//是否按实际工资缴纳
                     "rate":"",		//比例
+                    "entRate":"",	//公司缴纳比例
                     "amount":""		//基数
                 };
                 //提交增加
@@ -614,12 +619,18 @@ function setCtrl(){
                 controller: modalCtrl
             });
             function modalCtrl ($scope, $modalInstance) {
+            	$scope.yesno = [{label:'是',value:'true'},{label:'否',value:'false'}];
                 $scope.addconfigform={
                     "name":row.name,		//项名称
                     "newName":row.newName,		//项名称 - MODIFY
                     "rate":row.rate,		//比例
-                    "amount":row.amount		//基数
+                    "amount":row.amount,		//基数
+                    "entRate":row.entRate
                 };
+                if(row.actualPay)
+                	$scope.addconfigform.actualPay = 'true';
+                else
+                	$scope.addconfigform.actualPay = 'false';
                 //提交编辑
                 $scope.ok=function(state){
                     if(!state){return;} //状态判断

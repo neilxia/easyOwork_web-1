@@ -1,0 +1,73 @@
+<div id="myCarousel" class="carousel slide">
+    <!-- 轮播（Carousel）指标 -->
+    <ol class="carousel-indicators">
+        <!-- <li data-target="#myCarousel" data-slide-to="0" class="active"></li> -->
+        <!-- <li data-target="#myCarousel" data-slide-to="1"></li> -->
+    </ol>   
+    <!-- 轮播（Carousel）项目 -->
+    <div class="carousel-inner">
+        <div class="item active">
+            <img src="/market/image/price.jpg" alt="First slide">
+            <div class="price-desc">
+            	<h1 style="color:#fff">更低的价格, 更优质的服务</h1>
+            	<h2 style="color:#fff">低至79元/月</h2>
+            	<a href="/index.html#/price#buy"><button class="btn btn-lg btn-primary" style="width:200px">查看详情</button></a>
+            </div>
+        </div>
+        <!-- 
+        <div class="item">
+            <img src="/market/image/login_bg02.jpg" alt="Second slide">
+            <div class="carousel-caption"></div>
+        </div>
+         -->
+    </div>
+</div>
+	<div class="g-bd" id="feature" ng-controller="priceCtrl">
+		<div class="sect-even">
+			<h2 class="m-navList-title"><image src="/market/svg/free.svg"/></h2>
+			<h1 class="m-navList-title">免费适用30天</h1>
+		</div>
+		<div class="price-type sect-even" id="buy">
+			<ul>
+				<li>
+					<div class="price-item">
+						<h1 class="cf">创业型</h1>
+						<h6 class="cf">*含企易所有功能*</h6>
+						<span>(员工人数少于20)</span>
+						<h1 class="cf">79元/月</h1>
+						<button class="btn btn-primary btn-lg" ng-click="buy('1')">立即购买</button>
+					</div>
+				</li>
+				<li>
+					<div class="price-item">
+						<h1 class="cf">发展型</h1>
+						<h6 class="cf">*含企易所有功能*</h6>
+						<span>(员工人数20-50)</span>
+						<h1 class="cf">109元/月</h1>
+						<button class="btn btn-primary btn-lg" ng-click="buy('2')">立即购买</button>
+					</div>
+				</li>
+				<li>
+					<div class="price-item">
+						<h1 class="cf">成熟型</h1>
+						<h6 class="cf">*含企易所有功能*</h6>
+						<span>(员工人数大于50)</span>
+						<h1 class="cf">149元/月</h1>
+						<button class="btn btn-primary btn-lg" ng-click="buy('3')">立即购买</button>
+					</div>
+				</li>
+			</ul>
+		</div>
+		
+			<script type="text/javascript"> 
+		window.onscroll = function(){ 
+		 var t = document.body.scrollTop;
+		 if(t>$("#myCarousel").height()){
+		 	document.getElementById("header").style.backgroundColor = "#1a263b";
+		 }else{
+			 document.getElementById("header").style.backgroundColor = "";
+		 }
+		} 
+		$('.carousel').carousel();
+</script>
+		
