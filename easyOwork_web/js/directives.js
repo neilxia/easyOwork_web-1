@@ -613,7 +613,7 @@ function selectdep($timeout){
             title:'@'
         },
         template:'<div ng-class="{\'input-group-sm\':size == \'sm\' ,\'input-group-lg\':size == \'lg\'}" class="input-group" style="width: 100%;">' +
-        '<div class="form-control ovh" style="width: 100%;"><span ng-repeat="sele2 in myselected" ng-model="myselected" class="bdrs4 mr5" id="{{sele2.id}}">{{sele2.text}}{{sele2.name}}</span></div>' +
+        '<div class="form-control ovh" style="width: 100%;"><span ng-repeat="sele2 in myselected" ng-model="myselected" class="bdrs4 mr5" id="{{sele2.id}}">{{sele2.text}}{{sele2.name}}</span></div><a class="iconfont icon-close2 g9" ng-if="myselected.length > 0" ng-click="clearselected()"></a>' +
         '<a class="input-group-addon wd70" ng-click="selectstaff()">{{title}}</a>' +
         '</div>',
         /*link: function ($scope, element, attrs) {
@@ -705,7 +705,6 @@ function selectdep($timeout){
                 function modalCtrl ($scope, $modalInstance,items,pmData,jseData) {
                     if(items=='bm'){
                         $scope.treeData=pmData;
-                        debugger;
                     }else if(items=='gw'){
                         $scope.treeData=jseData;
                     }
@@ -749,10 +748,14 @@ function selectdep($timeout){
                     };
                     $scope.yourCtrl=function ()  {
                         var selected_nodes = $scope.treeInstance.jstree(true).get_checked('full');
-                        debugger;
                         $scope.selected=selected_nodes;
                     }
                 }
+            }
+
+            //clear
+            $scope.clearselected=function(){
+                $scope.myselected=null
             }
         }]
     }
@@ -813,29 +816,6 @@ function selectdepyuan($timeout){
                     MsgService.tomsg(data.body.status.errorDesc);
                 });
             };
-            //查询员工列表
-            inquiryEmployeeFun();
-            function inquiryEmployeeFun(){
-                $scope.options={
-                    "type":'ALL',		//必填项,ID(员工号), EMAIL(电子邮件),MOBILE(手机号码),NAME(名字),ORG(部门名称),ROLE(职位),ALL(查询所有员工)
-                    "orgName":''	//type为ORG时必填, 部门名称
-                };
-                var promise = employeesService.inquiryEmployee({body:$scope.options});
-                promise.success(function(data, status, headers, config){
-                    var datas=data.body;
-                    if(datas.status.statusCode==0){
-                        angular.forEach(datas.data.userList,function(val,ind){
-                            val.checked=false;
-                        })
-                        yuanData=datas.data.userList;
-                    }else{
-                        MsgService.tomsg(data.body.status.errorDesc);
-                    }
-                });
-                promise.error(function(data, status, headers, config){
-                    MsgService.tomsg(data.body.status.errorDesc);
-                });
-            };
 
             $scope.selectstaffyuan=function(){
                 var modalInstance = $modal.open({
@@ -865,15 +845,40 @@ function selectdepyuan($timeout){
                         $scope.yourCtrl();
                         $modalInstance.close($scope.selected);
                     };
-
                     $scope.cancel = function () {
                         $modalInstance.dismiss('cancel');
                     };
 
+                    //查询员工列表
+                    $scope.inquiryEmployeeFun=function(name){
+                        $scope.options={
+                            "type":'ORG',		//必填项,ID(员工号), EMAIL(电子邮件),MOBILE(手机号码),NAME(名字),ORG(部门名称),ROLE(职位),ALL(查询所有员工)
+                            "orgName":name	//type为ORG时必填, 部门名称
+                        };
+
+                        var promise = employeesService.inquiryEmployee({body:$scope.options});
+                        promise.success(function(data, status, headers, config){
+                            var datas=data.body;
+                            if(datas.status.statusCode==0){
+                                angular.forEach(datas.data.userList,function(val,ind){
+                                    val.checked=false;
+                                })
+                                $scope.stafftreeData=datas.data.userList;
+                            }else{
+                                MsgService.tomsg(data.body.status.errorDesc);
+                            }
+                        });
+                        promise.error(function(data, status, headers, config){
+                            MsgService.tomsg(data.body.status.errorDesc);
+                        });
+                    };
+
+                    //$scope.inquiryEmployeeFun('部门01');
+
                     //tree
                     $scope.ignoreChanges = false;
                     $scope.newNode = {};
-                    $scope.originalData = [
+                    /*$scope.originalData = [
                         { id : 'ajson1', parent : '#', text : '成都尔康互动有限公司1', state: { opened: true} },
                         { id : 'ajson1-1', parent : 'ajson1', text : '行政部', state: { opened: true} },
                         { id : 'ajson1-2', parent : 'ajson1', text : '产品中心' , state: { opened: true}},
@@ -883,7 +888,7 @@ function selectdepyuan($timeout){
                         { id : 'ajson1-2-4', parent : 'ajson1-2', text : '用户研究部' , state: { opened: true}},
                         { id : 'ajson1-3', parent : 'ajson1', text : '人事部' , state: { opened: true}},
                         { id : 'ajson1-4', parent : 'ajson1', text : '市场部' , state: { opened: true}}
-                    ];
+                    ];*/
 
                     $scope.treeData = pmData;
                     $scope.treeConfig = {
@@ -916,8 +921,10 @@ function selectdepyuan($timeout){
                     if(!yuangong){
                         $scope.treeConfig.plugins =['checkbox'];
                     }
+                    //筛选
                     $scope.changedCB=function(e,item){
-                        $scope.thisbm=[{"name":item.node.text}];
+                        //$scope.thisbm=[{"name":item.node.text}];
+                        $scope.inquiryEmployeeFun(item.node.text);
                         //inquiryEmployeeFun(item.node.text);
                         //alert(e+','+item+','+n+','+b);
                     };
@@ -927,7 +934,7 @@ function selectdepyuan($timeout){
                         //return false;
                     };
                     //员工
-                    $scope.stafftreeData=yuanData;
+                    //$scope.stafftreeData=yuanData;
 
 
                     $scope.yourCtrl=function ()  {
@@ -1075,7 +1082,7 @@ angular.module("selectdepyuan.html", []).run(["$templateCache", function($templa
         '</div>' +
         '<div class="col-xs-6 pr5 pt10 pb10">' +
         '<div slim-scroll box-height="330" class="addpcs-jstree-com">' +
-        '<div><ul><li class="h30 ovh" ng-repeat="data in stafftreeData | filter:{\'orgList\':thisbm}"><lable ><input icheck type="checkbox" name="chkList" ng-model="data.checked"> {{data.name}}</lable></li></ul></div>' +
+        '<div><ul><li class="h30 ovh" ng-repeat="data in stafftreeData"><lable ><input icheck type="checkbox" name="chkList" ng-model="data.checked"> {{data.name}}</lable></li></ul></div>' +
         '</div>' +
         '</div>' +
         '</div>' +
@@ -1096,7 +1103,7 @@ angular.module('custom-template', []).run(["$templateCache", function($templateC
         '</div></div></div>');
 }])
 
-.directive('currentTime', function($timeout, dateFilter) {
+function currentTime($timeout, dateFilter){
     // return the directive link function. (compile function not needed)
     return function(scope, element, attrs) {
         var format,  // date format
@@ -1130,7 +1137,7 @@ angular.module('custom-template', []).run(["$templateCache", function($templateC
 
         updateLater(); // kick off the UI update process.
     }
-});
+}
 
 /**
  *

@@ -56,22 +56,45 @@
                     <div ng-switch on="obj.type">
                         <div ng-switch-when="TEXT">
                             <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.mandatory==true">*</span>{{obj.name || '无'}}</div>
-                            <div class="col-xs-10"><input type="text" class="form-control wd200" placeholder="{{obj.placeholder || '无'}}" ng-model="obj.value"></div>
+                            <div class="col-xs-10">
+                                <table cellpadding="0" cellspacing="0" width="100%">
+                                    <tr>
+                                        <td width="210"><input type="text" class="form-control wd200" placeholder="{{obj.placeholder || '无'}}" ng-model="obj.value" maxlength="40"></td>
+                                        <td><span class="red">最大40个字符</span></td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
                         <div ng-switch-when="NUMBER">
                             <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.mandatory==true">*</span>{{obj.name || '无'}}</div>
-                            <div class="col-xs-10"><input type="number" class="form-control wd200" placeholder="{{obj.placeholder || '无'}}" ng-model="obj.value"></div>
+                            <div class="col-xs-10">
+                                <table cellpadding="0" cellspacing="0" width="100%">
+                                    <tr>
+                                        <td width="210"><input type="number" class="form-control wd200" placeholder="{{obj.placeholder || '无'}}" ng-model="obj.value" maxlength="20"></td>
+                                        <td><span class="red">最大20个字符</span></td>
+                                    </tr>
+                                </table>
+
+                            </div>
                         </div>
 
                         <div ng-switch-when="TEXTAREA">
                             <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.mandatory==true">*</span>{{obj.name || '无'}}</div>
-                            <div class="col-xs-10"><textarea class="form-control wd300" placeholder="{{obj.placeholder || '无'}}" ng-model="obj.value"></textarea></div>
+                            <div class="col-xs-10">
+                                <table cellpadding="0" cellspacing="0" width="100%">
+                                    <tr>
+                                        <td width="310"><textarea class="form-control wd300" placeholder="{{obj.placeholder || '无'}}" ng-model="obj.value" maxlength="200"></textarea></td>
+                                        <td><span class="red">最大200个字符</span></td>
+                                    </tr>
+                                </table>
+
+                            </div>
                         </div>
 
                         <div ng-switch-when="SELECTION">
                             
                             <div class="col-xs-2 t_r pt7 g9"><span class="red" ng-if="obj.mandatory==true">*</span>{{obj.name || '无'}}</div>
-                            <div class="col-xs-10"><select class="form-control wd200" ng-model="obj.selectedValue" ng-options="x.value for x in obj.valueList"></select></div>
+                            <div class="col-xs-10"><select class="form-control wd160" ng-model="obj.selectedValue" ng-options="x.value for x in obj.valueList"></select></div>
                         </div>
                         <div ng-switch-when="DATE">
                             
@@ -139,6 +162,7 @@
                     <th width="80"><span class="pl15">排序</span></th>
                     <th>级别</th>
                     <th width="120">审批人</th>
+                    <th width="60">操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -146,6 +170,7 @@
                     <td class="pl20"><span class="pl5">{{data.stepNo=$index+1}}</span></td>
                     <td>{{data.stepName}}</td>
                     <td>{{data.userDTO.name}}</span></td>
+                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editapprover(data)"><i class="iconfont icon-bianji f14"></i></button></td>
                 </tr>
                 </tbody>
             </table>
@@ -157,7 +182,40 @@
         </div>
     </div>
 
-
+    <!--新增审批人-->
+    <script type="text/ng-template" id="addapprover.html">
+        <div class="whitemodal">
+            <div class="modal-header">
+                <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                <div class="f16">{{approvername}}审批人</div>
+            </div>
+            <form role="baseForm" name="baseForm"  ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+                <div class="modal-body">
+                    <table cellpadding="0" cellspacing="0" width="100%" class="line30td">
+<!--                        <tr>
+                            <td class="g9">级别名称</td>
+                            <td class="pl5">
+                                <div class="nose-group"  ng-class="{'has-error':baseForm.stepName.$dirty && baseForm.stepName.$invalid}">
+                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.stepName.$dirty && baseForm.stepName.$invalid" popover="请输入名称" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                    <input type="text" class="form-control" name="stepName" ng-model="processDefStep.stepName"  placeholder="请输入名称" required />
+                                </div>
+                            </td>
+                        </tr>-->
+                        <tr>
+                            <td class="g9" valign="top">审批人</td>
+                            <td class="pl5">
+                                <div selectdepyuan yuangong="1" myselected="processDefStep.myselected" selectedallarr="processDefStep.selectedallarr"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" ng-click="cancel()">关闭</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </script>
 
     <!-- Footer -->
     <div ng-include="'modules/common/footer.html'"></div>

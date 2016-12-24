@@ -70,6 +70,7 @@
 /*.addpcs-config .col-xs-2{ width: 100px;}*/
 .addpcs-config-prople{}
 .addpcs-config-prople li{ float: left; padding: 4px 15px; background-color: #eeeeee; margin-right: 10px;}
+.addpcs-lg .addpcs-config-prople li{ padding: 7px 15px;}
 .addpcs-config-prople li.addbtn{width: 90px; background-color: #fff; border: #ddd dashed 1px; color: #999; text-align: center;}
 .addpcs-config-prople li.addbtn:hover{ border: #f7941d dashed 1px; color: #f7941d; cursor: pointer;}
 .addrow{border: #ddd dashed 1px; padding-top:10px; padding-bottom:10px; background-color: #fcfcfc; position: relative; cursor: pointer;}
@@ -92,6 +93,8 @@
 .addpcs-config .selectbox li{}
 
 /*员工管理*/
+.input-group .icon-close2{ position: absolute; font-size: 10px; top: 6px; right: 86px; z-index: 9;}
+.input-group.input-group-sm .icon-close2{ right: 75px;}
 .headportbox{ width: 120px; height: 120px; overflow: hidden;}
 .addinfobox{width: auto; height: 40px; line-height: 38px; display: block; border: #ddd dashed 1px; color: #999;}
 .addinfobox:hover{border: #f7941d dashed 1px; color: #f7941d;}

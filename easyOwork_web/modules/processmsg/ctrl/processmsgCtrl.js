@@ -96,34 +96,12 @@ function addpcsCtrl(){
                 MsgService.tomsg(data.body.status.errorDesc);
             });
         };
-        /*
-        $scope.processmodal = {
-        	"name":"",
-        	"title":"",
-        	"launchUserDTO":{
-                "id":userinfo.id,	//员工号
-                "personalEmail":userinfo.personalEmail,	//邮件地址
-                "personalPhoneCountryCode":userinfo.personalPhoneCountryCode,	//电话号码
-                "personalPhone":userinfo.personalPhone		//电话号码
-            },
-        	"processFieldDTOList":[]
-        };
-        
-        //选择流程
-        $scope.selectProcessModal = function(selectedProcessModal){
-        	$scope.processmodal.name = selectedProcessModal.name;
-        	 $scope.processmodal.processFieldDTOList = [];	//先清空再添加
-        	 angular.forEach(selectedProcessModal.processDefFieldDTOList, function(obj, key) {
-    			 $scope.processmodal.processFieldDTOList.push({'name':obj.name,'value':'','valueList':obj.valueList,'type':obj.type});
-             })
-        }
-        */
         //发起流程
         $scope.createProcessFun=function(){
-            if($scope.processmodal.title==''||$scope.processmodal.title==undefined){
+            /*if($scope.processmodal.title==''||$scope.processmodal.title==undefined){
                 MsgService.tomsg('新建流程名称为必填！');
                 return;
-            }
+            }*/
             debugger;
             var promise = processService.createProcess({body:$scope.processmodal});
             promise.success(function(data, status, headers, config){
@@ -138,9 +116,33 @@ function addpcsCtrl(){
                 MsgService.tomsg(data.body.status.errorDesc);
             });
         };
-        
         $scope.deleteAttachment=function($index){
             $scope.processmodal.attachmentList.splice($index, 1);
+        }
+
+        //编辑审批人
+        $scope.editapprover=function(row){
+            var oldrow=angular.copy(row);
+            var modalInstance = $modal.open({
+                templateUrl: 'addapprover.html',
+                size:'sm',
+                controller: modalCtrl
+            });
+            function modalCtrl ($scope, $modalInstance) {
+                $scope.approvername='编辑';
+                $scope.processDefStep=row;
+                $scope.processDefStep.selectedallarr=[[],[row.userDTO]];
+                //提交编辑
+                $scope.ok=function(state){
+                    if(!state){return;} //状态判断
+                    row.userDTO=$scope.processDefStep.myselected[0];
+                    $modalInstance.close();
+                };
+                $scope.cancel = function () {
+                    angular.copy(oldrow, row);
+                    $modalInstance.dismiss('cancel');
+                };
+            }
         }
 
 
@@ -158,7 +160,7 @@ function mypcsCtrl(){
             inquiryProcessModelTypeFun();
         }
         //筛选
-        $scope.Processstatus="";
+        $scope.Processstatus="INPROGRESS";
         $scope.processtitle="";
         $scope.selectedproclass="";
         function inquiryProcessModelTypeFun(){
@@ -722,6 +724,7 @@ function addsetpcsCtrl(){
                 //提交编辑
                 $scope.ok=function(state){
                     if(!state){return;} //状态判断
+                    row.userDTO=$scope.processDefStep.myselected[0];
                     $modalInstance.close();
                 };
                 $scope.cancel = function () {
