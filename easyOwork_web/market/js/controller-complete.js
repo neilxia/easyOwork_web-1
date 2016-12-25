@@ -1,8 +1,8 @@
 /**
- * Created by Dumin on 2016/7/21.
+ * Created by changqing on 2016/7/21.
  */
-var app = angular.module('market.pay',[]);
-app.controller('payCtrl',['$rootScope','$scope','LocalStorage','commonService','$http','AppConfig','MsgService',function($rootScope,$scope,LocalStorage,commonService,$http,AppConfig,MsgService){
+var app = angular.module('market.complete',[]);
+app.controller('completeCtrl',['$rootScope','$scope','LocalStorage','commonService','MsgService','$http','AppConfig',function($rootScope,$scope,LocalStorage,commonService,MsgService,$http,AppConfig){
 	
 	$scope.init = function(){
 		var Identity = LocalStorage.getObject("Identity");
@@ -32,21 +32,20 @@ app.controller('payCtrl',['$rootScope','$scope','LocalStorage','commonService','
 				if (sts.statusCode == 0) {
 					$scope.order = data.body.data.orders[0];
 				} else {
-					MsgService.tomsg("无法获取订单");
+					MsgService.tomsg("无法获取支付结果, 请联系管理员查看");
 				}
 			});
 			promise.error(function(data, status, headers, config) {
-				MsgService.tomsg('无法获取订单');
+				MsgService.tomsg('无法获取支付结果, 请联系管理员查看');
 			});
 	}
-	$scope.cancel = function(){
+	
+	$scope.done = function(){
+		$rootScope.$state.go('price');
+	}
+	$scope.continue = function(){
 		$rootScope.$state.go('buy');
 	}
-	$scope.confirm = function(){
-		$rootScope.$state.go('pay');
-	}
-	$scope.complete = function(){
-		$rootScope.$state.go('complete',{order:$scope.order.orderNumber});
-	}
+
 	
 }]);

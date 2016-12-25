@@ -71,8 +71,8 @@ app.controller('loginCtrl',['$rootScope','$scope','$http','commonService','AppCo
 			promise.success(function(data, status, headers, config){
 	            var sts=data.body.status;
 	            if(sts.statusCode==0){
-	            	var Identity = {entId:data.body.data.entId,name:data.body.data.name,entName:data.body.data.entName};
-	            	Identity.timestamp = new Date();
+	            	var Identity = data.body.data;
+	            	Identity.tokenId = data.header.tokenId;
 	            	LocalStorage.setObject("Identity",Identity);
 	                if(redirect_url != undefined || redirect_url != ''){
 	                	$location.url(redirect_url);

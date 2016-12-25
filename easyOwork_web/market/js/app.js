@@ -11,6 +11,7 @@
         'market.price',
         'market.buy',
         'market.pay',
+        'market.complete',
         'market.customize',
         'market.login',
         'market.service'

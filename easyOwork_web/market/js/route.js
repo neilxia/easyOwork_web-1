@@ -50,8 +50,13 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
 
         })
         .state('pay', {
-            url: "/pay",
+            url: "/pay?order",
             templateUrl: "market/view/pay.html",
+
+        })
+        .state('complete', {
+            url: "/complete?order",
+            templateUrl: "market/view/complete.html",
 
         })
 
