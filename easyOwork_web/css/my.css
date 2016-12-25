@@ -27,7 +27,10 @@
 .salary_issue li:last-child .textbox{padding-bottom: 0;}
 .salary_issue li:last-child .textbox:before{border-left:none;}
 
-.salary_line01{ border-top: #ddd dashed 1px; text-align: center; margin-top:10px; margin-bottom:10px;}
+.issueview_madal1{}
+.issueview_madal1 .col-xs-3{ height: 34px; line-height: 34px;}
+
+.salary_line01{ width: 100%; border-top: #ddd dashed 1px; text-align: center; margin-top:10px; margin-bottom:10px; clear: both;}
 .salary_line01 > span{ display:block; width: 100px; margin-left: auto; margin-right: auto ;margin-top: -10px; background-color: #fff; color: #999;}
 
 /*公告管理*/

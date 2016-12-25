@@ -604,12 +604,12 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             data: { pageTitle: '工资发放'}
         })
         .state('salarymsg.issueview', {
-            url: "/issueview",
+            url: "/issueview?year&month",
             templateUrl: 'modules/salarymsg/tmp/view.html',
             data: { pageTitle: '工资发放详情'}
         })
         .state('salarymsg.list', {
-            url: "/list",
+            url: "/list?year&month",
             templateUrl: 'modules/salarymsg/tmp/list.html',
             data: { pageTitle: '工资单查询'}
         })

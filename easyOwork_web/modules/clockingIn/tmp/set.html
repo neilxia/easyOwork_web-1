@@ -26,46 +26,40 @@
                 <tbody>
                 <tr>
                 <!--<tr ng-repeat="data in dataslist">-->
-                <tr ng-repeat="data in dataslist | startFrom:2">
+                <tr ng-repeat="data in dataslist">
                     <td class="pl20">{{data.nameas}}</td>
                     <td>
-                        <span editable-time="data.value" e-form="Vcode" onbeforesave="setWorkingTimeFun($data,data.name)" >{{data.value || '无'}}</span> <span class="ml5 poi orange" ng-click="Vcode.$show()" ng-hide="Vcode.$visible">修改</span>
+                        <span ng-if="data.name!='WORKING_DAY'">
+                        <span  editable-time="data.value" e-form="Vcode" onbeforesave="setWorkingTimeFun($data,data.name)" >{{data.value || '无'}}</span> <span class="ml5 poi orange" ng-click="Vcode.$show()" ng-hide="Vcode.$visible">修改</span>
+</span>
+
+
+                        <span ng-if="data.name=='WORKING_DAY'">
+                            <span ng-repeat="data in seleworking" class="mr5" ng-if="seleworked">{{data.text}}</span>
+                        <label ng-repeat="data in workingDay" class="mr5" ng-if="!seleworked"><input icheck type="checkbox" ng-model="data.checked" value="{{data.value}}">{{data.text}}</label>
+                        <button type="button" class="btn btn-primary btn-xs" ng-click="setWorkingTimeFun('','WORKING_DAY')" ng-if="!seleworked">确定</button>
+                        <span class="ml5 poi orange" ng-if="seleworked" ng-click="seleworkedopen()">修改</span>
+                        </span>
 
                     </td>
                     <td>{{data.description}}</td>
                 </tr>
 
-<!--
-
-                <tr>
-                    <td class="pl15">上班时间</td>
-                    <td>
-                        <span editable-time="workingFrom" e-form="Vcode"  onbeforesave="setWorkingTimeFun($data,'workingFrom')">{{workingFrom || '无'}}</span> <span class="ml5 poi orange" ng-click="Vcode.$show()" ng-hide="Vcode.$visible">修改</span>
-
-                    </td>
-                    <td>设置公司员工的上班打卡时间，此时间后打卡的算作迟到</td>
-                </tr>
-                <tr>
-                    <td class="pl15">下班时间</td>
-                    <td>
-                        <span editable-time="workingTo" e-form="Vcode2" onbeforesave="setWorkingTimeFun($data,'workingTo')">{{workingTo || '无'}}</span> <span class="ml5 poi orange" ng-click="Vcode2.$show()" ng-hide="Vcode2.$visible">修改</span>
-
-                    </td>
-                    <td>设置公司员工的下班打卡时间，此时间前打卡的算作早退</td>
-                </tr>-->
-                <tr>
+                <!--<tr>
                     <td class="pl15">工作日自定义</td>
-                    <td>
-                        <label><input icheck type="checkbox" ng-model="demo.checkOne"> 星期一</label>
-                        <label class="ml5"><input icheck type="checkbox" ng-model="demo.checkOne"> 星期二</label>
-                        <label class="ml5"><input icheck type="checkbox" ng-model="demo.checkOne"> 星期三</label>
-                        <label class="ml5"><input icheck type="checkbox" ng-model="demo.checkOne"> 星期四</label>
-                        <label class="ml5"><input icheck type="checkbox" ng-model="demo.checkOne"> 星期五</label>
-                        <label class="ml5"><input icheck type="checkbox" ng-model="demo.checkOne"> 星期六</label>
-                        <label class="ml5"><input icheck type="checkbox" ng-model="demo.checkOne"> 星期日</label>
+                    <td class="line24">
+                        &lt;!&ndash;<a href="#" editable-checklist="user.status" e-ng-options="s.value as s.text for s in statuses">
+
+                        </a>&ndash;&gt;
+                        &lt;!&ndash;<span editable-checklist="workingDay" e-form="workingDay" e-ng-options="s.value as s.text for s in workingDay">
+                            {{workingDay}}
+                        </span>
+                        <span class="ml5 poi orange" ng-click="workingDay.$show()" ng-hide="workingDay.$visible">修改</span>&ndash;&gt;
+
+
                     </td>
                     <td>{{data.description}}</td>
-                </tr>
+                </tr>-->
                 </tbody>
             </table>
         </div>

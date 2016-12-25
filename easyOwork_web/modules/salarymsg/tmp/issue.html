@@ -15,53 +15,26 @@
         <div class="nose-panel-body">
             <div class="p30">
                 <ul class="salary_issue f20">
-                    <li class="jing">
-                        <span class="sign bdrs50">11 <span class="f12 ml-5">/月</span></span>
+                    <li ng-repeat="data in summaryListData" ng-class="{'jing':data.totalSettledEmployeeCount==0,'waing':data.totalSettledEmployeeCount<data.totalEmployeeCount}">
+                        <span class="sign bdrs50">{{data.month}} <span class="f12 ml-5">/月</span></span>
                         <div class="textbox row">
-                            <div class="col-lg-2">0/40<span class="f12 g9 ml5">已发放</span></div>
-                            <div class="col-lg-2">0.00<span class="f12 g9 ml5">总金额</span></div>
-                            <div class="col-lg-2">0.00<span class="f12 g9 ml5">税</span></div>
-                            <div class="col-lg-2">0.00<span class="f12 g9 ml5">五险一金</span></div>
-                            <div class="col-lg-2"><button class="btn btn-default ">发放工资</button></div>
-                        </div>
-                    </li>
-                    <li class="waing">
-                        <span class="sign bdrs50 f20">10 <span class="f12 ml-5">/月</span></span>
-                        <div class="textbox row">
-                            <div class="col-lg-2">30/40<span class="f12 g9 ml5">已发放</span></div>
-                            <div class="col-lg-2">245550.00<span class="f12 g9 ml5">总金额</span></div>
-                            <div class="col-lg-2">3000.00<span class="f12 g9 ml5">税</span></div>
-                            <div class="col-lg-2">957.00<span class="f12 g9 ml5">五险一金</span></div>
-                            <div class="col-lg-2"><button class="btn btn-default" ui-sref="salarymsg.issueview">查看明细</button></div>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="sign bdrs50 f20">9 <span class="f12 ml-5">/月</span></span>
-                        <div class="textbox row">
-                            <div class="col-lg-2">40/40<span class="f12 g9 ml5">已发放</span></div>
-                            <div class="col-lg-2">300000.00<span class="f12 g9 ml5">总金额</span></div>
-                            <div class="col-lg-2">3000.00<span class="f12 g9 ml5">税</span></div>
-                            <div class="col-lg-2">957.00<span class="f12 g9 ml5">五险一金</span></div>
-                            <div class="col-lg-2"><button class="btn btn-default ">查看明细</button></div>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="sign bdrs50 f20">8 <span class="f12 ml-5">/月</span></span>
-                        <div class="textbox row">
-                            <div class="col-lg-2">40/40<span class="f12 g9 ml5">已发放</span></div>
-                            <div class="col-lg-2">300000.00<span class="f12 g9 ml5">总金额</span></div>
-                            <div class="col-lg-2">3000.00<span class="f12 g9 ml5">税</span></div>
-                            <div class="col-lg-2">957.00<span class="f12 g9 ml5">五险一金</span></div>
-                            <div class="col-lg-2"><button class="btn btn-default ">查看明细</button></div>
+                            <div class="col-lg-2">{{data.totalSettledEmployeeCount}}/{{data.totalEmployeeCount}}<span class="f12 g9 ml5">已发放</span></div>
+                            <div class="col-lg-2">{{data.totalAmountMonth}}<span class="f12 g9 ml5">总金额</span></div>
+                            <!--<div class="col-lg-2">0.00<span class="f12 g9 ml5">税</span></div>-->
+                            <div class="col-lg-2">{{data.totalSocialSecurityMonth}}<span class="f12 g9 ml5">五险一金</span></div>
+                            <div class="col-lg-2">
+                                <button class="btn btn-default" ng-if="data.totalSettledEmployeeCount!=data.totalEmployeeCount" ui-sref="salarymsg.issueview({year:thisyear,month:data.month})">发放工资</button>
+                                <button class="btn btn-default" ng-if="data.totalSettledEmployeeCount==data.totalEmployeeCount" ui-sref="salarymsg.list({year:thisyear,month:data.month})">查看明细</button>
+                            </div>
                         </div>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="nose-panel-footer cf bte">
+        <!--<div class="nose-panel-footer cf bte">
             <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
             <div class="g9">共 {{thispages.total}} 条数据</div>
-        </div>
+        </div>-->
     </div>
 
 

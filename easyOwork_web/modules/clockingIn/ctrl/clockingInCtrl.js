@@ -38,7 +38,7 @@ function clockingInlistCtrl(){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                     $scope.attendanceslist=data.body.data.attendances;
-                    $scope.attendanceslist=[
+                    /*$scope.attendanceslist=[
                         {
                             "name":"将之前",
                             "id":"01111",
@@ -48,7 +48,7 @@ function clockingInlistCtrl(){
                             "chidao":"2",
                             "zhaotui":"2"
                         }
-                    ]
+                    ]*/
                     $scope.thispages.total=$scope.attendanceslist.length;	//分页
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
@@ -63,42 +63,36 @@ function clockingInlistCtrl(){
 }
 
 function clockingInviewCtrl(){
-    return['$scope','$rootScope',function($scope,$rootScope){
+    return['$scope','$rootScope','attendanceService',function($scope,$rootScope,attendanceService){
         //var userinfo=LocalStorage.getObject('userinfo');
-        $scope.datas=$rootScope.$stateParams.row;
-
+        var rordatas=$rootScope.$stateParams.row;
 /*        $scope.thispages={
             total:null,
             pageNum:1,
             pageSize:10
-        };
+        };*/
         $scope.init = function(){
             inquiryAttendanceFun();
         };
-        var date = new Date();
-        var attendance={
-            attendanceYear:date.getFullYear(),
-            attendanceMonth:date.getMonth()+1,
-            attendanceDay:date.getDate()
-        }
         //查询考勤记录当月
         function inquiryAttendanceFun(){
             $scope.options={
-                "attendanceYear":attendance.attendanceYear,	//签到或签退年份
-                "attendanceMonth":attendance.attendanceMonth,	//签到或签退月份
+                "attendanceYear":rordatas.attendanceYear || "",	//签到或签退年份
+                "attendanceMonth":rordatas.attendanceMonth || "",	//签到或签退月份
                 "attendanceDay":"",		//签到或签退天
                 "userDTO":{
-                    "id":userinfo.id || "",	//员工号
-                    "personalEmail":userinfo.personalEmail || "",	//邮件地址
-                    "personalPhoneCountryCode":userinfo.personalPhoneCountryCode || "",	//电话号码国家代码
-                    "personalPhone":userinfo.personalPhone || ""		//电话号码
+                    "id":rordatas.userDTO.id || "",	//员工号
+                    "personalEmail":rordatas.userDTO.personalEmail || "",	//邮件地址
+                    "personalPhoneCountryCode":rordatas.userDTO.personalPhoneCountryCode || "",	//电话号码国家代码
+                    "personalPhone":rordatas.userDTO.personalPhone || ""		//电话号码
                 }
             };
+            debugger;
             var promise = attendanceService.inquiryAttendance({body:$scope.options});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
-                    $scope.reportlist=data.body.data.reports;
+                    $scope.attendanceslist=data.body.data.attendances;
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
                 }
@@ -106,7 +100,7 @@ function clockingInviewCtrl(){
             promise.error(function(data, status, headers, config){
                 MsgService.tomsg(data.body.status.errorDesc);
             });
-        }*/
+        }
 
     }]
 }
@@ -122,23 +116,47 @@ function clockingInsetCtrl(){
             "name":""	//如为空则查询所有系统参数, 如有值则查询该参数
             //"name":"WORKING_FROM_TIME"	//如为空则查询所有系统参数, 如有值则查询该参数
         };
+
+        $scope.workingDay = [
+            {value: 1, text: '星期一',checked:false},
+            {value: 2, text: '星期二',checked:false},
+            {value: 3, text: '星期三',checked:false},
+            {value: 4, text: '星期四',checked:false},
+            {value: 5, text: '星期五',checked:false},
+            {value: 6, text: '星期六',checked:false},
+            {value: 7, text: '星期日',checked:false}
+        ];
+
         function inquiryParameterFun(){
             var promise = publicService.inquiryParameter({body:$scope.options});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                     var datalist=data.body.data.settings;
-                    debugger;
+                    var datalistnew=[];
                     angular.forEach(datalist,function(val,ind){
                         if(val.name=='WORKING_FROM_TIME'){
                             val.nameas='上班时间';
+                            datalistnew.push(val);
                         }else if(val.name=='WORKING_TO_TIME'){
                             val.nameas='下班时间';
+                            datalistnew.push(val);
                         }else if(val.name=='WORKING_DAY'){
-                            val.nameas='工作日';
+                            var arr=val.value.split(',');
+                            var arrnew=[];
+                            val.nameas='工作日自定义';
+                            datalistnew.push(val);
+                            angular.forEach(arr,function(aval){
+                                angular.forEach($scope.workingDay,function(val,ind){
+                                    if(aval==val.value){
+                                        arrnew.push(val);
+                                    }
+                                })
+                            })
+                            $scope.seleworking=arrnew;
                         }
                     })
-                    $scope.dataslist=datalist;
+                    $scope.dataslist=datalistnew;
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
                 }
@@ -148,8 +166,20 @@ function clockingInsetCtrl(){
             });
         };
 
-
+        $scope.showStatus = function() {
+            var selected = [];
+            angular.forEach($scope.workingDay, function(val) {
+                if (val.checked) {
+                    selected.push(s.text);
+                }
+            });
+            return selected.length ? selected.join(',') : '没有选择';
+        };
         //设置工作时间
+        $scope.seleworked=true;
+        $scope.seleworkedopen=function(){
+            $scope.seleworked=false;
+        }
         $scope.setWorkingTimeFun=function (data,name){
             var dataArr = data.split(':');
             switch (name){
@@ -167,13 +197,33 @@ function clockingInsetCtrl(){
                     };
                     break;
                 }
+                case 'WORKING_DAY':{
+                    $scope.seleworking = [];
+                    $scope.seleworkstring = '';
+                    angular.forEach($scope.workingDay, function(val) {
+                        if (val.checked) {
+                            $scope.seleworking.push(val);
+                            if($scope.seleworkstring==''){
+                                $scope.seleworkstring = val.value;
+                            }else {
+                                $scope.seleworkstring = $scope.seleworkstring+','+val.value;
+                            }
+                        }
+                    });
+                    //return $scope.selected.length ? $scope.selected.join(',') : '没有选择';
+                    $scope.options={
+                        "workingDay":$scope.seleworkstring	//工作结束时间-小时
+                    };
+                    break;
+                }
             }
             var promise = attendanceService.setWorkingTime({body:$scope.options});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                     //MsgService.tomsg();
-                    $modalInstance.close();
+                    //$modalInstance.close();
+                    $scope.seleworked=true;
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
                 }
@@ -183,5 +233,8 @@ function clockingInsetCtrl(){
             });
             return promise;
         };
+
+
+
     }]
 }

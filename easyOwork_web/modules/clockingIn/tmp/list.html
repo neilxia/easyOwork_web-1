@@ -26,25 +26,25 @@
                 <tr>
                     <th><span class="pl15">姓名</span></th>
                     <th width="100">员工编号</th>
-                    <th width="100">部门</th>
-                    <th width="100">年/月</th>
-                    <th width="80">出勤天数</th>
-                    <!--<th width="80">缺勤天数</th>-->
-                    <th width="80">迟到</th>
-                    <th width="80">早退</th>
+                    <th width="120">电话号码</th>
+                    <th width="100">年/月/日</th>
+                    <!--<th width="80">出勤天数</th>-->
+                    <th width="80">签到时间</th>
+                    <th width="80">签退时间</th>
+                    <th width="80">结果</th>
                     <th width="60">操作</th>
                 </tr>
                 </thead>
                 <tbody>
 <!--| filter:form.searchValue | filter:{dataType:selectedReportType} |-->
                 <tr ng-repeat="data in attendanceslist | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
-                    <td><span class="pl15">{{data.name}}</span></td>
-                    <td>{{data.id}}</td>
-                    <td>{{data.orgList}}</td>
-                    <td>{{data.time}}</td>
-                    <td>{{data.datey}}</td>
-                    <td>{{data.chidao}}</td>
-                    <td>{{data.zhaotui}}</td>
+                    <td><span class="pl15">{{data.userDTO.name}}</span></td>
+                    <td>{{data.userDTO.id}}</td>
+                    <td>{{data.userDTO.personalPhone}}</td>
+                    <td>{{data.attendanceYear}}-{{data.attendanceMonth}}-{{data.attendanceDay}}</td>
+                    <td>{{data.inHour}}:{{data.inMinute}}</td>
+                    <td>{{data.outHour}}:{{data.outMinute}}</td>
+                    <td>{{data.result}}</td>
                     <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="clockingIn.view({row:data})"><i class="iconfont icon-chakan f14"></i></button></td>
                 </tr>
                 </tbody>
@@ -62,13 +62,14 @@
 </div>
 
 <!--工资单明细-->
+<!--
 <script type="text/ng-template" id="s_issueDetail.html">
     <div class="whitemodal">
         <div class="modal-header">
             <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
             <div class="f16">{{thisname}}部门</div>
         </div>
-        <!--{{baseForm.$valid}}-->
+        &lt;!&ndash;{{baseForm.$valid}}&ndash;&gt;
         <form role="baseForm" name="baseForm"  ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
             <div class="modal-body bte">
                 <div>
@@ -182,4 +183,4 @@
             </div>
         </form>
     </div>
-</script>
+</script>-->
