@@ -2,7 +2,7 @@
 	<div style="height: 90px; width: 100%; background-color: #1a263b">
 
 	</div>
-	<div class="pay-section clearfix" ng-controller="payCtrl" ng-init="init()">
+	<div class="pay-section clearfix" ng-controller="completeCtrl" ng-init="init()">
 		<div class="col-xs-4 pay-section-right">
 			<form class="form-horizontal" role="form">
 				<div class="form-group">
@@ -52,29 +52,22 @@
 		<div class="col-xs-4 pay-section-mid">
 			<form class="form-horizontal" role="form">
 				<div class="form-group">
-					<h2 style="color: #f7941d;">选择支付方式</h2>
+					<h2 style="color: #f7941d;">支付结果</h2>
 				</div>
 
-				<div class="radio">
-					<label> <input type="radio" name="optionsRadios"
-						id="optionsRadios1" value="option1" checked> <image src="/market/svg/pay-wechat.svg"/>
+				<div class="form-group" ng-show="order.status == '已支付'">
+					<label><image src="/market/svg/success.svg"/> 支付成功
 					</label>
 				</div>
-				<div class="radio">
-					<label> <input type="radio" name="optionsRadios"
-						id="optionsRadios2" value="option2"> <image src="/market/svg/pay-alipay.svg"/>
-					</label>
-				</div>
-				<div class="radio">
-					<label> <input type="radio" name="optionsRadios"
-						id="optionsRadios2" value="option2"> <image src="/market/svg/pay-union.svg"/>
-					</label>
+				<div class="form-group" ng-show="order.status != '已支付'">
+					<label><image src="/market/svg/fail.svg"/> 支付失败
+					</label>,右边查看常见支付失败原因
 				</div>
 				<div class="form-group" style="margin-top:30px">
-					<button class="btn" style="width:150px" ng-click="cancel()">返回</button>
-					<button class="btn btn-primary" style="width:150px" ng-click="confirm()">确认并支付</button>
-					<button class="btn btn-primary" style="width:150px" ng-click="complete()">完成支付</button>
+					<button class="btn" style="width:150px" ng-click="continue()">继续购买</button>
+					<button class="btn btn-primary" style="width:150px" ng-click="done()">完成</button>
 				</div>
+
 			</form>
 		</div>
 		<div class="col-xs-3 pay-section-right">

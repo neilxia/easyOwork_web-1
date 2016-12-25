@@ -2,8 +2,15 @@
  * Created by Dumin on 2016/7/21.
  */
 var app = angular.module('market.buy', []);
-app.controller('buyCtrl', [ '$rootScope', '$scope', 'LocalStorage',
-		function($rootScope, $scope, LocalStorage) {
+app.controller('buyCtrl', [
+		'$rootScope',
+		'$scope',
+		'LocalStorage',
+		'commonService',
+		'$http',
+		'AppConfig',
+		'MsgService',
+		function($rootScope, $scope, LocalStorage,commonService,$http,AppConfig,MsgService) {
 
 			$scope.init = function() {
 				var Identity = LocalStorage.getObject("Identity");
@@ -17,32 +24,73 @@ app.controller('buyCtrl', [ '$rootScope', '$scope', 'LocalStorage',
 					'name' : Identity.name,
 					'productType' : 'fazhan',
 					'period' : null,
-					'total':0
+					'total' : 0
 				}
 			}
 			$scope.cancel = function() {
 				$rootScope.$state.go('price');
 			}
 			$scope.pay = function() {
-				if($scope.validatePeriod())
-					$rootScope.$state.go('pay');
+				if ($scope.validatePeriod()){
+					var Identity = LocalStorage.getObject("Identity");
+					$scope.orderRequestInfo = {
+							header : {
+								"requestId" : commonService.randomWord(false, 32),
+								"timeStamp" : commonService.getNowFormatDate(),
+								"applicationId" : "ezKompany-market",
+								"ip" : "127.0.0.1",
+								"entId": Identity.entId,
+								"tokenId":Identity.tokenId
+							},
+							body : {
+								"userDTO":{
+									"id":Identity.id,
+									"personalEmail":Identity.personalEmail,
+									"personalPhone":Identity.personalPhone,
+									"personalPhoneCountryCode":Identity.personalPhoneCountryCode
+								},
+								"serviceDTO":{
+									"type":"PLATFORM",
+									"name":$scope.form.productType
+								},
+								"count":$scope.form.period,
+								"amount":$scope.form.total
+							}
+						}
+						var promise = $http.post(AppConfig.BASE_URL
+								+ 'work/rest/createOrder', $scope.orderRequestInfo);
+						promise.success(function(data, status, headers, config) {
+							var sts = data.body.status;
+							if (sts.statusCode == 0) {
+								$scope.order = data.body.data;
+								$rootScope.$state.go('pay',{order:$scope.order.orderNumber});
+							} else {
+								MsgService.tomsg(sts.errorDesc);
+							}
+						});
+						promise.error(function(data, status, headers, config) {
+							MsgService.tomsg('创建订单失败');
+						});
+				}
+					
 			}
 			$scope.calTotal = function() {
-				if($scope.form.period == null){
+				if ($scope.form.period == null) {
 					$scope.form.total = 0;
 					return
+
 				}
 				var productType = $scope.form.productType;
 				var period = $scope.form.period;
-				if(productType == 'chuangye')
+				if (productType == '创业型')
 					$scope.form.total = 79 * period;
-				else if(productType == 'fazhan')
+				else if (productType == '发展型')
 					$scope.form.total = 109 * period;
-				else if(productType == 'chengshu')
+				else if (productType == '成熟型')
 					$scope.form.total = 149 * period;
 			}
-			$scope.validatePeriod = function(){
-				if($scope.form.period == null){
+			$scope.validatePeriod = function() {
+				if ($scope.form.period == null) {
 					$scope.periodError = '请选择购买时长';
 					return false
 				}
