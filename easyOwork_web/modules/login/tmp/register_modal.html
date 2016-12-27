@@ -41,7 +41,7 @@
                         <input type="password" class="form-control input-lg"  name="confirmPassword" pw-check="registerPassword" ng-model="Zh.confirmPassword" placeholder="确认密码" required />
                     </div>
                     <div class="mt10"><span class="f_r">已有帐号， <a class="a_prime" ng-click="loginbox()">直接登录</a></span><input icheck type="checkbox" ng-model="checkedbox"> 我已阅读并接受 <a class="a_prime" href="">服务条款</a></div>
-                    <div class="mt10"><button class="btn btn-primary btn-lg btn-block" type="submit" ng-disabled="!checkedbox">完成注册</button></div>
+                    <div class="mt10"><button class="btn btn-primary btn-lg btn-block" type="submit" ng-disabled="!checkedbox || form.$invalid">完成注册</button></div>
                     </form>
                 </div>
             </div>
@@ -79,8 +79,8 @@
                             <i class="iconfont icon-tishi f20 abs_r" ng-show="form2.confirmPassword.$error.pwmatch" popover="两次输入的密码不一致，请重新输入" popover-placement="bottom" popover-trigger="mouseenter"></i>
                             <input type="password" class="form-control input-lg"  name="confirmPassword" pw-check="registerPassword2" ng-model="Zh.confirmPassword" placeholder="确认密码" required />
                         </div>
-                        <div class="mt10"><span class="f_r">已有帐号， <a class="a_prime" ng-click="loginbox()">直接登录</a></span><input icheck type="checkbox" ng-model="checkedbox"> 我已阅读并接受 <a class="a_prime" href="">服务条款</a></div>
-                        <div class="mt10"><button class="btn btn-primary btn-lg btn-block" type="submit" ng-disabled="">完成注册</button></div>
+                        <div class="mt10"><span class="f_r">已有帐号， <a class="a_prime" ng-click="loginbox()">直接登录</a></span><input icheck type="checkbox" ng-model="checkedbox2"> 我已阅读并接受 <a class="a_prime" href="">服务条款</a></div>
+                        <div class="mt10"><button class="btn btn-primary btn-lg btn-block" type="submit" ng-disabled="!checkedbox2 || form2.$invalid">完成注册</button></div>
                     </form>
                 </div>
             </div>

@@ -774,7 +774,7 @@ function selectdepyuan($timeout){
         },
         template:'<ul ng-class="{\'input-group-sm\':size == \'sm\' ,\'input-group-lg\':size == \'lg\'}" class="addpcs-config-prople cf" ng-model="selectedallarr">' +
         '<li ng-if="yuangong!=\'1\'" ng-repeat="sele2 in myselected" class="bdrs4" id="{{selected.id}}">{{sele2.text}}{{sele2.name}}</li><li ng-if="yuangong==\'1\'&& selectedallarr" class="bdrs4">{{selectedallarr[1][0].text}}{{selectedallarr[1][0].name}}</li>' +
-        '<li class="bdrs4 addbtn fadecj" ng-click="selectstaffyuan()"><i class="iconfont icon-add f12"></i></li>' +
+        '<li class="bdrs4 addbtn fadecj" ng-click="selectstaffyuan()"><i class="iconfont icon-bianji f12"></i></li>' +
         '</ul>',
         /*link: function ($scope, element, attrs) {
          $timeout(function(){
@@ -917,7 +917,7 @@ function selectdepyuan($timeout){
                         //plugins : ['checkbox']
                         //plugins : ["wholerow",'checkbox']
                     };
-
+                    $scope.yuangong=yuangong;
                     if(!yuangong){
                         $scope.treeConfig.plugins =['checkbox'];
                     }
@@ -935,8 +935,10 @@ function selectdepyuan($timeout){
                     };
                     //员工
                     //$scope.stafftreeData=yuanData;
-
-
+                    $scope.radiocheckedFun=function(row){
+                        $scope.radiochecked=row;
+                        debugger;
+                    }
                     $scope.yourCtrl=function ()  {
                         //var selected_nodes = this.treeInstance.jstree(true).get_selected('full');
                         var selected_nodes;
@@ -944,9 +946,11 @@ function selectdepyuan($timeout){
                             selected_nodes = $scope.treeInstance.jstree(true).get_checked('full');
                         }else{
                             selected_nodes = [];
+                            $scope.radiochecked.checked=true;
                         }
                         var selectedItems=[];
                         var datalist = $scope.stafftreeData;
+
                         angular.forEach(datalist, function(item) {
                             if (item.checked == true) {
                                 selectedItems.push(item);
@@ -1082,7 +1086,10 @@ angular.module("selectdepyuan.html", []).run(["$templateCache", function($templa
         '</div>' +
         '<div class="col-xs-6 pr5 pt10 pb10">' +
         '<div slim-scroll box-height="330" class="addpcs-jstree-com">' +
-        '<div><ul><li class="h30 ovh" ng-repeat="data in stafftreeData"><lable ><input icheck type="checkbox" name="chkList" ng-model="data.checked"> {{data.name}}</lable></li></ul></div>' +
+        '<div><ul>' +
+        '<li ng-show="yuangong!=1" class="h30 ovh" ng-repeat="data in stafftreeData"><lable ><input icheck type="checkbox" name="chkList" ng-model="data.checked"> {{data.name}}</lable></li>' +
+        '<li ng-show="yuangong==1" class="h30 ovh" ng-repeat="data in stafftreeData"><lable ><input icheck type="radio" name="radioList" ng-model="radiochecked" ng-change="radiocheckedFun(data)" value="data"> {{data.name}}</lable></li>' +
+        '</ul></div>' +
         '</div>' +
         '</div>' +
         '</div>' +

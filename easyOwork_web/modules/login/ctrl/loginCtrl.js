@@ -2,7 +2,7 @@
  * Created by Nose on 2016/8/30.
  */
 function loginCtrl(){
-    return['$scope','$modal','$state','publicService','noseService','LocalStorage','MsgService','roleService','accessService',function($scope,$modal,$state,publicService,noseService,LocalStorage,MsgService,roleService,accessService){
+    return['$scope','$rootScope','$modal','$state','publicService','noseService','LocalStorage','MsgService','roleService','accessService',function($scope,$rootScope,$modal,$state,publicService,noseService,LocalStorage,MsgService,roleService,accessService){
         //公用登录方法
         function Funlogin(options,$modalInstance){
             var promise = publicService.login({body:options});
@@ -137,14 +137,17 @@ function loginCtrl(){
                     cpId:null
                 };
                 $scope.checkedbox=true;
+                $scope.checkedbox2=true;
                 //注册实现
                 $scope.secondStep=function(state){
                     if(!state){return;}
+                    $rootScope.loading2=true;
                     var typearr=noseService.judgeloginClass($scope.Zh.registername);
                     $scope.user.registerEmail=typearr[1][0];
                     $scope.user.registerMobileNo=typearr[1][1];
                     var promise = companyService.registerCompany({body:$scope.user});
                     promise.success(function(data, status, headers, config){
+                        $rootScope.loading2=false;
                         var sts=data.body.status;
                         if(sts.statusCode==0){
                             $scope.Zh.cpId=data.header.entId;
@@ -154,6 +157,9 @@ function loginCtrl(){
                             MsgService.tomsg(sts.errorDesc);
                         }
                     });
+                    promise.error(function(){
+                        $rootScope.loading2=false;
+                    })
                 };
                 //发送验证码
                 $scope.sendMSG=function(){
