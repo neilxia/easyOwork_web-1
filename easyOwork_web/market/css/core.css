@@ -1705,6 +1705,41 @@ a:hover,a:active {
     border-radius:10px;
     text-align:center;
 }
+.whitemodal{
+    background-color: #fff;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+}
+.whitemodal .modal-header{
+    padding: 20px 30px 10px 30px;
+    border-bottom: none;
+    background-color: #fff;
+    border-top-left-radius: 8px;
+    -webkit-border-top-left-radius: 8px;
+    -moz-border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    -webkit-border-top-right-radius: 8px;
+    -moz-border-top-right-radius: 8px;
+}
+.whitemodal .modal-body{padding: 0 30px; }
+.whitemodal .modal-footer{padding: 10px 30px 20px 30px; border-top: none;
+    border-bottom-left-radius: 8px;
+    -webkit-border-bottom-left-radius: 8px;
+    -moz-border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    -webkit-border-bottom-right-radius: 8px;
+    -moz-border-bottom-right-radius: 8px;
+}
+.whitemodal.smbox .modal-header{
+    padding: 20px 20px 10px 20px;
+}
+.whitemodal.smbox .modal-body{
+    padding: 0 20px;
+}
+.whitemodal.smbox .modal-footer{
+    padding: 10px 20px 20px 20px
+}
 
 .pay-section-mid{
 	margin-left:50px;

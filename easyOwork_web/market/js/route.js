@@ -54,10 +54,21 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             templateUrl: "market/view/pay.html",
 
         })
+        .state('payTab', {
+            url: "/payTab?charge",
+            templateUrl: "market/view/payTab.html",
+        })
+        .state('qrcode', {
+            url: "/qrcode?charge",
+            templateUrl: "market/view/qrcode.html",
+        })
         .state('complete', {
-            url: "/complete?order",
+            url: "/complete?out_trade_no",
             templateUrl: "market/view/complete.html",
-
+        })
+        .state('complete_outter', {
+            url: "/complete_outter",
+            templateUrl: "market/view/complete_outter.html",
         })
 
         /*========系统设置=============================================================================================== */

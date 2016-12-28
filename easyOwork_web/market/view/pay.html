@@ -1,98 +1,120 @@
 
-	<div style="height: 90px; width: 100%; background-color: #1a263b">
+<div style="height: 90px; width: 100%; background-color: #1a263b">
 
+</div>
+<div class="pay-section clearfix" ng-controller="payCtrl"
+	ng-init="init()">
+	<div class="col-xs-4 pay-section-right">
+		<form class="form-horizontal" role="form">
+			<div class="form-group">
+				<h2 style="color: #f7941d; text-align: center">订单详情</h2>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">订单号</label>
+				<div class="col-sm-9">
+					<p class="form-control-static">{{order.orderNumber}}</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">企业名称</label>
+				<div class="col-sm-9">
+					<p class="form-control-static">{{form.entName}}</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">企业号</label>
+				<div class="col-sm-9">
+					<p class="form-control-static">{{form.entId}}</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail3" class="col-sm-3 control-label">产品</label>
+				<div class="col-sm-9">
+					<p class="form-control-static">企易办公平台</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail3" class="col-sm-3 control-label">套餐类型</label>
+				<p class="form-control-static">{{order.serviceDTO.name}}</p>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">购买时长</label>
+				<p class="form-control-static">{{order.count}}个月</p>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">价格</label>
+				<div class="col-sm-9">
+					<p class="form-control-static"
+						style="font-size: 25px; color: #f7941d">¥{{order.amount}}</p>
+				</div>
+			</div>
+		</form>
 	</div>
-	<div class="pay-section clearfix" ng-controller="payCtrl" ng-init="init()">
-		<div class="col-xs-4 pay-section-right">
-			<form class="form-horizontal" role="form">
-				<div class="form-group">
-					<h2 style="color: #f7941d; text-align: center">订单详情</h2>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-3 control-label">订单号</label>
-					<div class="col-sm-9">
-						<p class="form-control-static">{{order.orderNumber}}</p>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-3 control-label">企业名称</label>
-					<div class="col-sm-9">
-						<p class="form-control-static">{{form.entName}}</p>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-3 control-label">企业号</label>
-					<div class="col-sm-9">
-						<p class="form-control-static">{{form.entId}}</p>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="inputEmail3" class="col-sm-3 control-label">产品</label>
-					<div class="col-sm-9">
-						<p class="form-control-static">企易办公平台</p>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="inputEmail3" class="col-sm-3 control-label">套餐类型</label>
-					<p class="form-control-static">{{order.serviceDTO.name}}</p>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-3 control-label">购买时长</label>
-					<p class="form-control-static">{{order.count}}个月</p>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-3 control-label">价格</label>
-					<div class="col-sm-9">
-						<p class="form-control-static"
-							style="font-size: 25px; color: #f7941d">¥{{order.amount}}</p>
-					</div>
-				</div>
-			</form>
-		</div>
-		<div class="col-xs-4 pay-section-mid">
-			<form class="form-horizontal" role="form">
-				<div class="form-group">
-					<h2 style="color: #f7941d;">选择支付方式</h2>
-				</div>
+	<div class="col-xs-4 pay-section-mid">
+		<form class="form-horizontal" role="form">
+			<div class="form-group">
+				<h2 style="color: #f7941d;">选择支付方式</h2>
+			</div>
 
-				<div class="radio">
-					<label> <input type="radio" name="optionsRadios"
-						id="optionsRadios1" value="option1" checked> <image src="/market/svg/pay-wechat.svg"/>
-					</label>
-				</div>
-				<div class="radio">
-					<label> <input type="radio" name="optionsRadios"
-						id="optionsRadios2" value="option2"> <image src="/market/svg/pay-alipay.svg"/>
-					</label>
-				</div>
-				<div class="radio">
-					<label> <input type="radio" name="optionsRadios"
-						id="optionsRadios2" value="option2"> <image src="/market/svg/pay-union.svg"/>
-					</label>
-				</div>
-				<div class="form-group" style="margin-top:30px">
-					<button class="btn" style="width:150px" ng-click="cancel()">返回</button>
-					<button class="btn btn-primary" style="width:150px" ng-click="confirm()">确认并支付</button>
-					<button class="btn btn-primary" style="width:150px" ng-click="complete()">完成支付</button>
-				</div>
-			</form>
-		</div>
-		<div class="col-xs-3 pay-section-right">
-			<h2>常见问题</h2>
-			<p>
-				<a>购买后什么时候生效 ?</a>
-			</p>
-			<p>
-				<a>是否可以在未到期前购买?</a>
-			</p>
-			<p>
-				<a>任何人都可以为企业购买吗?</a>
-			</p>
-			<p>
-				<a>哪里可以看到购买成功后使用期限延长?</a>
-			</p>
-			<p>
-				<a>购买后公司员工数量变化会影响使用使用期限吗?<a>
-			</p>
-		</div>
+			<div class="radio">
+				<label> <input type="radio" name="optionsRadios"
+					id="optionsRadios1" value="wx_pub_qr" ng-model="form.payType">
+					<image src="/market/svg/pay-wechat.svg" />
+				</label>
+			</div>
+			<div class="radio">
+				<label> <input type="radio" name="optionsRadios"
+					id="optionsRadios2" value="alipay_pc_direct"
+					ng-model="form.payType"> <image
+						src="/market/svg/pay-alipay.svg" />
+				</label>
+			</div>
+			<div class="radio">
+				<label> <input type="radio" name="optionsRadios"
+					id="optionsRadios2" value="upacp_pc" ng-model="form.payType">
+					<image src="/market/svg/pay-union.svg" />
+				</label>
+			</div>
+			<div class="form-group" style="margin-top: 30px">
+				<button class="btn" style="width: 150px" ng-click="cancel()">取消</button>
+				<button class="btn btn-primary" style="width: 150px"
+					ng-click="confirm()">确认并支付</button>
+			</div>
+		</form>
 	</div>
+	<div class="col-xs-3 pay-section-right">
+		<h2>常见问题</h2>
+		<p>
+			<a>购买后什么时候生效 ?</a>
+		</p>
+		<p>
+			<a>是否可以在未到期前购买?</a>
+		</p>
+		<p>
+			<a>任何人都可以为企业购买吗?</a>
+		</p>
+		<p>
+			<a>哪里可以看到购买成功后使用期限延长?</a>
+		</p>
+		<p>
+			<a>购买后公司员工数量变化会影响使用使用期限吗?<a>
+		</p>
+	</div>
+</div>
+<script type="text/ng-template" id="payPrompt.html">
+         <div class="whitemodal smbox">
+            <div class="modal-header">
+                <div style="text-align:center;font-size:20px">支付中...</div>
+            </div>
+            <div class="modal-body">
+                <div>
+                    完成支付前请不要刷新或者关闭该页面, 可能导致订单状态不准确.
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white wd80" ng-click="complete()">已完成支付</button>
+                <button type="button" class="btn btn-primary wd80" ng-click="selectPayType()">重新选择支付方式</button>
+            </div>
+        </div>
+    </script>

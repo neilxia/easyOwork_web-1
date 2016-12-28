@@ -19,7 +19,13 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label">姓名</label>
+				<label class="col-sm-3 control-label">企业员工数</label>
+				<div class="col-sm-9">
+					<p class="form-control-static" ng-show="form.productType == '创业型'">{{form.userCount}}人 (适用{{form.productType}}套餐)</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">当前登录员工</label>
 				<div class="col-sm-9">
 					<p class="form-control-static">{{form.name}}</p>
 				</div>
@@ -35,13 +41,13 @@
 				<div class="col-sm-9">
 					<label class="radio-inline"> <input type="radio"
 						ng-model="form.productType" name="inlineRadioOptions"
-						id="inlineRadio1" value="创业型"> 创业型(79元/月)
+						id="inlineRadio1" value="创业型" ng-disabled="form.productType != '创业型'"> 创业型(79元/月)
 					</label> <label class="radio-inline"> <input type="radio"
 						ng-model="form.productType" name="inlineRadioOptions"
-						id="inlineRadio2" value="发展型"> 发展型(109元/月)
+						id="inlineRadio2" value="发展型" ng-disabled="form.productType != '发展型'"> 发展型(109元/月)
 					</label> <label class="radio-inline"> <input type="radio"
 						ng-model="form.productType" name="inlineRadioOptions"
-						id="inlineRadio3" value="成熟型"> 成熟型(149元/月)
+						id="inlineRadio3" value="成熟型" ng-disabled="form.productType != '成熟型'"> 成熟型(149元/月)
 					</label>
 				</div>
 			</div>

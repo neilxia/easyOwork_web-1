@@ -1,22 +1,21 @@
-<div id="header" class="g-hd z-top">
-		<div class="wrapper">
-			<div class="gutter">
-				<h1 class="hd-logo">
-					<a><img src="./market/image/logo.png" alt="企易"></a>
-				</h1>
-				<ul class="hd-nav evcat" id="nav" data-evcat="home-nav">
-					<li class="itm text"><a ui-sref="product">产品<span></span></a></li>
-					<li class="itm text"><a ui-sref="price">价格及购买<span></span></a></li>
-					<li class="itm text"><a ui-sref="customize">定制服务<span></span></a></li>
-					<li class="itm text"><a>帮助<span></span></a></li>
-					<!-- <li class="itm"><a class="u-btn"
-						href="/ind.html#/login" target="_blank"
-						hidefocus="true" data-evact="to-login">登录</a></li>
-					 -->
-					<li class="itm"><a id="topReg" class="u-btn u-btn-solid"
-						href="/ind.html#/login" target="_blank" hidefocus="true"
-						data-evact="to-register">进入应用</a></li>
-				</ul>
-			</div>
+<div id="header" class="g-hd z-top" ng-controller="headerCtrl"
+	ng-init="init()">
+	<div class="wrapper">
+		<div class="gutter">
+			<h1 class="hd-logo">
+				<a><img src="./market/image/logo.png" alt="企易"></a>
+			</h1>
+			<ul class="hd-nav evcat" id="nav" data-evcat="home-nav">
+				<li class="itm text"><a ui-sref="product">产品<span></span></a></li>
+				<li class="itm text"><a ui-sref="price">价格及购买<span></span></a></li>
+				<li class="itm text"><a ui-sref="customize">定制服务<span></span></a></li>
+				<li class="itm text"><a>帮助<span></span></a></li>
+				<li class="itm text" ng-show="!Identity"><a ui-sref="login">登录<span></span></a></li>
+				<li class="itm text" ng-show="Identity"><a ng-click="logout()">{{Identity.name}}(退出)</a></li>
+				<li class="itm"><a id="topReg" class="u-btn u-btn-solid"
+					href="/ind.html#/login" target="_blank" hidefocus="true"
+					data-evact="to-register">企易工作</a></li>
+			</ul>
 		</div>
 	</div>
+</div>

@@ -10,10 +10,12 @@ app.controller('buyCtrl', [
 		'$http',
 		'AppConfig',
 		'MsgService',
-		function($rootScope, $scope, LocalStorage,commonService,$http,AppConfig,MsgService) {
+		'$cookieStore',
+		function($rootScope, $scope, LocalStorage,commonService,$http,AppConfig,MsgService,$cookieStore) {
 
 			$scope.init = function() {
-				var Identity = LocalStorage.getObject("Identity");
+				//var Identity = LocalStorage.getObject("Identity");
+				var Identity = $cookieStore.get("Identity");
 				if (Identity == undefined || Identity.entId == undefined)
 					$rootScope.$state.go('login', {
 						redirect_url : '/buy'
@@ -22,17 +24,24 @@ app.controller('buyCtrl', [
 					'entId' : Identity.entId,
 					'entName' : Identity.entName,
 					'name' : Identity.name,
-					'productType' : 'fazhan',
+					'userCount' : Identity.userCount,
 					'period' : null,
 					'total' : 0
-				}
+				};
+				if($scope.form.userCount > 50)
+					$scope.form.productType = "成熟型";
+				else if($scope.form.userCount < 20)
+					$scope.form.productType = "创业型";
+				else
+					$scope.form.productType = "发展型";
+				
 			}
 			$scope.cancel = function() {
 				$rootScope.$state.go('price');
 			}
 			$scope.pay = function() {
 				if ($scope.validatePeriod()){
-					var Identity = LocalStorage.getObject("Identity");
+					var Identity = $cookieStore.get("Identity");
 					$scope.orderRequestInfo = {
 							header : {
 								"requestId" : commonService.randomWord(false, 32),

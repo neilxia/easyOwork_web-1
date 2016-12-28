@@ -2,7 +2,7 @@
  * Created by Dumin on 2016/7/21.
  */
 var app = angular.module('market.login',[]);
-app.controller('loginCtrl',['$rootScope','$scope','$http','commonService','AppConfig','MsgService','$location','LocalStorage',function($rootScope,$scope,$http,commonService,AppConfig,MsgService,$location,LocalStorage){
+app.controller('loginCtrl',['$rootScope','$scope','$http','commonService','AppConfig','MsgService','$location','LocalStorage','$cookieStore',function($rootScope,$scope,$http,commonService,AppConfig,MsgService,$location,LocalStorage,$cookieStore){
 	
 	var redirect_url = $rootScope.$stateParams.redirect_url;
 	
@@ -67,15 +67,19 @@ app.controller('loginCtrl',['$rootScope','$scope','$http','commonService','AppCo
 				body:$scope.body
 			}
 			
-			var promise = $http.post(AppConfig.BASE_URL+'work/rest/login',$scope.requestInfo);
+			var promise = $http.post(AppConfig.BASE_URL+'work/rest/marketLogin',$scope.requestInfo);
 			promise.success(function(data, status, headers, config){
 	            var sts=data.body.status;
 	            if(sts.statusCode==0){
 	            	var Identity = data.body.data;
 	            	Identity.tokenId = data.header.tokenId;
-	            	LocalStorage.setObject("Identity",Identity);
-	                if(redirect_url != undefined || redirect_url != ''){
+	            	//LocalStorage.setObject("Identity",Identity);
+	            	$cookieStore.put("Identity",Identity);
+	            	$rootScope.Identity = Identity;
+	                if(redirect_url != undefined && redirect_url != ''){
 	                	$location.url(redirect_url);
+	                }else{
+	                	$rootScope.$state.go('product');
 	                }
 	            }else{
 	                MsgService.tomsg(sts.errorDesc);
