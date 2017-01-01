@@ -1,41 +1,18 @@
 <!DOCTYPE html>
 <!-- saved from url=(0062)https://qiye.yixin.im/?utm_source=baidu&utm_medium=cpc#contact -->
-<html lang="zh-cmn-Hans" ng-app="market">
+<html lang="en" ng-app="market">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style class="vjs-styles-defaults">
-.video-js {
-	width: 300px;
-	height: 150px;
-}
-
-.vjs-fluid {
-	padding-top: 56.25%
-}
-</style>
-<style class="vjs-styles-dimensions">
-.bannerVideo-dimensions {
-	width: 1000px;
-	height: 562px;
-}
-
-.bannerVideo-dimensions.vjs-fluid {
-	padding-top: 56.25%;
-}
-</style>
-
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="keywords" content="企易,办公,OA,SAAS">
 <meta name="description" content="企易为公司提供一站式企业办公信息服务">
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<meta name="baidu-site-verification" content="bJaOfgovQ2">
-<meta name="360-site-verification"
-	content="c7e738df9098dd46b9f1bc39f4b06e39">
-<meta name="sogou_site_verification" content="sIGmDok74I">
 <title>企易, 企业管理更容易</title>
-<link rel="stylesheet" href="./market/css/core.css">
 <link rel="stylesheet" href="./market/font/iconfont.css">
+<link rel="stylesheet" href="./market/css/core.css">
 <link rel="stylesheet" href="./plugins/ui-bootstrap/bootstrap.css">
 <link href="./plugins/angular-notify/angular-notify.min.css" rel="stylesheet">
+<link href="./plugins/iCheck/custom.css" rel="stylesheet">
 
 <script src="./plugins/jquery/jquery1.12.0.min.js"></script>
 <script src="./plugins/ui-bootstrap/bootstrap.js"></script>
@@ -50,11 +27,14 @@
 <script src="./plugins/pingxx/pingpp.js"></script>
 <script src="./plugins/jquery-qrcode/jquery.qrcode.min.js"></script>
 
+<script src="./plugins/iCheck/icheck.min.js"></script>
+
 <script src="./market/js/main.js"></script>
 <script src="./market/js/app.js"></script>
 <script src="./market/js/config.js"></script>
 <script src="./market/js/route.js"></script>
 <script src="./market/js/directives.js"></script>
+<script src="./market/js/controller-main.js"></script>
 <script src="./market/js/controller-product.js"></script>
 <script src="./market/js/controller-price.js"></script>
 <script src="./market/js/controller-buy.js"></script>
@@ -65,6 +45,8 @@
 <script src="./market/js/controller-customize.js"></script>
 <script src="./market/js/controller-login.js"></script>
 <script src="./market/js/controller-header.js"></script>
+<script src="./market/js/controller-findpwd.js"></script>
+<script src="./market/js/controller-register.js"></script>
 <script src="./market/js/service.js"></script>
 
 <!--[if IE 8]>
@@ -87,13 +69,17 @@ border: none;
 </style>
 <![endif]-->
 </head>
-<body id="top">
+<body id="top" ng-controller="mainCtrl">
 	<ng-include src="'./market/view/header_white.html'"></ng-include>
 		<div ui-view></div>
 		
 		<ng-include src="'./market/view/contact.html'"></ng-include>
 		<ng-include src="'./market/view/footer.html'"></ng-include>
-		<script type="text/javascript">
+		<div id="mask-loading" class="mask-loading" ng-if="loading" style="background-color: rgba(0, 0, 0, 0.17);">
+    		<div class="loading-icon"><img src="./market/image/loading.gif" alt=""></div>
+		</div>
+</body>
+<script type="text/javascript">
 			window.onscroll = function() {
 				var t = document.body.scrollTop;
 				if (t > $("#myCarousel").height()) {
@@ -102,7 +88,5 @@ border: none;
 					document.getElementById("header").style.backgroundColor = "";
 				}
 			}
-			$('.carousel').carousel();
-		</script>
-</body>
+</script>
 </html>

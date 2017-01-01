@@ -25,6 +25,24 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             }
 
         })
+        .state('findpwd', {
+            url: "/findpwd",
+            views: {
+                '': {
+                    templateUrl: 'market/view/findpwd.html'
+                }
+            }
+
+        })
+        .state('register', {
+            url: "/register",
+            views: {
+                '': {
+                    templateUrl: 'market/view/register.html'
+                }
+            }
+
+        })
         .state('product', {
             url: "/product",
             views: {

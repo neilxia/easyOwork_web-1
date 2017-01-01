@@ -5,21 +5,21 @@ var app = angular.module('market.complete',[]);
 app.controller('completeCtrl',['$rootScope','$scope','LocalStorage','commonService','MsgService','$http','AppConfig','$cookieStore',function($rootScope,$scope,LocalStorage,commonService,MsgService,$http,AppConfig,$cookieStore){
 	
 	$scope.init = function(){
-		var Identity = $cookieStore.get("Identity");
+		var userinfo = LocalStorage.getObject("userinfo");
 		$scope.form = {
-			'entId' : Identity.entId,
-			'entName' : Identity.entName,
-			'name' : Identity.name
+			'entId' : userinfo.entId,
+			'entName' : userinfo.entName,
+			'name' : userinfo.name
 		}
-		$scope.order = $cookieStore.get("Order");
+		$scope.order = LocalStorage.getObject("Order");
 		$scope.getOrderRequestInfo = {
 				header : {
 					"requestId" : commonService.randomWord(false, 32),
 					"timeStamp" : commonService.getNowFormatDate(),
 					"applicationId" : "ezKompany-market",
 					"ip" : "127.0.0.1",
-					"entId": Identity.entId,
-					"tokenId":Identity.tokenId
+					"entId": userinfo.entId,
+					"tokenId":userinfo.tokenId
 				},
 				body : $scope.order
 			}

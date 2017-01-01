@@ -7,7 +7,7 @@
     <!-- 轮播（Carousel）项目 -->
     <div class="carousel-inner">
         <div class="item active">
-            <img src="/market/image/price.jpg" alt="First slide">
+            <img src="/market/image/login_bg01.jpg" alt="First slide">
             <div class="price-desc">
             	<h1 style="color:#fff">更低的价格, 更优质的服务</h1>
             	<h2 style="color:#fff">低至79元/月</h2>
@@ -59,15 +59,9 @@
 			</ul>
 		</div>
 		
-			<script type="text/javascript"> 
-		window.onscroll = function(){ 
-		 var t = document.body.scrollTop;
-		 if(t>$("#myCarousel").height()){
-		 	document.getElementById("header").style.backgroundColor = "#1a263b";
-		 }else{
-			 document.getElementById("header").style.backgroundColor = "";
-		 }
-		} 
-		$('.carousel').carousel();
-</script>
+			<script type="text/javascript">
+			$(document).ready(function(){
+				$('.carousel').carousel();
+			});	
+		</script>
 		

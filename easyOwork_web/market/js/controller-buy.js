@@ -14,17 +14,16 @@ app.controller('buyCtrl', [
 		function($rootScope, $scope, LocalStorage,commonService,$http,AppConfig,MsgService,$cookieStore) {
 
 			$scope.init = function() {
-				//var Identity = LocalStorage.getObject("Identity");
-				var Identity = $cookieStore.get("Identity");
-				if (Identity == undefined || Identity.entId == undefined)
+				var userinfo = LocalStorage.getObject("userinfo");
+				if (userinfo == undefined || userinfo.entId == undefined)
 					$rootScope.$state.go('login', {
 						redirect_url : '/buy'
 					});
 				$scope.form = {
-					'entId' : Identity.entId,
-					'entName' : Identity.entName,
-					'name' : Identity.name,
-					'userCount' : Identity.userCount,
+					'entId' : userinfo.entId,
+					'entName' : userinfo.entName,
+					'name' : userinfo.name,
+					'userCount' : userinfo.userCount,
 					'period' : null,
 					'total' : 0
 				};
@@ -41,22 +40,22 @@ app.controller('buyCtrl', [
 			}
 			$scope.pay = function() {
 				if ($scope.validatePeriod()){
-					var Identity = $cookieStore.get("Identity");
+					var userinfo = LocalStorage.getObject("userinfo");
 					$scope.orderRequestInfo = {
 							header : {
 								"requestId" : commonService.randomWord(false, 32),
 								"timeStamp" : commonService.getNowFormatDate(),
 								"applicationId" : "ezKompany-market",
 								"ip" : "127.0.0.1",
-								"entId": Identity.entId,
-								"tokenId":Identity.tokenId
+								"entId": userinfo.entId,
+								"tokenId":userinfo.tokenId
 							},
 							body : {
 								"userDTO":{
-									"id":Identity.id,
-									"personalEmail":Identity.personalEmail,
-									"personalPhone":Identity.personalPhone,
-									"personalPhoneCountryCode":Identity.personalPhoneCountryCode
+									"id":userinfo.id,
+									"personalEmail":userinfo.personalEmail,
+									"personalPhone":userinfo.personalPhone,
+									"personalPhoneCountryCode":userinfo.personalPhoneCountryCode
 								},
 								"serviceDTO":{
 									"type":"PLATFORM",
@@ -66,9 +65,11 @@ app.controller('buyCtrl', [
 								"amount":$scope.form.total
 							}
 						}
+						$rootScope.loading = true;
 						var promise = $http.post(AppConfig.BASE_URL
 								+ 'work/rest/createOrder', $scope.orderRequestInfo);
 						promise.success(function(data, status, headers, config) {
+							$rootScope.loading = false;
 							var sts = data.body.status;
 							if (sts.statusCode == 0) {
 								$scope.order = data.body.data;
@@ -78,6 +79,7 @@ app.controller('buyCtrl', [
 							}
 						});
 						promise.error(function(data, status, headers, config) {
+							$rootScope.loading = false;
 							MsgService.tomsg('创建订单失败');
 						});
 				}

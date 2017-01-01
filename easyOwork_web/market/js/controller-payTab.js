@@ -4,7 +4,7 @@
 var app = angular.module('market.payTab',[]);
 app.controller('payTabCtrl',['$rootScope','$scope','LocalStorage','commonService','$http','AppConfig','MsgService','$cookieStore','$modal','$window',function($rootScope,$scope,LocalStorage,commonService,$http,AppConfig,MsgService,$cookieStore,$modal,$window){
 	$scope.init = function(){
-		var order = $cookieStore.get("Order");
+		var order = LocalStorage.getObject("Order");
 		pingpp.createPayment(order.charge, function(result, err){
 		    console.log(result);
 		    console.log(err.msg);

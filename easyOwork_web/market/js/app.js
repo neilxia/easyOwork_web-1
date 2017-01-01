@@ -5,6 +5,7 @@
         'ui.bootstrap',                 // Ui Bootstrap
         'cgNotify',
         'ngCookies',
+        'market.main',
         'market.config',
         'market.route',
         'market.directives',
@@ -18,7 +19,9 @@
         'market.customize',
         'market.login',
         'market.service',
-        'market.header'
+        'market.header',
+        'market.findpwd',
+        'market.register'
     ]);
 })();
 

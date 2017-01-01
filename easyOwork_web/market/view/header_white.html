@@ -1,21 +1,47 @@
 <div id="header" class="g-hd z-top" ng-controller="headerCtrl"
 	ng-init="init()">
-	<div class="wrapper">
 		<div class="gutter">
 			<h1 class="hd-logo">
 				<a><img src="./market/image/logo.png" alt="企易"></a>
 			</h1>
+			<!-- 
 			<ul class="hd-nav evcat" id="nav" data-evcat="home-nav">
 				<li class="itm text"><a ui-sref="product">产品<span></span></a></li>
 				<li class="itm text"><a ui-sref="price">价格及购买<span></span></a></li>
 				<li class="itm text"><a ui-sref="customize">定制服务<span></span></a></li>
 				<li class="itm text"><a>帮助<span></span></a></li>
-				<li class="itm text" ng-show="!Identity"><a ui-sref="login">登录<span></span></a></li>
-				<li class="itm text" ng-show="Identity"><a ng-click="logout()">{{Identity.name}}(退出)</a></li>
+				<li class="itm text"><a ui-sref="register">企业注册<span></span></a></li>
+				<li class="itm text" ng-show="!userinfo.name"><a ui-sref="login">登录<span></span></a></li>
+				<li class="itm text" ng-show="userinfo.name"><a ng-click="logout()">{{userinfo.name}}(退出)</a></li>
 				<li class="itm"><a id="topReg" class="u-btn u-btn-solid"
-					href="/ind.html#/login" target="_blank" hidefocus="true"
+					href="/ind.html#/index" target="_blank" hidefocus="true"
+					data-evact="to-register">企易工作</a></li>
+			</ul>
+			 -->
+			 <ul class="nav-list">
+				<li><a ui-sref="product">产品<span></span></a></li>
+				<li><a ui-sref="price">价格<span></span></a></li>
+				<li><a ui-sref="customize">定制<span></span></a></li>
+				<li><a ui-sref="register">注册<span></span></a></li>
+				<li ng-show="!userinfo.name"><a ui-sref="login">登录<span></span></a></li>
+				<li ng-show="userinfo.name">
+					<a class="addvalue">{{userinfo.name}}({{userinfo.entName}})<i class="icon iconfont">&#xe60d;</i></a>
+					<div class="subnav notshow" ng-click="logout()">
+						<div><a>退出</a></div>
+					</div>
+					
+				</li>
+				<li><a id="topReg" class="u-btn u-btn-solid" style="padding:10px"
+					href="/ind.html#/index" target="_blank" hidefocus="true"
 					data-evact="to-register">企易工作</a></li>
 			</ul>
 		</div>
-	</div>
 </div>
+<script type="text/javascript">
+	$('.subnav').mouseover(function(){
+		$('.subnav').removeClass('notshow');
+    });	
+	$('.subnav').mouseout(function(){
+		$('.subnav').addClass('notshow');
+    });	
+</script>

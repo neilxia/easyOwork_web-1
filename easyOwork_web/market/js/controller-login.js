@@ -66,16 +66,17 @@ app.controller('loginCtrl',['$rootScope','$scope','$http','commonService','AppCo
 				},
 				body:$scope.body
 			}
-			
+			$rootScope.loading = true;
 			var promise = $http.post(AppConfig.BASE_URL+'work/rest/marketLogin',$scope.requestInfo);
 			promise.success(function(data, status, headers, config){
+				$rootScope.loading = false;
 	            var sts=data.body.status;
 	            if(sts.statusCode==0){
-	            	var Identity = data.body.data;
-	            	Identity.tokenId = data.header.tokenId;
-	            	//LocalStorage.setObject("Identity",Identity);
-	            	$cookieStore.put("Identity",Identity);
-	            	$rootScope.Identity = Identity;
+	            	var userinfo = data.body.data;
+	            	userinfo.tokenId = data.header.tokenId;
+	            	userinfo.entId = data.header.entId;
+	            	LocalStorage.setObject("userinfo",userinfo);
+	            	$rootScope.userinfo = userinfo;
 	                if(redirect_url != undefined && redirect_url != ''){
 	                	$location.url(redirect_url);
 	                }else{
@@ -86,6 +87,7 @@ app.controller('loginCtrl',['$rootScope','$scope','$http','commonService','AppCo
 	            }
 	        });
 			promise.error(function(data, status, headers, config){
+				$rootScope.loading = false;
 				MsgService.tomsg('登录失败, 请稍后重试');
 	        });
 		

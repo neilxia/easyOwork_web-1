@@ -59,7 +59,8 @@ function addpcsCtrl(){
         	                    "id":userinfo.id,	//员工号
         	                    "personalEmail":userinfo.personalEmail,	//邮件地址
         	                    "personalPhoneCountryCode":userinfo.personalPhoneCountryCode,	//电话号码
-        	                    "personalPhone":userinfo.personalPhone		//电话号码
+        	                    "personalPhone":userinfo.personalPhone,		//电话号码
+        	                    "name":userinfo.name
         	                },
         	            	"processFieldDTOList":[],
         	            	"processStepDTOList":obj.processDefStepDTOList
@@ -194,7 +195,8 @@ function mypcsCtrl(){
                     "id":userinfo.id,	//员工号
                     "personalEmail":userinfo.personalEmail,	//邮件地址
                     "personalPhoneCountryCode":userinfo.personalPhoneCountryCode,	//电话号码
-                    "personalPhone":userinfo.personalPhone		//电话号码
+                    "personalPhone":userinfo.personalPhone,		//电话号码
+                    "name":userinfo.name
                 }
             };
             var promise = processService.inquiryCreatedProcesses({body:$scope.options});
@@ -324,7 +326,8 @@ function myauditCtrl(){
                     "id":userinfo.id,	//员工号
                     "personalEmail":userinfo.personalEmail,	//邮件地址
                     "personalPhoneCountryCode":userinfo.personalPhoneCountryCode,	//电话号码
-                    "personalPhone":userinfo.personalPhone		//电话号码
+                    "personalPhone":userinfo.personalPhone,		//电话号码
+                    "name":userinfo.name
                 }
             };
             var promise = processService.inquiryHandlingProcesses({body:$scope.options});

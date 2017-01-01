@@ -3,13 +3,13 @@
  */
 var app = angular.module('market.pay',[]);
 app.controller('payCtrl',['$rootScope','$scope','LocalStorage','commonService','$http','AppConfig','MsgService','$cookieStore','$modal','$window',function($rootScope,$scope,LocalStorage,commonService,$http,AppConfig,MsgService,$cookieStore,$modal,$window){
-	var Identity = $cookieStore.get("Identity");
+	var userinfo = LocalStorage.getObject("userinfo");
 	var orderNumber = $rootScope.$stateParams.order;
 	$scope.init = function(){
 		$scope.form = {
-			'entId' : Identity.entId,
-			'entName' : Identity.entName,
-			'name' : Identity.name,
+			'entId' : userinfo.entId,
+			'entName' : userinfo.entName,
+			'name' : userinfo.name,
 			'payType':'alipay_pc_direct'
 		}
 		$scope.getOrderRequestInfo = {
@@ -18,8 +18,8 @@ app.controller('payCtrl',['$rootScope','$scope','LocalStorage','commonService','
 					"timeStamp" : commonService.getNowFormatDate(),
 					"applicationId" : "ezKompany-market",
 					"ip" : "127.0.0.1",
-					"entId": Identity.entId,
-					"tokenId":Identity.tokenId
+					"entId": userinfo.entId,
+					"tokenId":userinfo.tokenId
 				},
 				body : {
 					"orderNumber":orderNumber
@@ -46,8 +46,8 @@ app.controller('payCtrl',['$rootScope','$scope','LocalStorage','commonService','
 					"timeStamp" : commonService.getNowFormatDate(),
 					"applicationId" : "ezKompany-market",
 					"ip" : "127.0.0.1",
-					"entId": Identity.entId,
-					"tokenId":Identity.tokenId
+					"entId": userinfo.entId,
+					"tokenId":userinfo.tokenId
 				},
 				body : {
 					"orderNumber":orderNumber
@@ -75,8 +75,8 @@ app.controller('payCtrl',['$rootScope','$scope','LocalStorage','commonService','
 					"timeStamp" : commonService.getNowFormatDate(),
 					"applicationId" : "ezKompany-market",
 					"ip" : "127.0.0.1",
-					"entId": Identity.entId,
-					"tokenId":Identity.tokenId
+					"entId": userinfo.entId,
+					"tokenId":userinfo.tokenId
 				},
 				body : {
 					"orderNumber":$scope.order.orderNumber,
@@ -86,12 +86,14 @@ app.controller('payCtrl',['$rootScope','$scope','LocalStorage','commonService','
 					"cancelUrl":"http://127.0.0.1:80/index.html#/buy"
 				}
 			}
+			$rootScope.loading = true;
 			var promise = $http.post(AppConfig.BASE_URL
 					+ 'work/rest/initPay', $scope.initPayRequestInfo);
 			promise.success(function(data, status, headers, config) {
+				$rootScope.loading = false;
 				var sts = data.body.status;
 				if (sts.statusCode == 0) {
-					$cookieStore.put("Order",data.body.data);
+					LocalStorage.setObject("Order",data.body.data);
 					$scope.charge = data.body.data.charge;
 					
 					var modalInstance = $modal.open({
@@ -119,6 +121,7 @@ app.controller('payCtrl',['$rootScope','$scope','LocalStorage','commonService','
 				}
 			});
 			promise.error(function(data, status, headers, config) {
+				$rootScope.loading = false;
 				MsgService.tomsg('无法获取订单');
 			});
 		$rootScope.$state.go('pay');

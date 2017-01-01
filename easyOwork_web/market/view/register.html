@@ -1,0 +1,64 @@
+
+	<div style="height: 90px; width: 100%; background-color: #1a263b">
+
+	</div>
+	<div class="buy-section clearfix" ng-controller="registerCtrl" ng-init="init()">
+		<div class="col-xs-12">
+			
+			<form class="form-horizontal" role="form">
+				<div class="form-group">
+					<div class="col-sm-offset-4 col-sm-4 market-group">
+						<h2 class="c_o f20 bold">企业注册</h2>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-4 col-sm-4 market-group">
+						<input type="text" ng-model="form.user" class="form-control" placeholder="手机号码/电子邮箱" ng-change="validateUser()">
+					</div>
+					<span class="col-sm-4 control-label input-error" style="text-align:left">{{userError}}</span>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-4 col-sm-4 market-group">
+						<input type="text" ng-model="form.name" class="form-control" placeholder="请输入企业名称" ng-change="validateName()">
+					</div>
+					<span class="col-sm-4 control-label input-error" style="text-align:left">{{nameError}}</span>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-4 col-sm-2">
+						<input type="password" ng-model="form.verificationCode" placeholder="验证码" ng-change="validateVerificationCode()" class="form-control">
+					</div>
+					<div class="col-sm-2">
+						<button type="button" class="btn btn-primary ml10 wd140" get-code ng-disabled="userError||userError == undefined" ng-click="sendMSG()">获取验证码</button>
+					</div>
+					<span class="col-sm-4 control-label input-error" style="text-align:left">{{verificationError}}</span>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-4 col-sm-4 market-group">
+						<input type="password" ng-model="form.registerPassword" class="form-control" placeholder="输入密码" ng-change="validatePassword()">
+					</div>
+					<span class="col-sm-4 control-label input-error" style="text-align:left">{{passwordError}}</span>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-4 col-sm-4 market-group">
+						<input type="password" ng-model="form.repeatPassword" class="form-control" placeholder="再次输入密码" ng-change="validateRepeatPassword()">
+					</div>
+					<span class="col-sm-4 control-label input-error" style="text-align:left">{{repeatPasswordError}}</span>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-sm-offset-4 col-sm-4 market-group">
+						<input icheck type="checkbox" ng-model="checkedbox2"> 我已阅读并接受 <a class="a_prime" href="">服务条款</a>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-4 col-sm-2">
+						<button type="button" class="btn btn-block" ng-click="cancel()">取消</button>
+					</div>
+					<div class="col-sm-2">
+						<button id="register" type="button" class="btn btn-primary btn-block" ng-disabled="!checkedbox2" ng-click="complete()">注册</button>
+					</div>
+				</div>
+			</form>
+			
+		</div>
+	</div>

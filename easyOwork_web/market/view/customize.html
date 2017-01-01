@@ -52,14 +52,8 @@
 		</ul>
 
 	
-	<script type="text/javascript"> 
-		window.onscroll = function(){ 
-		 var t = document.body.scrollTop;
-		 if(t>$("#myCarousel").height()){
-		 	document.getElementById("header").style.backgroundColor = "#1a263b";
-		 }else{
-			 document.getElementById("header").style.backgroundColor = "";
-		 }
-		} 
-		$('.carousel').carousel();
-</script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.carousel').carousel();
+});	
+		</script>
