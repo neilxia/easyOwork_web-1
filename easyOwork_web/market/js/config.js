@@ -4,7 +4,7 @@
 var config = angular.module('market.config',[]);
 config.factory('AppConfig',function(){
     return {
-        BASE_URL:'http://120.76.96.199:8080/',
+        BASE_URL:'http://localhost:8080/',
     }
 });
 config.factory('LocalStorage',['$window',function($window){

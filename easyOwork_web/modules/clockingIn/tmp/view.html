@@ -39,8 +39,10 @@
                     <td><span class="pl15">{{data.userDTO.name}}</span></td>
                     <td>{{data.attendanceYear}}-{{data.attendanceMonth}}-{{data.attendanceDay}}</td>
                     <td>{{data.week}}</td>
-                    <td>{{data.inHour}}:{{data.inMinute}}</td>
-                    <td>{{data.outHour}}:{{data.outMinute}}</td>
+                    <td ng-if="data.inHour==0 && data.inMinute==0">无</td>
+                    <td ng-if="data.inHour!=0 || data.inMinute!=0">{{data.inHour}}:{{data.inMinute}}</td>
+                    <td ng-if="data.outHour==0 && data.outMinute==0">无</td>
+                    <td ng-if="data.outHour!=0 || data.outMinute!=0">{{data.outHour}}:{{data.outMinute}}</td>
                     <td><span class="red">{{data.result}}</span></td>
                     <!--<td><span class="red">00:07</span></td>-->
                 </tr>
@@ -88,7 +90,7 @@
                             <td width="60" class="g9">&nbsp;</td>
                         </tr>
                     </table>
-                    <div class="salary_line01"><span>收入明显页</span></div>
+                    <div class="salary_line01"><span>收入明细页</span></div>
                     <table cellpadding="0" cellspacing="0" width="80%" class="line40td">
                         <tr>
                             <td  width="100" class="f16 pr10 t_r">5000,00</td>
@@ -103,7 +105,7 @@
                             <td width="60" class="g9">&nbsp;</td>
                         </tr>
                     </table>
-                    <div class="salary_line01"><span>扣除明显页</span></div>
+                    <div class="salary_line01"><span>收入明细页</span></div>
                     <table cellpadding="0" cellspacing="0" width="80%" class="line40td">
                         <tr>
                             <td width="100" class="f16 pr10 t_r">600,00</td>
@@ -140,7 +142,7 @@
                             <td width="60" class="g9">&nbsp;</td>
                         </tr>
                     </table>
-                    <div class="salary_line01"><span>收入明显页</span></div>
+                    <div class="salary_line01"><span>收入明细页</span></div>
                     <table cellpadding="0" cellspacing="0" width="80%" class="line40td">
                         <tr>
                             <td  width="100" class="f16 pr10 t_r">5000,00</td>
@@ -155,7 +157,7 @@
                             <td width="60" class="g9">&nbsp;</td>
                         </tr>
                     </table>
-                    <div class="salary_line01"><span>扣除明显页</span></div>
+                    <div class="salary_line01"><span>收入明细页</span></div>
                     <table cellpadding="0" cellspacing="0" width="80%" class="line40td">
                         <tr>
                             <td width="100" class="f16 pr10 t_r">600,00</td>

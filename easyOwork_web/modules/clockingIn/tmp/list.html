@@ -42,8 +42,10 @@
                     <td>{{data.userDTO.id}}</td>
                     <td>{{data.userDTO.personalPhone}}</td>
                     <td>{{data.attendanceYear}}-{{data.attendanceMonth}}-{{data.attendanceDay}}</td>
-                    <td>{{data.inHour}}:{{data.inMinute}}</td>
-                    <td>{{data.outHour}}:{{data.outMinute}}</td>
+                    <td ng-if="data.inHour==0 && data.inMinute==0">无</td>
+                    <td ng-if="data.inHour!=0 || data.inMinute!=0">{{data.inHour}}:{{data.inMinute}}</td>
+                    <td ng-if="data.outHour==0 && data.outMinute==0">无</td>
+                    <td ng-if="data.outHour!=0 || data.outMinute!=0">{{data.outHour}}:{{data.outMinute}}</td>
                     <td>{{data.result}}</td>
                     <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="clockingIn.view({row:data})"><i class="iconfont icon-chakan f14"></i></button></td>
                 </tr>

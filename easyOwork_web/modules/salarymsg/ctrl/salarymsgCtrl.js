@@ -14,16 +14,15 @@ function salarymsgissueCtrl(){
         function inquiryPayrollSummaryFun(){
             //查询薪酬总额
             $scope.options={
-                "year":attendance.attendanceYear,		//年
-                "month":''	//如查询某月总额, 则需传入该值, 否则不需传入
+                "year":attendance.attendanceYear		//年
             };
             var promise = salaryService.inquiryPayrollSummary({body:$scope.options});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
-                    //$scope.summaryListData=data.body.data.summaryList;
+                    $scope.summaryListData=data.body.data.summaryList;
                     //开启上面，下面是测试数据
-                    $scope.summaryListData=[
+                    /**$scope.summaryListData=[
                         {
                             "month":"12",	//月份
                             "totalEmployeeCount":"30",	//总人数
@@ -49,7 +48,7 @@ function salarymsgissueCtrl(){
                             "totalAmountMonth":"30000",	//月总发放额总收入
                             "totalSocialSecurityMonth":"3000"	//月总五险一金额(公司缴纳)
                         },
-                    ]
+                    ]**/
 
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
@@ -128,8 +127,9 @@ function salarymsglistCtrl(){
                 promise.success(function(data, status, headers, config){
                     var sts=data.body.status;
                     if(sts.statusCode==0){
-                        //$scope.inquiryPayrollData=data.body.data;
+                        $scope.inquiryPayrollData=data.body.data;
                         //上面开启，下面是测试数据
+                        /**
                         $scope.inquiryPayrollData={
                             "totalIncome":"12000",	//总收入
                             "totalDeduction":"1540",	//总扣缴
@@ -159,7 +159,7 @@ function salarymsglistCtrl(){
                                     "income":false	// true or false(收入项或者是扣缴项)
                                 }
                             ]
-                        }
+                        }**/
 
                     }else{
                         MsgService.tomsg(data.body.status.errorDesc);
@@ -245,7 +245,7 @@ function salarymsgviewCtrl(){
                     promise.success(function(data, status, headers, config){
                         var sts=data.body.status;
                         if(sts.statusCode==0){
-                            MsgService.tomsg();
+                            //MsgService.tomsg();
                         }else{
                             MsgService.tomsg(data.body.status.errorDesc);
                         }
@@ -283,8 +283,9 @@ function salarymsgviewCtrl(){
                 promise.success(function(data, status, headers, config){
                     var sts=data.body.status;
                     if(sts.statusCode==0){
-                        //$scope.inquiryPayrollData=data.body.data;
+                        $scope.inquiryPayrollData=data.body.data;
                         //上面开启，下面是测试数据
+                        /**
                         $scope.inquiryPayrollData={
                             "totalIncome":"12000",	//总收入
                             "totalDeduction":"1540",	//总扣缴
@@ -314,7 +315,7 @@ function salarymsgviewCtrl(){
                                     "income":false	// true or false(收入项或者是扣缴项)
                                 }
                             ]
-                        }
+                        }**/
 
                     }else{
                         MsgService.tomsg(data.body.status.errorDesc);
@@ -339,7 +340,9 @@ function salarymsgviewCtrl(){
                         "year":$scope.inquiryPayrollData.year,		//年
                         "month":$scope.inquiryPayrollData.month,	//月
                         "status":"CONFIRMED",	//CREATED(已生成未确认), CONFIRMED(已确认)
-                        "payrollItems":$scope.inquiryPayrollData.payrollItems
+                        "payrollItems":$scope.inquiryPayrollData.payrollItems,
+                        "totalIncome":$scope.inquiryPayrollData.totalIncome,
+                        "totalDeduction":$scope.inquiryPayrollData.totalDeduction
                     };
                     var promise2 = salaryService.changePayroll({body:$scope.options});
                     promise2.success(function(data, status, headers, config){
