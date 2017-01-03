@@ -2,7 +2,7 @@
  * Created by Nose on 2016/9/7.
  */
 function mySetCtrl(){
-    return['$scope','$filter', 'employeesService' ,'LocalStorage','MsgService','publicService',function($scope,$filter,employeesService,LocalStorage,MsgService,publicService){
+    return['$scope','$filter', 'employeesService' ,'LocalStorage','MsgService','publicService','FileUploader','noseService','OSSService',function($scope,$filter,employeesService,LocalStorage,MsgService,publicService,FileUploader,noseService,OSSService){
         $scope.initFun=function(){
             //inquiryEmployeeFun();
             var userinfo=LocalStorage.getObject('userinfo');
@@ -19,7 +19,9 @@ function mySetCtrl(){
                 "personalPhone":userinfo.personalPhone || "",		//手机号码
                 "orgList":userinfo.orgList,		//所属部门名称
                 "joiningDate":userinfo.joiningDate || "",		//入职日期
-                "roleList":userinfo.roleList	//角色数组, 可多个角色
+                "roleList":userinfo.roleList,
+                'entId':userinfo.entId,
+                'tokenId':userinfo.tokenId
                 //"contractUrl":row.contractUrl || "",		//合同文件地址
                 //"contract":row.contract,
                 //"salaryTypeList":userinfo.salaryTypeList
@@ -104,6 +106,32 @@ function mySetCtrl(){
                 MsgService.tomsg(sts.errorDesc);
             });
             return promise;
+        };
+        
+        var htUploader = $scope.htUploader = new FileUploader({
+            url: '', //不使用默认URL上传
+            queueLimit: 1,     //文件个数
+            removeAfterUpload: true,   //上传后删除文件
+            autoUpload:false
+        });
+        htUploader.onAfterAddingFile = function(fileItem){
+            htUploader.cancelAll();
+             var file = $("#photo").get(0).files[0];
+             var filePath = LocalStorage.getObject('userinfo').entId+'/employee/photo/'+noseService.randomWord(false, 32)+'_';
+             var key= filePath+file.name;
+             var promise = OSSService.uploadFile(filePath,file);
+             promise.success(function (data, status, headers, config) {
+                 var urlPromise = OSSService.getUrl({'body':{'key':key}});
+                 urlPromise.success(function (data, status, headers, config) {
+                 var sts=data.body.status;
+                 if(sts.statusCode==0){
+                	 $scope.changeEmployeeFun(data.body.data.url,'photoUrl');
+                 }
+                 });
+             });
+             promise.error(function (data, status, headers, config) {
+            	 MsgService.tomsg('头像上传失败');
+             });
         };
 
         //修改密码

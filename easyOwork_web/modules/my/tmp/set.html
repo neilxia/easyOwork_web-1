@@ -34,10 +34,10 @@
         </div>
          -->
         <div class="mysetheadpic">
-            <div class="imgbox bdrs50"><img src="./images/headportrait02.jpg" alt=""></div>
+            <div class="imgbox bdrs50"><img src="{{userinfo.photoUrl || './images/headportrait01.png'}}" alt=""></div>
             <div class="mt10">
                 <div  class="btn btn-default btn-xs upheadbtn">
-                    <input type="file" id="licence" nv-file-select accept="image/*" uploader="uploader"/>上传头像
+                    <input type="file" id="photo" nv-file-select accept="image/*" uploader="htUploader"/>上传头像
                 </div>
             </div>
         </div>
