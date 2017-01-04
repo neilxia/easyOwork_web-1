@@ -185,7 +185,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
 
         })
         .state('staffmsg.searchlist', {
-            url: "/orglist",
+            url: "/searchlist",
             templateUrl: 'modules/staffmsg/tmp/searchlist.html',
             data: { pageTitle: '员工查询'}
 

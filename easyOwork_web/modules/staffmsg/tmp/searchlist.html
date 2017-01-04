@@ -47,8 +47,8 @@
 						  </button>
 						  <ul class="dropdown-menu">
 						    <li ><a ng-click="staffbase(data)">基本信息</a></li>
-						    <li protectedId="{{data.userUuid}}"><a ng-click="staffbase(data)">薪酬及合同</a></li>
-						    <li protectedId="{{data.userUuid}}"><a ng-click="staffbase(data)">工资单</a></li>
+						    <li protectedId="{{data.userUuid}}"><a ng-click="staffsalary(data)">薪酬及合同</a></li>
+						    <li protectedId="{{data.userUuid}}"><a ng-click="staffpayroll(data)">工资单</a></li>
 						    <li protectedId="{{data.userUuid}}"><a ng-click="staffbase(data)">参与的项目</a></li>
 						    <li protectedId="{{data.userUuid}}"><a ng-click="staffbase(data)">负责的客户</a></li>
 						  </ul>
@@ -134,4 +134,107 @@
         </div>
     </div>
 
+</script>
+
+<script type="text/ng-template" id="staffsalary.html">
+    <div class="whitemodal smbox">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">薪酬及合同</div>
+        </div>
+
+        <div class="modal-body cf pb0">
+            <div class="col-xs-12">
+                <table class="table bded mt10" cellspacing="0" cellpadding="0" width="100%;">
+                            <thead>
+                            <tr>
+                                <th><span class="pl20">薪酬项名</span></th>
+                                <th width="100">金额(¥)</th>
+                                <th width="70">周期</th>
+                                <th width="120">生效日期</th>
+                            </tr>
+                            </thead>
+                            <!--{{user.salaryTypeList}}-->
+                            <tbody>
+                            <tr>
+                                <td><span class="pl20">基本工资</span></td>
+                                <td>{{user.currentSalary}}</td>
+                                <td>月</td>
+                                <td>{{user.currentSalaryStartDate}}</td>
+                            </tr>
+                            <tr ng-repeat="data in user.salaryTypeList">
+                                <td><span class="pl20">{{data.name}}</span></td>
+                                <td>{{data.amount}}</td>
+                                <td>{{data.period}}</td>
+                                <td>{{data.startDate}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+            </div>
+			<div class="col-xs-2 pt20 pb20">
+                  <span class="pl20 b">合同</span>
+            </div>
+			<div class="col-xs-10  pt20 pb20">
+                  <a ng-href="{{user.contract.url}}">{{user.contract.fileName}}</a>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>
+        </div>
+    </div>
+
+</script>
+
+<script type="text/ng-template" id="staffpayroll.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">工资单({{user.name}})</div>
+        </div>
+            <div class="modal-body bte issueview_madal1">
+                <div class="mt10">
+
+<div class="btn-group">
+	<button type="button" class="btn btn-default" ng-model="year" ng-click="changeYear(currentYear-1)" btn-radio="{{currentYear-1}}">{{currentYear-1}}年</button>
+  	<button type="button" class="btn btn-default" ng-model="year" ng-click="changeYear(currentYear)" btn-radio="{{currentYear}}">{{currentYear}}年</button>
+
+  <div class="btn-group">
+
+<select class="form-control" ng-model="month" ng-change="changeMonth()">
+						<option ng-repeat="x in monthList" value="{{x.value}}">{{x.label}}</option>
+					</select>
+  </div>
+</div>
+</div>
+		<div ng-show="inquiryPayrollData.payrollItems.length>0">
+                    <div class="row f16 mt10">
+                        <div class="col-xs-3 t_r">{{inquiryPayrollData.totalIncome}}</div>
+                        <div class="col-xs-3"><span class="g9 f12">总收入</span></div>
+                        <div class="col-xs-3 t_r">{{inquiryPayrollData.totalDeduction}}</div>
+                        <div class="col-xs-3"><span class="g9 f12">扣除金额</span></div>
+                        <div class="col-xs-3 t_r">{{inquiryPayrollData.totalIncome-inquiryPayrollData.totalDeduction}}</div>
+                        <div class="col-xs-3"><span class="g9 f12">到账金额</span></div>
+                    </div>
+                    <div class="h5"></div>
+                    <div class="salary_line01"><span>收入明细</span></div>
+                    <div class="row f16 mt10">
+                        <span ng-repeat="data in inquiryPayrollData.payrollItems | filter:{income:true}">
+                            <div class="col-xs-3 t_r">{{data.itemAmount}}</div>
+                            <div class="col-xs-3"><span class="g9 f12">{{data.itemName}}</span></div>
+                        </span>
+                    </div>
+                    <div class="h10"></div>
+                    <div class="salary_line01"><span>扣除明细</span></div>
+                    <div class="row f16 mt10">
+                        <span ng-repeat="data in inquiryPayrollData.payrollItems | filter:{income:false}">
+                            <div class="col-xs-3 t_r">{{data.itemAmount}}</div>
+                            <div class="col-xs-3"><span class="g9 f12">{{data.itemName}}</span></div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer mt10">
+                <button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>
+            </div>
+    </div>
 </script>
