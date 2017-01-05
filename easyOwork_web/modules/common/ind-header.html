@@ -33,7 +33,7 @@
                 </div>
             </li>
             <li class="usrbox">
-                <div class="imgbox bdrs50 f_l"><img src="{{userinfoall.photoUrl || './images/headportrait01.png'}}" alt=""></div>
+                <div class="imgbox bdrs50 f_l"><img src="./images/headportrait02.jpg" alt=""></div>
                 <div class="dropdown pull-right ml10 mt10" dropdown>
                     <span dropdown-toggle>{{userinfoall.name || '暂无'}} <span class="caret"></span></span>
                     <ul class="dropdown-menu" role="menu">
@@ -55,21 +55,23 @@
 <div class="topmenu whitew f16">
     <div class="{{$state.current.data.widthClass}}">
         <a ui-sref-active="active" ui-sref="index"><i class="iconfont icon-gongzuotai mr5"></i>面板</a>
-        <a ui-sref-active="active" ui-sref="sysmsg.info" accessId="A001-001||A001-002">设置</a>
-        <a ui-sref-active="active" ui-sref="structuremsg.list" accessId="A001-001">组织</a>
-        <a ui-sref-active="active" ui-sref="staffmsg.searchlist">员工</a>
-        <!--<a ui-sref-active="active" ui-sref="">审批流程</a>-->
-        <a ui-sref-active="active" ui-sref="processmsg.mypcs">审批</a>
-        <a ui-sref-active="active" ui-sref="permissions.list" accessId="A001-003">权限</a>
-        <a ui-sref-active="active" ui-sref="report.sendlist">报告</a>
-        <a ui-sref-active="active" ui-sref="task.sendlist">任务</a>
-        <a ui-sref-active="active" ui-sref="analysis.list">决策</a>
-        <a ui-sref-active="active" ui-sref="notice.list">公告</a>
-        <a ui-sref-active="active" ui-sref="clockingIn.list">考勤</a>
-        <a ui-sref-active="active" ui-sref="salarymsg.list">工资</a>
-        <a ui-sref-active="active" ui-sref="">项目</a>
-        <a ui-sref-active="active" ui-sref="">销售</a>
-        <a ui-sref-active="active" ui-sref="">招聘</a>
-        <a ui-sref-active="active" ui-sref="">资产</a>
+        <a ng-class="{active:$state.includes('sysmsg')}" ui-sref="sysmsg.info" accessId="A001-001||A001-002">设置</a>
+        <a ng-class="{active:$state.includes('structuremsg')}" ui-sref="structuremsg.list" accessId="A001-001">组织</a>
+        <a ng-class="{active:$state.includes('staffmsg')}" ui-sref="staffmsg.searchlist">员工</a>
+        <!--<a ng-class="{active:$state.includes('sysmsg')}" ui-sref="">审批流程</a>-->
+        <a ng-class="{active:$state.includes('processmsg')}" ui-sref="processmsg.mypcs">流程</a>
+        <a ng-class="{active:$state.includes('permissions')}" ui-sref="permissions.list" accessId="A001-003">权限</a>
+
+        <a ng-class="{active:$state.includes('report')}" ui-sref="report.sendlist">报告</a>
+        <a ng-class="{active:$state.includes('task')}" ui-sref="task.sendlist">任务</a>
+        <a ng-class="{active:$state.includes('analysis')}" ui-sref="analysis.list">决策</a>
+
+        <a ng-class="{active:$state.includes('notice')}" ui-sref="notice.list">公告</a>
+        <a ng-class="{active:$state.includes('clockingIn')}" ui-sref="clockingIn.list">考勤</a>
+        <a ng-class="{active:$state.includes('salarymsg')}" ui-sref="salarymsg.list">工资</a>
+        <a ng-class="{active:$state.includes('project')}" ui-sref="project.msglist">项目</a>
+        <a ng-class="{active:$state.includes('sales')}" ui-sref="sales.customerlist">销售</a>
+        <a ng-class="{active:$state.includes('recruitment')}" ui-sref="recruitment.planlist({'type':0})">招聘</a>
+        <a ng-class="{active:$state.includes('assets')}" ui-sref="assets.assetslist({'type':0})">资产</a>
     </div>
 </div>

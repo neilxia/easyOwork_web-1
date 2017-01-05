@@ -1059,7 +1059,8 @@ select.disabled,textarea.disabled,input.disabled,button.disabled{ border-color:#
 }
 .progress-small,
 .progress-small .progress-bar {
-    height: 10px;
+    height: 8px;
+    margin-bottom: 0;
 }
 .progress-small,
 .progress-mini {
@@ -1068,7 +1069,7 @@ select.disabled,textarea.disabled,input.disabled,button.disabled{ border-color:#
 .progress-mini,
 .progress-mini .progress-bar {
     height: 5px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 .progress-bar-navy-light {
     background-color: #3dc7ab;

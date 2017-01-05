@@ -1358,7 +1358,7 @@ function CustomerService(){
                 return $http.post(AppConfig.BASE_URL+'work/rest/changeCustomer',form)
             },
             //POST 5.10.2	B0036-查询(潜在)客户
-            changeCustomer:function(form){
+            inquiryCustomer:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/changeCustomer',form)
             },
             //POST 5.10.3	B0037-添加/修改/删除 销售活动
@@ -1467,6 +1467,61 @@ function projectService(){
             //POST 5.11.11	B0061-查询项目
             inquiryProject:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryProject',form)
+            }
+        }
+    }];
+}
+/*========招聘=======================================================*/
+function RecruitFlowService(){
+    return ['$http','AppConfig',function($http,AppConfig){
+        return {
+            //POST 5.13.1	B0062-添加/修改/删除招聘流程
+            changeRecruitFlow:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changeRecruitFlow',form)
+            },
+            //POST 5.13.2	B0063-查询招聘流程
+            inquiryRecruitFlow:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryRecruitFlow',form)
+            },
+            //POST 5.13.3	B0064-添加/修改/删除招聘渠道
+            changeRecruitChannel:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changeRecruitChannel',form)
+            },
+            //POST 5.13.4	B0065-查询招聘渠道
+            inquiryRecruitChannel:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryRecruitChannel',form)
+            },
+            //POST 5.13.5	B0066-添加/修改/删除招聘计划
+            changeRecruitPlan:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changeRecruitPlan',form)
+            },
+            //POST 5.13.6	B0067-添加/修改/删除招聘计划职位
+            changeRecruitPosition:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changeRecruitPosition',form)
+            },
+            //POST 5.13.7	B0068-发布招聘计划职位
+            sendRecruitPosition:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/sendRecruitPosition',form)
+            },
+            //POST 5.13.8	B0069-查询招聘计划
+            inquiryRecruitPlan:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryRecruitPlan',form)
+            },
+            //POST 5.13.9	B0070-添加/修改/删除简历
+            changeRecruitResume:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changeRecruitResume',form)
+            },
+            //POST 5.13.10	B0071-查询简历
+            inquiryRecruitResume:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryRecruitResume',form)
+            },
+            //POST 5.13.11	B0072-启动招聘流程
+            startRecruitFlow:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/startRecruitFlow',form)
+            },
+            //POST 5.13.12	B0073-通过/拒绝/待定招聘职位
+            tellResumeForPosition:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/tellResumeForPosition',form)
             }
         }
     }];

@@ -680,6 +680,311 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             data: { pageTitle: '个人中心'}
         })
 
+        /*========项目==================================================== */
+        .state('project', {
+            abstract: true,
+            url: "/project",
+            data: { pageTitle: '项目管理', specialClass: 'bgf2' },
+            views: {
+                '': {
+                    templateUrl: 'modules/common/content.html'
+                },
+                'main@project': {
+                    templateUrl: 'modules/common/myContent.html'
+                },
+                'menu@project': {
+                    templateUrl: 'modules/project/tmp/menu.html'
+                }
+            },
+            resolve:{
+                loadPlugin:function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            //时间控件
+                            name: 'datePicker',
+                            files: ['plugins/datapicker/angular-datapicker.css','plugins/datapicker/angular-datepicker.js']
+                        }
+                    ])
+                }
+            }
+        })
+        .state('project.msglist', {
+            url: "/msglist",
+            templateUrl: 'modules/project/tmp/msglist.html',
+            data: { pageTitle: '项目管理'}
+        })
+        .state('project.msgdtmain', {
+            url: "/msgdtmain",
+            templateUrl: 'modules/project/tmp/msgdtmain.html',
+            data: { pageTitle: '项目详情'}
+        })
+
+        .state('project.mylist', {
+            url: "/mylist",
+            templateUrl: 'modules/project/tmp/mylist.html',
+            data: { pageTitle: '我参与的项目'}
+        })
+        .state('project.mydtmain', {
+            url: "/mydtmain",
+            templateUrl: 'modules/project/tmp/mydtmain.html',
+            data: { pageTitle: '项目详情'}
+        })
+
+        .state('project.modellist', {
+            url: "/modellist",
+            templateUrl: 'modules/project/tmp/modellist.html',
+            data: { pageTitle: '项目模板设置'}
+        })
+        .state('project.modelphase', {
+            url: "/modelphase",
+            templateUrl: 'modules/project/tmp/modephase.html',
+            data: { pageTitle: '项目模板阶段设置'}
+        })
+
+        /*========销售==================================================== */
+        .state('sales', {
+            abstract: true,
+            url: "/sales",
+            data: { pageTitle: '销售管理', specialClass: 'bgf2' },
+            views: {
+                '': {
+                    templateUrl: 'modules/common/content.html'
+                },
+                'main@sales': {
+                    templateUrl: 'modules/common/myContent.html'
+                },
+                'menu@sales': {
+                    templateUrl: 'modules/sales/tmp/menu.html'
+                }
+            }
+        })
+        .state('sales.customerlist', {
+            url: "/customerlist",
+            templateUrl: 'modules/sales/tmp/customerlist.html',
+            data: { pageTitle: '客户管理'}
+        })
+        .state('sales.customerdtmain', {
+            url: "/customerdtmain",
+            templateUrl: 'modules/sales/tmp/customerdtmain.html',
+            data: { pageTitle: '客户详情'}
+        })
+
+        .state('sales.Ptcustomerlist', {
+            url: "/Ptcustomerlist",
+            templateUrl: 'modules/sales/tmp/Ptcustomerlist.html',
+            data: { pageTitle: '潜在客户'}
+        })
+        .state('sales.Ptcustomerdtmain', {
+            url: "/Ptcustomerdtmain",
+            templateUrl: 'modules/sales/tmp/Ptcustomerdtmain.html',
+            data: { pageTitle: '潜在客户详情'}
+        })
+
+        .state('sales.assetsmsglist', {
+            url: "/assetsmsglist",
+            templateUrl: 'modules/sales/tmp/assetsmsglist.html',
+            data: { pageTitle: '销售过程'}
+        })
+        .state('sales.assetsmsgdtmain', {
+            url: "/assetsmsgdtmain",
+            templateUrl: 'modules/sales/tmp/assetsmsgdtmain.html',
+            data: { pageTitle: '销售过程详情'}
+        })
+
+        .state('sales.assetsmpmsglist', {
+            url: "/assetsmpmsglist",
+            templateUrl: 'modules/sales/tmp/assetsmpmsglist.html',
+            data: { pageTitle: '销售目标'},
+            resolve:{
+                loadPlugin:function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            //时间控件
+                            name: 'datePicker',
+                            files: ['plugins/datapicker/angular-datapicker.css','plugins/datapicker/angular-datepicker.js']
+                        }
+                    ])
+                }
+            }
+        })
+/*        .state('sales.assetsmpmsgdtmain', {
+            url: "/assetsmpmsgdtmain",
+            templateUrl: 'modules/sales/tmp/assetsmpmsgdtmain.html',
+            data: { pageTitle: '销售目标详情'}
+        })*/
+
+        .state('sales.activitylist', {
+            url: "/activitylist",
+            templateUrl: 'modules/sales/tmp/activitylist.html',
+            data: { pageTitle: '营销活动'}
+        })
+        .state('sales.activitydtmain', {
+            url: "/activitydtmain",
+            templateUrl: 'modules/sales/tmp/activitydtmain.html',
+            data: { pageTitle: '营销活动详情'}
+        })
+
+        /*========招聘==================================================== */
+        .state('recruitment', {
+            abstract: true,
+            url: "/recruitment",
+            data: { pageTitle: '招聘管理', specialClass: 'bgf2' },
+            views: {
+                '': {
+                    templateUrl: 'modules/common/content.html'
+                },
+                'main@recruitment': {
+                    templateUrl: 'modules/common/myContent.html'
+                },
+                'menu@recruitment': {
+                    templateUrl: 'modules/recruitment/tmp/menu.html'
+                }
+            }
+        })
+        .state('recruitment.planlist', {
+            url: "/planlist?type",
+            templateUrl: 'modules/recruitment/tmp/planlist.html',
+            data: { pageTitle: '招聘计划'},
+            resolve:{
+                loadPlugin:function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            //时间控件
+                            name: 'datePicker',
+                            files: ['plugins/datapicker/angular-datapicker.css','plugins/datapicker/angular-datepicker.js']
+                        }
+                    ])
+                }
+            }
+        })
+        .state('recruitment.channemsgllist', {
+            url: "/channemsgllist",
+            templateUrl: 'modules/recruitment/tmp/channemsgllist.html',
+            data: { pageTitle: '招聘渠道'},
+            resolve:{
+                loadPlugin:function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            //时间控件
+                            name: 'datePicker',
+                            files: ['plugins/datapicker/angular-datapicker.css','plugins/datapicker/angular-datepicker.js']
+                        }
+                    ])
+                }
+            }
+        })
+        .state('recruitment.processmsg', {
+            url: "/processmsg",
+            templateUrl: 'modules/recruitment/tmp/processmsg.html',
+            data: { pageTitle: '招聘过程'}
+        })
+        .state('recruitment.classlist', {
+            url: "/classlist",
+            templateUrl: 'modules/recruitment/tmp/classlist.html',
+            data: { pageTitle: '类别设置'}
+        })
+
+        .state('planlist', {
+            abstract: true,
+            url: "/planlist",
+            data: { pageTitle: '招聘计划', specialClass: 'bgf2' },
+            views: {
+                '': {
+                    templateUrl: 'modules/common/content.html'
+                },
+                'main@planlist': {
+                    templateUrl: 'modules/common/myContent.html'
+                },
+                'menu@planlist': {
+                    templateUrl: 'modules/recruitment/tmp/planmenu.html'
+                }
+            }
+        })
+        .state('planlist.dtplanlist', {
+            url: "/dtplanlist",
+            templateUrl: 'modules/recruitment/tmp/dtplanlist.html',
+            data: { pageTitle: '招聘计划详情'}
+        })
+        .state('planlist.dtfpositions', {
+            url: "/dtfpositions?type",
+            templateUrl: 'modules/recruitment/tmp/dtfpositions.html',
+            data: { pageTitle: '发布职位'}
+        })
+        .state('planlist.dtresumemsg', {
+            url: "/dtresumemsg",
+            templateUrl: 'modules/recruitment/tmp/dtresumemsg.html',
+            data: { pageTitle: '简历管理'}
+        })
+        .state('planlist.dtprocess', {
+            url: "/dtprocess?type",
+            templateUrl: 'modules/recruitment/tmp/dtprocess.html',
+            data: { pageTitle: '招聘流程'}
+        })
+        .state('planlist.dtprocessoffer', {
+            url: "/dtprocessoffer",
+            templateUrl: 'modules/recruitment/tmp/dtprocessoffer.html',
+            data: { pageTitle: 'offer'}
+        })
+        .state('planlist.dtprocessrz', {
+            url: "/dtprocessrz",
+            templateUrl: 'modules/recruitment/tmp/dtprocessrz.html',
+            data: { pageTitle: '入职'}
+        })
+
+        /*========资产==================================================== */
+        .state('assets', {
+            abstract: true,
+            url: "/assets",
+            data: { pageTitle: '资产管理', specialClass: 'bgf2' },
+            views: {
+                '': {
+                    templateUrl: 'modules/common/content.html'
+                },
+                'main@assets': {
+                    templateUrl: 'modules/common/myContent.html'
+                },
+                'menu@assets': {
+                    templateUrl: 'modules/assets/tmp/menu.html'
+                }
+            },
+            resolve:{
+                loadPlugin:function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            //时间控件
+                            name: 'datePicker',
+                            files: ['plugins/datapicker/angular-datapicker.css','plugins/datapicker/angular-datepicker.js']
+                        }
+                    ])
+                }
+            }
+        })
+        .state('assets.assetslist', {
+            url: "/assetslist?type",
+            templateUrl: 'modules/assets/tmp/assetslist.html',
+            data: { pageTitle: '资产库'}
+        })
+        .state('assets.assetsview', {
+            url: "/assetsview?type",
+            templateUrl: 'modules/assets/tmp/assetsview.html',
+            data: { pageTitle: '资产详情'}
+        })
+        .state('assets.dbtassets', {
+            url: "/dbtassets",
+            templateUrl: 'modules/assets/tmp/dbtassets.html',
+            data: { pageTitle: '分配资产'}
+        })
+        .state('assets.recyclingassets', {
+            url: "/recyclingassets",
+            templateUrl: 'modules/assets/tmp/recyclingassets.html',
+            data: { pageTitle: '回收资产'}
+        })
+        .state('assets.assetsclass', {
+            url: "/assetsclass",
+            templateUrl: 'modules/assets/tmp/assetsclass.html',
+            data: { pageTitle: '资产类别'}
+        })
+
         /*========demo============================================================== */
         .state('demo1', {
             //abstract: true,

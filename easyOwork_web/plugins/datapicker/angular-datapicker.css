@@ -28,6 +28,8 @@
 .date-picker-date-time {
     position: absolute;
 }
+.date-picker-right [date-picker-wrapper]{ left: -90px;}
+
 [date-picker-wrapper] {
     position: absolute;
     min-width: 220px;

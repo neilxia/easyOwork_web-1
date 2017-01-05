@@ -772,8 +772,12 @@ function selectdepyuan($timeout){
             size:'=',
             title:'@'
         },
-        template:'<ul ng-class="{\'input-group-sm\':size == \'sm\' ,\'input-group-lg\':size == \'lg\'}" class="addpcs-config-prople cf" ng-model="selectedallarr">' +
-        '<li ng-if="yuangong!=\'1\'" ng-repeat="sele2 in myselected" class="bdrs4" id="{{selected.id}}">{{sele2.text}}{{sele2.name}}</li><li ng-if="yuangong==\'1\'&& selectedallarr" class="bdrs4">{{selectedallarr[1][0].text}}{{selectedallarr[1][0].name}}</li>' +
+        template:'<div ng-if="options!=\'bmyg\'" ng-class="{\'input-group-sm\':size == \'sm\' ,\'input-group-lg\':size == \'lg\'}" class="input-group" style="width: 100%;" ng-model="selectedallarr">' +
+        '<div class="form-control ovh" style="width: 100%;"><span ng-if="yuangong!=\'1\'" ng-repeat="sele2 in myselected" class="mr5" id="{{selected.id}}">{{sele2.text}}{{sele2.name}}</span><span ng-if="yuangong==\'1\'&& selectedallarr" class="bdrs4" id="{{selected.id}}">{{sele2.text}}{{selectedallarr[1][0].text}}{{selectedallarr[1][0].name}}</span></div><a class="iconfont icon-close2 g9" ng-if="myselected.length > 0 || selectedallarr.length>0" ng-click="clearselected()"></a>' +
+        '<a class="input-group-addon wd70" ng-click="selectstaffyuan()">{{title || \'选择人员\'}}</a>' +
+        '</div>' +
+        '<ul ng-if="options==\'bmyg\'" ng-class="{\'input-group-sm\':size == \'sm\' ,\'input-group-lg\':size == \'lg\'}" class="addpcs-config-prople cf" ng-model="selectedallarr">' +
+        '<li  ng-repeat="sele2 in myselected" class="bdrs4" id="{{selected.id}}">{{sele2.text}}{{sele2.name}}</li><li ng-if="yuangong==\'1\'&& selectedallarr" class="bdrs4">{{selectedallarr[1][0].text}}{{selectedallarr[1][0].name}}</li>' +
         '<li class="bdrs4 addbtn fadecj" ng-click="selectstaffyuan()"><i class="iconfont icon-bianji f12"></i></li>' +
         '</ul>',
         /*link: function ($scope, element, attrs) {
@@ -788,6 +792,12 @@ function selectdepyuan($timeout){
             var userinfo=LocalStorage.getObject('userinfo');
             var pmData=[];
             var yuanData=[];
+
+            //clear
+            $scope.clearselected=function(){
+                $scope.myselected=null;
+                $scope.selectedallarr=null;
+            }
             //查询部门
             getCompanyOrg();
             function getNewarr(arr,parentId){
@@ -878,17 +888,6 @@ function selectdepyuan($timeout){
                     //tree
                     $scope.ignoreChanges = false;
                     $scope.newNode = {};
-                    /*$scope.originalData = [
-                        { id : 'ajson1', parent : '#', text : '成都尔康互动有限公司1', state: { opened: true} },
-                        { id : 'ajson1-1', parent : 'ajson1', text : '行政部', state: { opened: true} },
-                        { id : 'ajson1-2', parent : 'ajson1', text : '产品中心' , state: { opened: true}},
-                        { id : 'ajson1-2-1', parent : 'ajson1-2', text : '产品一部' , state: { opened: true}},
-                        { id : 'ajson1-2-2', parent : 'ajson1-2', text : '产品二部' , state: { opened: true}},
-                        { id : 'ajson1-2-3', parent : 'ajson1-2', text : '用户体验部' , state: { opened: true}},
-                        { id : 'ajson1-2-4', parent : 'ajson1-2', text : '用户研究部' , state: { opened: true}},
-                        { id : 'ajson1-3', parent : 'ajson1', text : '人事部' , state: { opened: true}},
-                        { id : 'ajson1-4', parent : 'ajson1', text : '市场部' , state: { opened: true}}
-                    ];*/
 
                     $scope.treeData = pmData;
                     $scope.treeConfig = {
@@ -946,7 +945,13 @@ function selectdepyuan($timeout){
                             selected_nodes = $scope.treeInstance.jstree(true).get_checked('full');
                         }else{
                             selected_nodes = [];
-                            $scope.radiochecked.checked=true;
+                            if(yuangong==2){
+                                angular.forEach($scope.radiochecked,function(val,ind){
+                                    val.checked=true;
+                                });
+                            }else{
+                                $scope.radiochecked.checked=true;
+                            }
                         }
                         var selectedItems=[];
                         var datalist = $scope.stafftreeData;

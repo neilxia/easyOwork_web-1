@@ -2,7 +2,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
 <svg xmlns="http://www.w3.org/2000/svg">
 <metadata>
-Created by FontForge 20120731 at Sun Dec 25 22:59:07 2016
+Created by FontForge 20120731 at Sun Jan  1 02:01:41 2017
  By admin
 </metadata>
 <defs>
@@ -19,7 +19,7 @@ Created by FontForge 20120731 at Sun Dec 25 22:59:07 2016
     bbox="2 -127.76 1022 895.571"
     underline-thickness="0"
     underline-position="0"
-    unicode-range="U+0078-E79C"
+    unicode-range="U+0078-E79F"
   />
 <missing-glyph 
  />
@@ -238,5 +238,8 @@ t-7.5 19t-18.5 8q-121 0 -195 -89t-74 -229q0 -10 8 -18t19 -8h116q10 0 18 9.5t8 20
 q11 0 18.5 7.5t7.5 18.5v1q0 94 -47.5 175t-122.5 120zM570 492q45 0 76.5 -31.5t31.5 -75.5q0 -41 -26 -70.5t-66 -35.5q-15 1 -18 1q-1 0 -15 -1q-37 6 -63.5 37t-26.5 68v1v0q0 44 31.5 75.5t75.5 31.5v0zM356 -14q7 91 60 153.5t131 71.5q17 -2 21 -2q7 0 24 2
 q77 -9 130 -71.5t61 -153.5h-427zM333 399q11 0 18.5 8t7.5 19t-8 23.5t-17 12.5v0q-41 0 -70 29t-29 70v1q0 41 29.5 70t70.5 29h1q31 0 57 -18.5t36 -47.5q4 -9 18.5 -12t24.5 1q11 4 15.5 13.5t0.5 20.5q-16 45 -61.5 77t-93.5 32q-67 0 -115.5 -48.5t-48.5 -115.5
 t48.5 -115.5t115.5 -48.5z" />
+    <glyph glyph-name="xiazai" unicode="&#xe79f;" 
+d="M448 86q4 -6 10 -10v0q9 -6 20 -6t20 6h1q6 4 10 10l377 428q10 11 10 26t-10.5 25.5t-25.5 10.5t-26 -10l-319 -371v596q-1 14 -11.5 24t-25 10t-25.5 -10t-12 -24v-596l-315 374q-11 11 -26 11t-25.5 -10.5t-10.5 -25.5t11 -26zM860 11h-760q-15 0 -26 -10.5t-11 -26
+t11 -26t26 -10.5h760q16 0 26.5 10.5t10.5 26t-10.5 26t-26.5 10.5z" />
   </font>
 </defs></svg>

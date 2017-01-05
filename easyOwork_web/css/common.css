@@ -241,7 +241,7 @@ textarea{resize: none;}
 .topnav .rightbox .usrbox .dropdown-menu{ min-width: 65px;}
 
 .topmenu{ height: 44px; background-color: #f7941d; padding: 0 20px; overflow: hidden;}
-.topmenu a{ float: left; padding: 10px 0; min-width: 100px; text-align: center;}
+.topmenu a{ float: left; padding: 11px 20px; text-align: center;}
 .topmenu a.active{ background-color: #f89f34;}
 
 .topinfo-com{ width: 320px; height: 100%; position: fixed; top: 54px; right: -321px; z-index: 9; background-color: #fff; box-shadow: 0 3px 6px #eee; padding: 10px 15px; border-top: #eee solid 1px;}
@@ -266,7 +266,7 @@ textarea{resize: none;}
     transition: all 0.5s;
 }
 .arrow {
-    float: right;
+    float: right; margin-top: 5px;
 }
 .fa.arrow:before {
     content: "\f104";
@@ -304,8 +304,8 @@ textarea{resize: none;}
     color: #a7b1c2;
     padding: 10px 20px 10px 25px;
 }
-.navbar-default  .nav-second-level li a {
-    padding: 7px 10px 7px 52px;
+.navbar-default .nav-second-level li a {
+    padding: 7px 20px 7px 52px;
 }
 
 .navbar-default .nav > li.active > a {
@@ -315,9 +315,14 @@ textarea{resize: none;}
 .navbar-default .nav.nav-second-level > li.active {
     border: none;
 }
+.navbar-default .nav.nav-second-level > li.active a{
+    background-color: #3a4653;
+}
+
 .navbar-default .nav.nav-second-level.collapse[style] {
     height: auto !important;
 }
+
 .navbar-default .nav-header a {
     color: #DFE4ED;
 }
@@ -348,11 +353,8 @@ textarea{resize: none;}
 .nav-third-level li {
     border-bottom: none !important;
 }
-.nav-second-level li a {
-    padding: 7px 10px 7px 52px;
-}
-.nav-third-level li a {
-    padding-left: 62px;
+.navbar-default .nav-third-level li a {
+    padding-left: 67px;
 }
 .nav-second-level li:last-child {
     margin-bottom: 10px;
