@@ -19,16 +19,14 @@
             <!--备忘录-->
             <div class="panel mt15">
                 <div class="panel-heading"><!--<span class="f_r"><i class="iconfont icon-right f14"></i></span>--><span class="f16">备忘录</span></div>
-                <div class="panel-body" style="min-height: 304px;">
-                    <ul class="ind_memo_list f12">
-                        <li class="bdrs4">
-                            <a class="iconfont icon-close2 f14 g9 f_r"></a>
-                            周五下午部门开会
+                <div class="pl15 pr5 pb10">
+                    <ul class="ind_memo_list f12" slim-scroll box-height="250">
+                        <li class="bdrs4" ng-repeat="data in memoslist">
+                            <a class="iconfont icon-close2 f14 g9 f_r" ng-click="deletememosFun(data)"></a>
+                            {{data.content}}
                         </li>
-                        <li class="bdrs4"><a class="iconfont icon-close2 f14 g9 f_r"></a>周天上午10点与客户确认方案</li>
-                        <li class="bdrs4"><a class="iconfont icon-close2 f14 g9 f_r"></a>下周一和美国硅谷辛辣电子递交项目设计方案，并通知对方及时查看！</li>
                     </ul>
-                    <a class="add-box mt15"><i class="iconfont icon-add f12"></i></a>
+                    <a class="add-box mr10 mt10" ng-click="addmemosFun()"><i class="iconfont icon-add f12"></i></a>
                 </div>
             </div>
         </div>
@@ -167,48 +165,16 @@
             </div>
             <!--公告-->
             <div class="panel mt15">
-                <div class="panel-heading"><!--<span class="f_r"><i class="iconfont icon-right f14"></i></span>--><span class="f16">公告</span></div>
+                <div class="panel-heading"><a class="f_r"><i class="iconfont icon-right f14" ui-sref="notice.view"></i></a><span class="f16">公告</span></div>
                 <div class="pl15 pr5">
                     <ul class="ind-notice_com pr10" slim-scroll box-height="356" >
-                        <li>
-                            <div class="h20 ovh"><a href="">关于国庆节放假通知</a></div>
-                            <div class="g9 mt3 f12"><span class="f_r">2016-09-24 16:57</span>人力资源部</div>
+                        <li ng-repeat="data in inquiryAnnouncementsData">
+                            <div class="h20 ovh" ui-sref="notice.view({data:data})"><a href="">{{data.name}}</a></div>
+                            <div class="g9 mt3 f12"><span class="f_r">{{data.announcementDate}}</span>{{data.createBy}}</div>
                         </li>
-                        <li>
-                            <div class="h20 ovh"><a href="">关于国庆节放假通知</a></div>
-                            <div class="g9 mt3 f12"><span class="f_r">2016-09-24 16:57</span>人力资源部</div>
-                        </li>
-                        <li>
-                            <div class="h20 ovh"><a href="">关于国庆节放假通知</a></div>
-                            <div class="g9 mt3 f12"><span class="f_r">2016-09-24 16:57</span>人力资源部</div>
-                        </li>
-                        <li>
-                            <div class="h20 ovh"><a href="">关于国庆节放假通知</a></div>
-                            <div class="g9 mt3 f12"><span class="f_r">2016-09-24 16:57</span>人力资源部</div>
-                        </li>
-                        <li>
-                            <div class="h20 ovh"><a href="">关于国庆节放假通知</a></div>
-                            <div class="g9 mt3 f12"><span class="f_r">2016-09-24 16:57</span>人力资源部</div>
-                        </li>
-                        <li>
-                            <div class="h20 ovh"><a href="">关于国庆节放假通知</a></div>
-                            <div class="g9 mt3 f12"><span class="f_r">2016-09-24 16:57</span>人力资源部</div>
-                        </li>
-                        <li>
-                            <div class="h20 ovh"><a href="">关于国庆节放假通知</a></div>
-                            <div class="g9 mt3 f12"><span class="f_r">2016-09-24 16:57</span>人力资源部</div>
-                        </li>
-                        <li>
-                            <div class="h20 ovh"><a href="">关于国庆节放假通知</a></div>
-                            <div class="g9 mt3 f12"><span class="f_r">2016-09-24 16:57</span>人力资源部</div>
-                        </li>
-                        <li>
-                            <div class="h20 ovh"><a href="">关于国庆节放假通知</a></div>
-                            <div class="g9 mt3 f12"><span class="f_r">2016-09-24 16:57</span>人力资源部</div>
-                        </li>
-                        <li>
+                        <!--<li>
                             <a class="add-box">查看全部</a>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
             </div>
@@ -216,6 +182,38 @@
         </div>
     </div>
 </div>
+
+<!--模板-->
+<script type="text/ng-template" id="addmemos.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">{{thename}}备忘录</div>
+        </div>
+        <!--{{baseForm.$valid}}-->
+        <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td>
+                            <div class="nose-group" ng-class="{'has-error':baseForm.content.$dirty && baseForm.content.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$invalid" popover="输入备忘录" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$error.maxlength" popover="不大于100字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <textarea class="form-control" rows="4" name="content" placeholder="输入备忘录，不大于100字" ng-maxlength="100" ng-model="modalform.content" required></textarea>
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary wd80">确定</button>
+            </div>
+        </form>
+    </div>
+</script>
+
 <!--<script language="JavaScript">
     function GetLocalIPAddr(){
         var oSetting = null;

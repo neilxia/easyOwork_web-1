@@ -66,4 +66,31 @@ app.filter('characters', function () {
             return input.slice(start);
         }
     })
+
 ;
+
+//porject状态
+app.filter('pjstatus',function(){
+    return function (obj){
+        if (obj.length <= 0) return;
+        var val;
+        switch (obj){
+            case 'GREEN':
+                val='待付款';
+                break;
+            case 'RED':
+                val='可使用';
+                break;
+            case 'YELLOW':
+                val='可使用';
+                break;
+            case 'COMPLETED':
+                val='可使用';
+                break;
+            default:
+                val='无';
+                break;
+        }
+        return val;
+    }
+});

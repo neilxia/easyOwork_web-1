@@ -134,11 +134,11 @@ function noticelistCtrl(){
 }
 
 function noticeviewCtrl(){
-    return['$scope', '$modal' ,'$compile','$state','noticeService','MsgService','reportService','LocalStorage','Common',function($scope,$modal,$compile,$state,noticeService,MsgService,reportService,LocalStorage,Common){
+    return['$scope','$rootScope', '$modal' ,'$compile','$state','noticeService','MsgService','reportService','LocalStorage','Common',function($scope,$rootScope,$modal,$compile,$state,noticeService,MsgService,reportService,LocalStorage,Common){
         $scope.initFun=function(){
             inquiryAnnouncementsFun();
         }
-//查询公告
+        //查询公告
         function inquiryAnnouncementsFun(){
             var promise = noticeService.inquiryAnnouncements({body:{}});
             promise.success(function(data, status, headers, config){
@@ -146,7 +146,15 @@ function noticeviewCtrl(){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                     $scope.inquiryAnnouncementsData=data.body.data.announcements;
-                    $scope.rowview(data.body.data.announcements[0])
+                    debugger;
+                    var thedata = $rootScope.$stateParams.data;
+                    if(thedata){
+                        $scope.rowview(thedata);
+                        $scope.thedataname=thedata.name;
+                    }else{
+                        $scope.rowview(data.body.data.announcements[0]);
+                        $scope.thedataname=data.body.data.announcements[0].name;
+                    }
                 }else{
                     MsgService.tomsg(sts.errorDesc);
                 }

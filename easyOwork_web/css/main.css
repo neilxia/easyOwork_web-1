@@ -13,7 +13,7 @@
 .personal .introbox li:hover .iconfont{display: inline-block;}
 /*备忘录*/
 .ind_memo_list{}
-.ind_memo_list li{ background-color: #eee; padding: 3px 15px 3px 10px; margin-bottom: 10px; position: relative;}
+.ind_memo_list li{ background-color: #eee; padding: 3px 15px 3px 10px; margin-right: 10px; margin-bottom: 10px; position: relative;}
 .ind_memo_list li .iconfont{ position: absolute; top: 2px; right:5px;}
 /*banner*/
 .ind-flexslider{ width: 100%;  height: 100%; position:relative;}

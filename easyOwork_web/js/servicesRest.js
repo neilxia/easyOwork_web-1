@@ -141,8 +141,8 @@ function MemoService(){
                 return $http.post(AppConfig.BASE_URL+'work/rest/changeMemo',form)
             },
             //5.3.2	B0075-查询备忘录
-            inquiryMemos:function(form){
-                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryMemos',form)
+            inquiryMemo:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryMemo',form)
             }
         }
     }];
@@ -374,13 +374,25 @@ function projectService(){
             changeProjectDef:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/changeProjectDef',form)
             },
+            //POST 5.11.1	批量删除项目模板
+            deleteProjectDefs:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/deleteProjectDefs',form)
+            },
             //POST 5.11.2	B0052-查询项目模板
             inquiryProjectDef:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryProjectDef',form)
             },
+            //POST 5.11.2	B0052-查询项目模板类型
+            inquiryProjectDefType:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryProjectDefType',form)
+            },
             //POST 5.11.3	B0053-添加/修改/删除项目
             changeProject:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/changeProject',form)
+            },
+            //POST 5.11.3	批量删除项目
+            deleteProjects:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/deleteProjects',form)
             },
             //POST 5.11.4	B0054-添加/删除项目参与人员
             changeUserProject:function(form){

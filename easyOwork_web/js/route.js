@@ -577,7 +577,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             data: { pageTitle: '公告列表'}
         })
         .state('notice.view', {
-            url: "/view",
+            url: "/view:data",
             templateUrl: 'modules/notice/tmp/view.html',
             data: { pageTitle: '公告详情'}
         })
@@ -714,7 +714,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             data: { pageTitle: '项目管理'}
         })
         .state('project.msgdtmain', {
-            url: "/msgdtmain",
+            url: "/msgdtmain?name",
             templateUrl: 'modules/project/tmp/msgdtmain.html',
             data: { pageTitle: '项目详情'}
         })
@@ -736,7 +736,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             data: { pageTitle: '项目模板设置'}
         })
         .state('project.modelphase', {
-            url: "/modelphase",
+            url: "/modelphase?name",
             templateUrl: 'modules/project/tmp/modephase.html',
             data: { pageTitle: '项目模板阶段设置'}
         })

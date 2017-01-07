@@ -24,7 +24,7 @@
                 <td width="300" valign="top" class="bre">
                     <div class="nt_detail_lf" slim-scroll box-height="700">
                         <ul>
-                            <li data-toggle="tab" ng-class="{'active':$index==0}" ng-repeat="data in inquiryAnnouncementsData" ng-click="rowview(data)">
+                            <li data-toggle="tab" ng-class="{'active':data.name==thedataname}" ng-repeat="data in inquiryAnnouncementsData" ng-click="rowview(data)">
                                 <div class="dt">
                                     <!--<span class="iyuan f_r bdrs50 mt8"></span>-->
                                     <span class="f16">{{data.name | characters:10}}</span>

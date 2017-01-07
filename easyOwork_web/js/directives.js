@@ -936,7 +936,6 @@ function selectdepyuan($timeout){
                     //$scope.stafftreeData=yuanData;
                     $scope.radiocheckedFun=function(row){
                         $scope.radiochecked=row;
-                        debugger;
                     }
                     $scope.yourCtrl=function ()  {
                         //var selected_nodes = this.treeInstance.jstree(true).get_selected('full');

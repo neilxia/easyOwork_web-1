@@ -240,9 +240,16 @@ textarea{resize: none;}
 .topnav .rightbox .usrbox .imgbox img{ width: 100%;}
 .topnav .rightbox .usrbox .dropdown-menu{ min-width: 65px;}
 
-.topmenu{ height: 44px; background-color: #f7941d; padding: 0 20px; overflow: hidden;}
-.topmenu a{ float: left; padding: 11px 20px; text-align: center;}
-.topmenu a.active{ background-color: #f89f34;}
+.topmenu{ height: 44px; background-color: #f7941d; padding: 0 20px; }
+.topmenu div > a{ height: 44px; float: left; padding: 11px 26px; text-align: center; overflow: hidden;}
+.topmenu div > a.active{ background-color: #f89f34;}
+.topmenu div .dropdown{}
+
+.topmenu div .dropdown a:hover{ background-color: #f89f34;}
+.topmenu div .dropdown .dropdown-menu .iconfont{ font-size: 18px;}
+.topmenu div .dropdown .dropdown-menu li{padding-top: 5px; padding-bottom: 5px;}
+.topmenu div .dropdown .dropdown-menu a{  color: #444;}
+.topmenu div .dropdown .dropdown-menu a:hover{ color: #fff;}
 
 .topinfo-com{ width: 320px; height: 100%; position: fixed; top: 54px; right: -321px; z-index: 9; background-color: #fff; box-shadow: 0 3px 6px #eee; padding: 10px 15px; border-top: #eee solid 1px;}
 /*.topinfo-com.active{ right:0;}*/
