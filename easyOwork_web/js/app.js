@@ -35,7 +35,7 @@
         'qiyi.my',
         'angularFileUpload',
 
-        'qiyi.project' //项目
+        'qiyi.project', //项目
         //'qiyi.sales',//销售
         //'qiyi.recruitment',//招聘
         //'qiyi.assets'//资产

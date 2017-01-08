@@ -18,22 +18,6 @@ function projectmylistCtrl(){
             pageNum:1,
             pageSize:10
         };
-        //查询项目模板
-        function inquiryProjectDefFun(){
-            $scope.options={};
-            var promise = projectService.inquiryProjectDef({body:$scope.options});
-            promise.success(function(data, status, headers, config){
-                var sts=data.body.status;
-                if(sts.statusCode==0){
-                    $scope.projectDefs=data.body.data.projectDefs;
-                }else{
-                    MsgService.tomsg(data.body.status.errorDesc);
-                }
-            });
-            promise.error(function(data, status, headers, config){
-                MsgService.tomsg(data.body.status.errorDesc);
-            });
-        }
 
         //查询项目
         function inquiryMyProjectFun(){
@@ -47,6 +31,7 @@ function projectmylistCtrl(){
                 }
             };
             var promise = projectService.inquiryMyProject({body:$scope.options});
+            //var promise = projectService.inquiryProject({body:$scope.options});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
@@ -94,17 +79,11 @@ function projectmydtmainlistCtrl(){
 
         /*=======任务=======*/
         //添加/修改/删除
-        function changeProjectTaskFun(){
+        function changeProjectTaskFun(change,row){
             $scope.options={
                 'actionType':change,		//ADD, MODIFY, DELETE
-                "taskName":oldrow.taskName || '',	//任务名称
-                "newTaskName":row.taskName || '',	//新任务名称
-                "description":row.description || '',	//任务描述
-                "status":row.status || '',	//任务状态
-                "startDate":startDate || '',	//任务开始时间
-                "endDate":endDate || '',	//任务结束时间
-                "fromUserDTO":userinfo,
-                "toUserDTO":row.mytask[0],
+                "taskName":row.taskName || '',	//任务名称
+                "status":'COMPLETED',	//任务状态
                 "projectDTO":{
                     "projectName":$scope.datadt.projectName || ''	//项目名称
                 },
@@ -112,6 +91,7 @@ function projectmydtmainlistCtrl(){
                     "projectStageName":row.projectStageName || ''	//项目阶段名称
                 }
             };
+            debugger;
             var promise = projectService.changeProjectTask({body:$scope.options});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
