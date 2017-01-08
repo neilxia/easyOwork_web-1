@@ -725,7 +725,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             data: { pageTitle: '我参与的项目'}
         })
         .state('project.mydtmain', {
-            url: "/mydtmain",
+            url: "/mydtmain?name",
             templateUrl: 'modules/project/tmp/mydtmain.html',
             data: { pageTitle: '项目详情'}
         })

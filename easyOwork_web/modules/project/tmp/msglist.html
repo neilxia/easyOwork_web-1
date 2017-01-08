@@ -13,8 +13,7 @@
     <div class="btnbox">
         <form class="f_r form-inline">
             <div selectdepyuan yuangong="1" myselected="ygselected" selectedallarr="ygselectedallarr" size="'sm'" class="wd170 dib" title="负责人"></div>
-            <select class="form-control input-sm dib" ng-model="selectedStatus" ng-options="x.val as x.name for x in projectStatusArr">
-                <option value="">状态</option>
+            <select class="form-control input-sm dib" ng-init="selectedStatus=''" ng-model="selectedStatus" ng-options="x.val as x.name for x in projectStatusArr">
             </select>
             <span class="form-group-sm search-group dib">
                 <input type="text" class="form-control wd180" ng-model="sltname" placeholder="搜索名称">

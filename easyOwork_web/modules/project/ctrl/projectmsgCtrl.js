@@ -7,6 +7,7 @@ function projectmsglistCtrl(){
             inquiryProjectFun();//查询项目
         };
         $scope.projectStatusArr=[
+            {name:'全部状态',val:''},
             {name:'正常',val:'GREEN'},
             {name:'轻度',val:'RED'},
             {name:'严重',val:'YELLOW'},
@@ -113,7 +114,6 @@ function projectmsglistCtrl(){
             promise.error(function(data, status, headers, config){
                 MsgService.tomsg(data.body.status.errorDesc);
             });
-            return promise;
         }
 
         //新增
@@ -220,7 +220,7 @@ function projectmsglistCtrl(){
 }
 //子列表
 function projectmsgdtmainlistCtrl(){
-    return['$rootScope','$scope','$modal','projectService','MsgService','LocalStorage','Common','OSSService','FileUploader',function($rootScope,$scope,$modal,projectService,MsgService,LocalStorage,Common,OSSService,FileUploader){
+    return['$rootScope','$scope','$modal','$filter','projectService','MsgService','LocalStorage','Common','OSSService','FileUploader',function($rootScope,$scope,$modal,$filter,projectService,MsgService,LocalStorage,Common,OSSService,FileUploader){
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.initFun = function(){
             inquiryProjectFun();
@@ -235,7 +235,28 @@ function projectmsgdtmainlistCtrl(){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                     $scope.datadt=data.body.data.projects[0];
-                    debugger;
+                }else{
+                    MsgService.tomsg(data.body.status.errorDesc);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.tomsg(data.body.status.errorDesc);
+            });
+        }
+
+        //添加/修改/删除
+        $scope.changeProjectFun=function (ind){
+            $scope.options={
+                "actionType":'MODIFY',		//ADD, MODIFY, DELETE
+                "projectName":$scope.datadt.projectName || '',		//项目名称
+                "currentStageSeqNo":ind+1	//新项目名称
+            };
+            debugger;
+            var promise = projectService.changeProject({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    inquiryProjectFun();
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
                 }
@@ -249,33 +270,35 @@ function projectmsgdtmainlistCtrl(){
         //添加/修改/删除
         function changeProjectTaskFun(change,row,$modalInstance,oldrow){
             if(oldrow==undefined){oldrow=row}
-            $scope.options={
-                'actionType':change,		//ADD, MODIFY, DELETE
-                "taskName":oldrow.taskName || '',	//任务名称
-                "newTaskName":row.taskName || '',	//新任务名称
-                "description":row.description || '',	//任务描述
-                "status":row.status || '',	//任务状态
-                "startDate":row.startDate || '',	//任务开始时间
-                "endDate":row.endDate || '',	//任务结束时间
-                "fromUserDTO":{	//谁分配任务
-                    "id":row.xxxx || '',	//员工号
-                    "personalEmail":row.xxxx || '',	//邮件地址
-                    "personalPhoneCountryCode":row.xxxx || '',	//电话号码国家代码
-                    "personalPhone":row.xxxx || '',		//电话号码
-                },
-                "toUserDTO":{	//分配给谁
-                    "id":row.xxxx || '',	//员工号
-                    "personalEmail":row.xxxx || '',	//邮件地址
-                    "personalPhoneCountryCode":row.xxxx || '',	//电话号码国家代码
-                    "personalPhone":row.xxxx || '',		//电话号码
-                },
-                "projectDTO":{
-                    "projectName":row.projectName || ''	//项目名称
-                },
-                "projectStageDTO":{
-                    "projectStageName":row.projectStageName || ''	//项目阶段名称
-                }
-            };
+            var startDate=$filter('date')(row.startDate,'yyyy-MM-dd');
+            var endDate=$filter('date')(row.endDate,'yyyy-MM-dd');
+            if(change!='DELETE'){
+                $scope.options={
+                    'actionType':change,		//ADD, MODIFY, DELETE
+                    "taskName":oldrow.taskName || '',	//任务名称
+                    "newTaskName":row.taskName || '',	//新任务名称
+                    "description":row.description || '',	//任务描述
+                    "status":row.status || '',	//任务状态
+                    "startDate":startDate || '',	//任务开始时间
+                    "endDate":endDate || '',	//任务结束时间
+                    "fromUserDTO":userinfo,
+                    "toUserDTO":row.mytask[0],
+                    "projectDTO":{
+                        "projectName":$scope.datadt.projectName || ''	//项目名称
+                    },
+                    "projectStageDTO":{
+                        "projectStageName":row.projectStageName || ''	//项目阶段名称
+                    }
+                };
+            }else{
+                $scope.options={
+                    'actionType':change,		//ADD, MODIFY, DELETE
+                    "taskName":row.taskName || '',	//任务名称
+                    "projectDTO":{
+                        "projectName":$scope.datadt.projectName || ''	//项目名称
+                    }
+                };
+            }
             var promise = projectService.changeProjectTask({body:$scope.options});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
@@ -291,33 +314,26 @@ function projectmsgdtmainlistCtrl(){
             });
             return promise;
         }
-
         //新增
-        $scope.addmodelFun = function () {
+        $scope.addTask = function () {
             var modalInstance = $modal.open({
-                templateUrl: 'addmodel.html',
+                templateUrl: 'addTask.html',
                 controller: modalCtrl,
                 resolve:{
-                    Types : function() {
-                        return $scope.projectDefTypes;
+                    Stage : function() {
+                        return $scope.datadt.projectStageDTOList;
                     }
                 }
             });
-            function modalCtrl ($scope, $modalInstance,Types) {
+            function modalCtrl ($scope, $modalInstance,Stage) {
                 $scope.thename='新增';
-                $scope.thisTypes=Types;
-                $scope.selectedName=Types[0];
-                $scope.projectDefDomainnew=null;
-                $scope.modalform={
-                    "projectDefName":"",
-                    //"newProjectDefName":"",
-                    "projectDefDesc":""
-                };
+                $scope.thisStage=Stage;
+                $scope.modalform={};
+                $scope.modalform.projectStageName=Stage[0].projectStageName;
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
-                    $scope.modalform.projectDefDomain=$scope.selectedName=='其他'?$scope.projectDefDomainnew:$scope.selectedName;
-                    changeProjectDefFun('ADD',$scope.modalform,$modalInstance);
+                    changeProjectTaskFun('ADD',$scope.modalform,$modalInstance);
                 };
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -325,34 +341,26 @@ function projectmsgdtmainlistCtrl(){
             };
         };
         //编辑
-        $scope.editFun = function (row) {
+        $scope.editTask = function (row) {
             var oldrow=angular.copy(row);
             var modalInstance = $modal.open({
-                templateUrl: 'addmodel.html',
-                //size:'sm',
+                templateUrl: 'addTask.html',
                 controller: modalCtrl,
                 resolve:{
-                    Types : function() {
-                        return $scope.projectDefTypes;
+                    Stage : function() {
+                        return $scope.datadt.projectStageDTOList;
                     }
                 }
             });
-            function modalCtrl ($scope, $modalInstance,Types) {
+            function modalCtrl ($scope, $modalInstance,Stage) {
                 $scope.thename='编辑';
                 $scope.modalform=row;
-                $scope.thisTypes=Types;
-                var index = Types.indexOf(row.projectDefDomain);
-                if (index > -1) {
-                    $scope.selectedName=row.projectDefDomain;
-                    $scope.projectDefDomainnew='';
-                }else{
-                    $scope.selectedName='其他';
-                    $scope.projectDefDomainnew=row.projectDefDomain;
-                }
+                $scope.thisStage=Stage;
+                $scope.modalform.taskall=[[],[row.toUserDTO]];
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
-                    changeProjectDefFun('MODIFY',$scope.modalform,$modalInstance,oldrow);
+                    changeProjectTaskFun('MODIFY',$scope.modalform,$modalInstance,oldrow);
                 };
                 $scope.cancel = function () {
                     angular.copy(oldrow, row);
@@ -360,32 +368,29 @@ function projectmsgdtmainlistCtrl(){
                 };
             };
         };
-
-        //批量
-        $scope.delete=function(row){
+        //删除
+        $scope.deleteTask=function(row){
             Common.openConfirmWindow().then(function() {
-                changeProjectDefFun('DELETE',row);
+                changeProjectTaskFun('DELETE',row);
             });
         };
-
         //批量删除
-        $scope.deleteAll=function(){
+        $scope.deleteAllTask=function(){
             Common.openConfirmWindow().then(function() {
                 var selectedItems=[];
-                angular.forEach($scope.datalist, function(item) {
+                angular.forEach($scope.datadt.projectTaskDTOList, function(item) {
                     if (item.checked == true) {
-                        selectedItems.push({"projectDefName":item.projectDefName});
+                        selectedItems.push({"taskName":item.taskName,"projectDTO":{"projectName":$scope.datadt.projectName || ''}});
                     }
                 });
                 $scope.options={
-                    projectDefs:selectedItems
+                    projectTasks:selectedItems
                 };
-                debugger;
-                var promise = projectService.deleteProjectDefs({body:$scope.options});
+                var promise = projectService.deleteProjectTasks({body:$scope.options});
                 promise.success(function(data, status, headers, config){
                     var sts=data.body.status;
                     if(sts.statusCode==0){
-                        inquiryProjectDefFun();
+                        inquiryProjectFun();
                     }else{
                         MsgService.tomsg(data.body.status.errorDesc);
                     }
@@ -398,6 +403,376 @@ function projectmsgdtmainlistCtrl(){
 
 
 
+
+        /*=======文档=======*/
+        //添加/修改/删除
+        function changeProjectDocumentFun(change,row,$modalInstance,oldrow){
+            if(oldrow==undefined){oldrow=row}
+            if(change!='DELETE'){
+                $scope.options={
+                    'actionType':change,		//ADD, MODIFY, DELETE
+                    "documentName":oldrow.documentName || '',	//文档名称
+                    "newDocumentName":row.documentName || '',	//新文档名称
+                    "documentUrl":row.documentUrl || 'www.baidu.com',		//文档地址
+                    "projectDTO":{
+                        "projectName":$scope.datadt.projectName || ''	//项目名称
+                    },
+                    "userDTO":userinfo
+                };
+            }else{
+                $scope.options={
+                    'actionType':change,		//ADD, MODIFY, DELETE
+                    "documentName":row.documentName || '',	//文档名称
+                    "projectDTO":{
+                        "projectName":$scope.datadt.projectName || ''	//项目名称
+                    }
+                };
+            }
+            debugger;
+            var promise = projectService.changeProjectDocument({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    inquiryProjectFun();
+                    $modalInstance.close();
+                }else{
+                    MsgService.tomsg(data.body.status.errorDesc);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.tomsg(data.body.status.errorDesc);
+            });
+            return promise;
+        }
+        //新增
+        $scope.addDocument = function () {
+            var modalInstance = $modal.open({
+                templateUrl: 'addDocument.html',
+                controller: modalCtrl,
+                resolve:{
+                    Stage : function() {
+                        return $scope.datadt.projectStageDTOList;
+                    }
+                }
+            });
+            function modalCtrl ($scope, $modalInstance,Stage) {
+                $scope.thename='新增';
+                $scope.thisStage=Stage;
+                $scope.modalform={};
+                $scope.modalform.projectStageName=Stage[0].projectStageName;
+                //提交增加
+                $scope.ok = function (state) {
+                    if(!state){return;} //状态判断
+                    changeProjectDocumentFun('ADD',$scope.modalform,$modalInstance);
+                };
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            };
+        };
+        $scope.downDocument=function(){
+
+        }
+        //编辑
+        $scope.editDocument = function (row) {
+            var oldrow=angular.copy(row);
+            var modalInstance = $modal.open({
+                templateUrl: 'addDocument.html',
+                controller: modalCtrl,
+                resolve:{
+                    Stage : function() {
+                        return $scope.datadt.projectStageDTOList;
+                    }
+                }
+            });
+            function modalCtrl ($scope, $modalInstance,Stage) {
+                $scope.thename='编辑';
+                $scope.modalform=row;
+                $scope.thisStage=Stage;
+                $scope.modalform.taskall=[[],[row.toUserDTO]];
+                //提交增加
+                $scope.ok = function (state) {
+                    if(!state){return;} //状态判断
+                    changeProjectDocumentFun('MODIFY',$scope.modalform,$modalInstance,oldrow);
+                };
+                $scope.cancel = function () {
+                    angular.copy(oldrow, row);
+                    $modalInstance.dismiss('cancel');
+                };
+            };
+        };
+        //删除
+        $scope.deleteDocument=function(row){
+            Common.openConfirmWindow().then(function() {
+                changeProjectDocumentFun('DELETE',row);
+            });
+        };
+        //批量删除
+        $scope.deleteAllDocument=function(){
+            Common.openConfirmWindow().then(function() {
+                var selectedItems=[];
+                angular.forEach($scope.datadt.projectDocumentDTOList, function(item) {
+                    if (item.checked == true) {
+                        selectedItems.push({"documentName":item.documentName,"projectDTO":{"projectName":$scope.datadt.projectName || ''}});
+                    }
+                });
+                $scope.options={
+                    projectDocumentList:selectedItems
+                };
+                var promise = projectService.deleteProjectDocuments({body:$scope.options});
+                promise.success(function(data, status, headers, config){
+                    var sts=data.body.status;
+                    if(sts.statusCode==0){
+                        inquiryProjectFun();
+                    }else{
+                        MsgService.tomsg(data.body.status.errorDesc);
+                    }
+                });
+                promise.error(function(data, status, headers, config){
+                    MsgService.tomsg(data.body.status.errorDesc);
+                });
+            });
+        };
+
+
+
+        /*=======阶段管理=======*/
+        //添加/修改/删除
+        function updateProjectStageFun(change,row,$modalInstance,oldrow){
+            if(oldrow==undefined){oldrow=row}
+            $scope.options={
+                "projectName":$scope.datadt.projectName,	//项目名称
+                "projectStageName":row.projectStageName,	//项目阶段名称
+                "userDTO":row.userDTO[0]
+            };
+            var promise = projectService.updateProjectStage({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    inquiryProjectFun();
+                    $modalInstance.close();
+                }else{
+                    MsgService.tomsg(data.body.status.errorDesc);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.tomsg(data.body.status.errorDesc);
+            });
+            return promise;
+        }
+        //编辑
+        $scope.editStage = function (row) {
+            var oldrow=angular.copy(row);
+            var modalInstance = $modal.open({
+                templateUrl: 'addStage.html',
+                size:'sm',
+                controller: modalCtrl,
+                resolve:{
+                    Stage : function() {
+                        return $scope.datadt.projectStageDTOList;
+                    }
+                }
+            });
+            function modalCtrl ($scope, $modalInstance,Stage) {
+                $scope.thename='编辑';
+                $scope.modalform=row;
+                $scope.modalform.userDTOall=[[],[row.userDTO]];
+                //提交增加
+                $scope.ok = function (state) {
+                    if(!state){return;} //状态判断
+                    updateProjectStageFun('MODIFY',$scope.modalform,$modalInstance,oldrow);
+                };
+                $scope.cancel = function () {
+                    angular.copy(oldrow, row);
+                    $modalInstance.dismiss('cancel');
+                };
+            };
+        };
+
+/*        //新增
+        $scope.addStage = function () {
+            var modalInstance = $modal.open({
+                templateUrl: 'addStage.html',
+                controller: modalCtrl,
+                resolve:{
+                    Stage : function() {
+                        return $scope.datadt.projectStageDTOList;
+                    }
+                }
+            });
+            function modalCtrl ($scope, $modalInstance,Stage) {
+                $scope.thename='新增';
+                $scope.thisStage=Stage;
+                $scope.modalform={};
+                $scope.modalform.projectStageName=Stage[0].projectStageName;
+                //提交增加
+                $scope.ok = function (state) {
+                    if(!state){return;} //状态判断
+                    updateProjectStageFun('ADD',$scope.modalform,$modalInstance);
+                };
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            };
+        };
+        //删除
+        $scope.deleteStage=function(row){
+            Common.openConfirmWindow().then(function() {
+                updateProjectStageFun('DELETE',row);
+            });
+        };
+        //批量删除
+        $scope.deleteAllStage=function(){
+            Common.openConfirmWindow().then(function() {
+                var selectedItems=[];
+                angular.forEach($scope.datadt.projectStageDTOList, function(item) {
+                    if (item.checked == true) {
+                        selectedItems.push({"projectName":item.projectName});
+                    }
+                });
+                $scope.options={
+                    projectDTO:selectedItems
+                };
+                var promise = projectService.deleteProjectStages({body:$scope.options});
+                promise.success(function(data, status, headers, config){
+                    var sts=data.body.status;
+                    if(sts.statusCode==0){
+                        inquiryProjectFun();
+                    }else{
+                        MsgService.tomsg(data.body.status.errorDesc);
+                    }
+                });
+                promise.error(function(data, status, headers, config){
+                    MsgService.tomsg(data.body.status.errorDesc);
+                });
+            });
+        };*/
+
+
+
+        /*=======参与人员=======*/
+        //添加/修改/删除
+        function changeUserProjectFun(change,row,$modalInstance,oldrow){
+            if(oldrow==undefined){oldrow=row}
+            if(change!='DELETE'){
+                $scope.options={
+                    'actionType':change,		//ADD, MODIFY, DELETE
+                    "userDTO":row.userDTO[0],
+                    "projectDTO":{
+                        "projectName":$scope.datadt.projectName	//项目名称
+                    }
+                };
+            }else{
+                $scope.options={
+                    'actionType':change,		//ADD, MODIFY, DELETE
+                    "userDTO":row,
+                    "projectDTO":{
+                        "projectName":$scope.datadt.projectName	//项目名称
+                    }
+                };
+            }
+            var promise = projectService.changeUserProject({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    inquiryProjectFun();
+                    $modalInstance.close();
+                }else{
+                    MsgService.tomsg(data.body.status.errorDesc);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.tomsg(data.body.status.errorDesc);
+            });
+            return promise;
+        }
+        //新增
+        $scope.addUserProject = function () {
+            var modalInstance = $modal.open({
+                templateUrl: 'addUserProject.html',
+                size:'sm',
+                controller: modalCtrl,
+                resolve:{
+                    Stage : function() {
+                        return $scope.datadt.projectStageDTOList;
+                    }
+                }
+            });
+            function modalCtrl ($scope, $modalInstance,Stage) {
+                $scope.thename='新增';
+                $scope.thisStage=Stage;
+                $scope.modalform={};
+                $scope.modalform.projectStageName=Stage[0].projectStageName;
+                //提交增加
+                $scope.ok = function (state) {
+                    if(!state){return;} //状态判断
+                    changeUserProjectFun('ADD',$scope.modalform,$modalInstance);
+                };
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            };
+        };
+        //删除
+        $scope.deleteUserProject=function(row){
+            Common.openConfirmWindow().then(function() {
+                changeUserProjectFun('DELETE',row);
+            });
+        };
+        //批量删除
+        $scope.deleteAllUserProject=function(){
+            Common.openConfirmWindow().then(function() {
+                var selectedItems=[];
+                angular.forEach($scope.datadt.projectUserDTOList, function(item) {
+                    if (item.checked == true) {
+                        selectedItems.push({"userDTO":item,"projectDTO":{"projectName":$scope.datadt.projectName}});
+                    }
+                });
+                $scope.options={
+                    userProjectList:selectedItems
+                };
+                var promise = projectService.deleteProjectUsers({body:$scope.options});
+                promise.success(function(data, status, headers, config){
+                    var sts=data.body.status;
+                    if(sts.statusCode==0){
+                        inquiryProjectFun();
+                    }else{
+                        MsgService.tomsg(data.body.status.errorDesc);
+                    }
+                });
+                promise.error(function(data, status, headers, config){
+                    MsgService.tomsg(data.body.status.errorDesc);
+                });
+            });
+        };
+
+
+        /*=======评论动态=======*/
+        //添加/修改/删除
+        function addCommentToProjectFun(change,row,$modalInstance,oldrow){
+            if(oldrow==undefined){oldrow=row}
+            $scope.options={
+                "comment":row.comment,
+                "userDTO":userinfo,
+                "projectDTO":{
+                    "projectName":$scope.datadt.projectName	//项目名称
+                }
+            };
+            var promise = projectService.addCommentToProject({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    inquiryProjectFun();
+                    $modalInstance.close();
+                }else{
+                    MsgService.tomsg(data.body.status.errorDesc);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.tomsg(data.body.status.errorDesc);
+            });
+            return promise;
+        }
         //发布动态
         $scope.adddynamic = function () {
             var modalInstance = $modal.open({
@@ -407,93 +782,17 @@ function projectmsgdtmainlistCtrl(){
             });
             function modalCtrl ($scope, $modalInstance) {
                 $scope.thename='新增';
+                $scope.modalform={};
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
-                    //$modalInstance.close();
+                    addCommentToProjectFun('ADD',$scope.modalform,$modalInstance);
                 };
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                 };
             };
         };
-
-        //新增
-        $scope.addmodelFun = function () {
-            var modalInstance = $modal.open({
-                templateUrl: 'addmodel.html',
-                //size:'sm',
-                controller: modalCtrl
-            });
-            function modalCtrl ($scope, $modalInstance) {
-                $scope.thename='新增';
-                //提交增加
-                $scope.ok = function (state) {
-                    if(!state){return;} //状态判断
-                    //$modalInstance.close();
-                };
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            };
-        };
-        //编辑社保
-        $scope.editmodelFun = function () {
-            var modalInstance = $modal.open({
-                templateUrl: 'addmodel.html',
-                //size:'sm',
-                controller: modalCtrl
-            });
-            function modalCtrl ($scope, $modalInstance) {
-                $scope.thename='编辑';
-                //提交增加
-                $scope.ok = function (state) {
-                    if(!state){return;} //状态判断
-                    //$modalInstance.close();
-                };
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            };
-        };
-
-        //批量
-        $scope.delete2=function(row){
-            Common.openConfirmWindow().then(function() {
-                changeshebaoFun('DELETE',row);
-            });
-        };
-
-        //批量删除
-        $scope.deleteAll=function(){
-            Common.openConfirmWindow().then(function() {
-                deleteAllEmployees();
-            });
-        };
-        function deleteAllsx(){
-            var datalist = $scope.datalist;
-            angular.forEach(datalist, function(item) {
-                if (item.checked == true) {
-                    selectedItems.push({"userUuid":item.userUuid});
-                }
-            });
-            $scope.options={
-                userList:selectedItems
-            };
-            var promise = employeesService.deleteEmployees({body:$scope.options});
-            promise.success(function(data, status, headers, config){
-                var sts=data.body.status;
-                if(sts.statusCode==0){
-                    inquiryEmployeeFun();
-                }else{
-                    MsgService.tomsg(data.body.status.errorDesc);
-                }
-            });
-            promise.error(function(data, status, headers, config){
-                MsgService.tomsg(data.body.status.errorDesc);
-            });
-        }
-
 
         //上传开始
         var uploader = $scope.uploader = new FileUploader({

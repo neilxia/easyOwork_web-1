@@ -1,4 +1,4 @@
-<div id="page-wrapper" ng-controller="projectmsgdtmainlistCtrl" ng-init="initFun()">
+<div id="page-wrapper" ng-controller="projectmylistCtrl" ng-init="initFun()">
     <!--主要内容-->
     <div class="payetilebox">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="init()" title="刷新"></a></div>
@@ -12,13 +12,10 @@
     </ol>
     <div class="btnbox">
         <form class="f_r form-inline">
-            <select class="form-control input-sm" ng-model="selectedproclass" ng-options="x.name for x in prosclasslist">
-                <option value="">全部负责人员</option>
+            <div selectdepyuan yuangong="1" myselected="ygselected" selectedallarr="ygselectedallarr" size="'sm'" class="wd170 dib" title="负责人"></div>
+            <select class="form-control input-sm dib" ng-init="selectedStatus=''" ng-model="selectedStatus" ng-options="x.val as x.name for x in projectStatusArr">
             </select>
-            <select class="form-control input-sm" ng-model="selectedproclass" ng-options="x.name for x in prosclasslist">
-                <option value="">全部状态</option>
-            </select>
-            <span class="form-group-sm search-group">
+            <span class="form-group-sm search-group dib">
                 <input type="text" class="form-control wd180" ng-model="sltname" placeholder="搜索名称">
                 <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
             </span>
@@ -31,7 +28,8 @@
             <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
                 <thead>
                 <tr>
-                    <th class="pl15">项目名称</th>
+                    <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
+                    <th>项目名称</th>
                     <th width="100">项目编号</th>
                     <th width="300">完成进度</th>
                     <th width="100">负责人员</th>
@@ -40,24 +38,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td class="pl15">成都尔康互动有限公司</td>
-                    <td>GI8639887</td>
+                <!--'projectDefDomain':selectedType==null?'':selectedType,-->
+                <tr ng-repeat="data in datalist | filter:{'userDTO':ygselected[0].name,'projectStatus':selectedStatus,'projectName':sltname} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
+                    <td>{{data.projectName}}</td>
+                    <td>{{data.projectId}}</td>
                     <td>
-                        <progressbar value="40" type="warning" class="progress-striped progress-small active pct80 f_l"></progressbar>
-                        <div class="f_l ml5 mt-3">40%</div>
+                        <progressbar value="data.projectPercentage" type="warning" class="progress-striped progress-small active pct80 f_l"></progressbar>
+                        <div class="f_l ml5 mt-3">{{data.projectPercentage}}%</div>
 
                         <!--<progressbar value="40" type="success" class="progress-striped progress-small active"></progressbar>-->
                     </td>
-                    <td class="orange">樱空释</td>
-                    <td>需求调研</td>
-                    <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="project.mydtmain"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editstaff(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
-                </tr>
-                <tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
-                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
-                    <td>{{data.name}}</td>
-                    <td>{{data.orgList[0].name}}</td>
-                    <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="project.mydtmain"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editstaff(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                    <td class="orange">{{data.userDTO.name}}</td>
+                    <td>{{data.projectStatus | pjstatus}}</td>
+                    <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="project.mydtmain({name:data.projectName})"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
                 </tr>
                 </tbody>
             </table>
@@ -67,8 +61,6 @@
             <div class="g9">共 {{thispages.total}} 条数据</div>
         </div>
     </div>
-
-
     <!-- Footer -->
     <div ng-include="'modules/common/footer.html'"></div>
 </div>

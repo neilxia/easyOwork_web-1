@@ -398,10 +398,18 @@ function projectService(){
             changeUserProject:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/changeUserProject',form)
             },
-            //POST 5.11.5	B0055-添加/删除项目阶段参与人员
+            //POST 5.11.4	批量删除项目参与人员
+            deleteProjectUsers:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/deleteProjectUsers',form)
+            },
+            /*//POST 5.11.5	B0055-添加/删除项目阶段参与人员
             changeUserProjectStage:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/changeUserProjectStage',form)
             },
+            //POST 5.11.5	批量删除项目阶段参与人员
+            deleteProjectStageUsers:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/deleteProjectStageUsers',form)
+            },*/
             //POST 5.11.6	B0056-更新项目阶段信息
             updateProjectStage:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/updateProjectStage',form)
@@ -414,6 +422,10 @@ function projectService(){
             changeProjectTask:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/changeProjectTask',form)
             },
+            //POST 5.11.8	批量删除项目任务
+            deleteProjectTasks:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/deleteProjectTasks',form)
+            },
             //POST 5.11.9	B0059-添加项目任务评论
             addCommentToProjectTask:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/addCommentToProjectTask',form)
@@ -422,9 +434,17 @@ function projectService(){
             changeProjectDocument:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/changeProjectDocument',form)
             },
+            //POST 5.11.10	批量删除项目文档
+            deleteProjectDocuments:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/deleteProjectDocuments',form)
+            },
             //POST 5.11.11	B0061-查询项目
             inquiryProject:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryProject',form)
+            },
+            //POST 5.11.11	查询我参与的项目
+            inquiryMyProject:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryMyProject',form)
             }
         }
     }];
