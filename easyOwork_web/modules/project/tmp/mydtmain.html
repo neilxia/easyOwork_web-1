@@ -1,0 +1,405 @@
+<style>
+    .towntabbox02 ul{ padding-left: 20px;}
+</style>
+<div id="page-wrapper" ng-controller="projectmsgdtmainlistCtrl" ng-init="initFun()">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="init()" title="刷新"></a></div>
+        <ul>
+            <li class="active">项目详情</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li>我参与的项目</li>
+        <li class="active">项目详情</li>
+    </ol>
+    <div class="btnbox">
+        <button class="btn btn-default btn-sm" ng-click="adddynamic()">发布动态</button>
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <div class="p20">
+                <table class="line30td f12" cellspacing="0" cellpadding="0" width="100%;">
+                    <tr>
+                        <td width="250"><span class="g9">客户名称：</span>成都尔康互动有限公司</td>
+                        <td width="250"><span class="g9">项目编号：</span>GI7715661</td>
+                        <td width="250"><span class="g9">项目名称：</span>机顶盒体验设计</td>
+                        <td width="250"><span class="g9">负责人员：</span><span class="orange">樱空释</span></td>
+                        <td width="300"><span class="g9">合同金额：</span>￥360000.00</td>
+                    </tr>
+                    <tr>
+                        <td><span class="g9">项目成本：</span>￥360000.00</td>
+                        <td><span class="g9">开始/结束：</span>2016-10-12~2016-12-12</td>
+                        <td><span class="g9">项目阶段：</span><span class="green">功能设计</span></td>
+                        <td colspan="2"><span class="g9">项目描述：</span>这里是项目简要的描述文字</td>
+                    </tr>
+                </table>
+                <div class="project-mgsdtbox mt20">
+                    <table class="line30td f12" cellspacing="0" cellpadding="0" width="100%;">
+                        <tr>
+                            <td width="60" valign="top">项目阶段</td>
+                            <td>
+                                <ul class="project-mgsdt">
+                                    <li class="sucs">
+                                        <div class="titlebox"><span class="sign bdrs50"></span></div>
+                                        <div class="textbox">
+                                            <div>需求调研</div>
+                                            <div class="g9 f12">姜小文</div>
+                                        </div>
+                                    </li>
+                                    <li class="sucs">
+                                        <div class="titlebox"><span class="sign bdrs50"></span></div>
+                                        <div class="textbox">
+                                            <div>功能设计</div>
+                                            <div class="g9 f12">姜小文</div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="titlebox"><button class="btn btn-default btn-xs mt-5">完成</button></div>
+                                        <div class="textbox">
+                                            <div>需求调研</div>
+                                            <div class="g9 f12">姜小文</div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="titlebox"><span class="sign bdrs50"></span></div>
+                                        <div class="textbox">
+                                            <div>需求调研</div>
+                                            <div class="g9 f12">姜小文</div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="titlebox"><span class="sign bdrs50"></span></div>
+                                        <div class="textbox">
+                                            <div>需求调研</div>
+                                            <div class="g9 f12">姜小文</div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="mt10">
+                <div tabset class="towntabbox01 towntabbox02">
+                    <div tab>
+                        <div tab-heading>任务列表({{inquiryProcessesData.length}})</div>
+                        <div class="ind-medo_com" slim-scroll box-height="300">
+                            <div class="btnbox">
+                                <button class="btn btn-default btn-sm" ng-click="addmodelFun()">新增</button>
+                                <button class="btn btn-default btn-sm" ng-click="addmodelFun()">删除</button>
+                            </div>
+                            <table class="table table-hover bbe" cellspacing="0" cellpadding="0" width="100%;">
+                                <thead>
+                                <tr>
+                                    <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
+                                    <th>任务描述</th>
+                                    <th width="100">项目阶段</th>
+                                    <th width="160">开始/结束时间</th>
+                                    <th width="280">实施人列表</th>
+                                    <th width="90">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
+                                    <td>机顶盒体验设计</td>
+                                    <td>测试</td>
+                                    <td>2016-10-12 ~ 2016-12-12</td>
+                                    <td>张晓文，王海鸥，王杏姐，张帆董</td>
+                                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editstaff(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                                </tr>
+
+                                <tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
+                                    <td>{{data.name}}</td>
+                                    <td>{{data.orgList[0].name}}</td>
+                                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editstaff(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div tab>
+                        <div tab-heading>文档列表({{inquiryHandData.length}})</div>
+                        <div class="ind-medo_com" slim-scroll box-height="300">
+                            <div class="btnbox">
+                                <button class="btn btn-default btn-sm" ng-click="addmodelFun()">新增</button>
+                                <button class="btn btn-default btn-sm" ng-click="addmodelFun()">删除</button>
+                            </div>
+                            <table class="table table-hover bbe" cellspacing="0" cellpadding="0" width="100%;">
+                                <thead>
+                                <tr>
+                                    <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
+                                    <th>文档名称</th>
+                                    <th width="100">项目阶段</th>
+                                    <th width="160">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
+                                    <td>用户体验设计相关文档</td>
+                                    <td>测试</td>
+                                    <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="s_issueDetail(data)"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="下载" ng-click="s_issueDetail(data)"><i class="iconfont icon-xiazai f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editstaff(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                                </tr>
+                                <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div tab>
+                        <div tab-heading>报销列表({{inquiryHandData.length}})</div>
+                        <div class="ind-medo_com" slim-scroll box-height="300">
+                            <div class="btnbox">
+                                <button class="btn btn-default btn-sm" ng-click="addmodelFun()">新增</button>
+                                <button class="btn btn-default btn-sm" ng-click="addmodelFun()">删除</button>
+                            </div>
+                            <table class="table table-hover bbe" cellspacing="0" cellpadding="0" width="100%;">
+                                <thead>
+                                <tr>
+                                    <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
+                                    <th>报销事项</th>
+                                    <th width="100">报销人员</th>
+                                    <th width="100">报销金额</th>
+                                    <th width="100">报销状态</th>
+                                    <th width="90">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
+                                    <td>用户体验设计相关文档</td>
+                                    <td><span class="orange">张小凡</span></td>
+                                    <td>￥6350.00</td>
+                                    <td>待处理</td>
+                                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editstaff(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                                </tr>
+                                <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div tab>
+                        <div tab-heading>阶段负责人({{inquiryHandData.length}})</div>
+                        <div class="ind-medo_com" slim-scroll box-height="300">
+                            <div class="btnbox">
+                                <button class="btn btn-default btn-sm" ng-click="addmodelFun()">新增</button>
+                                <button class="btn btn-default btn-sm" ng-click="addmodelFun()">删除</button>
+                            </div>
+                            <table class="table table-hover bbe" cellspacing="0" cellpadding="0" width="100%;">
+                                <thead>
+                                <tr>
+                                    <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
+                                    <th>阶段名称</th>
+                                    <th width="100">阶段负责人</th>
+                                    <th width="100">手机号码</th>
+                                    <th width="100">E-mail</th>
+                                    <th width="100">部门</th>
+                                    <th width="100">职位</th>
+                                    <th width="60">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
+                                    <td>需求调研</td>
+                                    <td>姜小文</td>
+                                    <td>13458639887</td>
+                                    <td>jammy@gieo.cn</td>
+                                    <td>市场部</td>
+                                    <td>经理</td>
+                                    <td><button class="btn btn-danger btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                                </tr>
+                                <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div tab>
+                        <div tab-heading>参与人员({{inquiryHandData.length}})</div>
+                        <div class="ind-medo_com" slim-scroll box-height="300">
+                            <div class="btnbox">
+                                <button class="btn btn-default btn-sm" ng-click="addmodelFun()">新增</button>
+                                <button class="btn btn-default btn-sm" ng-click="addmodelFun()">删除</button>
+                            </div>
+                            <table class="table table-hover bbe" cellspacing="0" cellpadding="0" width="100%;">
+                                <thead>
+                                <tr>
+                                    <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
+                                    <th>姓名</th>
+                                    <th width="100">项目阶段</th>
+                                    <th width="100">手机号码</th>
+                                    <th width="100">E-mail</th>
+                                    <th width="100">部门</th>
+                                    <th width="100">职位</th>
+                                    <th width="60">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
+                                    <td>姜小文</td>
+                                    <td>测试</td>
+                                    <td>13458639887</td>
+                                    <td>jammy@gieo.cn</td>
+                                    <td>市场部</td>
+                                    <td>经理</td>
+                                    <td><button class="btn btn-danger btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                                </tr>
+                                <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div tab>
+                        <div tab-heading>动态({{inquiryHandData.length}})</div>
+                        <div class="ind-medo_com" slim-scroll box-height="300">
+                            <table class="bbe" width="100%" cellpadding="0" cellspacing="0">
+                                <tr class="poi" ng-repeat="data in inquiryProcessesData" ng-click="chakanpcsFun(data)">
+                                    <td width="70" valign="top">
+                                        <div class="imgheader head-sm" style="padding-left: 20px;">
+                                            <span class="bdrs50" style="width: 50px; height: 50px;"><img src="{{userinfoall.photoUrl || './images/headportrait02.jpg'}}" width="100%" alt=""></span>
+                                        </div>
+                                    </td>
+                                    <td class="pl15 pr15">
+                                        <div class="ovh">王逍遥  /  技术部  /  今天 11:53</div>
+                                        <div class="g9 f12 mt10">完成了任务撰写用户研究报告</div>
+                                        <div class="f12 mt10"><span class="g9">附件</span><span class="ml5">市场数据报表.rar</span></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="nose-panel-footer cf bte">
+            <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+            <div class="g9">共 {{thispages.total}} 条数据</div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
+<!--发布动态-->
+<script type="text/ng-template" id="adddynamic.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">发布动态</div>
+        </div>
+        <!--{{baseForm.$valid}}-->
+        <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
+                    <tr>
+                        <td >
+                            <div class="nose-group" ng-class="{'has-error':baseForm.content.$dirty && baseForm.content.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$invalid" popover="输入项目描述文字" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$error.maxlength" popover="不大于200字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <textarea class="form-control" rows="6" name="content" placeholder="说点什么（如项目进度等），不大于200字" ng-maxlength="100" ng-model="notices.content" required></textarea>
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <span class="f_l">
+                    <div class="btn btn-default btn-xs upheadbtn">
+                        <input type="file" id="logo" nv-file-select accept="image/*" uploader="logoUploader"/>本地上传
+                    </div>
+                    <!--<div><img src="./images/office01.png" alt=""> xxxxxx</div>-->
+                </span>
+
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary wd80">确定</button>
+            </div>
+        </form>
+    </div>
+</script>
+<!--模板-->
+<script type="text/ng-template" id="addmodel.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">{{thename}}项目</div>
+        </div>
+        <!--{{baseForm.$valid}}-->
+        <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
+                    <tr>
+                        <td width="60">合同编号</td>
+                        <td class="pl10">
+                            <div class="form-inline">
+                                <input type="text" class="form-control " style="width: 344px;">
+                                <button class="btn btn-default" type="button">随机生成</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">项目名称</td>
+                        <td class="pl10">
+                            <input type="text" class="form-control" placeholder="输入项目名称">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">负责人员</td>
+                        <td class="pl10">
+                            <select class="form-control">
+                                <option>选择项目负责人员</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">合同金额</td>
+                        <td class="pl10">
+                            <input type="text" class="form-control" placeholder="输入合同金额 (元)">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">成本预算</td>
+                        <td class="pl10">
+                            <input type="text" class="form-control" placeholder="输入成本金额 (元)">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">项目周期</td>
+                        <td class="pl10">
+                            <div class="qiyi-group line20td f_l" style="width: 210px;">
+                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="addconfigform.startDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="选择开始时间">
+                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                            </div>
+                            <div class="qiyi-group line20td f_l ml10" style="width: 209px;">
+                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="addconfigform.startDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="选择结束时间">
+                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60" valign="top">项目描述</td>
+                        <td class="pl10">
+                            <div class="nose-group" ng-class="{'has-error':baseForm.content.$dirty && baseForm.content.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$invalid" popover="输入项目描述文字" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$error.maxlength" popover="不大于100字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <textarea class="form-control" rows="4" name="content" placeholder="输入项目描述文字，不大于100字" ng-maxlength="100" ng-model="notices.content" required></textarea>
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary wd80">确定</button>
+            </div>
+        </form>
+    </div>
+</script>
