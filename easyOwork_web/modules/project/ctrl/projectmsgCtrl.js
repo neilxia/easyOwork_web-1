@@ -1,6 +1,6 @@
 //列表
 function projectmsglistCtrl(){
-    return['$rootScope','$scope','$modal','$filter','projectService','MsgService','LocalStorage','Common','noseService',function($rootScope,$scope,$modal,$filter,projectService,MsgService,LocalStorage,Common,noseService){
+    return['$rootScope','$scope','$modal','$filter','projectService','MsgService','LocalStorage','Common','noseService','FileUploader',function($rootScope,$scope,$modal,$filter,projectService,MsgService,LocalStorage,Common,noseService,FileUploader){
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.initFun = function(){
             inquiryProjectDefFun();//查询项目类型
@@ -78,13 +78,6 @@ function projectmsglistCtrl(){
                     "projectCost":row.projectCost || '',		//项目成本
                     "startDate":startDate || '',		//项目开始时间
                     "endDate":endDate || '',		//项目结束时间
-                    "userDTO":{	//项目负责人
-                        "name":row.myselected[0].name || '',
-                        "id":row.myselected[0].id || '',	//员工号
-                        "personalEmail":row.myselected[0].personalEmail || '',	//邮件地址
-                        "personalPhoneCountryCode":'86',	//电话号码国家代码
-                        "personalPhone":row.myselected[0].personalPhone || ''		//电话号码
-                    },
                     "customerDTO":{
                         "customerName":row.customerName || ''	//客户名字
                     }
@@ -92,6 +85,16 @@ function projectmsglistCtrl(){
                 if(change=='ADD'){
                     $scope.options.projectDefDTO={
                         "projectDefName":row.projectDefName || ''	//项目模板名称
+                    }
+                }
+                //新建时默认创建人员为项目负责人
+                if(change=="MODIFY"){
+                	$scope.options.userDTO = {	//项目负责人
+                            "name":row.myselected[0].name || '',
+                            "id":row.myselected[0].id || '',	//员工号
+                            "personalEmail":row.myselected[0].personalEmail || '',	//邮件地址
+                            "personalPhoneCountryCode":'86',	//电话号码国家代码
+                            "personalPhone":row.myselected[0].personalPhone || ''		//电话号码
                     }
                 }
             }else {
@@ -220,7 +223,7 @@ function projectmsglistCtrl(){
 }
 //子列表
 function projectmsgdtmainlistCtrl(){
-    return['$rootScope','$scope','$modal','$filter','projectService','MsgService','LocalStorage','Common','OSSService','FileUploader',function($rootScope,$scope,$modal,$filter,projectService,MsgService,LocalStorage,Common,OSSService,FileUploader){
+    return['$rootScope','$scope','$modal','$filter','projectService','MsgService','LocalStorage','Common','OSSService','FileUploader','noseService',function($rootScope,$scope,$modal,$filter,projectService,MsgService,LocalStorage,Common,OSSService,FileUploader,noseService){
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.initFun = function(){
             inquiryProjectFun();
@@ -413,7 +416,7 @@ function projectmsgdtmainlistCtrl(){
                     'actionType':change,		//ADD, MODIFY, DELETE
                     "documentName":oldrow.documentName || '',	//文档名称
                     "newDocumentName":row.documentName || '',	//新文档名称
-                    "documentUrl":row.documentUrl || 'www.baidu.com',		//文档地址
+                    "documentUrl":row.documentUrl || '',		//文档地址
                     "projectDTO":{
                         "projectName":$scope.datadt.projectName || ''	//项目名称
                     },
@@ -455,18 +458,50 @@ function projectmsgdtmainlistCtrl(){
                     }
                 }
             });
-            function modalCtrl ($scope, $modalInstance,Stage) {
+            function modalCtrl ($scope, $modalInstance,Stage,FileUploader) {
                 $scope.thename='新增';
                 $scope.thisStage=Stage;
                 $scope.modalform={};
                 $scope.modalform.projectStageName=Stage[0].projectStageName;
                 //提交增加
+                var htUploader = $scope.htUploader = new FileUploader({
+                    url: '', //不使用默认URL上传
+                    queueLimit: 1,     //文件个数
+                    removeAfterUpload: true,   //上传后删除文件
+                    autoUpload:false
+                });
+                htUploader.onAfterAddingFile = function(fileItem){
+                    htUploader.cancelAll();
+                     var file = $("#projectFile").get(0).files[0];
+                     var filePath = LocalStorage.getObject('userinfo').entId+'/project/document/'+noseService.randomWord(false, 32)+'_';
+                     var key= filePath+file.name;
+                     var promise = OSSService.uploadFile(filePath,file);
+                     promise.success(function (data, status, headers, config) {
+	                     var urlPromise = OSSService.getUrl({'body':{'key':key}});
+	                     urlPromise.success(function (data, status, headers, config) {
+	                     var sts=data.body.status;
+	                     if(sts.statusCode==0){
+	                    	 $scope.modalform.documentUrl = data.body.data.url;
+	                    	 $scope.modalform.documentName = file.name;
+	                     }
+	                     });
+                     });
+                     promise.error(function (data, status, headers, config) {
+                    	 MsgService.tomsg('文件上传失败');
+                     });
+                };
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
-                    changeProjectDocumentFun('ADD',$scope.modalform,$modalInstance);
+                    if($scope.modalform.documentName != undefined)
+                    	changeProjectDocumentFun('ADD',$scope.modalform,$modalInstance);
+                    else
+                    	$modalInstance.dismiss('cancel');
                 };
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
+                };
+                $scope.deleteDocument = function () {
+                	 $scope.modalform = {};
                 };
             };
         };

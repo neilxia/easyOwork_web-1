@@ -654,7 +654,7 @@ function setCtrl(){
 }
 
 function searchlistCtrl(){
-    return['$rootScope','$scope','$modal','employeesService','LocalStorage','salaryService','MsgService',function($rootScope,$scope,$modal,employeesService,LocalStorage,salaryService,MsgService){
+    return['$rootScope','$scope','$modal','employeesService','LocalStorage','salaryService','MsgService','projectService',function($rootScope,$scope,$modal,employeesService,LocalStorage,salaryService,MsgService,projectService){
         $scope.initFun=function(){
             inquiryEmployeeFun();
         }
@@ -782,6 +782,48 @@ function searchlistCtrl(){
                 $scope.changeYear($scope.currentYear);
                 $scope.month = $scope.currentMonth-1;
                 $scope.changeMonth();
+            }
+        };
+        $scope.staffproject=function(row){
+            var modalInstance = $modal.open({
+                templateUrl: 'staffproject.html',
+                //size:'md',
+                controller: modalCtrl
+            });
+            function modalCtrl ($scope, $modalInstance) {
+            	
+                $scope.user=row;
+                
+                $scope.options={
+                        "userDTO":{
+                            "id":row.id || '',	//员工号
+                            "personalEmail":row.personalEmail || '',	//邮件地址
+                            "personalPhoneCountryCode":'86',	//电话号码
+                            "personalPhone":row.personalPhone || ''		//电话号码
+                        }
+                };
+                var promise = projectService.inquiryMyProject({body:$scope.options});
+                promise.success(function(data, status, headers, config){
+                    var sts=data.body.status;
+                    if(sts.statusCode==0){
+                        $scope.projects=data.body.data.projects;
+                        if($scope.projects.length==0){
+                        	MsgService.tomsg('该员工没有参与项目');
+                        }
+                    }else{
+                        MsgService.tomsg(data.body.status.errorDesc);
+                    }
+                });
+                promise.error(function(data, status, headers, config){
+                    MsgService.tomsg(data.body.status.errorDesc);
+                });
+                $scope.ok = function () {
+                    $modalInstance.close();
+                };
+
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
             }
         };
     }]

@@ -110,7 +110,7 @@ angular.module('qiyi')
                 $scope.options={
                     "attendanceYear":attendance.attendanceYear,	//签到或签退年份
                     "attendanceMonth":attendance.attendanceMonth,	//签到或签退月份
-                    "attendanceDay":"",		//签到或签退天
+                    "attendanceDay":attendance.attendanceDay,		//签到或签退天
                     "userDTO":{
                         "id":$scope.userinfoall.id || "",	//员工号
                         "personalEmail":$scope.userinfoall.personalEmail || "",	//邮件地址

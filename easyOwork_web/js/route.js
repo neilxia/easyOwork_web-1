@@ -38,7 +38,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
         .state('login', {
             url: "/login",
             templateUrl: "modules/login/tmp/login.html",
-            data: { pageTitle: '这是一个登录页面',specialClass: 'bg-login'},
+            data: { pageTitle: '企易登录',specialClass: 'bg-login'},
             resolve:{
                 loadPlugin:function($ocLazyLoad){
                     return $ocLazyLoad.load([
@@ -271,7 +271,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                     return $ocLazyLoad.load([
                         {
                             //jstree
-                            files: ['plugins/jstree/style.css','plugins/jstree/jstree.min.js','plugins/jstree/ngJsTree.js']
+                            files: ['plugins/jsTree/style.css','plugins/jsTree/jstree.min.js','plugins/jsTree/ngJsTree.js']
                         },
                         {
                             //时间控件

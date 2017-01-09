@@ -107,7 +107,7 @@
                             <input type="text" class="form-control" ng-model="modalform.customerName" placeholder="输入客户名称">
                         </td>
                     </tr>
-                    <tr>
+                    <tr ng-show="thename=='编辑'">
                         <td width="60">负责人员</td>
                         <td class="pl10">
                             <div selectdepyuan yuangong="1" myselected="modalform.myselected" selectedallarr="modalform.selectedallarr"></div>

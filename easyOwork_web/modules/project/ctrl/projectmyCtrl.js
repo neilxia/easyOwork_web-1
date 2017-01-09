@@ -52,7 +52,7 @@ function projectmylistCtrl(){
 }
 //子列表
 function projectmydtmainlistCtrl(){
-    return['$rootScope','$scope','$modal','$filter','projectService','MsgService','LocalStorage','Common','OSSService','FileUploader',function($rootScope,$scope,$modal,$filter,projectService,MsgService,LocalStorage,Common,OSSService,FileUploader){
+    return['$rootScope','$scope','$modal','$filter','projectService','MsgService','LocalStorage','Common','OSSService','FileUploader','noseService',function($rootScope,$scope,$modal,$filter,projectService,MsgService,LocalStorage,Common,OSSService,FileUploader,noseService){
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.initFun = function(){
             inquiryProjectFun();
@@ -194,18 +194,50 @@ function projectmydtmainlistCtrl(){
                     }
                 }
             });
-            function modalCtrl ($scope, $modalInstance,Stage) {
+            function modalCtrl ($scope, $modalInstance,Stage,FileUploader) {
                 $scope.thename='新增';
                 $scope.thisStage=Stage;
                 $scope.modalform={};
                 $scope.modalform.projectStageName=Stage[0].projectStageName;
+                var htUploader = $scope.htUploader = new FileUploader({
+                    url: '', //不使用默认URL上传
+                    queueLimit: 1,     //文件个数
+                    removeAfterUpload: true,   //上传后删除文件
+                    autoUpload:false
+                });
+                htUploader.onAfterAddingFile = function(fileItem){
+                    htUploader.cancelAll();
+                     var file = $("#projectFile").get(0).files[0];
+                     var filePath = LocalStorage.getObject('userinfo').entId+'/project/document/'+noseService.randomWord(false, 32)+'_';
+                     var key= filePath+file.name;
+                     var promise = OSSService.uploadFile(filePath,file);
+                     promise.success(function (data, status, headers, config) {
+	                     var urlPromise = OSSService.getUrl({'body':{'key':key}});
+	                     urlPromise.success(function (data, status, headers, config) {
+	                     var sts=data.body.status;
+	                     if(sts.statusCode==0){
+	                    	 $scope.modalform.documentUrl = data.body.data.url;
+	                    	 $scope.modalform.documentName = file.name;
+	                     }
+	                     });
+                     });
+                     promise.error(function (data, status, headers, config) {
+                    	 MsgService.tomsg('文件上传失败');
+                     });
+                };
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
-                    changeProjectDocumentFun('ADD',$scope.modalform,$modalInstance);
+                    if($scope.modalform.documentName != undefined)
+                    	changeProjectDocumentFun('ADD',$scope.modalform,$modalInstance);
+                    else
+                    	$modalInstance.dismiss('cancel');
                 };
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
+                };
+                $scope.deleteDocument = function () {
+                	 $scope.modalform = {};
                 };
             };
         };
