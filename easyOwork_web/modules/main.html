@@ -134,11 +134,11 @@
         </div>
         <div class="col-nose-3">
             <!--新手帮助-->
-            <div class="panel p5 t_c">
-                <a href=""><i class="iconfont icon-ninwen f18 orange mr5 mt-2"></i>新手帮助</a>
+            <div class="panel p5 t_c mb15"  accessId="A001-001">
+                <a ng-click="initCompanyHelp()"><i class="iconfont icon-ninwen f18 orange mr5 mt-2"></i>企业初始化</a>
             </div>
             <!--考勤-->
-            <div class="panel mt15">
+            <div class="panel mb15">
                 <div class="panel-heading"><span class="f_r poi" ui-sref="clockingIn.list"><i class="iconfont icon-right f14"></i></span><span class="f16">考勤</span></div>
                 <div class="panel-body">
                     <table class="t_c" cellspacing="0" cellpadding="0" width="100%">
@@ -164,7 +164,7 @@
                 </div>
             </div>
             <!--公告-->
-            <div class="panel mt15">
+            <div class="panel mb15">
                 <div class="panel-heading"><a class="f_r"><i class="iconfont icon-right f14" ui-sref="notice.view"></i></a><span class="f16">公告</span></div>
                 <div class="pl15 pr5">
                     <ul class="ind-notice_com pr10" slim-scroll box-height="356" >
@@ -213,6 +213,114 @@
         </form>
     </div>
 </script>
+<script type="text/ng-template" id="init.html">
+        <div class="whitemodal" ng-show="currentStep=='step1'">
+            <div class="modal-header">
+                <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+               	<h4 class="a_prime t_c">企业初始化, 只需四步</h4>
+				 <div class="panel-body">
+					<div class="col-xs-2 a_prime">企业信息</div>
+					<div class="col-xs-1 a_prime"><i class="iconfont icon-jiantou"></i></div>
+					<div class="col-xs-2">功能权限</div>
+					<div class="col-xs-1"><i class="iconfont icon-jiantou"></i></div>
+					<div class="col-xs-2">员工添加</div>	
+					<div class="col-xs-1"><i class="iconfont icon-jiantou"></i></div>
+					<div class="col-xs-2">审批设置</div>
+				</div>
+            </div>
+            <div class="modal-body">
+				<span class="g9">设置企业营业执照, 企业Logo, 地址, 联系信息, 以及组织结构 (平台已为您创建默认的企业组织架构, 您可以根据公司实际情况进行调整)</span>
+               <ul class="mt20">
+					<li class="mb10">1. 点击顶部主菜单<b><设置></b></li>
+					<li class="mb10">2. 然后点击左边菜单<b><企业信息></b>进入页面设置企业信息</li>
+					<li class="mb10">3. 点击顶部主菜单<b><组织></b>进入页面调整企业组织结构</li>
+				<ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary wd80" ng-click="goStep(2)">下一步</button>
+            </div>
+            </form>
+        </div>
+		<div class="whitemodal" ng-show="currentStep=='step2'">
+            <div class="modal-header">
+                <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                <h4 class="a_prime t_c">企业初始化, 只需四步</h4>
+				<div class="panel-body">
+					<div class="col-xs-2">企业信息</div>
+					<div class="col-xs-1"><i class="iconfont icon-jiantou"></i></div>
+					<div class="col-xs-2 a_prime">权限配置</div>
+					<div class="col-xs-1 a_prime"><i class="iconfont icon-jiantou"></i></div>
+					<div class="col-xs-2">员工添加</div>	
+					<div class="col-xs-1"><i class="iconfont icon-jiantou"></i></div>
+					<div class="col-xs-2">审批设置</div>
+				</div>
+            </div>
+            <div class="modal-body">
+				<span class="g9">平台已为您创建默认的企业角色以及相关的权限设置, 一般情况下这些设置可以满足企业需求; 您可以随时查看,当然也可以根据企业实际情况进行调整</span>
+               <ul class="mt20">
+					<li class="mb10">1. 点击主菜单<b><权限></b>进入页面修改角色以及调整权限</li>
+				<ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary wd80" style="float:left" ng-click="goStep(1)">上一步</button>
+                <button type="button" class="btn btn-primary wd80" ng-click="goStep(3)">下一步</button>
+            </div>
+            </form>
+        </div>
+		<div class="whitemodal" ng-show="currentStep=='step3'">
+            <div class="modal-header">
+                <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                <h4 class="a_prime t_c">企业初始化, 只需四步</h4>
+				<div class="panel-body">
+					<div class="col-xs-2">企业信息</div>
+					<div class="col-xs-1"><i class="iconfont icon-jiantou"></i></div>
+					<div class="col-xs-2">功能权限</div>
+					<div class="col-xs-1"><i class="iconfont icon-jiantou"></i></div>
+					<div class="col-xs-2 a_prime">员工添加</div>	
+					<div class="col-xs-1 a_prime"><i class="iconfont icon-jiantou"></i></div>
+					<div class="col-xs-2">审批设置</div>
+				</div>
+            </div>
+            <div class="modal-body">
+				<span class="g9">员工为平台基础信息, 有了员工之后您才可以更完整的使用平台提供的丰富功能; 做为企业管理员, 您可以添加员工,如果您没有所有员工的信息， 我们建议您先添加一位人力资源职位的员工, 然后由他来完成其他员工的添加工作</span>
+               <ul class="mt20">
+					<li class="mb10">1. 点击顶部主菜单<b><员工></b></li>
+					<li class="mb10">2. 然后点击左边菜单<b><员工管理></b>进入页面添加员工</li>
+				<ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary wd80" style="float:left" ng-click="goStep(2)">上一步</button>
+                <button type="button" class="btn btn-primary wd80" ng-click="goStep(4)">下一步</button>
+            </div>
+            </form>
+        </div>
+		<div class="whitemodal" ng-show="currentStep=='step4'">
+            <div class="modal-header">
+                <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                <h4 class="a_prime t_c">企业初始化, 只需四步</h4>
+				<div class="panel-body">
+					<div class="col-xs-2">企业信息</div>
+					<div class="col-xs-1"><i class="iconfont icon-jiantou"></i></div>
+					<div class="col-xs-2">功能权限</div>
+					<div class="col-xs-1"><i class="iconfont icon-jiantou"></i></div>
+					<div class="col-xs-2">员工添加</div>	
+					<div class="col-xs-1"><i class="iconfont icon-jiantou"></i></div>
+					<div class="col-xs-2 a_prime">审批设置</div>
+				</div>
+            </div>
+            <div class="modal-body">
+				<span class="g9">平台已为您创建默认的常用审批流程, 并且所有审批人员为系统管理员, 您需要根据公司实际情况为审批流程公司相应的审批人员; 如果默认审批流程不能满足您的需求, 您也可以创建自己的审批流程</span>
+               <ul class="mb20">
+					<li class="mt10">1. 点击顶部主菜单<b><审批></b></li>
+					<li class="mt10">2. 然后点击左边菜单<b><审批设置></b>下的<b><流程设置></b>进入页面来设置审批流程</li>
+				<ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary wd80" style="float:left" ng-click="goStep(3)">上一步</button>
+            </div>
+            </form>
+        </div>
+    </script>
 
 <!--<script language="JavaScript">
     function GetLocalIPAddr(){

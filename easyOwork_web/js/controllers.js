@@ -273,6 +273,24 @@ angular.module('qiyi')
                 MsgService.tomsg(sts.errorDesc);
             });
         };
+        
+      //公司设置帮助
+        $scope.initCompanyHelp = function () {
+            var modalInstance = $modal.open({
+                templateUrl: 'init.html',
+                controller: modalCtrl
+            });
+            function modalCtrl ($scope, $modalInstance) {
+            	
+            	$scope.currentStep = 'step1';
+                $scope.goStep = function (step) {
+                    $scope.currentStep = 'step'+step;
+                };
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            };
+        };
 
 
     }])
