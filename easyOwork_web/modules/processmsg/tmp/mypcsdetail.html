@@ -48,19 +48,25 @@
             </ul>
             <table class="line40td mt10 f12" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
-                    <td width="80" class="t_r">审批编号：</td>
+                    <td width="80" class="t_r">审批编号:</td>
                     <td class="pl10">{{pcsdetail.processUuid}}</td>
                 </tr>
                 <tr>
-                    <td width="80" class="t_r">申请时间：</td>
+                    <td width="80" class="t_r">申请时间:</td>
                     <td class="pl10">{{pcsdetail.createDate}}</td>
                 </tr>
                 <tr>
-                    <td width="80" class="t_r">申请流程：</td>
+                    <td width="80" class="t_r">申请流程:</td>
                     <td class="pl10">{{pcsdetail.title}}</td>
                 </tr>
+                <tr ng-show="pcsdetail.cost">
+                    <td width="80" class="t_r" valign="top">项目名称:</td>
+                    <td class="pl10">
+                            {{pcsdetail.projectDTO.projectName}}
+                    </td>
+                </tr>
                 <tr>
-                    <td width="80" class="t_r" valign="top">申请内容：</td>
+                    <td width="80" class="t_r" valign="top">申请内容:</td>
                     <td class="pl10">
                         <div ng-repeat="data in pcsdetail.processFieldDTOList | orderBy:'seqNo'">
                             {{data.name}}：{{data.value}}

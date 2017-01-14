@@ -3,7 +3,7 @@
  */
 /*====================我的申请=================================*/
 function addpcsCtrl(){
-    return['$rootScope','$scope','$modal','editableOptions','processService','LocalStorage','MsgService','$state','noseService','OSSService','FileUploader',function($rootScope,$scope,$modal,editableOptions,processService,LocalStorage,MsgService,$state,noseService,OSSService,FileUploader){
+    return['$rootScope','$scope','$modal','editableOptions','processService','projectService','LocalStorage','MsgService','$state','noseService','OSSService','FileUploader',function($rootScope,$scope,$modal,editableOptions,processService,projectService,LocalStorage,MsgService,$state,noseService,OSSService,FileUploader){
         var userinfo=LocalStorage.getObject('userinfo');
         var attachmentUploader = $scope.attachmentUploader = new FileUploader({
             url: '', //不使用默认URL上传
@@ -55,6 +55,8 @@ function addpcsCtrl(){
         	            	"title":obj.title,
         	            	"description":obj.description,
         	            	"processType":obj.processType,
+        	            	"cost":obj.cost,
+        	            	"projectDTO":{},
         	            	"launchUserDTO":{
         	                    "id":userinfo.id,	//员工号
         	                    "personalEmail":userinfo.personalEmail,	//邮件地址
@@ -141,6 +143,47 @@ function addpcsCtrl(){
                 };
                 $scope.cancel = function () {
                     angular.copy(oldrow, row);
+                    $modalInstance.dismiss('cancel');
+                };
+            }
+        }
+        
+        $scope.clearproject = function(){
+        	$scope.processmodal.projectDTO.projectName = '';
+        }
+        $scope.selectproject = function(){
+        	var modalInstance = $modal.open({
+                templateUrl: 'selectproject.html',
+                size:'sm',
+                controller: modalCtrl,
+                resolve:{
+                	processmodal: function () {
+                        return $scope.processmodal;
+                    }
+                }
+            });
+        	function modalCtrl ($scope, $modalInstance,processmodal) {
+            	
+            	var promise = projectService.inquiryProject({body:{}});
+                promise.success(function(data, status, headers, config){
+                    var sts=data.body.status;
+                    if(sts.statusCode==0){
+                    	$scope.projects = data.body.data.projects;
+                    }
+                });
+                promise.error(function(data, status, headers, config){
+                    //MsgService.tomsg(data.body.status.errorDesc);
+                });
+                
+                $scope.clickproject = function(row){
+                	$scope.projectName= row.projectName;
+                }
+            	
+                $scope.ok=function(){
+                	processmodal.projectDTO.projectName = $scope.projectName;
+                    $modalInstance.close();
+                };
+                $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                 };
             }
@@ -464,6 +507,8 @@ function addsetpcsCtrl(){
             $scope.processmodal={
                 "actionType":'MODIFY',		//ADD, MODIFY, DELETE
                 "name":pcsRowData.name || "",		//数据模板名称
+                "cost":pcsRowData.cost,
+                "costFieldName":pcsRowData.costFieldName||"",
                 "description":pcsRowData.description || "",		//数据模板描述
                 "userDTOList":pcsRowData.userDTOList || [],
                 "orgDTOList":pcsRowData.orgDTOList || [], //如果userDTOList和orgDTOList都不传入则表示适用公司所有人员
@@ -479,6 +524,8 @@ function addsetpcsCtrl(){
                 "actionType":'ADD',		//ADD, MODIFY, DELETE
                 "name":"",		//数据模板名称
                 "description":"",		//数据模板描述
+                "cost":false,
+                "costFieldName":"",
                 "userDTOList":[],
                 "orgDTOList":[], //如果userDTOList和orgDTOList都不传入则表示适用公司所有人员
                 "processDefStepDTOList":[],
@@ -615,8 +662,15 @@ function addsetpcsCtrl(){
     //    总流程添加
         $scope.addprocessmodalFun=function(){
             if($scope.pcsclass=='' || $scope.processmodal.name==''){
-                MsgService.tomsg('流程类型、流程名称为必填项哦！');
-                return;
+                
+            }
+            //如果用于成本核算, 检查是否选择金额字段
+            if($scope.processmodal.cost){
+            	var costFieldName = $('#costFieldName option:selected').val();
+                if(costFieldName==''){
+                	MsgService.tomsg('该流程用于成本核算, 请选择金额字段');
+                    return;
+                }
             }
             //流程类型需要传入接口
             $scope.processmodal.processType=$scope.pcsclass;

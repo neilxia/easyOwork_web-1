@@ -3,26 +3,26 @@
     <div class="payetilebox">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
         <ul>
-            <li class="active">新建流程</li>
+            <li class="active">新建审批</li>
         </ul>
     </div>
     <ol class="breadbox">
         <li>工作面板</li>
         <li>审批流程</li>
-        <li class="active">新建流程</li>
+        <li class="active">新建审批</li>
     </ol>
     <div class="nose-panel">
         <div class="p30 pb10 addpcs-config">
             <div class="pct60  f12">
                 <div class="cf mb10">
-                    <div class="col-xs-2 t_r pt7 g9">选择流程类型</div>
+                    <div class="col-xs-2 t_r pt7 g9">选择模板类型</div>
                     <div class="col-xs-10 form-inline">
                         <button class="btn btn-default mr5" ng-repeat="data in prosclasslist" ng-model="$parent.pcsclass" btn-radio="'{{data.name}}'">{{data.name}}</button>
                     </div>
 
                 </div>
                 <div class="cf mb10" ng-show="pcsclass">
-                    <div class="col-xs-2 t_r pt7 g9">选择流程</div>
+                    <div class="col-xs-2 t_r pt7 g9">选择审批模板</div>
                     <div class="col-xs-10 form-inline">
                         <!--{{processmodal}}-->
                         <button class="btn btn-default mr5" ng-repeat="ModelData in processList | filter:{'processType':pcsclass}" ng-model="$parent.processmodal" btn-radio="{{ModelData}}">{{ModelData.name}}</button>
@@ -128,6 +128,24 @@
                         </div>
                     </div>
                 </div>
+            	<div class="cf mb10" ng-show="processmodal.cost">
+                    <div class="col-xs-2 t_r pt7 g9">选择项目&nbsp;&nbsp;<a title="选择项目后, 报销金额将用于计算项目成本"><i class="iconfont icon-ninwen"></i></a></div>
+                    <div class="col-xs-10">
+                        <table cellpadding="0" cellspacing="0" width="100%">
+                                    <tr>
+                                        <td width="210">
+                                        <label>
+	                                        <input type="text" class="form-control wd200"  ng-model="processmodal.projectDTO.projectName" readonly>
+	                                        </input>	
+                                        	<a ng-click="clearproject()" style="position:absolute;top:7px;left:190px" ng-show="processmodal.projectName"><i class="iconfont icon-close2"></i></a>
+                                        </label>
+                                        </td>
+                                        <td><a ng-click="selectproject()"><i class="iconfont icon-sousuo"></i></a></td>
+                                    </tr>
+                                </table>
+
+                    </div>
+                </div>
             	<div class="cf mb10" ng-show="processmodal">
                     <div class="col-xs-2 t_r pt7 g9">附件</div>
                     <div class="col-xs-10 pt5">
@@ -214,6 +232,27 @@
                     <button type="submit" class="btn btn-primary">保存</button>
                 </div>
             </form>
+        </div>
+    </script>
+    
+    <!--新增审批人-->
+    <script type="text/ng-template" id="selectproject.html">
+        <div class="whitemodal">
+            <div class="modal-header">
+                <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                <div class="f16">选择项目</div>
+            </div>
+                <div class="bte">
+					<table cellpadding="0" cellspacing="0" width="100%" class="line30td">
+                        <tr class="addpcs-project" ng-repeat="project in projects" ng-class="{'addpcs-project-selected':project.projectName == projectName}" ng-click="clickproject(project)">
+                            <td class="g9 pl30" valign="top">{{project.projectName}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" ng-click="cancel()">关闭</button>
+                    <button type="submit" class="btn btn-primary" ng-click="ok()">确定</button>
+                </div>
         </div>
     </script>
 

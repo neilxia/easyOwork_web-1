@@ -32,6 +32,17 @@
                     <div class="col-xs-10"><textarea class="form-control" cols="6" placeholder="输入简要的流程描述" ng-model="processmodal.description"></textarea></div>
                 </div>
                 <div class="cf mb10">
+                    <div class="col-xs-2 t_r g9 pt7">用于成本核算</div>
+                    <div class="col-xs-1 pt7"><input type="checkbox" icheck class="form-control" cols="6" ng-model="processmodal.cost"></input></div>
+                    <div class="col-xs-2 g9 pt7 t_r" ng-show="processmodal.cost">金额字段</div>
+                    <div class="col-xs-4" ng-show="processmodal.cost">
+                    	<select id="costFieldName" class="form-control" ng-model="processmodal.costFieldName" ng-options="processDefFieldDTO.name as processDefFieldDTO.name for processDefFieldDTO in processmodal.processDefFieldDTOList">
+                    		<option value="">请选择金额字段</option>
+                    	</select>
+                    </div>
+                    <div class="col-xs-1 pt5"><a title="如果选中则表示该流程属于报销类流程, 金额将用于计算企业成本"><i class="iconfont icon-ninwen"></i></a></div>
+                </div>
+                <div class="cf mb10">
                     <div class="col-xs-2 t_r pt7 g9">适用人员</div>
                     <div class="col-xs-10">
                         <!--<ul class="addpcs-config-prople cf">
@@ -45,11 +56,15 @@
                 </div>
                 <!--{{objs.datas}}-->
             </div>
+         </div>
+         <div class="nose-panel-body">
             <div class="mb15 f12 bg-fafafa">
-                <div class="cf pt5 pb10">
-                    <div class="col-xs-2 t_r pt7 f16">流程数据</div>
+                <div class="cf pt5 pb10  bbe bte">
+                    <div class="col-xs-2 t_r pt7 f16 t_l pl20">流程数据</div>
                 </div>
             </div>
+         </div>
+         <div class="pl30 pr30 addpcs-config">
 
             <div class="pct60 f12">
                 <div class="cf fadecj addrow mb10" ng-repeat="obj in processmodal.processDefFieldDTOList">
@@ -392,9 +407,9 @@
                 </div>
             </div>
 
-            <div class="pct60 mt15 mb10" ng-show="tableisDisabled">
-                <div class="add-box fadecj poi" ng-click="addpcsdata()"><i class="iconfont icon-add f14"></i> 流程数据</div>
-            </div>
+        </div>
+        <div class="pb20 pl20 pr20">
+             <div class="add-box fadecj poi" ng-show="tableisDisabled" ng-click="addpcsdata()"><i class="iconfont icon-add f14"></i> 流程数据</div>
         </div>
         <!--审批人-->
         <div class="nose-panel-body">
@@ -433,7 +448,7 @@
             </table>
         </div>
         <div class="pt20 pl20 pr20">
-            <div class="add-box fadecj poi" ng-click="addapprover()"><i class="iconfont icon-add f14"></i></div>
+            <div class="add-box fadecj poi" ng-click="addapprover()"><i class="iconfont icon-add f14"></i>审批人员</div>
         </div>
         <div class="nose-panel-footer cf">
             <button class="btn btn-default wd80" ui-sref="processmsg.setpcs">取消</button>

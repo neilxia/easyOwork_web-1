@@ -92,6 +92,13 @@
 .addpcs-config .selectbox{}
 .addpcs-config .selectbox li{}
 
+.addpcs-project:hover{
+	background-color:#eee;
+}
+.addpcs-project-selected{
+	background-color:#eee;
+}
+
 /*员工管理*/
 .input-group .icon-close2{ position: absolute; font-size: 10px; top: 6px; right: 86px; z-index: 9;}
 .input-group.input-group-sm .icon-close2{ right: 75px;}
