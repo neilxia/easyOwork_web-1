@@ -22,17 +22,26 @@
             <div class="p20">
                 <table class="line30td f12" cellspacing="0" cellpadding="0" width="100%;">
                     <tr>
-                        <td width="250"><span class="g9">客户名称：</span>{{datadt.customerName}}</td>
-                        <td width="250"><span class="g9">项目编号：</span>{{datadt.projectId}}</td>
-                        <td width="250"><span class="g9">项目名称：</span>{{datadt.projectName}}</td>
-                        <td width="250"><span class="g9">负责人员：</span><span class="orange">{{datadt.userDTO.name}}</span></td>
-                        <td width="300"><span class="g9">合同金额：</span>￥{{datadt.projectAmount}}</td>
+                    	<td width="250"><span class="g9">项目名称：</span>{{datadt.projectName}}</td>
+                    	<td width="150"><span class="g9">客户名称：</span>{{datadt.customerName}}</td>
+                        <td width="200"><span class="g9">开始时间：</span>{{datadt.startDate}}</td>
+                        <td colspan="2">
+	                        <span class="g9 f_l a_prime">进度：</span>
+	                        <progressbar value="datadt.projectProgress" type="warning" class="progress-striped progress-small active pct50 f_l" style="margin-top:5px"></progressbar>
+	                        <span class="f_l ml5">{{datadt.projectProgress}}%</span>
+	                        <span class="ml10"><i class="iconfont icon-bianji poi" ng-click="editProgress()"></i></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><span class="g9">项目成本：</span>￥{{datadt.projectCost}}</td>
-                        <td><span class="g9">开始/结束：</span>{{datadt.startDate}}~{{datadt.endDate}}</td>
-                        <td><span class="g9">项目阶段：</span><span class="green">{{datadt.projectName}}</span></td>
-                        <td colspan="2"><span class="g9">项目描述：</span>{{datadt.projectDesc}}</td>
+                    	<td><span class="g9">项目编号：</span>{{datadt.projectId}}</td>
+                    	<td><span class="g9">负责人员：</span><span>{{datadt.userDTO.name}}</span></td>
+                        <td><span class="g9">结束时间：</span>{{datadt.endDate}}</td>
+                        <td width="80px"><span class="g9 a_prime">健康度：</span></td>
+                        <td>
+                        <span class="bdrs50" ng-show="datadt.projectHealth=='严重'" style="display:inline-block;width:30px;height:30px;background-color:red"></span>
+                        <span class="bdrs50" ng-show="datadt.projectHealth=='轻度'" style="display:inline-block;width:30px;height:30px;background-color:orange"></span>
+                        <span class="bdrs50" ng-show="datadt.projectHealth=='正常'" style="display:inline-block;width:30px;height:30px;background-color:green"></span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="iconfont icon-bianji poi" ng-click="editHealth()"></i></td>
                     </tr>
                 </table>
                 <div class="project-mgsdtbox mt20">
@@ -41,11 +50,10 @@
                             <td width="60" valign="top">项目阶段</td>
                             <td>
                                 <ul class="project-mgsdt">
-                                    <li ng-class="{'sucs':$index < datadt.currentStageSeqNo}" ng-repeat="data in datadt.projectStageDTOList">
-                                        <div class="titlebox" ng-if="$index != datadt.currentStageSeqNo"><span class="sign bdrs50"></span></div>
-                                        <div class="titlebox" ng-if="$index == datadt.currentStageSeqNo"><button class="btn btn-default btn-xs mt-5" ng-click="changeProjectFun(datadt.currentStageSeqNo)">完成</button></div>
+                                    <li ng-class="{'sucs':data.status=='已完成'}" ng-repeat="data in datadt.projectStageDTOList">
+                                        <div class="titlebox"><span class="sign bdrs50 poi" ng-click="updateStageStatus(data)"></span></div>
                                         <div class="textbox">
-                                            <div>{{data.projectStageName}}</div>
+                                            <div>{{data.projectStageName}}({{data.status}})</div>
                                             <div class="g9 f12">{{data.userDTO.name}}</div>
                                         </div>
                                     </li>
@@ -419,6 +427,74 @@
                                 <textarea class="form-control" rows="6" name="content" placeholder="说点什么（如项目进度等），不大于100字" ng-maxlength="100" ng-model="modalform.comment" required></textarea>
                             </div>
 
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+               
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary wd80">确定</button>
+            </div>
+        </form>
+    </div>
+</script>
+
+<!--修改项目进度-->
+<script type="text/ng-template" id="editprogress.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">修改项目进度</div>
+        </div>
+        <!--{{baseForm.$valid}}-->
+        <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
+                    <tr>
+                        <td >
+							<div class="col-xs-4 t_r">
+								项目进度:
+							</div>
+                            <div class="nose-group col-xs-4">
+                                <input type="number" name="progress" class="form-control" placeholder="项目进度, 输入整数" ng-model="progress" required></input>
+                            </div>
+							<div class="col-xs-4 t_l">
+								%
+							</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+               
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary wd80">确定</button>
+            </div>
+        </form>
+    </div>
+</script>
+<!--修改项目健康度-->
+<script type="text/ng-template" id="edithealth.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">修改项目健康度</div>
+        </div>
+        <!--{{baseForm.$valid}}-->
+        <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
+                    <tr>
+                        <td >
+							<div class="col-xs-4 t_r">
+								项目健康度:
+							</div>
+                            <div class="nose-group col-xs-4">
+                                <select class="form-control" ng-model="health" ng-options="healthItem.value as healthItem.label for healthItem in healthList">
+									<option value="">请选择健康度</option>
+								</select>
+                            </div>
                         </td>
                     </tr>
                 </table>

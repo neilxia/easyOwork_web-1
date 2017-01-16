@@ -8,10 +8,9 @@ function projectmsglistCtrl(){
         };
         $scope.projectStatusArr=[
             {name:'全部状态',val:''},
-            {name:'正常',val:'GREEN'},
-            {name:'轻度',val:'RED'},
-            {name:'严重',val:'YELLOW'},
-            {name:'完成',val:'COMPLETED'}
+            {name:'未开始',val:'未开始'},
+            {name:'进行中',val:'进行中'},
+            {name:'已完成',val:'已完成'}
         ]
         $scope.thispages={
             total:null,
@@ -225,6 +224,8 @@ function projectmsglistCtrl(){
 function projectmsgdtmainlistCtrl(){
     return['$rootScope','$scope','$modal','$filter','projectService','MsgService','LocalStorage','Common','OSSService','FileUploader','noseService',function($rootScope,$scope,$modal,$filter,projectService,MsgService,LocalStorage,Common,OSSService,FileUploader,noseService){
         var userinfo=LocalStorage.getObject('userinfo');
+        $scope.editingProgress = false;
+        $scope.editingHealth = false;
         $scope.initFun = function(){
             inquiryProjectFun();
         };
@@ -246,14 +247,110 @@ function projectmsgdtmainlistCtrl(){
                 MsgService.tomsg(data.body.status.errorDesc);
             });
         }
+        
+        $scope.editProgress = function () {
+            var modalInstance = $modal.open({
+                templateUrl: 'editprogress.html',
+                controller: modalCtrl,
+                resolve:{
+                	datadt : function() {
+                        return $scope.datadt;
+                    }
+                }
+            });
+            function modalCtrl ($scope, $modalInstance,datadt) {
+            	$scope.progress = datadt.projectProgress;
+                $scope.ok = function (state) {
+                    if(!state){return;} //状态判断
+                    //判断格式
+                    if($scope.progress!=undefined && $scope.progress<=100){
+                    	var promise = projectService.changeProject({body:{"actionType":'MODIFY',"projectName":datadt.projectName,'projectProgress':$scope.progress}});
+	                    promise.success(function(data, status, headers, config){
+	                        var sts=data.body.status;
+	                        if(sts.statusCode==0){
+	                        	datadt.projectProgress = $scope.progress;
+	                        	$modalInstance.close();
+	                        }else{
+	                            MsgService.tomsg(data.body.status.errorDesc);
+	                        }
+	                    });
+	                    promise.error(function(data, status, headers, config){
+	                        MsgService.tomsg(data.body.status.errorDesc);
+	                    });
+                    }
+                };
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            };
+        };
+        $scope.editHealth = function () {
+        	var modalInstance = $modal.open({
+                templateUrl: 'edithealth.html',
+                controller: modalCtrl,
+                resolve:{
+                	datadt : function() {
+                        return $scope.datadt;
+                    }
+                }
+            });
+            function modalCtrl ($scope, $modalInstance,datadt) {
+            	$scope.health = datadt.projectHealth;
+            	$scope.healthList = [{'value':'正常','label':'正常'},{'value':'轻度','label':'轻度'},{'value':'严重','label':'严重'}]
+                $scope.ok = function (state) {
+                    if(!state){return;} //状态判断
+                    //判断格式
+                    if($scope.health!=''){
+	                    var promise = projectService.changeProject({body:{"actionType":'MODIFY',"projectName":datadt.projectName,'projectProgress':datadt.projectProgress,'projectHealth':$scope.health}});
+	                    promise.success(function(data, status, headers, config){
+	                        var sts=data.body.status;
+	                        if(sts.statusCode==0){
+	                        	datadt.projectHealth = $scope.health;
+	                        	$modalInstance.close();
+	                        }else{
+	                            MsgService.tomsg(data.body.status.errorDesc);
+	                        }
+	                    });
+	                    promise.error(function(data, status, headers, config){
+	                        MsgService.tomsg(data.body.status.errorDesc);
+	                    });
+                    }
+                };
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            };
+        };
 
+        $scope.updateStageStatus = function(row){
+        	var stageStatus;
+        	if(row.status == '未完成')
+        		stageStatus='已完成';
+        	else if(row.status == '已完成')
+        		stageStatus='未完成'
+        	var promise = projectService.updateProjectStage({body:{'projectName':$scope.datadt.projectName,'projectStageName':row.projectStageName,'status':stageStatus}});
+        	promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                	row.status = stageStatus;
+                }else{
+                    MsgService.tomsg(data.body.status.errorDesc);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.tomsg(data.body.status.errorDesc);
+            });
+        }
+        
         //添加/修改/删除
-        $scope.changeProjectFun=function (ind){
+        $scope.changeProjectFun=function (field){
             $scope.options={
                 "actionType":'MODIFY',		//ADD, MODIFY, DELETE
                 "projectName":$scope.datadt.projectName || '',		//项目名称
-                "currentStageSeqNo":ind+1	//新项目名称
+                'projectProgress':$scope.options.projectProgress
             };
+            if('HEALTH'==field)
+            	$scope.options.projectHealth = $scope.datadt.projectHealth;
             debugger;
             var promise = projectService.changeProject({body:$scope.options});
             promise.success(function(data, status, headers, config){
@@ -585,7 +682,7 @@ function projectmsgdtmainlistCtrl(){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                     inquiryProjectFun();
-                    $modalInstance.close();
+                   	$modalInstance.close();
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
                 }

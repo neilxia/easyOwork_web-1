@@ -44,13 +44,13 @@
                     <td>{{data.projectName}}</td>
                     <td>{{data.projectId}}</td>
                     <td>
-                        <progressbar value="data.projectPercentage" type="warning" class="progress-striped progress-small active pct80 f_l"></progressbar>
-                        <div class="f_l ml5 mt-3">{{data.projectPercentage}}%</div>
+                        <progressbar value="data.projectProgress" type="warning" class="progress-striped progress-small active pct80 f_l"></progressbar>
+                        <div class="f_l ml5 mt-3">{{data.projectProgress}}%</div>
 
                         <!--<progressbar value="40" type="success" class="progress-striped progress-small active"></progressbar>-->
                     </td>
                     <td class="orange">{{data.userDTO.name}}</td>
-                    <td>{{data.projectStatus | pjstatus}}</td>
+                    <td>{{data.projectStatus}}</td>
                     <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="project.msgdtmain({name:data.projectName})"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
                 </tr>
                 </tbody>
