@@ -608,6 +608,12 @@ function analysisService(){
             },
             getRoleEmployeeChart:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/getRoleEmployeeChart',form)
+            },
+            getProjectStatusChart:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/getProjectStatusChart',form)
+            },
+            getProjectHealthChart:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/getProjectHealthChart',form)
             }
         }
     }];

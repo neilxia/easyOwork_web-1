@@ -531,27 +531,20 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
 
         })
         .state('analysis.employee', {
-            url: "/employee",
-            templateUrl: 'modules/analysis/tmp/list.html',
-            data: { pageTitle: '决策分析'}
-
+            url: "/employee?type",
+            templateUrl: 'modules/analysis/tmp/employee.html',
+            data: { pageTitle: '员工分析'}
         })
         .state('analysis.customer', {
-            url: "/customer",
-            templateUrl: 'modules/analysis/tmp/list.html',
-            data: { pageTitle: '决策分析'}
+            url: "/customer?type",
+            templateUrl: 'modules/analysis/tmp/customer.html',
+            data: { pageTitle: '客户分析'}
 
         })
         .state('analysis.project', {
-            url: "/project",
-            templateUrl: 'modules/analysis/tmp/list.html',
-            data: { pageTitle: '决策分析'}
-
-        })
-        .state('analysis.recruit', {
-            url: "/recruit",
-            templateUrl: 'modules/analysis/tmp/list.html',
-            data: { pageTitle: '决策分析'}
+            url: "/project?type",
+            templateUrl: 'modules/analysis/tmp/project.html',
+            data: { pageTitle: '项目分析'}
 
         })
         /*========公告========================================================== */

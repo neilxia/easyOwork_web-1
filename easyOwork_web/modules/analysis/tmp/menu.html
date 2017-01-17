@@ -3,28 +3,32 @@
     <div class="sidebar-collapse">
         <ul side-navigation class="nav metismenu" id="side-menu">
             <li ui-sref-active="active" ng-class="{active: $state.includes('analysis.employee')}">
-                <a ui-sref="analysis.employee"><i class="iconfont icon-peizhi f18"></i> <span class="nav-label">员工分析</span></a>
-                <!-- <ul class="nav nav-second-level">
+                <a><i class="iconfont icon-peizhi f18"></i> <span class="nav-label">员工分析</span><span class="fa arrow"></a>
+                 <ul class="nav nav-second-level">
                     <li ui-sref-active="active">
-                        <a ui-sref="analysis.employee"><span class="nav-label">部门员工分布</span> </a>
+                        <a href="#/analysis/employee?type=org"><span class="nav-label">部门分布</span> </a>
                     </li>
                     <li ui-sref-active="active">
-                        <a ui-sref="analysis.roleemployee"><span class="nav-label">职位员工分布</span> </a>
+                        <a href="#/analysis/employee?type=role"><span class="nav-label">职位分布</span> </a>
                     </li>
                     <li ui-sref-active="active">
-                        <a ui-sref="analysis.salaryemployee"><span class="nav-label">薪酬分布</span> </a>
+                        <a href="#/analysis/employee?type=salary"><span class="nav-label">薪酬分布</span> </a>
                     </li>
                 </ul>
-        	 	-->
+        	 	
             </li>
             <li ui-sref-active="active" ng-class="{active: $state.includes('analysis.customer')}">
                 <a ui-sref="analysis.customer"><i class="iconfont icon-peizhi f18"></i> <span class="nav-label">客户</span> </a>
             </li>
             <li ui-sref-active="active" ng-class="{active: $state.includes('analysis.project')}">
-                <a ui-sref="analysis.project"><i class="iconfont icon-peizhi f18"></i> <span class="nav-label">项目</span> </a>
-            </li>
-            <li ui-sref-active="active" ng-class="{active: $state.includes('analysis.recruit')}">
-                <a ui-sref="analysis.recruit"><i class="iconfont icon-peizhi f18"></i> <span class="nav-label">招聘</span> </a>
+                <a ui-sref="analysis.project"><i class="iconfont icon-peizhi f18"></i> <span class="nav-label">项目分析</span><span class="fa arrow"></a>
+                <ul class="nav nav-second-level">
+                    <li ui-sref-active="active">
+                        <a href="#/analysis/project?type=status"><span class="nav-label">完成度</span> </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a href="#/analysis/project?type=health"><span class="nav-label">健康度</span> </a>
+                    </li>
             </li>
             </ul>
             
