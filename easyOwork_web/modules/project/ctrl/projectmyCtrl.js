@@ -1,6 +1,7 @@
 //列表
 function projectmylistCtrl(){
     return['$rootScope','$scope','$modal','$filter','projectService','MsgService','LocalStorage','Common','noseService',function($rootScope,$scope,$modal,$filter,projectService,MsgService,LocalStorage,Common,noseService){
+        debugger;
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.initFun = function(){
             //inquiryProjectDefFun();//查询项目类型

@@ -1,0 +1,139 @@
+<div id="page-wrapper" ng-controller="assetsmsgCtrl" ng-init="initFun()">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="init()" title="刷新"></a></div>
+        <ul>
+            <li class="active">销售过程</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li>销售管理</li>
+        <li class="active">销售过程</li>
+    </ol>
+    <div class="btnbox">
+        <form class="f_r form-inline">
+            <select class="form-control input-sm" ng-model="selectedproclass" ng-options="x.name for x in prosclasslist">
+                <option value="">全部负责人员</option>
+            </select>
+            <select class="form-control input-sm" ng-model="selectedproclass" ng-options="x.name for x in prosclasslist">
+                <option value="">全部阶段</option>
+            </select>
+            <span class="form-group-sm search-group">
+                <input type="text" class="form-control wd180" ng-model="sltname" placeholder="搜索名称">
+                <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
+            </span>
+        </form>
+        <button class="btn btn-default btn-sm" ng-click="addmodelFun()">新增</button>
+        <button class="btn btn-default btn-sm" ng-click="deleteAll()">删除</button>
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
+                <thead>
+                <tr>
+                    <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
+                    <th>名称</th>
+                    <th width="200">客户</th>
+                    <th width="120">销售金额</th>
+                    <th width="100">销售阶段</th>
+                    <th width="100">负责人员</th>
+                    <th width="125">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
+                    <td>用户体验设计</td>
+                    <td>成都尔康互动有限公司</td>
+                    <td>￥360000.00</td>
+                    <td>接洽客户</td>
+                    <td class="orange">樱空释</td>
+                    <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="sales.assetsmsgdtmain"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editstaff(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                </tr>
+                <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
+                </tbody>
+            </table>
+        </div>
+        <div class="nose-panel-footer cf bte">
+            <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+            <div class="g9">共 {{thispages.total}} 条数据</div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
+
+<!--销售过程-->
+<script type="text/ng-template" id="addcourse.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">{{thename}}销售过程</div>
+        </div>
+        <!--{{baseForm.$valid}}-->
+        <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
+                    <tr>
+                        <td width="60">过程名称</td>
+                        <td class="pl10">
+                            <input type="text" class="form-control" placeholder="输入销售过程名称" ng-model="modalform.saleName">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">销售金额</td>
+                        <td class="pl10">
+                            <input type="text" class="form-control" placeholder="设置销售金额(元)" ng-model="modalform.saleAmount">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">销售阶段</td>
+                        <td class="pl10">
+                            <select class="form-control" ng-model="modalform.saleStage">
+                                <option value="">选择销售阶段</option>
+                                <option value="接洽客户">接洽客户</option>
+                                <option value="确定需求">确定需求</option>
+                                <option value="报价方案">报价方案</option>
+                                <option value="议价审核">议价审核</option>
+                                <option value="销售成功">销售成功</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">机会来源</td>
+                        <td class="pl10">
+                            <select class="form-control" ng-model="modalform.saleSource">
+                                <option value="">选择机会来源</option>
+                                <option value="广告">广告</option>
+                                <option value="研讨会">研讨会</option>
+                                <option value="搜索引擎">搜索引擎</option>
+                                <option value="客户介绍">客户介绍</option>
+                                <option value="其他">其他</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">负责人员</td>
+                        <td class="pl10">
+                            <div selectdepyuan yuangong="1" myselected="modalform.mycourseall" selectedallarr="modalform.courseall"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60" valign="top">销售备忘</td>
+                        <td class="pl10">
+                            <textarea class="form-control" rows="3" ng-model="modalform.memo" maxlength="100" placeholder="请输入销售备忘"></textarea>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary wd80">确定</button>
+            </div>
+        </form>
+    </div>
+</script>

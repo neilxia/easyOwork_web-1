@@ -749,6 +749,17 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                 'menu@sales': {
                     templateUrl: 'modules/sales/tmp/menu.html'
                 }
+            },
+            resolve:{
+                loadPlugin:function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            //时间控件
+                            name: 'datePicker',
+                            files: ['plugins/datapicker/angular-datapicker.css','plugins/datapicker/angular-datepicker.js']
+                        }
+                    ])
+                }
             }
         })
         .state('sales.customerlist', {
@@ -757,7 +768,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             data: { pageTitle: '客户管理'}
         })
         .state('sales.customerdtmain', {
-            url: "/customerdtmain",
+            url: "/customerdtmain?name",
             templateUrl: 'modules/sales/tmp/customerdtmain.html',
             data: { pageTitle: '客户详情'}
         })
@@ -768,7 +779,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             data: { pageTitle: '潜在客户'}
         })
         .state('sales.Ptcustomerdtmain', {
-            url: "/Ptcustomerdtmain",
+            url: "/Ptcustomerdtmain?name",
             templateUrl: 'modules/sales/tmp/Ptcustomerdtmain.html',
             data: { pageTitle: '潜在客户详情'}
         })

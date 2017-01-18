@@ -412,7 +412,6 @@ function projectmsgdtmainlistCtrl(){
             promise.error(function(data, status, headers, config){
                 MsgService.tomsg(data.body.status.errorDesc);
             });
-            return promise;
         }
         //新增
         $scope.addTask = function () {

@@ -76,16 +76,60 @@ app.filter('pjstatus',function(){
         var val;
         switch (obj){
             case 'GREEN':
-                val='待付款';
+                val='正常';
                 break;
             case 'RED':
-                val='可使用';
+                val='轻度';
                 break;
             case 'YELLOW':
-                val='可使用';
+                val='严重';
                 break;
             case 'COMPLETED':
-                val='可使用';
+                val='完成';
+                break;
+            default:
+                val='无';
+                break;
+        }
+        return val;
+    }
+});
+
+app.filter('qystatus',function(){
+    return function (obj){
+        if (obj.length <= 0) return;
+        var val;
+        switch (obj){
+            case 'NORMAL':
+                val='一般';
+                break;
+            case 'IMPORTANT':
+                val='重要';
+                break;
+            default:
+                val='无';
+                break;
+        }
+        return val;
+    }
+});
+
+app.filter('activestatus',function(){
+    return function (obj){
+        if (obj.length <= 0) return;
+        var val;
+        switch (obj){
+            case 'PLAN':
+                val='计划中';
+                break;
+            case 'NPROGRESS':
+                val='正在进行';
+                break;
+            case 'COMPLETED':
+                val='已完成';
+                break;
+            case 'CANCELLED':
+                val='已取消';
                 break;
             default:
                 val='无';
