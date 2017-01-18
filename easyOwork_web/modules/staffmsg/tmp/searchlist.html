@@ -33,7 +33,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                <tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize | orderBy:['orgList[0].name']">
                     <td><span class="p15">{{data.name}}</span></td>
                     <td>{{data.sex}}</td>
                     <td>{{data.orgList[0].name}}</td>
