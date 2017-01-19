@@ -75,13 +75,31 @@ app.controller('loginCtrl',['$rootScope','$scope','$http','commonService','AppCo
 	            	var userinfo = data.body.data;
 	            	userinfo.tokenId = data.header.tokenId;
 	            	userinfo.entId = data.header.entId;
+	            	//将用户信息放入LocalStorage
 	            	LocalStorage.setObject("userinfo",userinfo);
 	            	$rootScope.userinfo = userinfo;
-	                if(redirect_url != undefined && redirect_url != ''){
-	                	$location.url(redirect_url);
-	                }else{
-	                	$rootScope.$state.go('product');
-	                }
+	            	
+	            	//获取用户权限, 确保该数据在主页显示前加载
+	            	$scope.requestInfo.header.entId = data.header.entId;
+	            	$scope.requestInfo.header.tokenId = data.header.tokenId;
+                    var permissionPromise = $http.post(AppConfig.BASE_URL+'work/rest/inquiryUserFunction',$scope.requestInfo);
+                    permissionPromise.success(function(pdata, status, headers, config){
+                    	var datas=pdata.body.data;
+                        var sts=pdata.body.status;
+                        if(sts.statusCode==0){
+                        	//将用户权限放入LocalStorage
+                        	LocalStorage.setObject('permissionList',datas.functionList);
+                        	LocalStorage.setObject('userList',datas.userList);
+                        	if(redirect_url != undefined && redirect_url != ''){
+        	                	$location.url(redirect_url);
+        	                }else{
+        	                	$rootScope.$state.go('product');
+        	                }
+                        }
+                    });
+                    promise.error(function(data, status, headers, config){
+                    });
+	            	
 	            }else{
 	                MsgService.tomsg(sts.errorDesc);
 	            }
