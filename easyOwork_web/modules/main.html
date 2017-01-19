@@ -18,15 +18,14 @@
             </div>
             <!--备忘录-->
             <div class="panel mt15">
-                <div class="panel-heading"><!--<span class="f_r"><i class="iconfont icon-right f14"></i></span>--><span class="f16">备忘录</span></div>
-                <div class="pl15 pr5 pb10">
+                <div class="panel-heading"><!--<span class="f_r"><i class="iconfont icon-right f14"></i></span>--><span class="f16">备忘录</span><span class="f16 f_r poi" ng-click="addmemosFun()"><i class="iconfont icon-add g9"></i></span></div>
+                <div class="pl15 pr5 pb10 pt10">
                     <ul class="ind_memo_list f12" slim-scroll box-height="250">
                         <li class="bdrs4" ng-repeat="data in memoslist">
                             <a class="iconfont icon-close2 f14 g9 f_r" ng-click="deletememosFun(data)"></a>
                             {{data.content}}
                         </li>
                     </ul>
-                    <a class="add-box mr10 mt10" ng-click="addmemosFun()"><i class="iconfont icon-add f12"></i></a>
                 </div>
             </div>
         </div>
