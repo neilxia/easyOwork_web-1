@@ -1,0 +1,361 @@
+<style>
+    .towntabbox02 ul{ padding-left: 20px;}
+</style>
+<div id="page-wrapper" ng-controller="activitydtmainCtrl" ng-init="initFun()">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="init()" title="刷新"></a></div>
+        <ul>
+            <li class="active">营销活动详情</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li>销售管理</li>
+        <li>营销活动</li>
+        <li class="active">营销活动详情</li>
+    </ol>
+    <!--    <div class="btnbox">
+            <button class="btn btn-default btn-sm" ng-click="adddynamic()">发布动态</button>
+        </div>-->
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <div class="p20">
+                <table class="line30td f12" cellspacing="0" cellpadding="0" width="100%;">
+                    <tr>
+                        <td width="250"><span class="g9">活动名称：</span>用户体验交流活动</td>
+                        <td width="250"><span class="g9">开始/结束：</span>2016-11-12 11:00~11-13 20:30</td>
+                        <td width="150"><span class="g9">负责人员：</span><span class="orange">樱空释</span></td>
+                        <td width="150"><span class="g9">活动状态：</span>正在进行</td>
+                        <td width="300"><span class="g9">活动类型：</span>线下活动</td>
+                    </tr>
+                    <tr>
+                        <td><span class="g9">预计成本：</span>￥80000.00</td>
+                        <td><span class="g9">实际成本：</span>￥80020.00</td>
+                        <td><span class="g9">参与人员：</span><span class="orange">樱空释</span></td>
+                        <td colspan="2"><span class="g9">活动描述：</span>这里是描述文字</td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <div tabset class="towntabbox01 towntabbox02">
+                    <div tab>
+                        <div tab-heading>潜在客户({{inquiryProcessesData.length}})</div>
+                        <div class="ind-medo_com" slim-scroll box-height="300">
+                            <div class="btnbox">
+                                <button class="btn btn-default btn-sm" ng-click="addassetsFun()">新增</button>
+                                <button class="btn btn-default btn-sm" ng-click="addmodelFun()">删除</button>
+                            </div>
+                            <table class="table table-hover bbe" cellspacing="0" cellpadding="0" width="100%;">
+                                <thead>
+                                <tr>
+                                    <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
+                                    <th>客户名称</th>
+                                    <th width="100">联系电话</th>
+                                    <th width="100">邮箱</th>
+                                    <th width="100">客户级别</th>
+                                    <th width="90">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
+                                    <td>四川金立科技有限公司</td>
+                                    <td>13458639887</td>
+                                    <td>jammy@gieo.cn</td>
+                                    <td class="orange">重要</td>
+                                    <!--<td class="red">非常重要</td>-->
+                                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editstaff(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                                </tr>
+                                <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div tab>
+                        <div tab-heading>文档({{inquiryHandData.length}})</div>
+                        <div class="ind-medo_com" slim-scroll box-height="300">
+                            <div class="btnbox">
+                                <button class="btn btn-default btn-sm" ng-click="addmodelFun()">新增</button>
+                                <button class="btn btn-default btn-sm" ng-click="addmodelFun()">删除</button>
+                            </div>
+                            <table class="table table-hover bbe" cellspacing="0" cellpadding="0" width="100%;">
+                                <thead>
+                                <tr>
+                                    <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
+                                    <th>文档名称</th>
+                                    <th width="160">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
+                                    <td>用户体验设计相关文档</td>
+                                    <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="s_issueDetail(data)"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="查看" ng-click="s_issueDetail(data)"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editstaff(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                                </tr>
+                                <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div tab>
+                        <div tab-heading>日程活动({{inquiryHandData.length}})</div>
+                        <div class="ind-medo_com" slim-scroll box-height="300">
+                            <div class="btnbox">
+                                <button class="btn btn-default btn-sm" ng-click="addmodelFun()">新增</button>
+                                <button class="btn btn-default btn-sm" ng-click="addmodelFun()">删除</button>
+                            </div>
+                            <table class="table table-hover bbe" cellspacing="0" cellpadding="0" width="100%;">
+                                <thead>
+                                <tr>
+                                    <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
+                                    <th>活动类型</th>
+                                    <th width="160">开始与结束时间</th>
+                                    <th width="100">提醒时间</th>
+                                    <th width="100">负责人员</th>
+                                    <th width="100">参与人员</th>
+                                    <th width="125">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
+                                    <td>拜访客户</td>
+                                    <td>2016-10-12 15:00 <br> 2016-10-12 18:00</td>
+                                    <td>2016-10-12 15:00</td>
+                                    <td class="orange">张卡锁</td>
+                                    <td class="orange">张小凡...</td>
+                                    <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="s_issueDetail(data)"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editstaff(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                                </tr>
+                                <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--        <div class="nose-panel-footer cf bte">
+                    <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+                    <div class="g9">共 {{thispages.total}} 条数据</div>
+                </div>-->
+    </div>
+
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
+<!--销售过程-->
+<script type="text/ng-template" id="addassets.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">{{thename}}销售过程</div>
+        </div>
+        <!--{{baseForm.$valid}}-->
+        <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
+                    <tr>
+                        <td width="60">过程名称</td>
+                        <td class="pl10">
+                            <input type="text" class="form-control" placeholder="输入销售过程名称">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">销售金额</td>
+                        <td class="pl10">
+                            <input type="text" class="form-control" placeholder="设置销售金额(元)">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">销售阶段</td>
+                        <td class="pl10">
+                            <select class="form-control">
+                                <option>现在当前阶段</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">机会来源</td>
+                        <td class="pl10">
+                            <select class="form-control">
+                                <option>选择机会来源</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">负责人员</td>
+                        <td class="pl10">
+                            <div selectdepyuan yuangong="1" myselected="processDefStep.myselected" selectedallarr="processDefStep.selectedallarr"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">参与人员</td>
+                        <td class="pl10">
+                            <div selectdepyuan yuangong="1" myselected="processDefStep.myselected" selectedallarr="processDefStep.selectedallarr"></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary wd80">确定</button>
+            </div>
+        </form>
+    </div>
+</script>
+<!--合同-->
+<script type="text/ng-template" id="addcontract.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">{{thename}}合同</div>
+        </div>
+        <!--{{baseForm.$valid}}-->
+        <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
+                    <tr>
+                        <td width="60">合同名称</td>
+                        <td class="pl10">
+                            <input type="text" class="form-control" placeholder="输入合同名称">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">金额</td>
+                        <td class="pl10">
+                            <input type="text" class="form-control" placeholder="设置合同金额(元)">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">项目周期</td>
+                        <td class="pl10">
+                            <div class="qiyi-group line20td f_l" style="width: 210px;">
+                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="addconfigform.startDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="选择开始时间">
+                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                            </div>
+                            <div class="qiyi-group line20td f_l ml10" style="width: 209px;">
+                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="addconfigform.startDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="选择结束时间">
+                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">合同状态</td>
+                        <td class="pl10">
+                            <select class="form-control">
+                                <option>选择合同状态</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">合同附件</td>
+                        <td class="pl10">
+                            <div class="btn btn-default upheadbtn">
+                                <input type="file" id="logo" nv-file-select accept="image/*" uploader="logoUploader"/>本地上传
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60" valign="top">收款状态</td>
+                        <td class="pl10">
+                            <select class="form-control">
+                                <option>部分收款</option>
+                            </select>
+                            <div class="mt10">
+                                <input type="text" class="form-control" placeholder="设置合同金额(元)">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary wd80">确定</button>
+            </div>
+        </form>
+    </div>
+</script>
+
+<!--模板-->
+<script type="text/ng-template" id="addmodel.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">{{thename}}项目</div>
+        </div>
+        <!--{{baseForm.$valid}}-->
+        <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
+                    <tr>
+                        <td width="60">合同编号</td>
+                        <td class="pl10">
+                            <div class="form-inline">
+                                <input type="text" class="form-control " style="width: 344px;">
+                                <button class="btn btn-default" type="button">随机生成</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">项目名称</td>
+                        <td class="pl10">
+                            <input type="text" class="form-control" placeholder="输入项目名称">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">负责人员</td>
+                        <td class="pl10">
+                            <select class="form-control">
+                                <option>选择项目负责人员</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">合同金额</td>
+                        <td class="pl10">
+                            <input type="text" class="form-control" placeholder="输入合同金额 (元)">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">成本预算</td>
+                        <td class="pl10">
+                            <input type="text" class="form-control" placeholder="输入成本金额 (元)">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">项目周期</td>
+                        <td class="pl10">
+                            <div class="qiyi-group line20td f_l" style="width: 210px;">
+                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="addconfigform.startDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="选择开始时间">
+                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                            </div>
+                            <div class="qiyi-group line20td f_l ml10" style="width: 209px;">
+                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="addconfigform.startDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="选择结束时间">
+                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60" valign="top">项目描述</td>
+                        <td class="pl10">
+                            <div class="nose-group" ng-class="{'has-error':baseForm.content.$dirty && baseForm.content.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$invalid" popover="输入项目描述文字" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$error.maxlength" popover="不大于100字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <textarea class="form-control" rows="4" name="content" placeholder="输入项目描述文字，不大于100字" ng-maxlength="100" ng-model="notices.content" required></textarea>
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary wd80">确定</button>
+            </div>
+        </form>
+    </div>
+</script>

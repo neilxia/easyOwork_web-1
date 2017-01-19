@@ -1,0 +1,257 @@
+<div id="page-wrapper" ng-controller="assetsmpmsgCtrl" ng-init="initFun()">
+    <div class="pt10 pb10 bg-fafafa t_c">
+        <div class="btn-group btn-grouptop" role="group">
+            <button class="btn btn-default wd100" ng-model="radioModel" btn-radio="'COMPANY'" ng-change="inquirySaleTargetFun()">公司</button>
+            <button class="btn btn-default wd100" ng-model="radioModel" btn-radio="'ORG'" ng-change="inquirySaleTargetFun()">部门</button>
+            <button class="btn btn-default wd100" ng-model="radioModel" btn-radio="'USER'" ng-change="inquirySaleTargetFun()">个人</button>
+        </div>
+    </div>
+    <!--主要内容-->
+   <div ng-if="radioModel=='COMPANY'">
+       <div class="btnbox bte">
+           <form class="f_r form-inline">
+               <div class="qiyi-group dib date-picker-right line20td">
+                   <input type="datetime" name="startDate" class="form-control wd100 input-sm" date-time ng-model="dateJson.curryear" view="year" min-view="year" format="yyyy" placeholder="选择年度" auto-close="true">
+                   <span class="abs_r" style="top: 5px;"><i class="iconfont icon-rili"></i></span>
+               </div>
+               <button type="submit" class="btn btn-primary btn-sm" ng-click="inquirySalelist(dateJson.curryear)">查询</button>
+           </form>
+           <button class="btn btn-default btn-sm" ng-click="addmplFun()">设定目标</button>
+       </div>
+       <div class="nose-panel">
+           <div class="nose-panel-body">
+               <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
+                   <thead>
+                   <tr>
+                       <th class="pl20">月份</th>
+                       <th width="100">业绩指标</th>
+                       <th width="400">完成进度</th>
+                       <!--<th width="100">负责人员</th>-->
+                       <th width="100">状态</th>
+                       <th width="90">操作</th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                   <tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                       <td class="pl20">
+                           <span ng-if="data.year">{{data.year}}年度</span>
+                           <span ng-if="data.quarter">{{data.quarter}}季度</span>
+                           <span ng-if="data.month">{{data.month}}月</span>
+                       </td>
+                       <td>￥{{data.targetAmount}}</td>
+                       <td class="orange">
+                           <progressbar value="data.actualAmount/data.targetAmount * 100" type="warning" class="progress-striped progress-small active pct60 f_l"></progressbar>
+                           <div class="f_l ml5 mt-3">{{data.actualAmount/data.targetAmount * 100}}% ￥{{data.actualAmount}}</div>
+
+                           <!--<progressbar value="40" type="success" class="progress-striped progress-small active"></progressbar>-->
+                       </td>
+                       <!--<td class="orange">樱空释</td>-->
+                       <td class="green">
+                           <span class="red" ng-if="data.targetAmount > data.targetAmount">未完成指标</span>
+                           <span class="green" ng-if="data.targetAmount <= data.actualAmount">完成指标</span>
+                       </td>
+                       <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editmpFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deletemp(data)"><i class="iconfont icon-del f14"></i></button></td>
+                   </tr>
+                   <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
+                   </tbody>
+               </table>
+           </div>
+           <div class="nose-panel-footer cf bte">
+               <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+               <div class="g9">共 {{thispages.total}} 条数据</div>
+           </div>
+       </div>
+   </div>
+    <div ng-if="radioModel=='ORG'">
+        <div class="btnbox bte">
+            <form class="f_r form-inline">
+                <span selectdep options="'bm'" size="'sm'" myselected="dateJson.org" class="wd170 dib" title="选择部门"></span>
+                <div class="qiyi-group dib date-picker-right line20td">
+                    <input type="datetime" name="startDate" class="form-control wd100 input-sm" date-time ng-model="dateJson.curryear" view="year" min-view="year" format="yyyy" placeholder="选择年度" auto-close="true">
+                    <span class="abs_r" style="top: 5px;"><i class="iconfont icon-rili"></i></span>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm" ng-click="inquirySalelist(dateJson.curryear,dateJson.org[0])">查询</button>
+            </form>
+
+            <button class="btn btn-default btn-sm" ng-click="addmplFun()">设定目标</button>
+        </div>
+        <div class="nose-panel">
+            <div class="nose-panel-body">
+                <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
+                    <thead>
+                    <tr>
+                        <th class="pl20">月份</th>
+                        <th width="100">业绩指标</th>
+                        <th width="400">完成进度</th>
+                        <th width="100">部门</th>
+                        <th width="100">状态</th>
+                        <th width="90">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                        <td class="pl20">
+                            <span ng-if="data.year">{{data.year}}年度</span>
+                            <span ng-if="data.quarter">{{data.quarter}}季度</span>
+                            <span ng-if="data.month">{{data.month}}月</span>
+                        </td>
+                        <td>￥{{data.targetAmount}}</td>
+                        <td class="orange">
+                            <progressbar value="data.actualAmount/data.targetAmount * 100" type="warning" class="progress-striped progress-small active pct60 f_l"></progressbar>
+                            <div class="f_l ml5 mt-3">{{data.actualAmount/data.targetAmount * 100}}% ￥{{data.actualAmount}}</div>
+                        </td>
+                        <td class="orange">{{data.orgDTO.name}}</td>
+                        <td class="green">
+                            <span class="red" ng-if="data.targetAmount > data.targetAmount">未完成指标</span>
+                            <span class="green" ng-if="data.targetAmount<=data.actualAmount">完成指标</span>
+                        </td>
+                        <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editmp(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                    </tr>
+                    <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
+                    </tbody>
+                </table>
+            </div>
+            <div class="nose-panel-footer cf bte">
+                <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+                <div class="g9">共 {{thispages.total}} 条数据</div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="radioModel=='USER'">
+        <div class="btnbox bte">
+            <form class="f_r form-inline">
+                <span selectdepyuan yuangong="1" size="'sm'" myselected="dateJson.user" selectedallarr="processDefStep.selectedallarr" class="wd170 dib"></span>
+                <div class="qiyi-group dib date-picker-right line20td">
+                    <input type="datetime" name="startDate" class="form-control wd100 input-sm" date-time ng-model="dateJson.curryear" view="year" min-view="year" format="yyyy" placeholder="选择年度" auto-close="true">
+                    <span class="abs_r" style="top: 5px;"><i class="iconfont icon-rili"></i></span>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm" ng-click="inquirySalelist(dateJson.curryear,null,dateJson.user[0])">查询</button>
+            </form>
+            <button class="btn btn-default btn-sm" ng-click="addmplFun()">设定目标</button>
+        </div>
+        <div class="nose-panel">
+            <div class="nose-panel-body">
+                <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
+                    <thead>
+                    <tr>
+                        <th class="pl20">月份</th>
+                        <th width="100">业绩指标</th>
+                        <th width="400">完成进度</th>
+                        <th width="100">员工</th>
+                        <th width="100">状态</th>
+                        <th width="90">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                        <td class="pl20">
+                            <span ng-if="data.year">{{data.year}}年度</span>
+                            <span ng-if="data.quarter">{{data.quarter}}季度</span>
+                            <span ng-if="data.month">{{data.month}}月</span>
+                        </td>
+                        <td>￥{{data.targetAmount}}</td>
+                        <td class="orange">
+                            <progressbar value="data.actualAmount/data.targetAmount * 100" type="warning" class="progress-striped progress-small active pct60 f_l"></progressbar>
+                            <div class="f_l ml5 mt-3">{{data.actualAmount/data.targetAmount * 100}}% ￥{{data.actualAmount}}</div>
+                        </td>
+                        <td class="orange">{{data.userDTO.name}}</td>
+                        <td class="green">
+                            <span class="red" ng-if="data.targetAmount > data.targetAmount">未完成指标</span>
+                            <span class="green" ng-if="data.targetAmount<=data.actualAmount">完成指标</span>
+                        </td>
+                        <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editmpFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                    </tr>
+                    <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
+                    </tbody>
+                </table>
+            </div>
+            <div class="nose-panel-footer cf bte">
+                <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+                <div class="g9">共 {{thispages.total}} 条数据</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
+
+<!--设定目标-->
+<script type="text/ng-template" id="addmodel.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">设定目标</div>
+        </div>
+        <!--{{baseForm.$valid}}-->
+        <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
+                    <tr>
+                        <td width="60">选择类型</td>
+                        <td class="pl10">
+                            <select class="form-control" ng-model="modalform.targetType">
+                                <option value="YEAR">年度</option>
+                                <option value="QUARTER">季度</option>
+                                <option value="MONTH">月度</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">选择周期</td>
+                        <td class="pl10">
+                            <div class="qiyi-group line20td" ng-if="modalform.targetType=='YEAR'">
+                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.year" view="year" min-view="year" format="yyyy"  auto-close="true">
+                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                            </div>
+                            <select class="form-control" ng-model="modalform.quarter" ng-if="modalform.targetType=='QUARTER'">
+                                <option value="1">1季度</option>
+                                <option value="2">2季度</option>
+                                <option value="3">3季度</option>
+                                <option value="4">4季度</option>
+                            </select>
+                            <div class="qiyi-group line20td" ng-if="modalform.targetType=='MONTH'">
+                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.month" view="month" min-view="month" format="M"  auto-close="true">
+                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-if="radioModel=='ORG'">
+                        <td width="60">选择部门</td>
+                        <td class="pl10">
+                            <span selectdep options="'bm'" myselected="modalform.orgDTO"  title="选择部门"></span>
+                        </td>
+                    </tr>
+                    <tr ng-if="radioModel=='USER'">
+                        <td width="60">选择个人</td>
+                        <td class="pl10">
+                            <div selectdepyuan yuangong="1" myselected="modalform.myuserDTO" selectedallarr="modalform.myuserDTOall"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">业绩指标</td>
+                        <td class="pl10">
+                            <input type="text" class="form-control" ng-model="modalform.targetAmount" placeholder="设置业绩指标金额(元)">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60" valign="top">备注内容</td>
+                        <td class="pl10">
+                            <div class="nose-group" ng-class="{'has-error':baseForm.content.$dirty && baseForm.content.$invalid}">
+                                <!--<i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$invalid" popover="输入项目描述文字" popover-placement="bottom" popover-trigger="mouseenter"></i>-->
+                                <!--<i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$error.maxlength" popover="不大于100字符" popover-placement="bottom" popover-trigger="mouseenter"></i>-->
+                                <textarea class="form-control" rows="4" name="content" placeholder="输入备注内容，不大于100字" ng-maxlength="100" ng-model="modalform.memo" required></textarea>
+                            </div>
+
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary wd80">确定</button>
+            </div>
+        </form>
+    </div>
+</script>

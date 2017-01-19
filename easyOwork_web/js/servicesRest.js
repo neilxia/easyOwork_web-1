@@ -303,9 +303,13 @@ function CustomerService(){
             changeCustomer:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/changeCustomer',form)
             },
+            //POST 5.10.1	添加/修改/删除客户联系人
+            changeCustomerContact:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changeCustomerContact',form)
+            },
             //POST 5.10.2	B0036-查询(潜在)客户
             inquiryCustomer:function(form){
-                return $http.post(AppConfig.BASE_URL+'work/rest/changeCustomer',form)
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryCustomer',form)
             },
             //POST 5.10.3	B0037-添加/修改/删除 销售活动
             changeSale:function(form){
@@ -332,8 +336,8 @@ function CustomerService(){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryActivity',form)
             },
             //POST 5.10.9	B0043-添加/修改/删除 合同
-            changeActivity:function(form){
-                return $http.post(AppConfig.BASE_URL+'work/rest/changeActivity',form)
+            changeContract:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changeContract',form)
             },
             //POST 5.10.10	B0044-查询合同
             inquiryContract:function(form){
@@ -362,6 +366,14 @@ function CustomerService(){
             //POST 5.10.16	B0050-查询竞争对手
             inquiryRival:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryRival',form)
+            },
+            //POST 5.10.16	添加/修改/删除 销售目标
+            changeSaleTarget:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changeSaleTarget',form)
+            },
+            //POST 5.10.16	查询销售目标
+            inquirySaleTarget:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquirySaleTarget',form)
             }
         }
     }];

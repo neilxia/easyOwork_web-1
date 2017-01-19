@@ -334,6 +334,26 @@ function multipleEmail(){
         }
     };
 }
+//电话验证
+function multipleTell(){
+    return {
+        require: "ngModel",
+        link: function (scope, element, attr, ngModel) {
+            if (ngModel) {
+                var mobileRegexp = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+                var gsRegexp  =/^(0[0-9]{2,3}\-)?([2-9][0-9]{6,7})+(\-[0-9]{1,4})?$/;
+            }
+            var customValidator = function (value) {
+                var validity = ngModel.$isEmpty(value) || (mobileRegexp.test(value) || gsRegexp.test(value));
+                ngModel.$setValidity("multipleTell", validity);
+                return validity ? value : undefined;
+            };
+            ngModel.$formatters.push(customValidator);
+            ngModel.$parsers.push(customValidator);
+        }
+    };
+}
+
 function isnumber(){
     return {
         require: "ngModel",
