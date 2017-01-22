@@ -790,7 +790,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             data: { pageTitle: '销售过程'}
         })
         .state('sales.assetsmsgdtmain', {
-            url: "/assetsmsgdtmain",
+            url: "/assetsmsgdtmain?name",
             templateUrl: 'modules/sales/tmp/assetsmsgdtmain.html',
             data: { pageTitle: '销售过程详情'}
         })
@@ -823,7 +823,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             data: { pageTitle: '营销活动'}
         })
         .state('sales.activitydtmain', {
-            url: "/activitydtmain",
+            url: "/activitydtmain?name",
             templateUrl: 'modules/sales/tmp/activitydtmain.html',
             data: { pageTitle: '营销活动详情'}
         })

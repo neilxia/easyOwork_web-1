@@ -43,7 +43,7 @@
                     <td>{{data.startDate}} <br> {{data.endDate}}</td>
                     <td class="orange">{{data.userDTO.name}}</td>
                     <td>{{data.status | activestatus}}</td>
-                    <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="sales.activitydtmain"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                    <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="sales.activitydtmain({name:data.campaignName})"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
                 </tr>
                 <!--<tr ng-repeat="data in datalist | filter:{'userDTO':ygselected[0].name,'projectStatus':selectedStatus,'projectName':sltname} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
                 </tbody>
@@ -108,7 +108,7 @@
                     <tr>
                         <td width="60">活动状态</td>
                         <td class="pl10">
-                            <select class="form-control input-sm dib" ng-init="modalform.status='PLAN'" ng-model="modalform.status" ng-options="x.val as x.name for x in gcStatusArr">
+                            <select class="form-control input-sm dib" ng-model="modalform.status" ng-options="x.val as x.name for x in gcStatusArr">
                             </select>
                         </td>
 

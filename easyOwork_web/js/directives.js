@@ -1184,6 +1184,7 @@ angular
     .directive('slimScroll', slimScroll)   // 简单的滚动条
     .directive('websimUploader', websimUploader)   // 文件上传
     .directive('multipleEmail', multipleEmail) // 手机和邮箱验证
+    .directive('multipleTell', multipleTell) //  电话号码
     .directive('isnumber', isnumber) // 是数字验证
     .directive('onFinishRender', onFinishRender)
     .directive('getCode', getCode) //获取验证码

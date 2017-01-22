@@ -113,7 +113,7 @@ app.filter('qystatus',function(){
         return val;
     }
 });
-
+//营销
 app.filter('activestatus',function(){
     return function (obj){
         if (obj.length <= 0) return;
@@ -122,7 +122,7 @@ app.filter('activestatus',function(){
             case 'PLAN':
                 val='计划中';
                 break;
-            case 'NPROGRESS':
+            case 'INPROGRESS':
                 val='正在进行';
                 break;
             case 'COMPLETED':
