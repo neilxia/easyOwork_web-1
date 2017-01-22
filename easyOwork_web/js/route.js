@@ -589,6 +589,17 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                 'menu@salarymsg': {
                     templateUrl: 'modules/salarymsg/tmp/menu.html'
                 }
+            },
+            resolve:{
+                loadPlugin:function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            //时间控件
+                            name: 'datePicker',
+                            files: ['plugins/datapicker/angular-datapicker.css','plugins/datapicker/angular-datepicker.js']
+                        }
+                    ])
+                }
             }
         })
         .state('salarymsg.issue', {
@@ -621,6 +632,25 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                 },
                 'menu@clockingIn': {
                     templateUrl: 'modules/clockingIn/tmp/menu.html'
+                }
+            },
+            resolve:{
+                loadPlugin:function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            //时间控件
+                            name: 'datePicker',
+                            files: ['plugins/datapicker/angular-datapicker.css','plugins/datapicker/angular-datepicker.js']
+                        }/*,
+                        {
+                            files: ['plugins/jquery-treetable/jquery.treetable.css','plugins/jquery-treetable/jquery.treetable.theme.default.css','plugins/jquery-treetable/jquery.treetable.js']
+                        }*/,
+                        {
+                            // TreeGrid
+                            files: ['plugins/TreeGrid/TreeGrid.css','plugins/TreeGrid/TreeGrid-1.1.js']
+                        }
+
+                    ])
                 }
             }
         })

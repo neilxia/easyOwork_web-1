@@ -291,6 +291,9 @@ function attendanceService(){
             //POST 5.9.3	B0034-查询考勤记录
             inquiryAttendance:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryAttendance',form)
+            },
+            inquiryAttendanceSummary:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryAttendanceSummary',form)
             }
         }
     }];
@@ -626,6 +629,15 @@ function analysisService(){
             },
             getProjectHealthChart:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/getProjectHealthChart',form)
+            },
+            getCustomerCustomerChart:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/getCustomerCustomerChart',form)
+            },
+            getCustomerSaleChart:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/getCustomerSaleChart',form)
+            },
+            getAnalysisSummary:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/getAnalysisSummary',form)
             }
         }
     }];

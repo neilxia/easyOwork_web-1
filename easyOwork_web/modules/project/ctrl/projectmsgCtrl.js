@@ -2,6 +2,7 @@
 function projectmsglistCtrl(){
     return['$rootScope','$scope','$modal','$filter','projectService','MsgService','LocalStorage','Common','noseService','FileUploader',function($rootScope,$scope,$modal,$filter,projectService,MsgService,LocalStorage,Common,noseService,FileUploader){
         var userinfo=LocalStorage.getObject('userinfo');
+        $scope.userinfo = userinfo;
         $scope.initFun = function(){
             inquiryProjectDefFun();//查询项目类型
             inquiryProjectFun();//查询项目

@@ -24,7 +24,7 @@
                             <div class="col-lg-2">{{data.totalSocialSecurityMonth}}<span class="f12 g9 ml5">五险一金</span></div>
                             <div class="col-lg-2">
                                 <button class="btn btn-default" ng-if="data.totalSettledEmployeeCount!=data.totalEmployeeCount" ui-sref="salarymsg.issueview({year:thisyear,month:data.month})">发放工资</button>
-                                <button class="btn btn-default" ng-if="data.totalSettledEmployeeCount==data.totalEmployeeCount" ui-sref="salarymsg.list({year:thisyear,month:data.month})">查看明细</button>
+                                <button class="btn btn-default" ng-if="data.totalSettledEmployeeCount==data.totalEmployeeCount" ui-sref="salarymsg.issueview({year:thisyear,month:data.month})">查看明细</button>
                             </div>
                         </div>
                     </li>

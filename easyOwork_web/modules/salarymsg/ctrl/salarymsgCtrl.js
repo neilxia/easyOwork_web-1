@@ -63,16 +63,27 @@ function salarymsgissueCtrl(){
 function salarymsglistCtrl(){
     return['$scope', '$modal','$rootScope','MsgService','salaryService','LocalStorage','employeesService',function($scope,$modal,$rootScope,MsgService,salaryService,LocalStorage,employeesService){
         var userinfo=LocalStorage.getObject('userinfo');
-        var thisyear=$rootScope.$stateParams.year;
-        var thismonth=$rootScope.$stateParams.month;
         var date = new Date();
+        var thisyear = date.getFullYear();
+        var thismonth = date.getMonth()+1;
         var attendance={
-            attendanceYear:date.getFullYear(),
-            attendanceMonth:date.getMonth()+1,
+            attendanceYear:thisyear,
+            attendanceMonth:thismonth,
             attendanceDay:date.getDate()
         }
+        $scope.form = {};
         $scope.init=function(){
+        	if(thismonth<10)
+        		$scope.form = {"payrollDate":thisyear+"-0"+thismonth};
+        	else
+        		$scope.form = {"payrollDate":thisyear+"0"+thismonth};
             inquiryEmployeeFun();
+        }
+        $scope.changeYearMonth = function(){
+        	var payrollDate = $("#payrollDate").val();
+        	thisyear = payrollDate.substring(0,4);
+        	thismonth = payrollDate.substring(5,7);
+        	inquiryEmployeeFun();
         }
         //查询本人/其他员工信息列表
         //分页
@@ -83,13 +94,21 @@ function salarymsglistCtrl(){
         };
         function inquiryEmployeeFun(){
             $scope.options={
-                "type":"ALL"
+                "year":thisyear,
+                "month":thismonth,
+                "queryType":'HIERARCHY',
+                "userDTO":{
+                	"id":userinfo.id,	//员工号
+                    "personalEmail":userinfo.personalEmail,	//邮件地址
+                    "personalPhoneCountryCode":'86',	//电话号码国家代码
+                    "personalPhone":userinfo.personalPhone		//电话号码
+                }
             };
-            var promise = employeesService.inquiryEmployee({body:$scope.options});
+            var promise = salaryService.inquiryPayroll({body:$scope.options});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
-                    $scope.datalist=data.body.data.userList;
+                    $scope.datalist=data.body.data.payrolls;
                     $scope.thispages.total=$scope.datalist.length;//分页总数
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
@@ -113,12 +132,7 @@ function salarymsglistCtrl(){
                 //查询工资单
                 $scope.userinfo=row;
                 $scope.options={
-                    "userDTO":{
-                        "id":row.id || '',	//员工号
-                        "personalEmail":row.personalEmail || '',	//邮件地址
-                        "personalPhoneCountryCode":'86',	//电话号码
-                        "personalPhone":row.personalPhone || ''		//电话号码
-                    },
+                    "userDTO":row.userDTO,
                     "year":thisyear || attendance.attendanceYear,		//工资年份
                     "month":thismonth || attendance.attendanceMonth 	//工资月份
                 };
@@ -127,7 +141,7 @@ function salarymsglistCtrl(){
                 promise.success(function(data, status, headers, config){
                     var sts=data.body.status;
                     if(sts.statusCode==0){
-                        $scope.inquiryPayrollData=data.body.data;
+                        $scope.inquiryPayrollData=data.body.data.payrolls[0];
                         //上面开启，下面是测试数据
                         /**
                         $scope.inquiryPayrollData={
@@ -188,6 +202,8 @@ function salarymsgviewCtrl(){
         }
         var thisyear=$rootScope.$stateParams.year;
         var thismonth=$rootScope.$stateParams.month;
+        $scope.thisyear = thisyear;
+        $scope.thismonth = thismonth;
         //查询本人/其他员工信息列表
         //分页
         $scope.thispages={
@@ -197,15 +213,19 @@ function salarymsgviewCtrl(){
         };
         function inquiryEmployeeFun(){
             $scope.options={
-                "type":"ALL"
+                "year":thisyear,
+                "month":thismonth
             };
-            var promise = employeesService.inquiryEmployee({body:$scope.options});
+            var promise = salaryService.inquiryPayroll({body:$scope.options});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
-                    var datalist=data.body.data.userList;
+                    var datalist=data.body.data.payrolls;
                     for(d in datalist){
                         datalist[d].checked = false;
+                        //如果有未定薪员工, 则设置编辑模式可以生成工资单
+                        if(datalist[d].status != 'CONFIRMED')
+                        	$scope.editMode = true;
                     }
                     $scope.datalist=datalist;
                     $scope.thispages.total=$scope.datalist.length;//分页总数
@@ -231,12 +251,7 @@ function salarymsgviewCtrl(){
                 if (item.checked == true) {
                     //selectedItems.push({"userUuid":item.userUuid});
                     $scope.options={
-                        "userDTO":{
-                            "id":item.id || '',	//员工号
-                            "personalEmail":item.personalEmail || '',	//邮件地址
-                            "personalPhoneCountryCode":'86',	//电话号码
-                            "personalPhone":item.personalPhone || ''		//电话号码
-                        },
+                        "userDTO":item.userDTO,
                         "year":thisyear || '',		//工资年份
                         "month":thismonth || '' 	//工资月份
                     };
@@ -270,12 +285,7 @@ function salarymsgviewCtrl(){
                 //查询工资单
                 $scope.userinfo=row;
                 $scope.options={
-                    "userDTO":{
-                        "id":row.id || '',	//员工号
-                        "personalEmail":row.personalEmail || '',	//邮件地址
-                        "personalPhoneCountryCode":'86',	//电话号码
-                        "personalPhone":row.personalPhone || ''		//电话号码
-                    },
+                    "userDTO":row.userDTO,
                     "year":thisyear || '',		//工资年份
                     "month":thismonth || '' 	//工资月份
                 };
@@ -283,7 +293,7 @@ function salarymsgviewCtrl(){
                 promise.success(function(data, status, headers, config){
                     var sts=data.body.status;
                     if(sts.statusCode==0){
-                        $scope.inquiryPayrollData=data.body.data;
+                        $scope.inquiryPayrollData=data.body.data.payrolls[0];
                         //上面开启，下面是测试数据
                         /**
                         $scope.inquiryPayrollData={
@@ -329,12 +339,7 @@ function salarymsgviewCtrl(){
                 $scope.changePayrollFun=function (state){
                     if(!state){return;}
                     $scope.options={
-                        "userDTO":{
-                            "id":row.id || '',	//员工号
-                            "personalEmail":row.personalEmail || '',	//邮件地址
-                            "personalPhoneCountryCode":'86',	//电话号码
-                            "personalPhone":row.personalPhone || ''		//电话号码
-                        },
+                        "userDTO":row.userDTO,
                         //"totalIncome":"",	//总收入
                         //"totalDeduction":"",	//总扣缴
                         "year":$scope.inquiryPayrollData.year,		//年
