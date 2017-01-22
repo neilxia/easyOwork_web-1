@@ -6,15 +6,27 @@ function clockingInlistCtrl(){
             pageNum:1,
             pageSize:10
         };
-        $scope.init = function(){
-            inquiryAttendanceFun();
-        };
         var date = new Date();
         var attendance={
-            attendanceYear:date.getFullYear(),
-            attendanceMonth:date.getMonth()+1,
-            attendanceDay:date.getDate()
+                attendanceYear:date.getFullYear(),
+                attendanceMonth:date.getMonth()+1,
+                attendanceDay:date.getDate()
+            }
+        $scope.init = function(){
+            if(attendance.attendanceMonth<10)
+        		$scope.form = {"attendanceDate":attendance.attendanceYear+"-0"+attendance.attendanceMonth};
+        	else
+        		$scope.form = {"attendanceDate":attendance.attendanceYear+"-"+attendance.attendanceMonth};
+            inquiryAttendanceFun();
+        };
+        $scope.changeYearMonth = function(){
+        	var attendanceDate = $("#attendanceDate").val();
+        	attendance.attendanceYear = attendanceDate.substring(0,4);
+        	attendance.attendanceMonth = attendanceDate.substring(5,7);
+        	inquiryAttendanceFun();
         }
+        
+        
         //查询考勤记录当月
         function inquiryAttendanceFun(){
             $scope.options={
@@ -33,7 +45,7 @@ function clockingInlistCtrl(){
                     "personalPhone":userinfo.personalPhone || ""		//电话号码
                 }
             };*/
-            var promise = attendanceService.inquiryAttendance({body:$scope.options});
+            var promise = attendanceService.inquiryAttendanceSummary({body:$scope.options});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
@@ -66,6 +78,7 @@ function clockingInviewCtrl(){
     return['$scope','$rootScope','attendanceService',function($scope,$rootScope,attendanceService){
         //var userinfo=LocalStorage.getObject('userinfo');
         var rordatas=$rootScope.$stateParams.row;
+        $scope.yearMonth = rordatas;
 /*        $scope.thispages={
             total:null,
             pageNum:1,
@@ -79,7 +92,7 @@ function clockingInviewCtrl(){
             $scope.options={
                 "attendanceYear":rordatas.attendanceYear || "",	//签到或签退年份
                 "attendanceMonth":rordatas.attendanceMonth || "",	//签到或签退月份
-                "attendanceDay":"",		//签到或签退天
+                //"attendanceDay":"",		//签到或签退天
                 "userDTO":{
                     "id":rordatas.userDTO.id || "",	//员工号
                     "personalEmail":rordatas.userDTO.personalEmail || "",	//邮件地址

@@ -2,6 +2,9 @@
     <!-- <div class="sidebar-collapse" accessid="A002-001"> -->
     <div class="sidebar-collapse">
         <ul side-navigation class="nav metismenu" id="side-menu">
+       	 	<li ui-sref-active="active" ng-class="{active: $state.includes('analysis.list')}">
+                <a href="#/analysis/list"><i class="iconfont icon-peizhi f18"></i> <span class="nav-label">统计数据</span></a>
+            </li>
             <li ui-sref-active="active" ng-class="{active: $state.includes('analysis.employee')}">
                 <a><i class="iconfont icon-peizhi f18"></i> <span class="nav-label">员工分析</span><span class="fa arrow"></a>
                  <ul class="nav nav-second-level">
@@ -18,7 +21,15 @@
         	 	
             </li>
             <li ui-sref-active="active" ng-class="{active: $state.includes('analysis.customer')}">
-                <a ui-sref="analysis.customer"><i class="iconfont icon-peizhi f18"></i> <span class="nav-label">客户</span> </a>
+                <a ui-sref="analysis.customer"><i class="iconfont icon-peizhi f18"></i> <span class="nav-label">客户分析</span><span class="fa arrow"> </a>
+                <ul class="nav nav-second-level">
+                    <li ui-sref-active="active">
+                        <a href="#/analysis/customer?type=customer"><span class="nav-label">客户增长曲线</span> </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a href="#/analysis/customer?type=sale"><span class="nav-label">销售增长曲线</span> </a>
+                    </li>
+                </ul>
             </li>
             <li ui-sref-active="active" ng-class="{active: $state.includes('analysis.project')}">
                 <a ui-sref="analysis.project"><i class="iconfont icon-peizhi f18"></i> <span class="nav-label">项目分析</span><span class="fa arrow"></a>

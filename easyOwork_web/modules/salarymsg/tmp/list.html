@@ -15,8 +15,10 @@
         <!--<div class="line28 f_l">搜索“ <span class="red ng-binding">1</span> ”，共搜索到<span class="red ng-binding">1</span>条记录</div>-->
         <form class="f_r form-inline">
             <span class="form-group-sm search-group">
-                <input type="text" class="form-control wd180" placeholder="姓名/手机/邮箱" ng-model="sltname">
-                <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
+            	<input type="text" class="form-control wd180" placeholder="姓名/手机/邮箱" ng-model="sltname">
+            	<input type="datetime" class="form-control" placeholder="工资年月" date-time id="payrollDate" ng-model="form.payrollDate" min-view="month" format="yyyy-MM" auto-close="true">
+                <span class="abs_r" style="right:40px"><i class="iconfont icon-rili"></i></span>
+                <i class="iconfont icon-sousuo ml10 poi" ng-click="changeYearMonth()"></i>
             </span>
         </form>
     </div>
@@ -26,17 +28,22 @@
                 <thead>
                 <tr>
                     <th><span class="pl15">姓名</span></th>
-                    <th width="100">员工编号</th>
+                    <th width="200">员工编号</th>
                     <th width="200">部门</th>
+                    <th width="200">工资状态</th>
                     <th width="60">操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
-                    <td><span class="pl15">{{data.name}}</span></td>
-                    <td>{{data.id}}</td>
-                    <td>{{data.orgList[0].name}}</td>
-                    <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="s_issueDetail(data)"><i class="iconfont icon-chakan f14"></i></button></td>
+                    <td><span class="pl15">{{data.userDTO.name}}</span></td>
+                    <td>{{data.userDTO.id}}</td>
+                    <td>{{data.userDTO.orgList[0].name}}</td>
+                    <td>
+                    	<span ng-show="data.status=='CONFIRMED'" class="label label-success">已生成</span>
+                    	<span ng-show="data.status!='CONFIRMED'" class="label label-warning">未生成</span>
+                    </td>
+                    <td><button ng-if="data.status=='CONFIRMED'" class="btn btn-default btn-xs h30" title="查看" ng-click="s_issueDetail(data)"><i class="iconfont icon-chakan f14"></i></button></td>
                 </tr>
                 </tbody>
             </table>
@@ -63,9 +70,7 @@
         <form role="baseForm" name="baseForm"  ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
             <div class="modal-body bte line28" style="min-height:280px;">
                 <div class="mt15">
-                    <span class="f16">{{userinfo.name}}</span>
-                    <span class="label label-sm label-primary ml5" ng-if="inquiryPayrollData.status=='CREATED'">未定薪</span>
-                    <span class="label label label-success ml5" ng-if="inquiryPayrollData.status=='CONFIRMED'">已定薪</span>
+                    <span class="f16">{{userinfo.userDTO.name}}</span>
                 </div>
                 <div class="row f16 mt10">
                     <div class="col-xs-3 t_r">{{inquiryPayrollData.totalIncome}}</div>

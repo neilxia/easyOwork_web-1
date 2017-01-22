@@ -3,7 +3,7 @@
     <div class="payetilebox">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="init()" title="刷新"></a></div>
         <ul>
-            <li class="active">发放查询</li>
+            <li class="active">{{thisyear}}年{{thismonth}}月工资</li>
         </ul>
     </div>
     <ol class="breadbox">
@@ -13,7 +13,7 @@
         <li class="active">发放查询</li>
     </ol>
     <div class="btnbox">
-        <button class="btn btn-default btn-sm" ng-click="createPayrollFunAll()">生成工资单</button>
+        <button class="btn btn-default btn-sm" ng-click="createPayrollFunAll()" ng-if="editMode">生成工资单</button>
         <!--<div class="line28 f_l">搜索“ <span class="red ng-binding">1</span> ”，共搜索到<span class="red ng-binding">1</span>条记录</div>-->
         <form class="f_r form-inline">
             <!--<span class="form-group-sm search-group">
@@ -32,19 +32,25 @@
             <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
                 <thead>
                 <tr>
-                    <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
+                    <th width="50" class="t_r"><input ng-if="editMode" icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
                     <th>姓名</th>
-                    <th width="100">员工编号</th>
+                    <th width="200">员工编号</th>
                     <th width="200">部门</th>
+                    <th width="200">工资状态</th>
                     <th width="60">操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
-                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
-                    <td>{{data.name}}</td>
-                    <td>{{data.id}}</td>
-                    <td>{{data.orgList[0].name}}</td>
+                    <td class="t_r"><input ng-if="editMode" icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
+                    <td>{{data.userDTO.name}}</td>
+                    <td>{{data.userDTO.id}}</td>
+                    <td>{{data.userDTO.orgList[0].name}}</td>
+                    <td>
+                    	<span ng-show="data.status=='CONFIRMED'" class="label label-success">已定薪</span>
+                    	<span ng-show="data.status=='CREATED'" class="label label-warning">未定薪</span>
+                    	<span ng-show="data.status==''" class="label label-danger">已生成</span>
+                    </td>
                     <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="s_issueDetail(data)"><i class="iconfont icon-chakan f14"></i></button></td>
                 </tr>
                 </tbody>

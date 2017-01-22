@@ -16,6 +16,21 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                 }
             }
         })
+        .state('aboutus', {
+            url: "/aboutus",
+            templateUrl: "market/view/aboutus.html",
+
+        })
+        .state('serviceagreement', {
+            url: "/serviceagreement",
+            templateUrl: "market/view/serviceagreement.html",
+
+        })
+        .state('privacy', {
+            url: "/privacy",
+            templateUrl: "market/view/privacy.html",
+
+        })
         .state('login', {
             url: "/login?redirect_url",
             views: {

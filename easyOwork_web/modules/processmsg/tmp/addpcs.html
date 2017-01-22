@@ -156,7 +156,7 @@
                         </table>
 
                     <div class="t_l g9" ng-repeat="attachmentItem in processmodal.attachmentList">
-                        <a ng-href="{{attachmentItem.url}}">{{attachmentItem.fileName}}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{attachmentItem.size+' Byte'}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="red" ng-click="deleteAttachment($index)">删除</span>
+                        <a target="_blank" ng-href="{{attachmentItem.url}}">{{attachmentItem.fileName}}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{attachmentItem.size+' Byte'}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="red" ng-click="deleteAttachment($index)">删除</span>
                     </div>
                         <div class="btn btn-primary btn-xs upheadbtn"><input type="file" id="attachment" nv-file-select uploader="attachmentUploader"/>上传附件</div>
 
