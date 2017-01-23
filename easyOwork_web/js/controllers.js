@@ -2,7 +2,7 @@
  * MainCtrl - controller--by Nose
  */
 angular.module('qiyi')
-    .controller('MainCtrl', ['$rootScope','$scope','$timeout','$modal','$state','LocalStorage','roleService','accessService','OSSService','MsgService','processService','Common','attendanceService','MemoService','noticeService',function($rootScope,$scope,$timeout,$modal,$state,LocalStorage,roleService,accessService,OSSService,MsgService,processService,Common,attendanceService,MemoService,noticeService) {
+    .controller('MainCtrl', ['$rootScope','$scope','$timeout','$modal','$state','LocalStorage','roleService','accessService','OSSService','MsgService','processService','Common','attendanceService','MemoService','noticeService','publicService',function($rootScope,$scope,$timeout,$modal,$state,LocalStorage,roleService,accessService,OSSService,MsgService,processService,Common,attendanceService,MemoService,noticeService,publicService) {
     $scope.collapsehset={toggleclick:"#infobtn",togglecom:".topinfo-com",setcomH:"-330px",openArrow:'right'};
 /*    $scope.$on('$viewContentLoaded', function(){});*/
         $scope.$on('$stateChangeSuccess', function(){
@@ -25,7 +25,8 @@ angular.module('qiyi')
             inquiryCreatedProcessesFun();//查询发起的流程
             inquiryHandlingProcessesFun();//查询审批
             inquiryMemosFun(); //查询备忘录
-
+            inquiryWorkingTimeFun();//查询工作时间
+            inquiryAttendanceFun();//获取当前签到信息
         });
 
         function inquiryCreatedProcessesFun(){
@@ -95,69 +96,103 @@ angular.module('qiyi')
         function getduanDateFun(){
            $scope.currentDate= Common.getduanDate(0,1)[0];
         }
-        //签到/签退
-
-        $scope.signInOutFun=function (){
-            var date = new Date();
-            var attendance={
+        
+        //获取工作时间
+        function inquiryWorkingTimeFun(){
+            var promise = publicService.inquiryParameter({body:{}});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    var datalist=data.body.data.settings;
+                    var datalistnew=[];
+                    angular.forEach(datalist,function(val,ind){
+                        if(val.name=='WORKING_FROM_TIME'){
+                            $scope.fromTime = val.value;
+                        }else if(val.name=='WORKING_TO_TIME'){
+                        	$scope.toTime = val.value;
+                        }
+                    })
+                }else{
+                    MsgService.tomsg(data.body.status.errorDesc);
+                }
+            
+            });
+            promise.error(function(data, status, headers, config){
+            	
+            });
+        }
+        
+        //获取当天签到记录
+        function inquiryAttendanceFun(){
+        	var date = new Date();
+            var currentDay={
                 attendanceYear:date.getFullYear(),
                 attendanceMonth:date.getMonth()+1,
                 attendanceDay:date.getDate()
             }
-            inquiryAttendanceFun();
-            //查询考勤记录当月
-            function inquiryAttendanceFun(){
-                $scope.options={
-                    "attendanceYear":attendance.attendanceYear,	//签到或签退年份
-                    "attendanceMonth":attendance.attendanceMonth,	//签到或签退月份
-                    "attendanceDay":attendance.attendanceDay,		//签到或签退天
-                    "userDTO":{
-                        "id":$scope.userinfoall.id || "",	//员工号
-                        "personalEmail":$scope.userinfoall.personalEmail || "",	//邮件地址
-                        "personalPhoneCountryCode":$scope.userinfoall.personalPhoneCountryCode || "",	//电话号码国家代码
-                        "personalPhone":$scope.userinfoall.personalPhone || ""		//电话号码
-                    }
-                };
-                var promise = attendanceService.inquiryAttendance({body:$scope.options});
-                promise.success(function(data, status, headers, config){
-                    var sts=data.body.status;
-                    if(sts.statusCode==0){
-                        var actionType;
-                        data.body.data.attendances.length>0?actionType='OUT':actionType='IN';
-                        $scope.options={
-                            "actionType":actionType,	//IN(签到),OUT(签退)
-                            "attendanceYear":attendance.attendanceYear,	//签到或签退年份
-                            "attendanceMonth":attendance.attendanceMonth,	//签到或签退月份
-                            "attendanceDay":attendance.attendanceDay,		//签到或签退天
-                            "userDTO":{
-                                "id":$scope.userinfoall.id || '',	//员工号
-                                "personalEmail":$scope.userinfoall.personalEmail || '',	//邮件地址
-                                "personalPhoneCountryCode":$scope.userinfoall.personalPhoneCountryCode || '',	//电话号码国家代码
-                                "personalPhone":$scope.userinfoall.personalPhone || ''		//电话号码
-                            }
-
-                        };
-                        var promise = attendanceService.signInOut({body:$scope.options});
-                        promise.success(function(data, status, headers, config){
-                            var sts=data.body.status;
-                            if(sts.statusCode==0){
-                                MsgService.tomsg('打卡成功');
-                            }else{
-                                MsgService.tomsg(data.body.status.errorDesc);
-                            }
-                        });
-                        promise.error(function(data, status, headers, config){
-                            MsgService.tomsg(data.body.status.errorDesc);
-                        });
-
-                    }else{
-                        MsgService.tomsg(data.body.status.errorDesc);
-                    }
-                });
-                promise.error(function(data, status, headers, config){
+        	$scope.options={
+                "attendanceYear":currentDay.attendanceYear,	//签到或签退年份
+                "attendanceMonth":currentDay.attendanceMonth,	//签到或签退月份
+                "attendanceDay":currentDay.attendanceDay,		//签到或签退天
+                "userDTO":{
+                    "id":$scope.userinfoall.id || "",	//员工号
+                    "personalEmail":$scope.userinfoall.personalEmail || "",	//邮件地址
+                    "personalPhoneCountryCode":$scope.userinfoall.personalPhoneCountryCode || "",	//电话号码国家代码
+                    "personalPhone":$scope.userinfoall.personalPhone || ""		//电话号码
+                }
+            };
+            var promise = attendanceService.inquiryAttendance({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                	if(data.body.data.attendances.length>0){
+                		$scope.attendance = data.body.data.attendances[0];
+                	}else{
+                		$scope.attendance = {};
+                	}
+                }else{
                     MsgService.tomsg(data.body.status.errorDesc);
-                });
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.tomsg(data.body.status.errorDesc);
+            });
+        }
+        
+        //签到/签退
+
+        $scope.signInOutFun=function (actionType){
+        	var date = new Date();
+            var currentDay={
+                attendanceYear:date.getFullYear(),
+                attendanceMonth:date.getMonth()+1,
+                attendanceDay:date.getDate()
             }
+        	$scope.options={
+                    "actionType":actionType,	//IN(签到),OUT(签退)
+                    "attendanceYear":currentDay.attendanceYear,	//签到或签退年份
+                    "attendanceMonth":currentDay.attendanceMonth,	//签到或签退月份
+                    "attendanceDay":currentDay.attendanceDay,		//签到或签退天
+                    "userDTO":{
+                        "id":$scope.userinfoall.id || '',	//员工号
+                        "personalEmail":$scope.userinfoall.personalEmail || '',	//邮件地址
+                        "personalPhoneCountryCode":$scope.userinfoall.personalPhoneCountryCode || '',	//电话号码国家代码
+                        "personalPhone":$scope.userinfoall.personalPhone || ''		//电话号码
+                    }
+
+                };
+        	var promise = attendanceService.signInOut({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                	inquiryAttendanceFun();
+                }else{
+                    MsgService.tomsg(data.body.status.errorDesc);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.tomsg(data.body.status.errorDesc);
+            });
         };
 
         //查询备忘录

@@ -33,7 +33,7 @@
                 </div>
             </li>
             <li class="usrbox">
-                <div class="imgbox bdrs50 f_l"><img src="./images/headportrait02.jpg" alt=""></div>
+                <div class="imgbox bdrs50 f_l"><img src="{{userinfoall.photoUrl||'./images/headportrait02.jpg'}}" alt=""></div>
                 <div class="dropdown pull-right ml10 mt10" dropdown>
                     <span dropdown-toggle>{{userinfoall.name || '暂无'}} <span class="caret"></span></span>
                     <ul class="dropdown-menu" role="menu">
@@ -64,7 +64,7 @@
 
         <a ng-class="{active:$state.includes('report')}" ui-sref="report.sendlist"><i class="iconfont icon-baogao mr5"></i>报告</a>
         <a ng-class="{active:$state.includes('task')}" ui-sref="task.sendlist"><i class="iconfont icon-wodeshenqing mr5"></i>任务</a>
-        <a ng-class="{active:$state.includes('analysis')}" ui-sref="analysis.list" accessId="A016-001"><i class="iconfont icon-juece mr5"></i>决策</a>
+        <a ng-class="{active:$state.includes('analysis')}" ui-sref="analysis.list"><i class="iconfont icon-juece mr5"></i>决策</a><!--  accessId="A016-001" -->
 
         <a ng-class="{active:$state.includes('notice')}" ui-sref="notice.list"><i class="iconfont icon-gonggao mr5"></i>公告</a>
         <!--<a ng-class="{active:$state.includes('salarymsg')}" ui-sref="salarymsg.list"><i class="iconfont icon-gongzi mr5"></i>工资</a>

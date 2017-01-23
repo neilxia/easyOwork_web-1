@@ -1,5 +1,5 @@
 function clockingInlistCtrl(){
-    return['$scope', '$modal' ,'$compile','$state','attendanceService','MsgService','reportService','LocalStorage','Common',function($scope,$modal,$compile,$state,attendanceService,MsgService,reportService,LocalStorage,Common){
+    return['$scope', '$modal' ,'$compile','$state','attendanceService','MsgService','reportService','LocalStorage','Common','publicService',function($scope,$modal,$compile,$state,attendanceService,MsgService,reportService,LocalStorage,Common,publicService){
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.thispages={
             total:null,
@@ -25,7 +25,6 @@ function clockingInlistCtrl(){
         	attendance.attendanceMonth = attendanceDate.substring(5,7);
         	inquiryAttendanceFun();
         }
-        
         
         //查询考勤记录当月
         function inquiryAttendanceFun(){
