@@ -4,3 +4,4 @@
 var app = angular.module('qiyi.my',[]);
 //app.controller('myCtrl',myCtrl());
 app.controller('mySetCtrl',mySetCtrl());
+app.controller('pOrderCtrl',orderCtrl());

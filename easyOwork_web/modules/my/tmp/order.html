@@ -1,0 +1,60 @@
+<div id="page-wrapper" ng-controller="pOrderCtrl" ng-init="initFun()">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
+        <ul>
+            <li class="active">使用期限</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li>个人中心</li>
+        <li class="active">使用期限</li>
+    </ol>
+    <div class="btnbox">
+        <form class="f_r form-inline">
+            <button class="btn btn-default btn-sm" ng-model="Orderstatus" btn-radio="">全部</button>
+            <button class="btn btn-default btn-sm" ng-model="Orderstatus" btn-radio="'已支付'">已支付</button>
+            <button class="btn btn-default btn-sm" ng-model="Orderstatus" btn-radio="'未支付'">未支付</button>
+            <button class="btn btn-default btn-sm" ng-model="Orderstatus" btn-radio="'R已取消'">已取消</button>
+        </form>
+        <span>平台使用到期日:</span>
+         <span class="f20 orange">{{serviceDue.dueDate}}</span>
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <table class="table table-hover table-striped tr" cellspacing="0" cellpadding="0" width="100%;">
+                <thead>
+                    <tr>
+                        <th width="80"><span class="pl15">订单号</span></th>
+                        <th>产品类型</th>
+                        <th>产品名称</th>
+                        <th width="150">期限</th>
+                        <th width="120">价格(元)</th>
+                        <th width="120">订购者姓名</th>
+                        <th width="100">订单状态</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="order in orders | filter:{'status':Orderstatus} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                        <td><span class="pl15">{{order.orderNumber}}</span></td>
+                        <td>全角色工作平台</td>
+                        <td>{{order.serviceDTO.name}}</td>
+                        <td>{{order.count}}个月</td>
+                        <td>{{order.amount}}</td>
+                        <td>{{order.userDTO.name}}</td>
+                        <td>{{order.status}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="nose-panel-footer cf bte">
+            <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+            <div class="g9">共 {{thispages.total}} 条数据</div>
+        </div>
+
+    </div>
+    
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>

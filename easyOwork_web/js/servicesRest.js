@@ -19,6 +19,7 @@ app.factory('OSSService',OSSService());//阿里云OSS服务
 app.factory('reportService',reportService());//工作报告
 app.factory('taskService',taskService());//工作任务
 app.factory('analysisService',analysisService());//决策分析
+app.factory('orderService',orderService());//订单及使用期限
 /*========公共接口=====================================================================*/
 function publicService(){
     return ['$http','AppConfig',function($http,AppConfig){
@@ -641,6 +642,19 @@ function analysisService(){
             },
             getAnalysisSummary:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/getAnalysisSummary',form)
+            }
+        }
+    }];
+}
+/*===============================订单及使用期限========================================*/
+function orderService(){
+    return ['$http','AppConfig',function($http,AppConfig){
+        return {
+        	getOrders:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/getOrders',form)
+            },
+            getDueDate:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/getDueDate',form)
             }
         }
     }];

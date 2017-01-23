@@ -203,4 +203,46 @@ function ModalInstanceCtrl ($scope, $modalInstance) {
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
-};
+}
+
+function orderCtrl(){
+    return['$scope','MsgService','orderService',function($scope,MsgService,orderService){
+       
+    	$scope.thispages={
+                total:null,
+                pageNum:1,
+                pageSize:10
+        };
+    	
+    	$scope.initFun=function(){
+    		$scope.OrderStatus='';
+        	var orderPromise = orderService.getOrders({body:{}});
+        	orderPromise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    $scope.orders=data.body.data.orders;
+                    $scope.thispages.total=$scope.orders.length;
+                }else{
+                	
+                }
+            });
+        	orderPromise.error(function(data, status, headers, config){
+                //MsgService.tomsg(data.body.status.errorDesc);
+            });
+        	
+        	var duePromise = orderService.getDueDate({body:{}});
+        	duePromise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    $scope.serviceDue=data.body.data;
+                }else{
+                	
+                }
+            });
+        	duePromise.error(function(data, status, headers, config){
+                //MsgService.tomsg(data.body.status.errorDesc);
+            });
+        }
+
+    }]
+}

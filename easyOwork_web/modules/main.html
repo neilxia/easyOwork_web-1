@@ -40,32 +40,35 @@
                 <div class="panel-body">
                     <ul class="ind-kanban t_c f12">
                         <li>
-                            <div class="f30 bluelow">9</div>
+                            <div class="f30 ">
+                            <a ui-sref="salarymsg.list" class="bluelow" ng-if="statistics.lastSalaryMonth">{{statistics.lastSalaryMonth}}<font class="f20">月</font></a>
+                            <span class="bluelow" ng-if="!statistics.lastSalaryMonth">无</span>
+                            </div>
                             <div>我的薪资</div>
-                            <div class="orange mt5">9月已发</div>
+                            <div class="orange mt5"><button class="btn btn-default btn-xs" ui-sref="salarymsg.list" >查看</button></div>
                         </li>
                         <li>
-                            <div class="f30 red">3</div>
-                            <div>未完成任务</div>
-                            <div class="mt5"><button class="btn btn-default btn-xs" ui-sref="task.add">创建</button></div>
+                            <div class="f30"><a ui-sref="task.receivelist" class="red">{{statistics.taskCount}}</a></div>
+                            <div>我的任务</div>
+                            <div class="mt5"><button class="btn btn-default btn-xs" ui-sref="task.addtask">创建</button></div>
                         </li>
                         <li>
-                            <div class="f30 orange">3</div>
-                            <div>我的项目</div>
+                            <div class="f30"><a ui-sref="project.mylist" class="orange">{{statistics.projectCount}}</a></div>
+                            <div>参与的项目</div>
                             <div class="mt5"><button class="btn btn-default btn-xs" ui-sref="project.mylist">查看</button></div>
                         </li>
-                        <li>
-                            <div class="f30 teal">98</div>
+                        <li accessId="A007-001">
+                            <div class="f30"><a ui-sref="sales.customerlist" class="teal">{{statistics.customerCount}}</a></div>
                             <div>我的客户</div>
                             <div class="mt5"><button class="btn btn-default btn-xs" ui-sref="sales.customerlist">添加</button></div>
                         </li>
                         <li>
-                            <div class="f30 red">3</div>
-                            <div>工作报告</div>
-                            <div class="mt5"><button class="btn btn-default btn-xs" ui-sref="report.add">提交</button></div>
+                            <div class="f30 "><a ui-sref="report.sendlist" class="red">{{statistics.reportCount}}</a></div>
+                            <div>收到的报告</div>
+                            <div class="mt5"><button class="btn btn-default btn-xs" ui-sref="report.addreport">提交</button></div>
                         </li>
                         <li>
-                            <div class="f30 orange">5</div>
+                            <div class="f30 orange">{{statistics.recruitCount}}</div>
                             <div>需招聘人才</div>
                             <div class="mt5"><button class="btn btn-default btn-xs">添加</button></div>
                         </li>
@@ -147,7 +150,7 @@
                                 <div class="g9">{{fromTime}}</div>
                             </td>
                             <td width="70">
-                                <div class="f20" ng-show="attendance.inHour">{{attendance.inHour}}:{{attendance.inMinute}}</div>
+                                <div class="f20 orange" ng-show="attendance.inHour">{{attendance.inHour}}:{{attendance.inMinute}}</div>
                             </td>
                             <td rowspan='2'>
                                 <div class="g9">{{currentDate.cweek}}</div>
@@ -161,7 +164,7 @@
                                 <div class="g9">{{toTime}}</div>
                             </td>
                             <td width="70">
-                                <div class="f20" ng-show="attendance.inHour&&attendance.outHour>0">{{attendance.outHour}}:{{attendance.outMinute}}</div>
+                                <div class="f20 orange" ng-show="attendance.inHour&&attendance.outHour>0">{{attendance.outHour}}:{{attendance.outMinute}}</div>
                             </td>
                         </tr>
                     </table>

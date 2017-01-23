@@ -702,6 +702,11 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             templateUrl: 'modules/my/tmp/set.html',
             data: { pageTitle: '个人中心'}
         })
+        .state('my.order', {
+            url: "/order",
+            templateUrl: 'modules/my/tmp/order.html',
+            data: { pageTitle: '使用期限'}
+        })
 
         /*========项目==================================================== */
         .state('project', {

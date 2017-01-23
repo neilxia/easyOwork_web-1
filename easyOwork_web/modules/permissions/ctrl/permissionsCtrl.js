@@ -118,7 +118,7 @@ function permissionsCtrl(){
 }
 
 function permissionsaddCtrl(){
-    return['$scope','$modal','$state','roleService','$stateParams','notify',function($scope,$modal,$state,roleService,$stateParams,notify){
+    return['$scope','$modal','$state','roleService','$stateParams','MsgService',function($scope,$modal,$state,roleService,$stateParams,MsgService){
     	
     	$scope.treegirdoptions={
     			id:"Function",
@@ -169,7 +169,7 @@ function permissionsaddCtrl(){
                  	 }
                 	 
                  }else{
-                     notify({ message: status.errorDesc, classes: 'orange iconfont icon-one', templateUrl:'modules/common/prompt.html' ,prompt:true});
+                	 MsgService.tomsg(sts.errorDesc);
                  }
         	})
         };
@@ -249,7 +249,7 @@ function permissionsaddCtrl(){
                 if(sts.statusCode==0){
                 	$state.go('permissions.list');
                 }else{
-                    notify({ message: status.errorDesc, classes: 'orange iconfont icon-one', templateUrl:'modules/common/prompt.html' ,prompt:true});
+                	MsgService.tomsg(sts.errorDesc);
                 }
             })
             

@@ -45,6 +45,15 @@ angular.module('qiyi')
                 	$scope.toTime = val.value;
                 }
             })
+            //统计数据
+            $scope.statistics = {
+            	"lastSalaryMonth":data.lastSalaryMonth,
+            	"taskCount":data.taskCount,
+            	"projectCount":data.projectCount,
+            	"reportCount":data.reportCount,
+            	"customerCount":data.customerCount,
+            	"recruitCount":data.recruitCount
+            }
         });
         /**
         $scope.$on('to-parent2', function(event,data) {
