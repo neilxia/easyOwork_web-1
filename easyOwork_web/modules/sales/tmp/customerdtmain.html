@@ -119,8 +119,7 @@
                             <table class="table table-hover bbe" cellspacing="0" cellpadding="0" width="100%;">
                                 <thead>
                                 <tr>
-                                    <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
-                                    <th>文档名称</th>
+                                    <th class="pl20">文档名称</th>
                                     <th width="100">上传人员</th>
                                     <!--<th width="100">项目阶段</th>-->
                                     <th width="90">操作</th>
@@ -128,8 +127,7 @@
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="data in datadt.documentList">
-                                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
-                                    <td>{{data.documentName}}</td>
+                                    <td class="pl20">{{data.documentName}}</td>
                                     <td>{{data.userDTO.name}}</td>
                                     <!--<td>测试</td>-->
                                     <td><a target="_blank" href="{{data.documentUrl}}" class="btn btn-default btn-xs h30" title="下载"><i class="iconfont icon-xiazai f14"></i></a><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deleteDocument(data)"><i class="iconfont icon-del f14"></i></button></td>
