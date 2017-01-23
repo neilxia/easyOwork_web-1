@@ -204,7 +204,7 @@ function mypcsCtrl(){
             inquiryProcessModelTypeFun();
         }
         //筛选
-        $scope.Processstatus="INPROGRESS";
+        $scope.Processstatus="";
         $scope.processtitle="";
         $scope.selectedproclass="";
         function inquiryProcessModelTypeFun(){

@@ -760,7 +760,7 @@ function searchlistCtrl(){
                             var sts=data.body.status;
                             if(sts.statusCode==0){
                                 $scope.inquiryPayrollData=data.body.data;
-                                if($scope.inquiryPayrollData.payrollItems.length==0){
+                                if($scope.inquiryPayrollData.payrolls[0].payrollItems.length==0){
                                 	MsgService.tomsg('没找到该月工资单');
                                 }
                             }else{

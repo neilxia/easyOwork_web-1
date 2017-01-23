@@ -42,15 +42,17 @@
                     <td>{{data.personalPhone}}</td>
                     <td>
 	                    <div class="btn-group">
-						  <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						    ...
+	                    <button type="button" class="btn btn-sm btn-default mr5"  ng-click="staffbase(data)">
+						    基本信息
+						  </button>
+						  <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" protectedId="{{data.userUuid}}">
+						   	 更多<span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu">
-						    <li ><a ng-click="staffbase(data)">基本信息</a></li>
-						    <li protectedId="{{data.userUuid}}"><a ng-click="staffsalary(data)">薪酬及合同</a></li>
-						    <li protectedId="{{data.userUuid}}"><a ng-click="staffpayroll(data)">工资单</a></li>
-						    <li protectedId="{{data.userUuid}}"><a ng-click="staffproject(data)">参与的项目</a></li>
-						    <li protectedId="{{data.userUuid}}"><a ng-click="staffcustomer(data)">负责的客户</a></li>
+						    <li><a ng-click="staffsalary(data)">薪酬及合同</a></li>
+						    <li><a ng-click="staffpayroll(data)">工资单</a></li>
+						    <li><a ng-click="staffproject(data)">参与的项目</a></li>
+						    <li><a ng-click="staffcustomer(data)">负责的客户</a></li>
 						  </ul>
 						</div>
                     
@@ -259,7 +261,7 @@
                             <tbody>
                             <tr ng-repeat="project in projects">
                                 <td><span class="pl20">{{project.projectName}}</span></td>
-                                <td>{{project.projectPercentage}}%</td>
+                                <td>{{project.projectProgress}}%</td>
                                 <td>{{project.userDTO.name}}</td>
 								<td>{{project.startDate}}至{{project.endDate}}</td>
                             </tr>

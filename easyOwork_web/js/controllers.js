@@ -377,7 +377,7 @@ angular.module('qiyi')
 	            	var datas=data.body.data;
 	            	//company data
 	            	$scope.companyinfo=datas.entDTO;
-                    LocalStorage.setObject('companyinfo',datas);
+                    LocalStorage.setObject('companyinfo',datas.entDTO);
                     //user data
                     var userinfoall=angular.extend({},userinfo,datas.userList[0]);
                     $scope.userinfoall=userinfoall;
