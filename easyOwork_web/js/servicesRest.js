@@ -112,6 +112,9 @@ function employeesService(){
             //POST 5.4.3	B0006-查询本人/其他员工信息
             inquiryEmployee:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryEmployee',form)
+            },
+            initMain:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/initMain',form)
             }
         }
     }];

@@ -15,19 +15,45 @@ angular.module('qiyi')
             //初始化阿里云OSS参数
             OSSService.inquiryOSSInfo({body:{}});
             getduanDateFun();//当前日期
-            inquiryAnnouncementsFun();//公告
+            //inquiryAnnouncementsFun();//公告
         }
         $scope.$on('to-parent1', function(event,data) {
+        	//企业信息
             $scope.companyinfo=LocalStorage.getObject('companyinfo');
+            //用户信息
+            $scope.userinfoall=LocalStorage.getObject('userinfo');
+            //我提交的审批
+            $scope.inquiryProcessesData=data.createdProcesses;
+            //我处理的审批
+            $scope.inquiryHandData=data.handlingProcesses;
+            //当天考勤记录
+            if(data.attendances.length>0){
+        		$scope.attendance = data.attendances[0];
+        	}else{
+        		$scope.attendance = {};
+        	}
+            //备忘录
+            $scope.memoslist=data.memos;
+            //公告
+            $scope.inquiryAnnouncementsData=data.announcements;
+            //工作时间
+            var datalist=data.settings;
+            angular.forEach(datalist,function(val,ind){
+                if(val.name=='WORKING_FROM_TIME'){
+                    $scope.fromTime = val.value;
+                }else if(val.name=='WORKING_TO_TIME'){
+                	$scope.toTime = val.value;
+                }
+            })
         });
+        /**
         $scope.$on('to-parent2', function(event,data) {
             $scope.userinfoall=LocalStorage.getObject('userinfo');
             inquiryCreatedProcessesFun();//查询发起的流程
             inquiryHandlingProcessesFun();//查询审批
             inquiryMemosFun(); //查询备忘录
-            inquiryWorkingTimeFun();//查询工作时间
             inquiryAttendanceFun();//获取当前签到信息
-        });
+        });*/
 
         function inquiryCreatedProcessesFun(){
             //查询发起的流程
@@ -332,10 +358,38 @@ angular.module('qiyi')
     .controller('headerCtrl',['$rootScope','$scope','$state','LocalStorage','publicService','MsgService','companyService','employeesService','$timeout',function($rootScope,$scope,$state,LocalStorage,publicService,MsgService,companyService,employeesService,$timeout){
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.inithdFun=function(){
-            getCompanyInfo();
-            getUserInfo();
-            getNotes();
+            //getCompanyInfo();
+            //getUserInfo();
+            //getNotes();
+        	initMain();
         };
+        function initMain(){
+        	var options={
+                    "id":userinfo.id,	//员工号
+                    "personalEmail":userinfo.personalEmail,	//邮件地址
+                    "personalPhoneCountryCode":userinfo.personalPhoneCountryCode,	//电话号码
+                    "personalPhone":userinfo.personalPhone		//电话号码
+            };
+	    	var promise = employeesService.initMain({body:options});
+	        promise.success(function(data, status, headers, config){
+	            var sts=data.body.status;
+	            if(sts.statusCode==0){
+	            	var datas=data.body.data;
+	            	//company data
+	            	$scope.companyinfo=datas.entDTO;
+                    LocalStorage.setObject('companyinfo',datas);
+                    //user data
+                    var userinfoall=angular.extend({},userinfo,datas.userList[0]);
+                    $scope.userinfoall=userinfoall;
+                    LocalStorage.setObject('userinfo',userinfoall);
+                    //note data
+                    $scope.notes=datas.notes;
+                    $scope.unreadCount = datas.unreadCount;
+                    
+                    $scope.$emit('to-parent1', datas);//父级
+	            }
+	        });
+        }
         function getNotes(){
         	var options={
                         "id":userinfo.id,	//员工号
