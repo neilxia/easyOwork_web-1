@@ -78,7 +78,6 @@ function PtcustomermsgCtrl(){
                     "customerName":row.customerName || ''		//项目名称
                 };
             }
-            debugger;
 
             var promise = CustomerService.changeCustomer({body:$scope.options});
             promise.success(function(data, status, headers, config){

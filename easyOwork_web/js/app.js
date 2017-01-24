@@ -37,7 +37,7 @@
 
         'qiyi.project', //项目
         'qiyi.sales',//销售
-        'qiyi.recruitment',//招聘
+        //'qiyi.recruitment',//招聘
         'qiyi.assets'//资产
     ]);
     //var myApp= angular.module("demo", [ 'ui.router', 'oc.lazyLoad', 'ui.bootstrap']);

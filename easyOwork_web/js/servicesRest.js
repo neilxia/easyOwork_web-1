@@ -276,6 +276,14 @@ function assetService(){
             //POST 5.8.3	B0031-查询公司/员工资产
             inquiryAssets:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryAssets',form)
+            },
+            //POST 5.8.3	创建/更新/删除资产类型
+            changeAssetType:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changeAssetType',form)
+            },
+            //POST 5.8.3	查询资产类型
+            inquiryAssetTypes:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryAssetTypes',form)
             }
         }
     }];

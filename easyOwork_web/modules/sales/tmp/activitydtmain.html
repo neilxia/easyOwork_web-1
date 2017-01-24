@@ -42,40 +42,39 @@
             <div>
                 <div tabset class="towntabbox01 towntabbox02">
                     <div tab>
-                        <div tab-heading>潜在客户({{inquiryProcessesData.length}})</div>
+                        <div tab-heading>潜在客户({{datadt.customerList.length || "0"}})</div>
                         <div class="ind-medo_com" slim-scroll box-height="300">
                             <div class="btnbox">
-                                <button class="btn btn-default btn-sm" ng-click="addassetsFun()">新增</button>
-                                <button class="btn btn-default btn-sm" ng-click="addmodelFun()">删除</button>
+                                <button class="btn btn-default btn-sm" ng-click="addCustomerFun()">新增</button>
+                                <!--<button class="btn btn-default btn-sm" ng-click="addmodelFun()">删除</button>-->
                             </div>
                             <table class="table table-hover bbe" cellspacing="0" cellpadding="0" width="100%;">
                                 <thead>
                                 <tr>
-                                    <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
-                                    <th>客户名称</th>
+                                    <th class="pl20">客户名称</th>
                                     <th width="100">联系电话</th>
-                                    <th width="100">邮箱</th>
+                                    <!--<th width="150">E-mail</th>-->
                                     <th width="100">客户级别</th>
+                                    <th width="100">客户来源</th>
                                     <th width="90">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
-                                    <td>四川金立科技有限公司</td>
-                                    <td>13458639887</td>
-                                    <td>jammy@gieo.cn</td>
-                                    <td class="orange">重要</td>
-                                    <!--<td class="red">非常重要</td>-->
-                                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editstaff(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                                <tr ng-repeat="data in datadt.customerList">
+                                    <td class="pl20">{{data.customerName}}</td>
+                                    <td>{{data.customerPhone}}</td>
+                                    <!--<td>{{data.customerPostCode}}</td>-->
+                                    <td class="orange">{{data.customerLevel | qystatus}}</td>
+                                    <td class="orange">{{data.customerSource || '无'}}</td>
+                                    <td><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editCustomerFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deleteCustomer(data)"><i class="iconfont icon-del f14"></i></button></td>
                                 </tr>
-                                <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
                                 </tbody>
                             </table>
+
                         </div>
                     </div>
                     <div tab>
-                        <div tab-heading>文档({{datadt.documentList.length}})</div>
+                        <div tab-heading>文档({{datadt.documentDTOList.length || "0"}})</div>
                         <div class="ind-medo_com" slim-scroll box-height="300">
                             <div class="btnbox">
                                 <button class="btn btn-default btn-sm" ng-click="addDocument()">新增</button>
@@ -91,7 +90,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="data in datadt.documentList">
+                                <tr ng-repeat="data in datadt.documentDTOList">
                                     <td class="pl20">{{data.documentName}}</td>
                                     <td>{{data.userDTO.name}}</td>
                                     <!--<td>测试</td>-->
@@ -103,7 +102,7 @@
                         </div>
                     </div>
                     <div tab>
-                        <div tab-heading>日程活动({{datadt.activityList.length}})</div>
+                        <div tab-heading>日程活动({{datadt.activityList.length || "0"}})</div>
                         <div class="ind-medo_com" slim-scroll box-height="300">
                             <div class="btnbox">
                                 <button class="btn btn-default btn-sm" ng-click="addActivitylFun()">新增</button>

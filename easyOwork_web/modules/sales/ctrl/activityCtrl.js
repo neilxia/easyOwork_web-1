@@ -155,10 +155,11 @@ function activitydtmainCtrl(){
         $scope.initFun = function(){
             inquiryCampaignFun();//查询
         };
+
         //查询
         function inquiryCampaignFun(){
             $scope.options={
-                "customerName":$rootScope.$stateParams.name		//如查询单个客户, 传入该数据
+                "campaignName":$rootScope.$stateParams.name		//如查询单个营销活动, 传入该数据; 否则查询所有营销活动
             };
             var promise = CustomerService.inquiryCampaign({body:$scope.options});
             promise.success(function(data, status, headers, config){
@@ -204,20 +205,24 @@ function activitydtmainCtrl(){
                      "contactMemo":"",		//备注
                      }],*/
                     "userDTO":row.myselected[0] || '',
-                    "campaignName":$scope.datadt.campaignName
+                    "campaignDTO":{
+                        "campaignName":$rootScope.$stateParams.name,
+                    }
                 }
             }else {
                 $scope.options={
                     "actionType":change,		//ADD, MODIFY, DELETE
                     "customerName":row.customerName || '',		//项目名称
-                    "campaignName":$scope.datadt.campaignName
+                    "campaignDTO":{
+                        "campaignName":$rootScope.$stateParams.name,
+                    }
                 };
             }
             var promise = CustomerService.changeCustomer({body:$scope.options});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
-                    inquiryCustomerFun();
+                    inquiryCampaignFun();
                     $modalInstance.close();
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
@@ -257,7 +262,6 @@ function activitydtmainCtrl(){
                 };
             };
         };
-
         //编辑
         $scope.editCustomerFun = function (row) {
             var oldrow=angular.copy(row);
@@ -301,14 +305,18 @@ function activitydtmainCtrl(){
                     "name":oldrow.name || '',	//文档名称
                     "newName":row.name || '',	//新文档名称
                     "url":row.url || '',
-                    "customerName":$rootScope.$stateParams.name,
+                    "campaignDTO":{
+                        "campaignName":$rootScope.$stateParams.name,
+                    }
                     //"userDTO":userinfo
                 };
             }else{
                 $scope.options={
                     'actionType':change,		//ADD, MODIFY, DELETE
                     "name":row.name || '',
-                    "customerName":$rootScope.$stateParams.name
+                    "campaignDTO":{
+                        "campaignName":$rootScope.$stateParams.name,
+                    }
                 };
             }
             debugger;
@@ -437,13 +445,17 @@ function activitydtmainCtrl(){
                     "remindTime":remindTime || '',		//提醒时间
                     "memo":row.memo || '',		//备忘
                     "userDTO":row.myActivity[0] || '',
-                    "customerName":$rootScope.$stateParams.name
+                    "campaignDTO":{
+                        "campaignName":$rootScope.$stateParams.name,
+                    }
                 }
             }else {
                 $scope.options={
                     "actionType":change,		//ADD, MODIFY, DELETE
                     "activityName":row.activityName || '',
-                    "customerName":$rootScope.$stateParams.name
+                    "campaignDTO":{
+                        "campaignName":$rootScope.$stateParams.name,
+                    }
                 };
             }
             var promise = CustomerService.changeActivity({body:$scope.options});
