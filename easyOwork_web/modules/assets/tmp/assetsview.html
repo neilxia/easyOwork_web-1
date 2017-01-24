@@ -14,10 +14,10 @@
     </ol>
     <div class="p20">
         编号：006
-        <span class="ml20">类别：PC</span>
-        <span class="ml20">名称：dell台式电脑 </span>
-        <span class="ml20">型号：PC5212</span>
-        <span class="ml20">当前状态：<span class="orange">已分配</span></span>
+        <span class="ml20">类别：{{datadt.assetType}}</span>
+        <span class="ml20">名称：{{datadt.assetName}} </span>
+        <span class="ml20">型号：{{datadt.assetModel}}</span>
+        <span class="ml20">当前状态：<span class="orange">{{datadt.assetType}}</span></span>
     </div>
     <div class="nose-panel bte">
         <div class="nose-panel-body">
@@ -31,11 +31,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td class="pl15">2016-11-04  12:30</td>
-                    <td>姜小文</td>
+                <tr ng-repeat="data in datadt.assetHistoryList">
+                    <td class="pl15">{{data.actionDate}}</td>
+                    <td>{{data.userDTO.name}}</td>
                     <td>王晓松</td>
-                    <td>回收</td>
+                    <td>{{data.actionType}}</td>
                 </tr>
                 <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
                 </tbody>
@@ -51,89 +51,3 @@
     <!-- Footer -->
     <div ng-include="'modules/common/footer.html'"></div>
 </div>
-
-<!--模板-->
-<script type="text/ng-template" id="addmodel.html">
-    <div class="whitemodal">
-        <div class="modal-header">
-            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
-            <div class="f16">{{thename}}招聘计划</div>
-        </div>
-        <!--{{baseForm.$valid}}-->
-        <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
-            <div class="modal-body">
-                <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
-<!--                    <tr>
-                        <td>合同编号</td>
-                        <td class="pl10">
-                            <div class="form-inline">
-                                <input type="text" class="form-control " style="width: 344px;">
-                                <button class="btn btn-default" type="button">随机生成</button>
-                            </div>
-                        </td>
-                    </tr>-->
-                    <tr>
-                        <td width="60">项目名称</td>
-                        <td class="pl10">
-                            <div class="form-inline">
-                                <select class="form-control" style="width: 210px;">
-                                    <option>选择客户级别</option>
-                                </select>
-                                <input type="text" class="form-control ml5"  style="width: 210px;"placeholder="输入新项目名称">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>发起人员</td>
-                        <td class="pl10">
-                            <div selectdepyuan yuangong="1" myselected="processDefStep.myselected" selectedallarr="processDefStep.selectedallarr"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>所属部门</td>
-                        <td class="pl10">
-                            <span selectdep options="'bm'" myselected="user.orgList" title="选择部门"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>招聘职务</td>
-                        <td class="pl10">
-                            <input type="text" class="form-control" placeholder="输入招聘职务">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>面试人员</td>
-                        <td class="pl10">
-                            <div selectdepyuan yuangong="1" myselected="processDefStep.myselected" selectedallarr="processDefStep.selectedallarr"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>到岗日期</td>
-                        <td class="pl10">
-                            <div class="qiyi-group line20td">
-                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="addconfigform.startDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true">
-                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td valign="top">需求描述</td>
-                        <td class="pl10">
-                            <textarea class="form-control" rows="3" placeholder="输入需求描述"></textarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td valign="top">人员要求</td>
-                        <td class="pl10">
-                            <textarea class="form-control" rows="3" placeholder="输入人员要求"></textarea>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
-                <button type="submit" class="btn btn-primary wd80">确定</button>
-            </div>
-        </form>
-    </div>
-</script>

@@ -196,7 +196,7 @@ textarea{resize: none;}
 .search-group .form-control{ padding: 5px 12px; border: #f3f3f3 solid 1px;}
 .search-group .searchbtn{ position: absolute; right:9px; top: 5px; cursor: pointer; display: inline-block;}
 .search-group.form-group-sm .form-control{ border: #ccc solid 1px;}
-.search-group.form-group-sm .searchbtn{ top: 3px;}
+.search-group.form-group-sm .searchbtn{ top: -3px;}
 
 .qiyi-group{position: relative; }
 .qiyi-group .form-control{ padding: 5px 12px;}

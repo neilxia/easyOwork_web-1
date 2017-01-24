@@ -1004,7 +1004,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             data: { pageTitle: '资产库'}
         })
         .state('assets.assetsview', {
-            url: "/assetsview?type",
+            url: "/assetsview?data",
             templateUrl: 'modules/assets/tmp/assetsview.html',
             data: { pageTitle: '资产详情'}
         })

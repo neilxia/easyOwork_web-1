@@ -266,8 +266,8 @@ function assetService(){
     return ['$http','AppConfig',function($http,AppConfig){
         return {
             //POST 5.8.1	B0029-创建/更新/删除资产
-            createAsset:function(form){
-                return $http.post(AppConfig.BASE_URL+'work/rest/createAsset',form)
+            changeAsset:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changeAsset',form)
             },
             //POST 5.8.2	B0030-分配/归还资产
             assignWithdrawAsset:function(form){
