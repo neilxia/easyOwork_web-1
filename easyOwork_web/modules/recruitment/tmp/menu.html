@@ -1,0 +1,31 @@
+<nav class="navbar-default navbar-static-side" id="navbar-default" role="navigation">
+    <!-- <div class="sidebar-collapse" accessid="A002-001"> -->
+    <div class="sidebar-collapse">
+        <ul side-navigation class="nav metismenu" id="side-menu">
+            <li ng-class="{active:$state.includes('recruitment.planlist')}">
+                <a><i class="iconfont icon-zichankupsd"></i> <span class="nav-label">招聘计划</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li ui-sref-active="active">
+                        <a ui-sref="recruitment.planlist({'type':0})"><span class="nav-label">全部</span> </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="recruitment.planlist({'type':1})"><span class="nav-label">未完成</span> </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="recruitment.planlist({'type':2})"><span class="nav-label">已完成</span> </a>
+                    </li>
+                </ul>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="recruitment.channemsgllist"><i class="iconfont icon-qudaoguanlipsd f18"></i> <span class="nav-label">渠道管理</span> </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="recruitment.processmsg"><i class="iconfont icon-zhaopinguochengpsd f18"></i> <span class="nav-label">招聘过程</span> </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="recruitment.classlist"><i class="iconfont icon-shezhi f18"></i> <span class="nav-label">类别设置</span> </a>
+            </li>
+            </ul>
+            
+    </div>
+</nav>
