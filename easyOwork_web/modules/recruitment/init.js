@@ -2,7 +2,7 @@ var app = angular.module('qiyi.recruitment',[]);
 app.controller('planlistCtrl',planlistCtrl());
 app.controller('channemsgllistCtrl',channemsgllistCtrl());
 app.controller('processmsglistCtrl',processmsglistCtrl());
-app.controller('classlistreCtrl',classlistreCtrl());
+//app.controller('classlistreCtrl',classlistreCtrl());
 
 app.controller('dtplanlistCtrl',dtplanlistCtrl());
 app.controller('dtfpositionsCtrl',dtfpositionsCtrl());
