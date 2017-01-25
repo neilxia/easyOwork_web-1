@@ -183,7 +183,7 @@ function assetsmsgCtrl(){
 }
 //子列表
 function assetsdtmainmsgCtrl(){
-    return['$rootScope','$scope','$modal','$filter','CustomerService','MsgService','LocalStorage','Common','OSSService','FileUploader',function($rootScope,$scope,$modal,$filter,CustomerService,MsgService,LocalStorage,Common,OSSService,FileUploader){
+    return['$rootScope','$scope','$modal','$filter','CustomerService','MsgService','LocalStorage','Common','OSSService','FileUploader','noseService',function($rootScope,$scope,$modal,$filter,CustomerService,MsgService,LocalStorage,Common,OSSService,FileUploader,noseService){
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.initFun = function(){
             inquirySaleFun();//查询
@@ -566,6 +566,32 @@ function assetsdtmainmsgCtrl(){
                 $scope.thename='新增';
                 $scope.modalform={};
                 //提交增加
+                var saleContractUploader = $scope.saleContractUploader = new FileUploader({
+                    url: '', //不使用默认URL上传
+                    queueLimit: 1,     //文件个数
+                    removeAfterUpload: true,   //上传后删除文件
+                    autoUpload:false
+                });
+                saleContractUploader.onAfterAddingFile = function(fileItem){
+                	saleContractUploader.cancelAll();
+                    var file = $("#saleContract").get(0).files[0];
+                    var filePath = LocalStorage.getObject('userinfo').entId+'/sale/contract/'+noseService.randomWord(false, 32)+'_';
+                    var key= filePath+file.name;
+                    var promise = OSSService.uploadFile(filePath,file);
+                    promise.success(function (data, status, headers, config) {
+                        var urlPromise = OSSService.getUrl({'body':{'key':key}});
+                        urlPromise.success(function (data, status, headers, config) {
+                            var sts=data.body.status;
+                            if(sts.statusCode==0){
+                                $scope.modalform.url = data.body.data.url;
+                                $scope.modalform.contractName = file.name;
+                            }
+                        });
+                    });
+                    promise.error(function (data, status, headers, config) {
+                        MsgService.tomsg('文件上传失败');
+                    });
+                };
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
                     changeContractFun('ADD',$scope.modalform,$modalInstance);
@@ -612,9 +638,9 @@ function assetsdtmainmsgCtrl(){
             if(change!='DELETE'){
                 $scope.options={
                     'actionType':change,		//ADD, MODIFY, DELETE
-                    "name":oldrow.name || '',	//文档名称
-                    "newName":row.name || '',	//新文档名称
-                    "url":row.url || '',
+                    "name":oldrow.documentName || '',	//文档名称
+                    "newName":row.documentName || '',	//新文档名称
+                    "url":row.documentUrl || '',
                     "saleDTO":{
                         "saleName":$scope.datadt.saleName || ""	//销售过程名称
                     },
@@ -655,16 +681,16 @@ function assetsdtmainmsgCtrl(){
                 $scope.thename='新增';
                 $scope.modalform={};
                 //提交增加
-                var htUploader = $scope.htUploader = new FileUploader({
+                var saleDocumentUploader = $scope.saleDocumentUploader = new FileUploader({
                     url: '', //不使用默认URL上传
                     queueLimit: 1,     //文件个数
                     removeAfterUpload: true,   //上传后删除文件
                     autoUpload:false
                 });
-                htUploader.onAfterAddingFile = function(fileItem){
-                    htUploader.cancelAll();
-                    var file = $("#projectFile").get(0).files[0];
-                    var filePath = LocalStorage.getObject('userinfo').entId+'/project/document/'+noseService.randomWord(false, 32)+'_';
+                saleDocumentUploader.onAfterAddingFile = function(fileItem){
+                	saleDocumentUploader.cancelAll();
+                    var file = $("#saleDocumentFile").get(0).files[0];
+                    var filePath = LocalStorage.getObject('userinfo').entId+'/sale/document/'+noseService.randomWord(false, 32)+'_';
                     var key= filePath+file.name;
                     var promise = OSSService.uploadFile(filePath,file);
                     promise.success(function (data, status, headers, config) {

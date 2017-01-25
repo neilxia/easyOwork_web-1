@@ -8,7 +8,7 @@ config.factory('AppConfig',function(){
     	BASE_URL:'https://www.qinghuiyang.com/',
         //BASE_URL:'http://192.168.2.190:9091/',
         //BASE_URL:'http://192.168.2.201:9090/',
-        OSS_BUCKET_URL:'http://qinghuiyang-easywork.oss-cn-shanghai.aliyuncs.com'
+        OSS_BUCKET_URL:'https://qinghuiyang-easywork.oss-cn-shanghai.aliyuncs.com'
         //LOCALJSON_URL:''
 
     }

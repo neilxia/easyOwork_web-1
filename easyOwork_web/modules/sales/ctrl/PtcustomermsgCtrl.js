@@ -188,7 +188,7 @@ function PtcustomermsgCtrl(){
 }
 //子列表
 function PtcustomerdtmainmsgCtrl(){
-    return['$rootScope','$scope','$modal','$filter','CustomerService','MsgService','LocalStorage','Common','OSSService','FileUploader',function($rootScope,$scope,$modal,$filter,CustomerService,MsgService,LocalStorage,Common,OSSService,FileUploader){
+    return['$rootScope','$scope','$modal','$filter','CustomerService','MsgService','LocalStorage','Common','OSSService','FileUploader','noseService',function($rootScope,$scope,$modal,$filter,CustomerService,MsgService,LocalStorage,Common,OSSService,FileUploader,noseService){
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.initFun = function(){
             inquiryCustomerFun();//查询
@@ -220,9 +220,9 @@ function PtcustomerdtmainmsgCtrl(){
             if(change!='DELETE'){
                 $scope.options={
                     'actionType':change,		//ADD, MODIFY, DELETE
-                    "name":oldrow.name || '',	//文档名称
-                    "newName":row.name || '',	//新文档名称
-                    "url":row.url || '',
+                    "name":oldrow.documentName || '',	//文档名称
+                    "newName":row.documentName || '',	//新文档名称
+                    "url":row.documentUrl || '',
                     "customerDTO":{
                         "customerName":$scope.datadt.customerName
                     },
@@ -271,8 +271,8 @@ function PtcustomerdtmainmsgCtrl(){
                 });
                 htUploader.onAfterAddingFile = function(fileItem){
                     htUploader.cancelAll();
-                    var file = $("#projectFile").get(0).files[0];
-                    var filePath = LocalStorage.getObject('userinfo').entId+'/project/document/'+noseService.randomWord(false, 32)+'_';
+                    var file = $("#customerDocumentFile").get(0).files[0];
+                    var filePath = LocalStorage.getObject('userinfo').entId+'/customer/document/'+noseService.randomWord(false, 32)+'_';
                     var key= filePath+file.name;
                     var promise = OSSService.uploadFile(filePath,file);
                     promise.success(function (data, status, headers, config) {

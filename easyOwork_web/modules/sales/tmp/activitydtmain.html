@@ -91,10 +91,10 @@
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="data in datadt.documentDTOList">
-                                    <td class="pl20">{{data.documentName}}</td>
+                                    <td class="pl20"><a href="{{data.url}}" target="_blank">{{data.name}}</a></td>
                                     <td>{{data.userDTO.name}}</td>
                                     <!--<td>测试</td>-->
-                                    <td><a target="_blank" href="{{data.documentUrl}}" class="btn btn-default btn-xs h30" title="下载"><i class="iconfont icon-xiazai f14"></i></a><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deleteDocument(data)"><i class="iconfont icon-del f14"></i></button></td>
+                                    <td><a target="_blank" href="{{data.url}}" class="btn btn-default btn-xs h30" title="下载"><i class="iconfont icon-xiazai f14"></i></a><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deleteDocument(data)"><i class="iconfont icon-del f14"></i></button></td>
                                 </tr>
                                 <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
                                 </tbody>
@@ -238,13 +238,13 @@
                     <tr ng-show="modalform.documentUrl">
                         <td width="60">文档名称</td>
                         <td class="pl10">
-                            <a ng-href="{{modalform.documentUrl}}">{{modalform.documentName}}</a> <a class="red f12" ng-click="deleteDocument()">删除</a>
+                            <a href="{{modalform.documentUrl}}" target="_blank">{{modalform.documentName}}</a> <a class="red f12" ng-click="deleteDocument()">删除</a>
                         </td>
                     </tr>
                     <tr>
                         <td width="60" valign="top">
                             <div class="btn btn-default upheadbtn dib">
-                                <input type="file" id="projectFile" nv-file-select accept="image/*" uploader="htUploader"/>上传文档
+                                <input type="file" id="campaignDocumentFile" nv-file-select uploader="campaignDocumentUploader"/>上传文档
                             </div>
                         </td>
                         <td class="pl10">
