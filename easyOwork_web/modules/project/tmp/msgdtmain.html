@@ -169,7 +169,7 @@
                                 <thead>
                                 <tr>
                                     <!--<th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>-->
-                                    <th class="pl15">阶段名称</th>
+                                    <th class="pl20">阶段名称</th>
                                     <th width="100">阶段负责人</th>
                                     <th width="100">手机号码</th>
                                     <th width="100">E-mail</th>
@@ -181,7 +181,7 @@
                                 <tbody>
                                 <tr ng-repeat="data in datadt.projectStageDTOList">
                                     <!--<td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>-->
-                                    <td class="pl15">{{data.projectStageName}}</td>
+                                    <td class="pl20">{{data.projectStageName}}</td>
                                     <td>{{data.userDTO.name}}</td>
                                     <td>{{data.userDTO.personalPhone || '---'}}</td>
                                     <td>{{data.userDTO.personalEmail || '---'}}</td>

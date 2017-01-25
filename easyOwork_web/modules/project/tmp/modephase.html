@@ -38,7 +38,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="data in datalist.projectDefStageDTOList | orderBy:'seqNo'">
-                    <td class="pl15">{{data.seqNo}}</td>
+                    <td class="pl20">{{data.seqNo}}</td>
                     <td>{{data.stageName}}</td>
                     <!--<td>20%</td>-->
                     <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editFun(data,thispages.total)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>

@@ -13,7 +13,7 @@
     </ol>
     <div class="btnbox">
         <form class="f_r form-inline">
-            <select class="form-control input-sm" ng-model="selectedproclass" ng-options="x.name for x in prosclasslist">
+            <select class="form-control input-sm" ng-model="selectclass" ng-options="x.name as x.name for x in listClass">
                 <option value="">全部类型</option>
             </select>
             <span class="form-group-sm search-group">
@@ -22,35 +22,32 @@
             </span>
         </form>
         <!--<button class="btn btn-default btn-sm" ng-click="addmodelFun()">回收资产</button>-->
-        <button class="btn btn-default btn-sm" ng-click="deleteAll()">回收资产</button>
+        <!--<button class="btn btn-default btn-sm" ng-click="deleteAll()">回收资产</button>-->
     </div>
     <div class="nose-panel">
         <div class="nose-panel-body">
             <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
                 <thead>
                 <tr>
-                    <th width="44" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
-                    <th>资产编号</th>
+                    <th class="pl20">资产编号</th>
                     <th width="100">类别</th>
                     <th width="100">名称</th>
                     <th width="100">型号</th>
                     <th width="100">使用者</th>
                     <th width="100">员工号</th>
-                    <th width="60">操作</th>
+                    <th width="90">操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
-                    <td>800001</td>
-                    <td>PC</td>
-                    <td>dell</td>
-                    <td>DE551</td>
-                    <td>姜小文</td>
-                    <td>000521</td>
-                    <td><button class="btn btn-default btn-xs h30" title="回收" ng-click="delete()"><i class="iconfont icon-fenpeizichanpsd f14"></i></button></td>
+                <tr ng-repeat="data in datalist | filter:{'assetType':selectclass==null?'':selectclass,'assetName':sltname} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                    <td class="pl20">{{data.id}}</td>
+                    <td>{{data.assetType}}</td>
+                    <td>{{data.assetName}}</td>
+                    <td>{{data.assetModel}}</td>
+                    <td><span class="orange">{{data.userDTO.name}}</span></td>
+                    <td>{{data.userDTO.id || '---'}}</td>
+                    <td><button class="btn btn-default btn-xs h30 mr5" title="查看" ui-sref="assets.assetsview({'data':data})"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs h30" title="回收" ng-click="delete(data)"><i class="iconfont icon-huishoupsd f14"></i></button></td>
                 </tr>
-                <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
                 </tbody>
             </table>
         </div>

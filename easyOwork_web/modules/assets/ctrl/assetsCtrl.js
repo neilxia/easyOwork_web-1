@@ -11,12 +11,12 @@ function assetslistCtrl(){
             pageNum:1,
             pageSize:10
         };
-        $scope.statelist=[
+/*        $scope.statelist=[
             {name:'全部状态',val:''},
             {name:'已分配',val:'NORMAL'},
             {name:'未分配',val:'IMPORTANT'},
             {name:'已报损',val:'IMPORTANT'}
-        ]
+        ]*/
         //查询类型list
         function inquiryAssetTypesFun(){
             $scope.options={};
@@ -40,8 +40,27 @@ function assetslistCtrl(){
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
-                    $scope.datalist=data.body.data.assets;
+                    var datalist=[];
+                    if($rootScope.$stateParams.type=="1"){
+                        angular.forEach(data.body.data.assets,function(val,ind){
+                            if(val.userDTO){
+                                datalist.push(val);
+                            }
+                        })
+                    }else if($rootScope.$stateParams.type=="2"){
+                        angular.forEach(data.body.data.assets,function(val,ind){
+                            if(!val.userDTO){
+                                datalist.push(val);
+                            }
+                        })
+                    }else{
+                        datalist=data.body.data.assets;
+                    }
+
+                    $scope.datalist=datalist;
                     $scope.thispages.total=$scope.datalist.length;	//分页
+
+
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
                 }
@@ -151,141 +170,31 @@ function assetsviewCtrl(){
     return['$rootScope','$scope','$modal','assetService','MsgService','LocalStorage','Common',function($rootScope,$scope,$modal,assetService,MsgService,LocalStorage,Common){
         $scope.datadt=$rootScope.$stateParams.data;
         var userinfo=LocalStorage.getObject('userinfo');
-        $scope.initFun = function(){
-            inquiryAttendanceFun();
-        };
-        $scope.thispages={
-            total:null,
-            pageNum:1,
-            pageSize:10
-        };
-        //查询考勤记录当月
-        function inquiryAttendanceFun(){
-            $scope.options={
-                "attendanceYear":attendance.attendanceYear,	//签到或签退年份
-                "attendanceMonth":attendance.attendanceMonth,	//签到或签退月份
-                "attendanceDay":""		//签到或签退天
-            };
-            var promise = assetService.inquiryAttendance({body:$scope.options});
-            promise.success(function(data, status, headers, config){
-                var sts=data.body.status;
-                if(sts.statusCode==0){
-                    $scope.attendanceslist=data.body.data.attendances;
-                    $scope.thispages.total=$scope.attendanceslist.length;	//分页
-                }else{
-                    MsgService.tomsg(data.body.status.errorDesc);
-                }
-            });
-            promise.error(function(data, status, headers, config){
-                MsgService.tomsg(data.body.status.errorDesc);
-            });
-        }
-
-        //新增
-        $scope.addmodelFun = function () {
-            var modalInstance = $modal.open({
-                templateUrl: 'addmodel.html',
-                //size:'sm',
-                controller: modalCtrl
-            });
-            function modalCtrl ($scope, $modalInstance) {
-                $scope.thename='新增';
-                //提交增加
-                $scope.ok = function (state) {
-                    if(!state){return;} //状态判断
-                    //$modalInstance.close();
-                };
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            };
-        };
-        //编辑社保
-        $scope.editmodelFun = function () {
-            var modalInstance = $modal.open({
-                templateUrl: 'addmodel.html',
-                //size:'sm',
-                controller: modalCtrl
-            });
-            function modalCtrl ($scope, $modalInstance) {
-                $scope.thename='编辑';
-                //提交增加
-                $scope.ok = function (state) {
-                    if(!state){return;} //状态判断
-                    //$modalInstance.close();
-                };
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            };
-        };
-
-        //批量
-        $scope.delete2=function(row){
-            Common.openConfirmWindow().then(function() {
-                changeshebaoFun('DELETE',row);
-            });
-        };
-
-        //批量删除
-        $scope.deleteAll=function(){
-            Common.openConfirmWindow().then(function() {
-                deleteAllEmployees();
-            });
-        };
-        function deleteAllsx(){
-            var datalist = $scope.datalist;
-            angular.forEach(datalist, function(item) {
-                if (item.checked == true) {
-                    selectedItems.push({"userUuid":item.userUuid});
-                }
-            });
-            $scope.options={
-                userList:selectedItems
-            };
-            var promise = employeesService.deleteEmployees({body:$scope.options});
-            promise.success(function(data, status, headers, config){
-                var sts=data.body.status;
-                if(sts.statusCode==0){
-                    inquiryEmployeeFun();
-                }else{
-                    MsgService.tomsg(data.body.status.errorDesc);
-                }
-            });
-            promise.error(function(data, status, headers, config){
-                MsgService.tomsg(data.body.status.errorDesc);
-            });
-        }
-
+debugger;
 
     }]
 }
-
 //列表
 function dbtassetsCtrl(){
     return['$rootScope','$scope','$modal','assetService','MsgService','LocalStorage','Common',function($rootScope,$scope,$modal,assetService,MsgService,LocalStorage,Common){
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.initFun = function(){
-            inquiryAttendanceFun();
+            inquiryAssetTypesFun();
+            inquiryAssetsFun();
         };
         $scope.thispages={
             total:null,
             pageNum:1,
             pageSize:10
         };
-        //查询考勤记录当月
-        function inquiryAttendanceFun(){
-            $scope.options={
-                "attendanceYear":attendance.attendanceYear,	//签到或签退年份
-                "attendanceMonth":attendance.attendanceMonth,	//签到或签退月份
-                "attendanceDay":""		//签到或签退天
-            };
-            var promise = assetService.inquiryAttendance({body:$scope.options});
+        //查询类型list
+        function inquiryAssetTypesFun(){
+            $scope.options={};
+            var promise = assetService.inquiryAssetTypes({body:$scope.options});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
-                    $scope.attendanceslist=data.body.data.attendances;
-                    $scope.thispages.total=$scope.attendanceslist.length;	//分页
+                    $scope.listClass=data.body.data.assetTypeList;
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
                 }
@@ -294,39 +203,65 @@ function dbtassetsCtrl(){
                 MsgService.tomsg(data.body.status.errorDesc);
             });
         }
-
+        //查询list未分配
+        function inquiryAssetsFun(){
+            $scope.options={};
+            var promise = assetService.inquiryAssets({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    var datalist=[];
+                    angular.forEach(data.body.data.assets,function(val,ind){
+                        if(!val.userDTO){
+                            datalist.push(val);
+                        }
+                    })
+                    $scope.datalist=datalist;
+                    $scope.thispages.total=$scope.datalist.length;	//分页
+                }else{
+                    MsgService.tomsg(data.body.status.errorDesc);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.tomsg(data.body.status.errorDesc);
+            });
+        }
+        //添加/修改/删除
+        function assignWithdrawAssetFun(change,row,$modalInstance,oldrow){
+            if(oldrow==undefined){oldrow=row}
+            $scope.options={
+                "actionType":change,	//ASSIGN, WITHDRAW
+                "userDTO":row.userDTO[0] || "",
+                "id":row.id	//资产号
+            }
+            var promise = assetService.assignWithdrawAsset({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    inquiryAssetsFun();
+                    $modalInstance.close();
+                }else{
+                    MsgService.tomsg(data.body.status.errorDesc);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.tomsg(data.body.status.errorDesc);
+            });
+        }
         //新增
-        $scope.addmodelFun = function () {
+        $scope.addmodelFun = function (data) {
             var modalInstance = $modal.open({
                 templateUrl: 'addmodel.html',
-                //size:'sm',
                 controller: modalCtrl
             });
             function modalCtrl ($scope, $modalInstance) {
                 $scope.thename='新增';
+                $scope.modalform={};
+                $scope.modalform=data;
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
-                    //$modalInstance.close();
-                };
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            };
-        };
-        //编辑社保
-        $scope.editmodelFun = function () {
-            var modalInstance = $modal.open({
-                templateUrl: 'addmodel.html',
-                //size:'sm',
-                controller: modalCtrl
-            });
-            function modalCtrl ($scope, $modalInstance) {
-                $scope.thename='编辑';
-                //提交增加
-                $scope.ok = function (state) {
-                    if(!state){return;} //状态判断
-                    //$modalInstance.close();
+                    assignWithdrawAssetFun('ASSIGN',$scope.modalform,$modalInstance);
                 };
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -334,42 +269,6 @@ function dbtassetsCtrl(){
             };
         };
 
-        //批量
-        $scope.delete2=function(row){
-            Common.openConfirmWindow().then(function() {
-                changeshebaoFun('DELETE',row);
-            });
-        };
-
-        //批量删除
-        $scope.deleteAll=function(){
-            Common.openConfirmWindow().then(function() {
-                deleteAllEmployees();
-            });
-        };
-        function deleteAllsx(){
-            var datalist = $scope.datalist;
-            angular.forEach(datalist, function(item) {
-                if (item.checked == true) {
-                    selectedItems.push({"userUuid":item.userUuid});
-                }
-            });
-            $scope.options={
-                userList:selectedItems
-            };
-            var promise = employeesService.deleteEmployees({body:$scope.options});
-            promise.success(function(data, status, headers, config){
-                var sts=data.body.status;
-                if(sts.statusCode==0){
-                    inquiryEmployeeFun();
-                }else{
-                    MsgService.tomsg(data.body.status.errorDesc);
-                }
-            });
-            promise.error(function(data, status, headers, config){
-                MsgService.tomsg(data.body.status.errorDesc);
-            });
-        }
 
 
     }]
@@ -379,26 +278,22 @@ function recyclingassetsCtrl(){
     return['$rootScope','$scope','$modal','assetService','MsgService','LocalStorage','Common',function($rootScope,$scope,$modal,assetService,MsgService,LocalStorage,Common){
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.initFun = function(){
-            inquiryAttendanceFun();
+            inquiryAssetTypesFun();
+            inquiryAssetsFun();
         };
         $scope.thispages={
             total:null,
             pageNum:1,
             pageSize:10
         };
-        //查询考勤记录当月
-        function inquiryAttendanceFun(){
-            $scope.options={
-                "attendanceYear":attendance.attendanceYear,	//签到或签退年份
-                "attendanceMonth":attendance.attendanceMonth,	//签到或签退月份
-                "attendanceDay":""		//签到或签退天
-            };
-            var promise = assetService.inquiryAttendance({body:$scope.options});
+        //查询类型list
+        function inquiryAssetTypesFun(){
+            $scope.options={};
+            var promise = assetService.inquiryAssetTypes({body:$scope.options});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
-                    $scope.attendanceslist=data.body.data.attendances;
-                    $scope.thispages.total=$scope.attendanceslist.length;	//分页
+                    $scope.listClass=data.body.data.assetTypeList;
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
                 }
@@ -407,83 +302,85 @@ function recyclingassetsCtrl(){
                 MsgService.tomsg(data.body.status.errorDesc);
             });
         }
-
+        //查询list分配
+        function inquiryAssetsFun(){
+            $scope.options={};
+            var promise = assetService.inquiryAssets({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    var datalist=[];
+                    angular.forEach(data.body.data.assets,function(val,ind){
+                        if(val.userDTO){
+                            datalist.push(val);
+                        }
+                    })
+                    $scope.datalist=datalist;
+                    $scope.thispages.total=$scope.datalist.length;	//分页
+                }else{
+                    MsgService.tomsg(data.body.status.errorDesc);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.tomsg(data.body.status.errorDesc);
+            });
+        }
+        //添加/修改/删除
+        function assignWithdrawAssetFun(change,row,$modalInstance,oldrow){
+            if(oldrow==undefined){oldrow=row}
+            $scope.options={
+                "actionType":change,	//ASSIGN, WITHDRAW
+                "userDTO":row.userDTO[0] || row.userDTO || "",
+                "id":row.id	//资产号
+            }
+            var promise = assetService.assignWithdrawAsset({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    inquiryAssetsFun();
+                    $modalInstance.close();
+                }else{
+                    MsgService.tomsg(data.body.status.errorDesc);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.tomsg(data.body.status.errorDesc);
+            });
+        }
         //新增
-        $scope.addmodelFun = function () {
+/*        $scope.delete = function (data) {
             var modalInstance = $modal.open({
                 templateUrl: 'addmodel.html',
-                //size:'sm',
                 controller: modalCtrl
             });
             function modalCtrl ($scope, $modalInstance) {
                 $scope.thename='新增';
+                $scope.modalform={};
+                $scope.modalform=data;
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
-                    //$modalInstance.close();
+                    assignWithdrawAssetFun('ASSIGN',$scope.modalform,$modalInstance);
                 };
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                 };
             };
-        };
-        //编辑社保
-        $scope.editmodelFun = function () {
-            var modalInstance = $modal.open({
-                templateUrl: 'addmodel.html',
-                //size:'sm',
-                controller: modalCtrl
-            });
-            function modalCtrl ($scope, $modalInstance) {
-                $scope.thename='编辑';
-                //提交增加
-                $scope.ok = function (state) {
-                    if(!state){return;} //状态判断
-                    //$modalInstance.close();
-                };
-                $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                };
-            };
-        };
+        };*/
 
         //批量
         $scope.delete=function(row){
             Common.openConfirmWindow('','确定回收？').then(function() {
-                changeshebaoFun('DELETE',row);
+                assignWithdrawAssetFun('WITHDRAW',row);
             });
         };
 
         //批量删除
-        $scope.deleteAll=function(){
+/*        $scope.deleteAll=function(){
             Common.openConfirmWindow('','确定选择项回收？').then(function() {
                 deleteAllEmployees();
             });
-        };
-        function deleteAllsx(){
-            var datalist = $scope.datalist;
-            angular.forEach(datalist, function(item) {
-                if (item.checked == true) {
-                    selectedItems.push({"userUuid":item.userUuid});
-                }
-            });
-            $scope.options={
-                userList:selectedItems
-            };
-            var promise = employeesService.deleteEmployees({body:$scope.options});
-            promise.success(function(data, status, headers, config){
-                var sts=data.body.status;
-                if(sts.statusCode==0){
-                    inquiryEmployeeFun();
-                }else{
-                    MsgService.tomsg(data.body.status.errorDesc);
-                }
-            });
-            promise.error(function(data, status, headers, config){
-                MsgService.tomsg(data.body.status.errorDesc);
-            });
-        }
-
+        };*/
 
     }]
 }

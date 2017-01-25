@@ -1,4 +1,4 @@
-<div id="page-wrapper" ng-controller="planlistCtrl" ng-init="initFun()">
+<div id="page-wrapper" ng-controller="assetsviewCtrl" ng-init="initFun()">
     <!--主要内容-->
     <div class="payetilebox">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="init()" title="刷新"></a></div>
@@ -24,7 +24,7 @@
             <table class="table bbe table-hover" cellspacing="0" cellpadding="0" width="100%;">
                 <thead>
                 <tr>
-                    <th class="pl15">操作日期</th>
+                    <th class="pl20">操作日期</th>
                     <th width="100">使用人员</th>
                     <th width="100">操作人员</th>
                     <th width="80">记录</th>
@@ -32,7 +32,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="data in datadt.assetHistoryList">
-                    <td class="pl15">{{data.actionDate}}</td>
+                    <td class="pl20">{{data.actionDate}}</td>
                     <td>{{data.userDTO.name}}</td>
                     <td>王晓松</td>
                     <td>{{data.actionType}}</td>
