@@ -150,7 +150,7 @@ debugger;
 }
 //子列表
 function activitydtmainCtrl(){
-    return['$rootScope','$scope','$modal','$filter','CustomerService','MsgService','LocalStorage','Common','OSSService','FileUploader',function($rootScope,$scope,$modal,$filter,CustomerService,MsgService,LocalStorage,Common,OSSService,FileUploader){
+    return['$rootScope','$scope','$modal','$filter','CustomerService','MsgService','LocalStorage','Common','OSSService','FileUploader','noseService',function($rootScope,$scope,$modal,$filter,CustomerService,MsgService,LocalStorage,Common,OSSService,FileUploader,noseService){
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.initFun = function(){
             inquiryCampaignFun();//查询
@@ -302,9 +302,9 @@ function activitydtmainCtrl(){
             if(change!='DELETE'){
                 $scope.options={
                     'actionType':change,		//ADD, MODIFY, DELETE
-                    "name":oldrow.name || '',	//文档名称
-                    "newName":row.name || '',	//新文档名称
-                    "url":row.url || '',
+                    "name":oldrow.documentName || '',	//文档名称
+                    "newName":row.documentName || '',	//新文档名称
+                    "url":row.documentUrl || '',
                     "campaignDTO":{
                         "campaignName":$rootScope.$stateParams.name,
                     }
@@ -345,16 +345,16 @@ function activitydtmainCtrl(){
                 $scope.thename='新增';
                 $scope.modalform={};
                 //提交增加
-                var htUploader = $scope.htUploader = new FileUploader({
+                var campaignDocumentUploader = $scope.campaignDocumentUploader = new FileUploader({
                     url: '', //不使用默认URL上传
                     queueLimit: 1,     //文件个数
                     removeAfterUpload: true,   //上传后删除文件
                     autoUpload:false
                 });
-                htUploader.onAfterAddingFile = function(fileItem){
-                    htUploader.cancelAll();
-                    var file = $("#projectFile").get(0).files[0];
-                    var filePath = LocalStorage.getObject('userinfo').entId+'/project/document/'+noseService.randomWord(false, 32)+'_';
+                campaignDocumentUploader.onAfterAddingFile = function(fileItem){
+                	campaignDocumentUploader.cancelAll();
+                    var file = $("#campaignDocumentFile").get(0).files[0];
+                    var filePath = LocalStorage.getObject('userinfo').entId+'/campaign/document/'+noseService.randomWord(false, 32)+'_';
                     var key= filePath+file.name;
                     var promise = OSSService.uploadFile(filePath,file);
                     promise.success(function (data, status, headers, config) {

@@ -153,11 +153,11 @@
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="data in datadt.contractDTOList">
-                                    <td class="pl20">{{data.contractName}}</td>
+                                    <td class="pl20"><a href="{{data.url}}" target="_blank">{{data.contractName}}</a></td>
                                     <td>￥{{data.contractAmount}}</td>
                                     <td>{{data.startDate}} ~ {{data.endDate}}</td>
                                     <td>{{data.status}}</td>
-                                    <td><a class="btn btn-default btn-xs h30" title="查看" href="{{data.url}}"><i class="iconfont icon-chakan f14"></i></a><a class="btn btn-danger ml5 btn-xs h30" title="下载" href="{{data.url}}"><i class="iconfont icon-xiazai f14"></i></a></td>
+                                    <td><a class="btn btn-danger ml5 btn-xs h30" title="下载" href="{{data.url}}" target="_blank"><i class="iconfont icon-xiazai f14"></i></a></td>
                                     <td class="green">￥{{data.collectedAmount}}</td>
                                     <td>
                                         <span class="red" ng-if="data.collectedAmount==0">未收款</span>
@@ -189,10 +189,10 @@
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="data in datadt.documentDTOList   ">
-                                    <td class="pl20">{{data.documentName}}</td>
+                                    <td class="pl20"><a href="{{data.url}}" target="_blank">{{data.name}}</td>
                                     <td>{{data.userDTO.name}}</td>
                                     <!--<td>测试</td>-->
-                                    <td><a target="_blank" href="{{data.documentUrl}}" class="btn btn-default btn-xs h30" title="下载"><i class="iconfont icon-xiazai f14"></i></a><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deleteDocument(data)"><i class="iconfont icon-del f14"></i></button></td>
+                                    <td><a target="_blank" href="{{data.url}}" class="btn btn-default btn-xs h30" title="下载"><i class="iconfont icon-xiazai f14"></i></a><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deleteDocument(data)"><i class="iconfont icon-del f14"></i></button></td>
                                 </tr>
                                 <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
                                 </tbody>
@@ -316,12 +316,13 @@
         <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
             <div class="modal-body">
                 <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
-                    <tr>
+                   <!--
+					 <tr>
                         <td width="60">合同名称</td>
                         <td class="pl10">
                             <input type="text" class="form-control" ng-model="modalform.contractName" placeholder="输入合同名称">
                         </td>
-                    </tr>
+                    </tr>-->
                     <tr>
                         <td width="60">合同状态</td>
                         <td class="pl10">
@@ -373,9 +374,9 @@
                         <td width="60">合同附件</td>
                         <td class="pl10">
                             <div class="btn btn-default upheadbtn">
-                                <input type="file" id="logo" nv-file-select accept="image/*" uploader="logoUploader"/>本地上传
+                                <input type="file" id="saleContract" nv-file-select uploader="saleContractUploader"/>本地上传
                             </div>
-                            <a ng-href="{{modalform.url}}">{{modalform.contractName}}</a> <a class="red f12" ng-click="deleteDocument()">删除</a>
+                            <a ng-href="{{modalform.url}}" target="_blank">{{modalform.contractName}}</a> <a class="red f12" ng-click="deleteDocument()">删除</a>
                         </td>
                     </tr>
 
@@ -402,13 +403,13 @@
                     <tr ng-show="modalform.documentUrl">
                         <td width="60">文档名称</td>
                         <td class="pl10">
-                            <a ng-href="{{modalform.documentUrl}}">{{modalform.documentName}}</a> <a class="red f12" ng-click="deleteDocument()">删除</a>
+                            <a ng-href="{{modalform.documentUrl}}" target="_blank">{{modalform.documentName}}</a> <a class="red f12" ng-click="deleteDocument()">删除</a>
                         </td>
                     </tr>
                     <tr>
                         <td width="60" valign="top">
                             <div class="btn btn-default upheadbtn dib">
-                                <input type="file" id="projectFile" nv-file-select accept="image/*" uploader="htUploader"/>上传文档
+                                <input type="file" id="saleDocumentFile" nv-file-select uploader="saleDocumentUploader"/>上传文档
                             </div>
                         </td>
                         <td class="pl10">
