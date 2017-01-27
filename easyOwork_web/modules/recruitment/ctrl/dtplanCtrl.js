@@ -595,23 +595,23 @@ function dtprocessCtrl(){
                     var datalist=[];
                     if($rootScope.$stateParams.type=="0"){
                         angular.forEach(data.body.data.resumes,function(val,ind){
-                            if(val.status=='进行中'){
+                            if(val.markFlag=='NORMAL'){
                                 datalist.push(val);
                             }
                         })
                     }else if($rootScope.$stateParams.type=="1"){
                         angular.forEach(data.body.data.resumes,function(val,ind){
-                            if(val.status=='待定'){
+                            if(val.markFlag=='HOLD'){
                                 datalist.push(val);
                             }
                         })
-                    }/*else if($rootScope.$stateParams.type=="2"){
+                    }else if($rootScope.$stateParams.type=="2"){
                         angular.forEach(data.body.data.resumes,function(val,ind){
-                            if(val.status=='淘汰'){
+                            if(val.markFlag=='REJECT'){
                                 datalist.push(val);
                             }
                         })
-                    }*/else{
+                    }else{
                         datalist=data.body.data.resumes;
                     }
                     $scope.datalist=datalist;
@@ -642,7 +642,10 @@ function dtprocessCtrl(){
                     });
                 }
             });
-            $scope.options=selectedItems;
+            $scope.options={
+                "actionType":change,
+                "positionResumes":selectedItems
+            };
             var promise = RecruitFlowService.tellResumeForPosition({body:$scope.options});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;

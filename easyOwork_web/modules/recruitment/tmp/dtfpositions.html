@@ -48,7 +48,7 @@
                     <td>{{data.status}}</td>
                     <td class="orange">
                         <!--{{data.url}}-->
-                        <span ng-if="data.status=='已发布'">{{data.url}}</span>
+                        <a href="{{data.url}}" target="_blank" ng-if="data.status=='已发布'">{{data.url | characters:16}}</a>
                         <button ng-if="data.status=='未发布'" ng-click="addmodelFun(data)" class="btn btn-default btn-xs">发布</button>
                     </td>
                     <td>
