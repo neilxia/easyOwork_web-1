@@ -44,7 +44,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="data in datalist | filter:{'campaignName':sltname} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                <tr ng-repeat="data in datalist | filter:{'resumeName':sltname} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
                     <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
                     <td>{{data.resumeName}}</td>
                     <td>{{data.resumeMobileNo}}</td>
