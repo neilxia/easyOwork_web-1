@@ -508,6 +508,10 @@ function RecruitFlowService(){
             sendRecruitPosition:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/sendRecruitPosition',form)
             },
+            //POST 5.13.7	查询发布的招聘计划职位
+            inquiryRecruitPositionChannel:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryRecruitPositionChannel',form)
+            },
             //POST 5.13.8	B0069-查询招聘计划
             inquiryRecruitPlan:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryRecruitPlan',form)
@@ -515,6 +519,10 @@ function RecruitFlowService(){
             //POST 5.13.9	B0070-添加/修改/删除简历
             changeRecruitResume:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/changeRecruitResume',form)
+            },
+            //POST 5.13.9	批量删除简历
+            deleteRecruitResumes:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/deleteRecruitResumes',form)
             },
             //POST 5.13.10	B0071-查询简历
             inquiryRecruitResume:function(form){
@@ -527,7 +535,12 @@ function RecruitFlowService(){
             //POST 5.13.12	B0073-通过/拒绝/待定招聘职位
             tellResumeForPosition:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/tellResumeForPosition',form)
+            },
+            //POST 5.13.12	查询招聘流程中简历
+            inquiryRecruitResumeByFlowNode:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryRecruitResumeByFlowNode',form)
             }
+
         }
     }];
 }

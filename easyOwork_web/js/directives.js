@@ -29,6 +29,9 @@ function pageTitle($rootScope, $timeout) {
 function sideNavigation($timeout) {
     return {
         restrict: 'A',
+        scope:{
+            optiondata:"="
+        },
         link: function(scope, element) {
             // Call the metsiMenu plugin and plug it to sidebar navigation
             $timeout(function(){
@@ -37,7 +40,23 @@ function sideNavigation($timeout) {
         }
     };
 };
-
+function sideNavigation2($timeout) {
+    return {
+        restrict: 'A',
+        scope:{
+            optiondata:"="
+        },
+        link: function(scope, element) {
+            // Call the metsiMenu plugin and plug it to sidebar navigation
+            scope.$watch('optiondata',function(oldval,newval,$scope){
+                $timeout(function(){
+                    if(oldval==newval)return;
+                    element.metisMenu();
+                });
+            });
+        }
+    };
+};
 /**
  * landingScrollspy - Directive for scrollspy in landing page
  */
@@ -366,6 +385,25 @@ function isnumber(){
                 ngModel.$setValidity("multipleEmail", validity);
                 return validity ? value : undefined;
             };
+            ngModel.$formatters.push(customValidator);
+            ngModel.$parsers.push(customValidator);
+        }
+    };
+}
+
+function ishttp(){
+    return {
+        require: "ngModel",
+        link: function (scope, element, attr, ngModel) {
+            if (ngModel) {
+                var idRegexp= /^(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?$/;
+            }
+            var customValidator = function (value) {
+                var validity = ngModel.$isEmpty(value) || idRegexp.test(value);
+                ngModel.$setValidity("ishttp", validity);
+                return validity ? value : undefined;
+            };
+
             ngModel.$formatters.push(customValidator);
             ngModel.$parsers.push(customValidator);
         }
@@ -1178,6 +1216,7 @@ angular
     .module('qiyi.directives',['nose.tpls'])
     .directive('pageTitle', pageTitle)
     .directive('sideNavigation', sideNavigation)
+    .directive('sideNavigation2', sideNavigation2)
     .directive('landingScrollspy', landingScrollspy)
     .directive('jsonTree', jsonTree) // jsonTree
     .directive('icheck', icheck)   // 单选框
@@ -1186,6 +1225,7 @@ angular
     .directive('multipleEmail', multipleEmail) // 手机和邮箱验证
     .directive('multipleTell', multipleTell) //  电话号码
     .directive('isnumber', isnumber) // 是数字验证
+    .directive('ishttp', ishttp) // 是http
     .directive('onFinishRender', onFinishRender)
     .directive('getCode', getCode) //获取验证码
     .directive('backButton', backButton) //返回

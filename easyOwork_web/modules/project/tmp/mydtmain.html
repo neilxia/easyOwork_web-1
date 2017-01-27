@@ -215,7 +215,7 @@
         </div>
         <div class="nose-panel-footer cf bte">
             <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
-            <div class="g9">共 {{thispages.total}} 条数据</div>
+            <div class="g9">共 {{thispages.total || '0'}} 条数据</div>
         </div>
     </div>
 

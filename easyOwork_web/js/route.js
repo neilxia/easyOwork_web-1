@@ -925,7 +925,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
 
         .state('planlist', {
             abstract: true,
-            url: "/planlist",
+            url: "/planlist?planName&positionName&positionCount",
             data: { pageTitle: '招聘计划', specialClass: 'bgf2' },
             views: {
                 '': {
@@ -955,10 +955,14 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             data: { pageTitle: '简历管理'}
         })
         .state('planlist.dtprocess', {
-            url: "/dtprocess?type",
+            url: "/dtprocess?type&flowNodeName&flowNodeSequence",
             templateUrl: 'modules/recruitment/tmp/dtprocess.html',
             data: { pageTitle: '招聘流程'}
         })
+
+
+
+
         .state('planlist.dtprocessoffer', {
             url: "/dtprocessoffer",
             templateUrl: 'modules/recruitment/tmp/dtprocessoffer.html',

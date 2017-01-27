@@ -4,6 +4,7 @@ app.controller('channemsgllistCtrl',channemsgllistCtrl());
 app.controller('processmsglistCtrl',processmsglistCtrl());
 //app.controller('classlistreCtrl',classlistreCtrl());
 
+app.controller('dtplanmenuCtrl',dtplanmenuCtrl());
 app.controller('dtplanlistCtrl',dtplanlistCtrl());
 app.controller('dtfpositionsCtrl',dtfpositionsCtrl());
 app.controller('dtresumemsgCtrl',dtresumemsgCtrl());

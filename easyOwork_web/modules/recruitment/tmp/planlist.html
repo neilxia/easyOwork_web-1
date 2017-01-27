@@ -13,19 +13,19 @@
     </ol>
     <div class="btnbox">
         <form class="f_r form-inline">
-            <select class="form-control input-sm" ng-model="selectedproclass" ng-options="x.name for x in prosclasslist">
-                <option value="">全部部门</option>
-            </select>
-            <select class="form-control input-sm" ng-model="selectedproclass" ng-options="x.name for x in prosclasslist">
-                <option value="">全部职务</option>
-            </select>
+            <span selectdep options="'bm'" size="'sm'" myselected="orgList" class="wd190 f_l mr5" title="选择部门"></span>
+           <!-- <select class="form-control input-sm dib" ng-init="selectedStatus=''" ng-model="selectedStatus" ng-options="x.val as x.name for x in projectStatusArr">
+            </select>-->
             <span class="form-group-sm search-group">
-                <input type="text" class="form-control wd180" ng-model="sltname" placeholder="搜索名称">
+                <input type="text" class="form-control wd180" ng-model="sltname" placeholder="搜索计划名称">
                 <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
             </span>
+            <!--<span class="form-group-sm search-group">
+                <input type="text" class="form-control wd180" ng-model="sltname" placeholder="搜索职位">
+                <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
+            </span>-->
         </form>
-        <button class="btn btn-default btn-sm" ng-click="addmodelFun()">新增</button>
-        <button class="btn btn-default btn-sm" ng-click="addPositionFun()">新增2</button>
+        <button class="btn btn-default btn-sm" ng-click="addmodelFun()">新增计划</button>
         <!--<button class="btn btn-default btn-sm" ng-click="deleteAll()">删除</button>-->
     </div>
     <div class="nose-panel">
@@ -33,26 +33,27 @@
             <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
                 <thead>
                 <tr>
-                    <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
-                    <th>计划名称</th>
+                    <!--<th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>-->
+                    <th class="pl20">计划名称</th>
                     <th width="100">发起人员</th>
                     <th width="100">所属部门</th>
-                    <th width="100">计划完成时间</th>
-                    <th width="100">招聘职务</th>
-                    <th width="150">招聘要求</th>
                     <th width="100">状态</th>
+                    <th width="100">招聘职位</th>
+                    <th width="100">期望到岗时间</th>
+                    <th width="150">招聘要求</th>
                     <th width="125">操作</th>
                 </tr>
                 </thead>
-                <tbody ng-repeat="data in datalist">
+                <tbody ng-repeat="data in datalist | filter:{'sponsor':orgList[0].text,'planName':sltname} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
                 <tr>
-                    <td>{{data.planName}}</td>
+                    <td class="pl20">{{data.planName}}</td>
                     <td>{{data.sponsor.name}}</td>
-                    <td>xxx部</td>
-                    <td>{{data.planEndDate}}</td>
-                    <td>---</td>
-                    <td>---</td>
-                    <td><button class="btn btn-default btn-xs h30" title="添加职位" ng-click="addPositionFun()"><i class="iconfont icon-add f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                    <td>{{data.sponsor.orgList[0].name}}</td>
+                    <td>{{data.planStatus || "----"}}</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td><button class="btn btn-default btn-xs h30" title="添加职位" ng-click="addPositionFun(data)"><i class="iconfont icon-add f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
                 </tr>
                 <tr ng-repeat="pttion in data.recruitPositionDTOList">
                     <td>&nbsp;</td>
@@ -60,17 +61,18 @@
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
                     <td>{{pttion.positionName}} ({{pttion.positionCount}})</td>
-                    <td>{{pttion.positionRequirement}}</td>
-                    <td>未完成</td>
-                    <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="planlist.dtplanlist"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editPositionFun(pttion)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deletePosition(pttion)"><i class="iconfont icon-del f14"></i></button></td>
+                    <td>{{pttion.planOnboardDate}}</td>
+                    <td>{{pttion.positionRequirement | characters:14 }}</td>
+                    <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="planlist.dtplanlist({planName:data.planName,positionName:pttion.positionName,positionCount:pttion.positionCount})"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editPositionFun(pttion,data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deletePosition(pttion,data)"><i class="iconfont icon-del f14"></i></button></td>
                 </tr>
+                <tr ng-if="data.recruitPositionDTOList.length>0 && !$last"><td colspan="8" style="padding:0;height:0;border-bottom: #eee solid 4px;"></td></tr>
                 <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
                 </tbody>
             </table>
         </div>
         <div class="nose-panel-footer cf bte">
             <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
-            <div class="g9">共 {{thispages.total}} 条数据</div>
+            <div class="g9">共 {{thispages.total || '0'}} 条数据</div>
         </div>
     </div>
 
@@ -90,15 +92,6 @@
         <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
             <div class="modal-body">
                 <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
-<!--                    <tr>
-                        <td>合同编号</td>
-                        <td class="pl10">
-                            <div class="form-inline">
-                                <input type="text" class="form-control " style="width: 344px;">
-                                <button class="btn btn-default" type="button">随机生成</button>
-                            </div>
-                        </td>
-                    </tr>-->
                     <tr>
                         <td width="60">招聘名称</td>
                         <td class="pl10">
@@ -111,24 +104,6 @@
                             <div selectdepyuan yuangong="1" myselected="modalform.sponsor" selectedallarr="modalform.sponsorarr"></div>
                         </td>
                     </tr>
-<!--                    <tr>
-                        <td>所属部门</td>
-                        <td class="pl10">
-                            <span selectdep options="'bm'" myselected="user.orgList" title="选择部门"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>招聘职务</td>
-                        <td class="pl10">
-                            <input type="text" class="form-control" placeholder="输入招聘职务">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>面试人员</td>
-                        <td class="pl10">
-                            <div selectdepyuan yuangong="1" myselected="processDefStep.myselected" selectedallarr="processDefStep.selectedallarr"></div>
-                        </td>
-                    </tr>-->
                     <tr>
                         <td>完成时间</td>
                         <td class="pl10">
@@ -138,18 +113,16 @@
                             </div>
                         </td>
                     </tr>
-                    <!--<tr>
-                        <td valign="top">需求描述</td>
+                    <tr ng-if="thename=='编辑'">
+                        <td>计划状态</td>
                         <td class="pl10">
-                            <textarea class="form-control" rows="3" placeholder="输入需求描述"></textarea>
+                            <select class="form-control" ng-model="modalform.planStatus">
+                                <option value="未完成">未完成</option>
+                                <option value="已完成">已完成</option>
+                                <option value="已取消">已取消</option>
+                            </select>
                         </td>
                     </tr>
-                    <tr>
-                        <td valign="top">人员要求</td>
-                        <td class="pl10">
-                            <textarea class="form-control" rows="3" placeholder="输入人员要求"></textarea>
-                        </td>
-                    </tr>-->
                 </table>
             </div>
             <div class="modal-footer">
@@ -179,6 +152,15 @@
                         <td>招聘人数</td>
                         <td class="pl10">
                             <input type="number" class="form-control" ng-model="modalform.positionCount" placeholder="输入招聘人数">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>到岗时间</td>
+                        <td class="pl10">
+                            <div class="qiyi-group line20td">
+                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.planOnboardDate" view="date" min-view="date" format="yyyy-MM-dd" placeholder="期望到岗时间" auto-close="true" required>
+                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                            </div>
                         </td>
                     </tr>
                     <tr>

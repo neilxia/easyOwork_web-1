@@ -33,7 +33,7 @@
                 </div>
                 <div class="cf mb10">
                     <div class="col-xs-2 t_r g9 pt7">用于成本核算</div>
-                    <div class="col-xs-1 pt7"><input type="checkbox" icheck class="form-control" cols="6" ng-model="processmodal.cost"></input></div>
+                    <div class="col-xs-1 pt7"><input type="checkbox" icheck class="form-control" cols="6" ng-model="processmodal.cost" /></div>
                     <div class="col-xs-2 g9 pt7 t_r" ng-show="processmodal.cost">金额字段</div>
                     <div class="col-xs-4" ng-show="processmodal.cost">
                     	<select id="costFieldName" class="form-control" ng-model="processmodal.costFieldName" ng-options="processDefFieldDTO.name as processDefFieldDTO.name for processDefFieldDTO in processmodal.processDefFieldDTOList">

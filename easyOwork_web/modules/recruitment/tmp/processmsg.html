@@ -3,13 +3,13 @@
     <div class="payetilebox">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="init()" title="刷新"></a></div>
         <ul>
-            <li class="active">招聘过程</li>
+            <li class="active">招聘流程</li>
         </ul>
     </div>
     <ol class="breadbox">
         <li>工作面板</li>
         <li>招聘管理</li>
-        <li class="active">招聘过程</li>
+        <li class="active">招聘流程</li>
     </ol>
     <div class="btnbox">
         <button class="btn btn-default btn-sm" ng-click="addmodelFun()">新增</button>
@@ -20,16 +20,16 @@
             <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
                 <thead>
                 <tr>
-                    <th width="50" class="pl15">编号</th>
+                    <th width="60" class="pl20">编号</th>
                     <th>名称</th>
                     <th width="90">操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td class="pl15 t_c">1</td>
-                    <td>笔试</td>
-                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editstaff(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                <tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                    <td class="pl20">{{data.flowNodeSequence}}</td>
+                    <td>{{data.flowNodeName}}</td>
+                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editFun(data,datalist)"><i class="iconfont icon-bianji f14"></i></button><button  class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data,datalist)"><i class="iconfont icon-del f14"></i></button></td>
                 </tr>
                 <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
                 </tbody>
@@ -37,7 +37,7 @@
         </div>
         <div class="nose-panel-footer cf bte">
             <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
-            <div class="g9">共 {{thispages.total}} 条数据</div>
+            <div class="g9">共 {{thispages.total || '0'}} 条数据</div>
         </div>
     </div>
 
@@ -51,16 +51,16 @@
     <div class="whitemodal">
         <div class="modal-header">
             <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
-            <div class="f16">{{thename}}过程</div>
+            <div class="f16">{{thename}}流程</div>
         </div>
         <!--{{baseForm.$valid}}-->
         <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
             <div class="modal-body">
                 <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
                     <tr>
-                        <td width="60">过程名称</td>
+                        <td width="60">流程名称</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.flowName" placeholder="输入过程名称">
+                            <input type="text" class="form-control" ng-model="modalform.flowNodeName" placeholder="输入流程名称">
                         </td>
                     </tr>
                 </table>

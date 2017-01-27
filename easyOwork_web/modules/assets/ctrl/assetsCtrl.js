@@ -1,6 +1,6 @@
 //列表
 function assetslistCtrl(){
-    return['$rootScope','$scope','$modal','assetService','MsgService','LocalStorage','Common',function($rootScope,$scope,$modal,assetService,MsgService,LocalStorage,Common){
+    return['$rootScope','$scope','$filter','$modal','assetService','MsgService','LocalStorage','Common',function($rootScope,$scope,$filter,$modal,assetService,MsgService,LocalStorage,Common){
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.initFun = function(){
             inquiryAssetTypesFun(); //查询类型list
@@ -73,12 +73,17 @@ function assetslistCtrl(){
         //添加/修改/删除
         function changeAssetFun(change,row,$modalInstance,oldrow){
             if(oldrow==undefined){oldrow=row}
+            var startDate=$filter('date')(row.startDate,'yyyy-MM-dd');
             if(change!='DELETE'){
                 $scope.options={
                     "actionType":change,		//ADD, MODIFY, DELETE
                     "assetModel":row.assetModel || '',	//资产型号
                     "assetName":row.assetName || '',	//资产名称
                     "assetType":row.assetType || '',	//资产类型
+                    "price":row.price || '',		//价格
+                    "startDate":startDate || '',	//购买日期
+                    "age":row.age || '',		//服务年限
+                    "description":row.description || '',	//描述
                     "id":oldrow.id || '',		//资产编号
                     "newId":row.id || ''	//资产编号 for MODIFYs
                 }

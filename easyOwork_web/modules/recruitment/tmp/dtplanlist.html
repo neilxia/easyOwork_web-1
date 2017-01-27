@@ -30,11 +30,11 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td class="pl20">王晓红</td>
-                    <td>产品二部</td>
-                    <td>经理</td>
-                    <td>5</td>
-                    <td>未完成</td>
+                    <td class="pl20">{{datadt.sponsor.name}}</td>
+                    <td>{{datadt.sponsor.orgList[0].name}}</td>
+                    <td>{{datadt.Position.positionName}}</td>
+                    <td>{{datadt.Position.positionCount}}</td>
+                    <td>{{datadt.planStatus}}</td>
                 </tr>
                 <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
                 </tbody>
@@ -42,7 +42,7 @@
         </div>
         <div class="nose-panel-footer cf bte">
             <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
-            <div class="g9">共 {{thispages.total}} 条数据</div>
+            <div class="g9">共 {{thispages.total || '1'}} 条数据</div>
         </div>
     </div>
 

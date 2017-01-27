@@ -48,8 +48,8 @@
                     <td>{{data.assetType}}</td>
                     <td>{{data.assetName}}</td>
                     <td>{{data.assetModel}}</td>
-                    <td>￥5623.00</td>
-                    <td>2016-10-31</td>
+                    <td><span ng-if="data.price">￥{{data.price}}</span></td>
+                    <td>{{data.startDate}}</td>
                     <td><span class="orange">{{data.userDTO.name || '---'}}</span></td>
                     <td><span class="orange">{{data.userDTO.name?'已分配':'未分配'}}</span></td>
                     <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="assets.assetsview({'data':data})"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
@@ -60,7 +60,7 @@
         </div>
         <div class="nose-panel-footer cf bte">
             <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
-            <div class="g9">共 {{thispages.total}} 条数据</div>
+            <div class="g9">共 {{thispages.total || '0'}} 条数据</div>
         </div>
     </div>
 
@@ -109,7 +109,7 @@
                     <tr>
                         <td>价格</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.xx" placeholder="输入价格(元)">
+                            <input type="text" class="form-control" ng-model="modalform.price" placeholder="输入价格(元)">
                         </td>
                     </tr>
                     <tr>
@@ -120,14 +120,14 @@
                                     <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.startDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true">
                                     <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
                                 </div>
-                                <input type="text" class="form-control dib ml5" ng-model="modalform.selectclass"  style="width: 243px;" placeholder="服务年限">
+                                <input type="text" class="form-control dib ml5" ng-model="modalform.age"  style="width: 243px;" placeholder="服务年限">
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td valign="top">描述</td>
                         <td class="pl10">
-                            <textarea class="form-control" ng-model="modalform.xxx"  rows="3" placeholder="输入资产描述"></textarea>
+                            <textarea class="form-control" ng-model="modalform.description"  rows="3" placeholder="输入资产描述"></textarea>
                         </td>
                     </tr>
                 </table>

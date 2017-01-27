@@ -25,9 +25,9 @@
                 <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
             </span>
         </form>
-        <button class="btn btn-primary btn-sm">进下轮</button>
-        <button class="btn btn-default btn-sm">待定</button>
-        <button class="btn btn-default btn-sm" ng-click="taotaimodelFun()">淘汰</button>
+        <button class="btn btn-primary btn-sm" ng-click="acceptFun()">进下轮</button>
+        <button class="btn btn-default btn-sm" ng-click="holdFun()">待定</button>
+        <button class="btn btn-default btn-sm" ng-click="rejectFun()">淘汰</button>
         <button class="btn btn-default btn-sm" ng-click="zhuanyimodelFun()">转移</button>
     </div>
     <div class="nose-panel">
@@ -39,18 +39,18 @@
                     <th>姓名</th>
                     <th width="100">联系电话</th>
                     <th width="150">E-mail</th>
-                    <th width="100">查看简历</th>
-                    <th width="90">操作</th>
+                    <th width="90">查看简历</th>
+                    <!--<th width="90">操作</th>-->
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <tr ng-repeat="data in datalist | filter:{'campaignName':sltname} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
                     <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
-                    <td>姜小文</td>
-                    <td>13458639887</td>
-                    <td>jammy@gieo.cn</td>
-                    <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="sales.customerdtmain"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="下载" ng-click="editstaff(data)"><i class="iconfont icon-xiazai f14"></i></button></td>
-                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editstaff(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                    <td>{{data.resumeName}}</td>
+                    <td>{{data.resumeMobileNo}}</td>
+                    <td>{{data.resumeEmail}}</td>
+                    <td><a class="btn btn-default btn-xs h30" title="查看" href="{{data.resumeUrl || '#'}}"><i class="iconfont icon-chakan f14"></i></a><a class="btn btn-default btn-xs ml5 h30" title="下载" href="{{data.resumeUrl || '#'}}"><i class="iconfont icon-xiazai f14"></i></a></td>
+                    <!--<td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>-->
                 </tr>
                 <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
                 </tbody>
@@ -58,7 +58,7 @@
         </div>
         <div class="nose-panel-footer cf bte">
             <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
-            <div class="g9">共 {{thispages.total}} 条数据</div>
+            <div class="g9">共 {{thispages.total || '0'}} 条数据</div>
         </div>
     </div>
 
@@ -80,7 +80,7 @@
                 <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
                     <tr>
                         <td>
-                            <input type="text" class="form-control" placeholder="输入淘汰原因">
+                            <input type="text" class="form-control" ng-model="modalform.comment" placeholder="输入淘汰原因">
                         </td>
                     </tr>
                 </table>

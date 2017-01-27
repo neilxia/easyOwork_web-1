@@ -16,7 +16,7 @@
             <div selectdepyuan yuangong="1" myselected="ygselected" selectedallarr="ygselectedallarr" size="'sm'" class="wd170 dib" title="负责人员"></div>
             <select class="form-control input-sm dib" ng-init="selectedStatus=''" ng-model="selectedStatus" ng-options="x.val as x.name for x in thisStatusArr">
             </select>
-            <span class="form-group-sm search-group dib">
+            <span class="form-group-sm search-group">
                 <input type="text" class="form-control wd180" ng-model="sltname" placeholder="搜索名称">
                 <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
             </span>
@@ -52,7 +52,7 @@
         </div>
         <div class="nose-panel-footer cf bte">
             <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
-            <div class="g9">共 {{thispages.total}} 条数据</div>
+            <div class="g9">共 {{thispages.total || '0'}} 条数据</div>
         </div>
     </div>
 

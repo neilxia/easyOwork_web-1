@@ -33,7 +33,7 @@
                 <thead>
                 <tr>
                     <th class="pl20">渠道名称</th>
-                    <th width="200">公司名称</th>
+                    <!--<th width="200">公司名称</th>-->
                     <th width="100">联系人</th>
                     <th width="100">联系电话</th>
                     <th width="150">官网</th>
@@ -42,8 +42,8 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
-                    <td class="pl20">{{data.channelName}}</td>
-                    <td>{{data.companyName}}</td>
+                    <td class="pl20">{{data.companyName}}</td>
+                    <!--<td>{{data.companyName}}</td>-->
                     <td>{{data.contactName}}</td>
                     <td>{{data.contactMobileNo}}</td>
                     <td>{{data.companyWebsite}}</td>
@@ -55,7 +55,7 @@
         </div>
         <div class="nose-panel-footer cf bte">
             <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
-            <div class="g9">共 {{thispages.total}} 条数据</div>
+            <div class="g9">共 {{thispages.total || '0'}} 条数据</div>
         </div>
     </div>
 
@@ -83,14 +83,14 @@
                             </select>
                         </td>
                     </tr>-->
-                    <tr>
+                    <tr ng-hide="true">
                         <td width="60">渠道名称</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.channelName" placeholder="输入渠道名称" required>
+                            <input type="text" class="form-control" ng-model="modalform.companyName" placeholder="输入渠道名称" required>
                         </td>
                     </tr>
                     <tr>
-                        <td width="60">公司名称</td>
+                        <td width="60">渠道名称</td>
                         <td class="pl10">
                             <input type="text" class="form-control" ng-model="modalform.companyName" placeholder="输入公司名称">
                         </td>
@@ -110,7 +110,10 @@
                     <tr>
                         <td width="60">联系电话</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.contactMobileNo" placeholder="输入电话">
+                            <div class="nose-group" ng-class="{'has-error':baseForm.contactMobileNo.$dirty && baseForm.contactMobileNo.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.contactMobileNo.$dirty && baseForm.contactMobileNo.$invalid" popover="请输入11位手机号" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" name="contactMobileNo" ng-model="modalform.contactMobileNo"  multiple-tell class="form-control" placeholder="输入联系人手机号码">
+                            </div>
                         </td>
                     </tr>
 

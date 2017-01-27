@@ -20,7 +20,24 @@ function planlistCtrl(){
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
-                    $scope.datalist=data.body.data.channels;
+                    var datalist=[];
+                    if($rootScope.$stateParams.type=="1"){
+                        angular.forEach(data.body.data.plans,function(val,ind){
+                            if(val.planStatus=='未完成'){
+                                datalist.push(val);
+                            }
+                        })
+                    }else if($rootScope.$stateParams.type=="2"){
+                        angular.forEach(data.body.data.plans,function(val,ind){
+                            if(val.planStatus=='已完成'){
+                                debugger;
+                                datalist.push(val);
+                            }
+                        })
+                    }else{
+                        datalist=data.body.data.plans;
+                    }
+                    $scope.datalist=datalist;
                     $scope.thispages.total=$scope.datalist.length;	//分页
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
@@ -41,6 +58,7 @@ function planlistCtrl(){
                     "planName":oldrow.planName || "",		//招聘计划名称
                     "newPlanName":row.planName || "",		//新招聘计划名称
                     "planEndDate":planEndDate || "",		//计划完成时间
+                    "planStatus":row.planStatus || "",		//已启动, 已取消, 已完成
                     "sponsor":row.sponsor[0] || row.sponsor || ''/*,
                     "recruitPositionDTOList":{
                         "positionName":row.xxx || "",	//职位名称
@@ -60,7 +78,7 @@ function planlistCtrl(){
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
-                    inquiryRecruitChannelFun();
+                    inquiryRecruitPlanFun();
                     $modalInstance.close();
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
@@ -100,6 +118,8 @@ function planlistCtrl(){
             function modalCtrl ($scope, $modalInstance) {
                 $scope.thename='编辑';
                 $scope.modalform=row;
+                //$scope.modalform.sponsor=[row.sponsor];
+                $scope.modalform.sponsorarr=[[],[row.sponsor]];
                 //[[],[row.userDTO]]
                 //提交增加
                 $scope.ok = function (state) {
@@ -123,6 +143,7 @@ function planlistCtrl(){
         //添加/修改/删除
         function changeRecruitPositionFun(change,row,$modalInstance,oldrow){
             if(oldrow==undefined){oldrow=row}
+            var planOnboardDate=$filter('date')(row.planOnboardDate,'yyyy-MM-dd');
             if(change!='DELETE'){
                 $scope.options={
                     "actionType":change,		//ADD, MODIFY, DELETE
@@ -131,12 +152,14 @@ function planlistCtrl(){
                     "newPositionName":row.positionName || "",	//新职位名称
                     "positionRequirement":row.positionRequirement || "",	//职位要求
                     "positionDesc":row.positionDesc || "",		//职位描述
-                    "positionCount":row.positionCount || "" 		//职位招聘人数
+                    "positionCount":row.positionCount || "", 		//职位招聘人数
+                    "planOnboardDate":planOnboardDate || "" 		//期望到岗时间
                 }
             }else {
                 $scope.options={
                     "actionType":change,		//ADD, MODIFY, DELETE
-                    "positionName":row.positionName || ""		//招聘计划名称
+                    "planName":row.planName || "",		//招聘计划名称
+                    "positionName":row.positionName || ""		//职位名称
                 };
             }
             debugger;
@@ -144,7 +167,7 @@ function planlistCtrl(){
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
-                    inquiryRecruitChannelFun();
+                    inquiryRecruitPlanFun();
                     $modalInstance.close();
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
@@ -155,7 +178,7 @@ function planlistCtrl(){
             });
         }
         //新增
-        $scope.addPositionFun = function () {
+        $scope.addPositionFun = function (row) {
             var modalInstance = $modal.open({
                 templateUrl: 'addPosition.html',
                 //size:'sm',
@@ -164,6 +187,7 @@ function planlistCtrl(){
             function modalCtrl ($scope, $modalInstance) {
                 $scope.thename='新增';
                 $scope.modalform={};
+                $scope.modalform.planName=row.planName;
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
@@ -175,7 +199,7 @@ function planlistCtrl(){
             };
         };
         //编辑
-        $scope.editPositionFun = function (row) {
+        $scope.editPositionFun = function (row,prow) {
             var oldrow=angular.copy(row);
             var modalInstance = $modal.open({
                 templateUrl: 'addPosition.html',
@@ -184,6 +208,7 @@ function planlistCtrl(){
             function modalCtrl ($scope, $modalInstance) {
                 $scope.thename='编辑';
                 $scope.modalform=row;
+                $scope.modalform.planName=prow.planName;
                 //[[],[row.userDTO]]
                 //提交增加
                 $scope.ok = function (state) {
@@ -197,8 +222,9 @@ function planlistCtrl(){
             };
         };
         //删除
-        $scope.deletePosition=function(row){
+        $scope.deletePosition=function(row,prow){
             Common.openConfirmWindow().then(function() {
+                row.planName=prow.planName;
                 changeRecruitPositionFun('DELETE',row);
             });
         };
@@ -340,7 +366,7 @@ function processmsglistCtrl(){
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
-                    $scope.datalist=data.body.data.assetTypeList;
+                    $scope.datalist=data.body.data.flows[0].recruitFlowNodeDTOList;
                     $scope.thispages.total=$scope.datalist.length;	//分页
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
@@ -351,23 +377,39 @@ function processmsglistCtrl(){
             });
         }
         //添加/修改/删除
-        function changeRecruitFlowFun(change,row,$modalInstance,oldrow){
+        function changeRecruitFlowFun(change,row,$modalInstance,oldrow,prow){
             if(oldrow==undefined){oldrow=row}
-            if(change!='DELETE'){
+            if(change=='ADD'){
+                var datalist=$scope.datalist || [];
+                datalist.push({	//流程节点列表
+                    "flowName":"默认招聘流程",	//节点名称
+                    "flowNodeName":row.flowNodeName || "",	//新节点名称
+                    "flowNodeSequence":$scope.thispages.total+1 || "" 	//节点序列号
+                });
                 $scope.options={
                     "actionType":change,		//ADD, MODIFY, DELETE
-                    "flowName":oldrow.flowName || "",		//流程名称
-                    "newFlowName":row.flowName || "",		//新流程名称
-                    "recruitFlowNodeDTOList":{	//流程节点列表
-                        "flowName":oldrow.flowName || "",	//节点名称
-                        "flowNodeName":row.flowName || "",	//新节点名称
-                        "flowNodeSequence":row.flowNodeSequence || "" 	//节点序列号
-                    }
+                    "recruitFlowNodeDTOList":datalist
                 }
-            }else {
+            }else if(change=='MODIFY'){
+                angular.forEach(prow,function(val,ind){
+                    prow.flowName="默认招聘流程";	//节点名称
+                    if(ind==row.flowNodeSequence-1){
+                        prow.flowNodeName=row.flowNodeName;
+                    }
+                });
                 $scope.options={
                     "actionType":change,		//ADD, MODIFY, DELETE
-                    "flowName":row.flowName || ""		//流程名称
+                    "recruitFlowNodeDTOList":prow || ""		//流程名称
+                };
+            }else{
+                row.recruitFlowNodeDTOList.splice(row.flowNodeSequence-1, 1);
+                angular.forEach(row.recruitFlowNodeDTOList,function(val,ind){
+                    val.flowName="默认招聘流程";	//节点名称
+                    val.flowNodeSequence=ind+1
+                });
+                $scope.options={
+                    "actionType":change,		//ADD, MODIFY, DELETE
+                    "recruitFlowNodeDTOList":row.recruitFlowNodeDTOList || ""		//流程名称
                 };
             }
             var promise = RecruitFlowService.changeRecruitFlow({body:$scope.options});
@@ -405,7 +447,7 @@ function processmsglistCtrl(){
             };
         };
         //编辑
-        $scope.editFun = function (row) {
+        $scope.editFun = function (row,prow) {
             var oldrow=angular.copy(row);
             var modalInstance = $modal.open({
                 templateUrl: 'addmodel.html',
@@ -418,7 +460,7 @@ function processmsglistCtrl(){
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
-                    changeRecruitFlowFun('MODIFY',$scope.modalform,$modalInstance,oldrow);
+                    changeRecruitFlowFun('MODIFY',$scope.modalform,$modalInstance,oldrow,prow);
                 };
                 $scope.cancel = function () {
                     angular.copy(oldrow, row);
@@ -427,7 +469,8 @@ function processmsglistCtrl(){
             };
         };
         //删除
-        $scope.delete=function(row){
+        $scope.delete=function(row,prow){
+            row.recruitFlowNodeDTOList=prow;
             Common.openConfirmWindow().then(function() {
                 changeRecruitFlowFun('DELETE',row);
             });

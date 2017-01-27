@@ -14,12 +14,6 @@
     </ol>
     <div class="btnbox">
         <form class="f_r form-inline">
-<!--            <select class="form-control input-sm" ng-model="selectedproclass" ng-options="x.name for x in prosclasslist">
-                <option value="">全部负责人员</option>
-            </select>
-            <select class="form-control input-sm" ng-model="selectedproclass" ng-options="x.name for x in prosclasslist">
-                <option value="">全部状态</option>
-            </select>-->
             <span class="form-group-sm search-group">
                 <input type="text" class="form-control wd180" ng-model="sltname" placeholder="搜索姓名">
                 <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
@@ -27,8 +21,8 @@
         </form>
         <button class="btn btn-default btn-sm" ng-click="addmodelFun()">新增</button>
         <button class="btn btn-default btn-sm" ng-click="deleteAll()">删除</button>
-        <button class="btn btn-primary btn-sm">进下轮</button>
-        <button class="btn btn-default btn-sm">转移</button>
+        <button class="btn btn-primary btn-sm" ng-click="nextstep()">进下轮</button>
+        <!--<button class="btn btn-default btn-sm">转移</button>-->
 
     </div>
     <div class="nose-panel">
@@ -37,7 +31,7 @@
                 <thead>
                 <tr>
                     <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
-                    <th>姓名</th>
+                    <th>简历名称</th>
                     <th width="100">联系电话</th>
                     <th width="150">E-mail</th>
                     <th width="100">查看简历</th>
@@ -45,13 +39,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <tr ng-repeat="data in datalist | filter:{'campaignName':sltname} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
                     <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
-                    <td>姜小文</td>
-                    <td>13458639887</td>
-                    <td>jammy@gieo.cn</td>
-                    <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="sales.customerdtmain"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="下载" ng-click="editstaff(data)"><i class="iconfont icon-xiazai f14"></i></button></td>
-                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editstaff(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                    <td>{{data.resumeName}}</td>
+                    <td>{{data.resumeMobileNo}}</td>
+                    <td>{{data.resumeEmail}}</td>
+                    <td><a class="btn btn-default btn-xs h30" title="查看" href="{{data.resumeUrl || '#'}}"><i class="iconfont icon-chakan f14"></i></a><a class="btn btn-default btn-xs ml5 h30" title="下载" href="{{data.resumeUrl || '#'}}"><i class="iconfont icon-xiazai f14"></i></a></td>
+                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
                 </tr>
                 <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
                 </tbody>
@@ -59,7 +53,7 @@
         </div>
         <div class="nose-panel-footer cf bte">
             <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
-            <div class="g9">共 {{thispages.total}} 条数据</div>
+            <div class="g9">共 {{thispages.total || '0'}} 条数据</div>
         </div>
     </div>
 
@@ -80,28 +74,34 @@
             <div class="modal-body">
                 <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
                     <tr>
-                        <td width="60">姓名</td>
+                        <td width="60">简历名称</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" placeholder="输入姓名">
+                            <input type="text" class="form-control" ng-model="modalform.resumeName" placeholder="输入简历名称">
                         </td>
                     </tr>
                     <tr>
                         <td width="60">联系电话</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" placeholder="输入联系电话">
+                            <div class="nose-group" ng-class="{'has-error':baseForm.contactMobileNo.$dirty && baseForm.contactMobileNo.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.contactMobileNo.$dirty && baseForm.contactMobileNo.$invalid" popover="请输入11位手机号" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text"  name="contactMobileNo" ng-model="modalform.resumeMobileNo"  multiple-email class="form-control" placeholder="输入联系人手机号码">
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <td width="60">E-mail</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" placeholder="输入邮箱">
+                            <div class="nose-group" ng-class="{'has-error':baseForm.personalEmail.$dirty && baseForm.personalEmail.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.personalEmail.$dirty && baseForm.personalEmail.$invalid" popover="正确的邮箱地址" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text"  name="personalEmail" ng-model="modalform.resumeEmail"  multiple-email class="form-control" placeholder="输入电子邮箱">
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <td width="60">简历上传</td>
                         <td class="pl10">
                             <div class="btn btn-default upheadbtn">
-                                <input type="file" id="logo" nv-file-select accept="image/*" uploader="logoUploader"/>本地上传
+                                <input type="file" id="logo"  ng-model="modalform.resumeUrl" nv-file-select accept="image/*" uploader="logoUploader"/>本地上传
                             </div>
                         </td>
                     </tr>
