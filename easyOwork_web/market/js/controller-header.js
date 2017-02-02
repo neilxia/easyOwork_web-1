@@ -2,10 +2,18 @@
  * Created by changqing on 2016/7/21.
  */
 var app = angular.module('market.header',[]);
-app.controller('headerCtrl',['$rootScope','$scope','LocalStorage','commonService','MsgService','$http','AppConfig','$cookieStore',function($rootScope,$scope,LocalStorage,commonService,MsgService,$http,AppConfig,$cookieStore){
+app.controller('headerCtrl',['$rootScope','$scope','LocalStorage','commonService','MsgService','$http','AppConfig','$cookieStore','$window',function($rootScope,$scope,LocalStorage,commonService,MsgService,$http,AppConfig,$cookieStore,$window){
 	
 	$scope.init = function(){
 		$rootScope.userinfo = LocalStorage.getObject("userinfo");
+	}
+	
+	$scope.openQiyiWork = function(){
+		if($rootScope.userinfo==null||$rootScope.userinfo.name==null){
+			$rootScope.$state.go('login');
+		}else{
+			$window.open("/ind.html#/index");
+		}
 	}
 	
 		$scope.logout=function(){

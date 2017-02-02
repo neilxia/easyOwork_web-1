@@ -957,7 +957,12 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
         .state('planlist.dtprocess', {
             url: "/dtprocess?type&flowNodeName&flowNodeSequence",
             templateUrl: 'modules/recruitment/tmp/dtprocess.html',
-            data: { pageTitle: '招聘流程'}
+            data: { pageTitle: '面试流程'}
+        })
+        .state('planlist.hirelist', {
+            url: "/hirelist",
+            templateUrl: 'modules/recruitment/tmp/hirelist.html',
+            data: { pageTitle: '录用'}
         })
 
 

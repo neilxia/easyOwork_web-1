@@ -50,8 +50,8 @@ function staffmsgCtrl(){
             var personalEmail = row.personalEmail;
             var personalPhone = row.personalPhone;
             var id = row.id;
-            if(personalEmail==''&&personalPhone==''&&id==''){
-                MsgService.tomsg('邮箱|电话|员工编号选一必填');
+            if(personalEmail==''&&personalPhone==''){
+                MsgService.tomsg('邮箱|电话选一必填');
                 return;
             }
             var orgList=row.orgList.length == 0 ?[]:[{"name":row.orgList[0].text || row.orgList[0].name}];
@@ -72,6 +72,7 @@ function staffmsgCtrl(){
                 "university":row.university || "",		//毕业院校
                 "personalEmail":row.personalEmail || "",		//电子邮箱
                 "personalPhone":row.personalPhone || "",		//手机号码
+                "personalPhoneCountryCode":'86',
                 "orgList":orgList,		//所属部门名称
                 "joiningDate":joiningDate || "",		//入职日期
                 "roleList":roleList,	//角色数组, 可多个角色

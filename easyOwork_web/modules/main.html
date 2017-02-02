@@ -20,7 +20,7 @@
             <div class="panel mt15">
                 <div class="panel-heading"><!--<span class="f_r"><i class="iconfont icon-right f14"></i></span>--><span class="f16">备忘录</span><span class="f16 f_r poi" ng-click="addmemosFun()"><i class="iconfont icon-add g9"></i></span></div>
                 <div class="pl15 pr5 pb10 pt10">
-                    <ul class="ind_memo_list f12" slim-scroll box-height="250">
+                    <ul class="ind_memo_list f12" slim-scroll box-height="135">
                         <li class="bdrs4" ng-repeat="data in memoslist">
                             <a class="iconfont icon-close2 f14 g9 f_r" ng-click="deletememosFun(data)"></a>
                             {{data.content}}
@@ -30,12 +30,14 @@
             </div>
         </div>
         <div class="col-nose-6">
+        <!-- 
             <div class="ind-flexslider mb15" id="ind_banner">
                 <ul class="slides">
                     <li class="bdrs4"><img src="./images/ind-pic01.jpg" alt=""></li>
                     <li class="bdrs4"><img src="./images/ind-pic01.jpg" alt=""></li>
                 </ul>
             </div>
+         -->
             <div class="panel">
                 <div class="panel-body">
                     <ul class="ind-kanban t_c f12">
@@ -67,9 +69,9 @@
                             <div>收到的报告</div>
                             <div class="mt5"><button class="btn btn-default btn-xs" ui-sref="report.addreport">提交</button></div>
                         </li>
-                        <li>
+                        <li accessId="A004-001">
                             <div class="f30 orange">{{statistics.recruitCount}}</div>
-                            <div>需招聘人才</div>
+                            <div>招聘计划</div>
                             <div class="mt5"><button class="btn btn-default btn-xs">添加</button></div>
                         </li>
                     </ul>
@@ -89,7 +91,7 @@
                     </div>-->
                     <div tabset class="towntabbox01 towntabbox02" >
                         <div tab>
-                            <div tab-heading>我的待处理申请({{inquiryProcessesData.length}})</div>
+                            <div tab-heading>我提交的审批({{inquiryProcessesData.length}})</div>
                             <div class="ind-medo_com" slim-scroll box-height="300">
                                 <table  width="98%" cellpadding="0" cellspacing="0">
                                     <tr class="poi" ng-repeat="data in inquiryProcessesData" ng-click="chakanpcsFun(data)">
@@ -101,8 +103,9 @@
                                         <td class="pl15 pr15">
                                             <div class="h40 ovh">
                                                 <a href="">{{data.title}}</a>
+                                                <span class="f_r g9 f12" ng-class="{'orange':data.statusDesc=='审批中','green':data.statusDesc=='已同意','red':data.statusDesc=='已拒绝','g9':data.statusDesc=='已撤回'}">{{data.statusDesc}}</span>
                                             </div>
-                                            <div class="g9 f12 mt10"><span class="f_r">{{data.createDate}}</span>{{data.launchUserDTO.name}}</div>
+                                            <div class="g9 f12 mt10"><span class="f_r">{{data.createDate}}</span>当前审批人: {{data.processStepDTOList[data.currentStepNo-1].userDTO.name}}</div>
                                         </td>
                                         <td width="12"><i class="iconfont icon-right f12"></i></td>
                                     </tr>
@@ -110,7 +113,7 @@
                             </div>
                         </div>
                         <div tab>
-                            <div tab-heading>我的待处理审批({{inquiryHandData.length}})</div>
+                            <div tab-heading>提交给我的审批({{inquiryHandData.length}})</div>
                             <div class="ind-medo_com" slim-scroll box-height="300">
                                 <table  width="98%" cellpadding="0" cellspacing="0">
                                     <tr class="poi" ng-repeat="data in inquiryHandData" ng-click="chakanauditFun(data)">
@@ -122,8 +125,9 @@
                                         <td class="pl15 pr15">
                                             <div class="h40 ovh">
                                                 <a href="">{{data.title}}</a>
+                                                <span class="f_r g9 f12" ng-class="{'orange':data.statusDesc=='审批中','green':data.statusDesc=='已同意','red':data.statusDesc=='已拒绝','g9':data.statusDesc=='已撤回'}">{{data.statusDesc}}</span>
                                             </div>
-                                            <div class="g9 f12 mt10"><span class="f_r">{{data.createDate}}</span>{{data.launchUserDTO.name}}</div>
+                                            <div class="g9 f12 mt10"><span class="f_r">{{data.createDate}}</span>申请人: {{data.launchUserDTO.name}}</div>
                                         </td>
                                         <td width="12"><i class="iconfont icon-right f12"></i></td>
                                     </tr>
@@ -137,7 +141,7 @@
         <div class="col-nose-3">
             <!--新手帮助-->
             <div class="panel p5 t_c mb15"  accessId="A001-001">
-                <a ng-click="initCompanyHelp()"><i class="iconfont icon-ninwen f18 orange mr5 mt-2"></i>企业初始化</a>
+                <a ng-click="initCompanyHelp()"><i class="iconfont icon-ninwen f18 orange mr5 mt-2"></i>企业初始化帮助</a>
             </div>
             <!--考勤-->
             <div class="panel mb15">
@@ -178,7 +182,7 @@
             <div class="panel mb15">
                 <div class="panel-heading"><a class="f_r"><i class="iconfont icon-right f14" ui-sref="notice.view"></i></a><span class="f16">公告</span></div>
                 <div class="pl15 pr5">
-                    <ul class="ind-notice_com pr10" slim-scroll box-height="356" >
+                    <ul class="ind-notice_com pr10" slim-scroll box-height="183" >
                         <li ng-repeat="data in inquiryAnnouncementsData" ui-sref="notice.view({data:data})">
                         <a>
                             <div class="h20 ovh">{{data.name}}</div>
@@ -244,9 +248,9 @@
             <div class="modal-body">
 				<span class="g9">设置企业营业执照, 企业Logo, 地址, 联系信息, 以及组织结构 (平台已为您创建默认的企业组织架构, 您可以根据公司实际情况进行调整)</span>
                <ul class="mt20">
-					<li class="mb10">1. 点击顶部主菜单<b><设置></b></li>
+					<li class="mb10">1. 点击顶部主菜单<b><企业设置></b></li>
 					<li class="mb10">2. 然后点击左边菜单<b><企业信息></b>进入页面设置企业信息</li>
-					<li class="mb10">3. 点击顶部主菜单<b><组织></b>进入页面调整企业组织结构</li>
+					<li class="mb10">3. 点击顶部主菜单<b><组织架构></b>进入页面调整企业组织结构</li>
 				<ul>
             </div>
             <div class="modal-footer">
@@ -330,6 +334,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary wd80" style="float:left" ng-click="goStep(3)">上一步</button>
+				<button type="button" class="btn btn-primary wd80" ng-click="cancel()">完成</button>
             </div>
             </form>
         </div>

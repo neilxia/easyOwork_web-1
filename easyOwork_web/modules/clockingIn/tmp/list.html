@@ -30,7 +30,8 @@
                     <th width="100">员工编号</th>
                     <th width="120">部门</th>
                     <th width="100">年-月</th>
-                    <th width="120">出勤正常(天数)</th>
+                    <th width="80">应出勤</th>
+                    <th width="80">出勤正常</th>
                     <th width="80">未出勤</th>
                     <th width="80">未签退</th>
                     <th width="80">迟到</th>
@@ -45,6 +46,7 @@
                     <td>{{data.userDTO.id}}</td>
                     <td>{{data.userDTO.orgList[0].name}}</td>
                     <td>{{data.attendanceYear}}-{{data.attendanceMonth}}</td>
+                    <td>{{data.totalCount}}</td>
                     <td>{{data.normalCount}}</td>
                     <td>{{data.notInCount}}</td>
                     <td>{{data.notOutCount}}</td>

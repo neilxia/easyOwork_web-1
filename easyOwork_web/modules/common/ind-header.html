@@ -54,19 +54,20 @@
 <!--主菜单-->
 <div class="topmenu whitew f16">
     <div class="{{$state.current.data.widthClass}}">
-        <a ui-sref-active="active" ui-sref="index"><i class="iconfont icon-gongzuotai mr5"></i>面板</a>
-        <a ng-class="{active:$state.includes('sysmsg')}" ui-sref="sysmsg.info" accessId="A001-001||A001-002"><i class="iconfont icon-shezhi mr5"></i>设置</a>
-        <a ng-class="{active:$state.includes('structuremsg')}" ui-sref="structuremsg.list" accessId="A001-001"><i class="iconfont icon-zuzhi mr5"></i>组织</a>
-        <a ng-class="{active:$state.includes('staffmsg')}" ui-sref="staffmsg.searchlist"><i class="iconfont icon-zichankupsd mr5"></i>员工</a>
-        <!--<a ng-class="{active:$state.includes('sysmsg')}" ui-sref="">审批流程</a>-->
+        <a ui-sref-active="active" ui-sref="index"><i class="iconfont icon-gongzuotai mr5"></i>工作首页</a>
+        
+        
+        <a ng-class="{active:$state.includes('staffmsg')}" ui-sref="staffmsg.searchlist"><i class="iconfont icon-zichankupsd mr5"></i>同事</a>
         <a ng-class="{active:$state.includes('processmsg')}" ui-sref="processmsg.mypcs"><i class="iconfont icon-wodeshenpi mr5"></i>审批</a>
-        <a ng-class="{active:$state.includes('permissions')}" ui-sref="permissions.list" accessId="A001-003"><i class="iconfont icon-peizhi mr5"></i>权限</a>
-
+        <a ng-class="{active:$state.includes('project')}" ui-sref="project.msglist"><i class="iconfont icon-canyuxiangmupsd mr5"></i>项目</a>
+        <a ng-class="{active:$state.includes('sales')}" ui-sref="sales.customerlist" accessId="A007-001"><i class="iconfont icon-xiaoshoumubiaopsd mr5"></i>销售</a>
+        <a ng-class="{active:$state.includes('recruitment')}" ui-sref="recruitment.planlist({'type':0})" accessId="A004-001||A004-002"><i class="iconfont icon-zhaopinguochengpsd mr5"></i>招聘</a>
+        <a ng-class="{active:$state.includes('assets')}" ui-sref="assets.assetslist({'type':0})" accessId="A005-001||A005-002||A005-003"><i class="iconfont icon-zichan mr5"></i>资产</a>
         <a ng-class="{active:$state.includes('report')}" ui-sref="report.sendlist"><i class="iconfont icon-baogao mr5"></i>报告</a>
         <a ng-class="{active:$state.includes('task')}" ui-sref="task.sendlist"><i class="iconfont icon-wodeshenqing mr5"></i>任务</a>
-        <a ng-class="{active:$state.includes('analysis')}" ui-sref="analysis.list"><i class="iconfont icon-juece mr5"></i>决策</a><!--  accessId="A016-001" -->
+        <a ng-class="{active:$state.includes('analysis')}" ui-sref="analysis.list" accessId="A016-001"><i class="iconfont icon-juece mr5"></i>决策</a><!--  accessId="A016-001" -->
 
-        <a ng-class="{active:$state.includes('notice')}" ui-sref="notice.list"><i class="iconfont icon-gonggao mr5"></i>公告</a>
+        
         <!--<a ng-class="{active:$state.includes('salarymsg')}" ui-sref="salarymsg.list"><i class="iconfont icon-gongzi mr5"></i>工资</a>
         <a ng-class="{active:$state.includes('project')}" ui-sref="project.msglist"><i class="iconfont icon-canyuxiangmupsd mr5"></i>项目</a>
         <a ng-class="{active:$state.includes('sales')}" ui-sref="sales.customerlist"><i class="iconfont icon-xiaoshoumubiaopsd mr5"></i>销售</a>
@@ -75,12 +76,12 @@
         <div class="dropdown pull-left" dropdown="">
             <a dropdown-toggle="" aria-haspopup="true" aria-expanded="false"><i class="iconfont icon-more f20"></i></a>
             <ul class="dropdown-menu" role="menu">
+            	<li><a ng-class="{active:$state.includes('sysmsg')}" ui-sref="sysmsg.info" accessId="A001-001||A001-002"><i class="iconfont icon-shezhi mr5"></i>企业设置</a></li>
+            	<li><a ng-class="{active:$state.includes('structuremsg')}" ui-sref="structuremsg.list" accessId="A001-001"><i class="iconfont icon-zuzhi mr5"></i>组织架构</a></li>
+            	<li><a ng-class="{active:$state.includes('permissions')}" ui-sref="permissions.list" accessId="A001-003"><i class="iconfont icon-peizhi mr5"></i>权限</a></li>
+            	<li><a ng-class="{active:$state.includes('notice')}" ui-sref="notice.list"><i class="iconfont icon-gonggao mr5"></i>公告</a></li>
                 <li><a ng-class="{active:$state.includes('clockingIn')}" ui-sref="clockingIn.list"><i class="iconfont icon-kaoqing mr5"></i>考勤</a></li>
                 <li><a ng-class="{active:$state.includes('salarymsg')}" ui-sref="salarymsg.list"><i class="iconfont icon-gongzi mr5"></i>工资</a></li>
-                <li><a ng-class="{active:$state.includes('project')}" ui-sref="project.msglist"><i class="iconfont icon-canyuxiangmupsd mr5"></i>项目</a></li>
-                <li><a ng-class="{active:$state.includes('sales')}" ui-sref="sales.customerlist"><i class="iconfont icon-xiaoshoumubiaopsd mr5"></i>销售</a></li>
-                <li><a ng-class="{active:$state.includes('recruitment')}" ui-sref="recruitment.planlist({'type':0})"><i class="iconfont icon-zhaopinguochengpsd mr5"></i>招聘</a></li>
-                <li><a ng-class="{active:$state.includes('assets')}" ui-sref="assets.assetslist({'type':0})"><i class="iconfont icon-zichan mr5"></i>资产</a></li>
             </ul>
         </div>
         <!--<a><i class="iconfont icon-more"></i></a>-->

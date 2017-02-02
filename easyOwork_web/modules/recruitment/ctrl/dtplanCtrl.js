@@ -330,7 +330,7 @@ function dtfpositionsCtrl(){
 }
 //列表简历管理
 function dtresumemsgCtrl(){
-    return['$rootScope','$scope','$modal','RecruitFlowService','MsgService','LocalStorage','Common',function($rootScope,$scope,$modal,RecruitFlowService,MsgService,LocalStorage,Common){
+    return['$rootScope','$scope','$modal','RecruitFlowService','MsgService','LocalStorage','Common','OSSService','FileUploader','noseService',function($rootScope,$scope,$modal,RecruitFlowService,MsgService,LocalStorage,Common,OSSService,FileUploader,noseService){
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.planName=$rootScope.$stateParams.planName;
         $scope.positionName=$rootScope.$stateParams.positionName;
@@ -441,10 +441,40 @@ function dtresumemsgCtrl(){
             function modalCtrl ($scope, $modalInstance) {
                 $scope.thename='新增';
                 $scope.modalform={};
+                var resumeUploader = $scope.resumeUploader = new FileUploader({
+                    url: '', //不使用默认URL上传
+                    queueLimit: 1,     //文件个数
+                    removeAfterUpload: true,   //上传后删除文件
+                    autoUpload:false
+                });
+                resumeUploader.onAfterAddingFile = function(fileItem){
+                	resumeUploader.cancelAll();
+                    var file = $("#resumeFile").get(0).files[0];
+                    var filePath = LocalStorage.getObject('userinfo').entId+'/recruit/resume/'+noseService.randomWord(false, 32)+'_';
+                    var key= filePath+file.name;
+                    var promise = OSSService.uploadFile(filePath,file);
+                    promise.success(function (data, status, headers, config) {
+                        var urlPromise = OSSService.getUrl({'body':{'key':key}});
+                        urlPromise.success(function (data, status, headers, config) {
+                            var sts=data.body.status;
+                            if(sts.statusCode==0){
+                                $scope.modalform.resumeUrl = data.body.data.url;
+                                $scope.modalform.resumeName = file.name;
+                            }
+                        });
+                    });
+                    promise.error(function (data, status, headers, config) {
+                        MsgService.tomsg('简历上传失败');
+                    });
+                };
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
                     changeRecruitResumeFun('ADD',$scope.modalform,$modalInstance);
+                };
+                $scope.deleteResume = function () {
+                    $scope.modalform.resumeName = '';
+                    $scope.modalform.resumeUrl = '';
                 };
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -518,43 +548,85 @@ function dtresumemsgCtrl(){
 
         //进下轮
         $scope.nextstep=function(){
-            Common.openConfirmWindow().then(function() {
-                var selectedItems=[];
-                angular.forEach($scope.datalist, function(item) {
-                    if (item.checked == true) {
-                        selectedItems.push({
-                            "recruitPositionResumeDTO":{
-                                "recruitPositionDTO":{
-                                    "planName":$scope.planName,	//招聘计划名称
-                                    "positionName":$scope.positionName		//职位名称
-                                },
-                                "resumeDTO":{
-                                    "resumeName":item.resumeName	//简历名称
-                                }
+
+            var selectedItems=[];
+            angular.forEach($scope.datalist, function(item) {
+                if (item.checked == true) {
+                    selectedItems.push({
+                        "recruitPositionResumeDTO":{
+                            "recruitPositionDTO":{
+                                "planName":$scope.planName,	//招聘计划名称
+                                "positionName":$scope.positionName		//职位名称
                             },
-                            "recruitFlowDTO":{
-                                "flowName":"默认招聘流程"	//招聘流程名称
+                            "resumeDTO":{
+                                "resumeName":item.resumeName	//简历名称
                             }
-                        });
-                    }
-                });
-                $scope.options={
-                    positionDetailList:selectedItems
-                };
-                var promise = RecruitFlowService.startRecruitFlow({body:$scope.options});
-                promise.success(function(data, status, headers, config){
-                    var sts=data.body.status;
-                    if(sts.statusCode==0){
-                        inquiryRecruitResumeFun();
-                    }else{
-                        MsgService.tomsg(data.body.status.errorDesc);
-                    }
-                });
-                promise.error(function(data, status, headers, config){
-                    MsgService.tomsg(data.body.status.errorDesc);
-                });
+                        },
+                        "recruitFlowDTO":{
+                            "flowName":"默认招聘流程"	//招聘流程名称
+                        }
+                    });
+                }
             });
+            $scope.options={
+                positionDetailList:selectedItems
+            };
+            var promise = RecruitFlowService.startRecruitFlow({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    inquiryRecruitResumeFun();
+                }else{
+                    MsgService.tomsg(data.body.status.errorDesc);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.tomsg(data.body.status.errorDesc);
+            });
+        
         };
+    }]
+}
+
+function dthiredresumemsgCtrl(){
+    return['$rootScope','$scope','$modal','RecruitFlowService','MsgService','LocalStorage','Common',function($rootScope,$scope,$modal,RecruitFlowService,MsgService,LocalStorage,Common){
+        var userinfo=LocalStorage.getObject('userinfo');
+        $scope.planName=$rootScope.$stateParams.planName;
+        $scope.positionName=$rootScope.$stateParams.positionName;
+        $scope.positionCount=$rootScope.$stateParams.positionCount;
+        $scope.initFun = function(){
+        	$scope.hiredCount=0;
+            inquiryRecruitHiredResumeFun();
+        };
+        $scope.thispages={
+            total:null,
+            pageNum:1,
+            pageSize:10
+        };
+        //查询list
+        function inquiryRecruitHiredResumeFun(){
+            $scope.options={
+                "planName":$scope.planName,	//招聘计划名称
+                "positionName":$scope.positionName		//职位名称
+                //"positionRequirement":$scope.planName,	//职位要求
+                //"positionDesc":$scope.planName,	//职位描述
+                //"positionCount":$scope.positionCount	//职位招聘人数
+            };
+            var promise = RecruitFlowService.inquiryRecruitHiredResume({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    var datalist=data.body.data.resumes;
+                    $scope.datalist=datalist;
+                    $scope.thispages.total=$scope.datalist.length;	//分页
+                }else{
+                    MsgService.tomsg(data.body.status.errorDesc);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.tomsg(data.body.status.errorDesc);
+            });
+        }
     }]
 }
 

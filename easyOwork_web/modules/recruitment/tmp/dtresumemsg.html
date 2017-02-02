@@ -21,7 +21,7 @@
         </form>
         <button class="btn btn-default btn-sm" ng-click="addmodelFun()">新增</button>
         <button class="btn btn-default btn-sm" ng-click="deleteAll()">删除</button>
-        <button class="btn btn-primary btn-sm" ng-click="nextstep()">进下轮</button>
+        <button class="btn btn-primary btn-sm" ng-click="nextstep()">进入面试</button>
         <!--<button class="btn btn-default btn-sm">转移</button>-->
 
     </div>
@@ -44,7 +44,7 @@
                     <td>{{data.resumeName}}</td>
                     <td>{{data.resumeMobileNo}}</td>
                     <td>{{data.resumeEmail}}</td>
-                    <td><a class="btn btn-default btn-xs h30" title="查看" href="{{data.resumeUrl || '#'}}"><i class="iconfont icon-chakan f14"></i></a><a class="btn btn-default btn-xs ml5 h30" title="下载" href="{{data.resumeUrl || '#'}}"><i class="iconfont icon-xiazai f14"></i></a></td>
+                    <td><a class="btn btn-default btn-xs ml5 h30" title="下载" href="{{data.resumeUrl || '#'}}" target="_blank"><i class="iconfont icon-xiazai f14"></i></a></td>
                     <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
                 </tr>
                 <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
@@ -97,12 +97,20 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td width="60">简历上传</td>
+					<tr ng-show="modalform.resumeUrl">
+                        <td width="60">简历</td>
                         <td class="pl10">
-                            <div class="btn btn-default upheadbtn">
-                                <input type="file" id="logo"  ng-model="modalform.resumeUrl" nv-file-select accept="image/*" uploader="logoUploader"/>本地上传
+                            <a ng-href="{{modalform.resumeUrl}}">{{modalform.resumeName}}</a> <a class="red f12" ng-click="deleteResume()">删除</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">
+							 <div class="btn btn-default upheadbtn">
+                                <input type="file" id="resumeFile"  ng-model="modalform.resumeUrl" nv-file-select uploader="resumeUploader"/>简历上传
                             </div>
+						</td>
+                        <td class="pl10">
+                           
                         </td>
                     </tr>
                 </table>

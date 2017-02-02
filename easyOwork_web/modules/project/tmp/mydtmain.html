@@ -87,8 +87,8 @@
                                     <td>{{data.startDate}} ~ {{data.endDate}}</td>
                                     <td>{{data.toUserDTO.name}}</td>
                                     <td>
-                                        <span ng-if="data.status=='COMPLETED'" class="green">已完成</span>
-                                        <button ng-if="data.status!='COMPLETED'" class="btn btn-default btn-xs h30" title="完成" ng-click="editTask(data)">完成</button>
+                                        <span ng-if="data.status=='已完成'" class="green">已完成</span>
+                                        <button ng-if="data.status!='已完成'" class="btn btn-default btn-xs h30" title="完成" ng-click="editTask(data)">完成</button>
 
                                     </td>
                                 </tr>

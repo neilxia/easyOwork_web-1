@@ -84,7 +84,7 @@ function projectmydtmainlistCtrl(){
             $scope.options={
                 'actionType':change,		//ADD, MODIFY, DELETE
                 "taskName":row.taskName || '',	//任务名称
-                "status":'COMPLETED',	//任务状态
+                "status":'已完成',	//任务状态
                 "projectDTO":{
                     "projectName":$scope.datadt.projectName || ''	//项目名称
                 },

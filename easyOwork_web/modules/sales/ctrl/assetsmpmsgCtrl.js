@@ -159,7 +159,7 @@ function assetsmpmsgCtrl(){
                     }
                 }
             });
-            function modalCtrl ($scope, $modalInstance) {
+            function modalCtrl ($scope, $modalInstance,item) {
                 $scope.thename='编辑';
                 $scope.modalform=row;
                 $scope.radioModel=item;

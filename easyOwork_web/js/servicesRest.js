@@ -528,6 +528,10 @@ function RecruitFlowService(){
             inquiryRecruitResume:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryRecruitResume',form)
             },
+            //POST 5.13.10	B0071-1查询已录用的简历
+            inquiryRecruitHiredResume:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryRecruitHiredResume',form)
+            },
             //POST 5.13.11	B0072-启动招聘流程
             startRecruitFlow:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/startRecruitFlow',form)

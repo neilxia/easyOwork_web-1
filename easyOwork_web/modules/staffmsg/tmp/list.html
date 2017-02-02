@@ -83,8 +83,8 @@
                                         <td class="pl5">
                                             <div class="nose-group"  ng-class="{'has-error':baseForm.name.$dirty && baseForm.name.$invalid}">
                                                 <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.name.$dirty && baseForm.name.$error.required" popover="员工姓名不能为空" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.name.$dirty && baseForm.name.$error.maxlength" popover="请输入员工真实姓名" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                                <input type="text" class="form-control" name="name" ng-model="user.name"  placeholder="输入员工姓名" ng-maxlength="4" required />
+                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.name.$dirty && baseForm.name.$error.maxlength" popover="员工姓名不超过20个字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                <input type="text" class="form-control" name="name" ng-model="user.name"  placeholder="输入员工姓名" ng-maxlength="20" required />
                                             </div>
                                         </td>
                                     </tr>
@@ -99,7 +99,7 @@
                                         <td class="g9">出生日期</td>
                                         <td class="pl5">
                                             <div class="qiyi-group nose-group line20td">
-                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.birthDate.$dirty && baseForm.birthDate.$invalid" popover="请输入员工姓名" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.birthDate.$dirty && baseForm.birthDate.$invalid" popover="请输入正确出生日期" popover-placement="bottom" popover-trigger="mouseenter"></i>
                                                 <input type="datetime" name="birthDate" class="form-control" date-time ng-model="user.birthDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true">
                                                 <span class="abs_r" style="top: 4px;"><i class="iconfont icon-rili"></i></span>
                                             </div>
@@ -112,7 +112,7 @@
 
                                             <div class="nose-group" ng-class="{'has-error':baseForm.personalEmail.$dirty && baseForm.personalEmail.$invalid}">
                                                 <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.personalEmail.$dirty && baseForm.personalEmail.$invalid" popover="正确的邮箱地址" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                                <input type="text"  name="personalEmail" ng-model="user.personalEmail"  multiple-email class="form-control" placeholder="输入电子邮箱(邮箱|电话|员工编号选一必填)">
+                                                <input type="text"  name="personalEmail" ng-model="user.personalEmail"  multiple-email class="form-control" placeholder="重要, 用于员工登录和接收密码; 邮箱和电话选一必填">
                                             </div>
 
 
@@ -121,11 +121,11 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="g9">联系电话</td>
+                                        <td class="g9">电话号码</td>
                                         <td class="pl5">
                                             <div class="nose-group" ng-class="{'has-error':baseForm.personalPhone.$dirty && baseForm.personalPhone.$invalid}">
                                                 <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.personalPhone.$dirty && baseForm.personalPhone.$invalid" popover="请输入11位手机号" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                                <input type="text"  name="personalPhone" ng-model="user.personalPhone"  multiple-email class="form-control" placeholder="输入手机号码(邮箱|电话|员工编号选一必填)">
+                                                <input type="text"  name="personalPhone" ng-model="user.personalPhone"  multiple-email class="form-control" placeholder="重要, 用于员工登录和接收密码;邮箱和电话选一必填">
                                             </div>
                                         </td>
                                     </tr>
@@ -134,7 +134,7 @@
                                         <td class="pl5">
                                             <div class="nose-group"  ng-class="{'has-error':baseForm.id.$dirty && baseForm.id.$invalid}">
                                                 <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.id.$dirty && baseForm.id.$invalid" popover="请输入最大6位数字的编号" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                                <input type="text" class="form-control" name="id" ng-model="user.id" isnumber  placeholder="输入员工编号(邮箱|电话|员工编号选一必填)" ng-maxlength="6" />
+                                                <input type="text" class="form-control" name="id" ng-model="user.id" isnumber  ng-maxlength="6" />
                                             </div>
                                         </td>
                                     </tr>
@@ -188,7 +188,7 @@
                         <table class="table bded mt10" cellspacing="0" cellpadding="0" width="100%;">
                             <thead>
                             <tr>
-                                <th><span class="pl20">配置项名</span></th>
+                                <th><span class="pl20">项名</span></th>
                                 <th width="100">金额(¥)</th>
                                 <th width="70">周期</th>
                                 <th width="60">计税</th>
@@ -236,7 +236,8 @@
                             </tr>
                             </tbody>
                         </table>
-                        <a class="addinfobox t_c mt10" ng-click="addPayclass()"><i class="iconfont icon-add "></i></a>
+                        <a class="addinfobox t_c mt10" ng-click="addPayclass()"><i class="iconfont icon-add ">福利项</i></a>
+						<div class="gc f16 mt20">社保公积金缴纳金额和比例通过<福利及社保>菜单统一配置</div>
                         <div class="mt10">
                             <table cellpadding="0" cellspacing="0" width="100%" class="line30td">
                                 <tr ng-show="user.contract">
@@ -310,7 +311,7 @@
         <div class="whitemodal">
             <div class="modal-header">
                 <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
-                <div class="f16">新增配置项</div>
+                <div class="f16">编辑福利项</div>
             </div>
             <form name="thisform"  novalidate="novalidate">
 
@@ -338,11 +339,14 @@
                             <td class="g9">周期</td>
                             <td class="pl5">
                                 <select class="form-control input-sm" name="period" ng-model="addconfigform.period">
-                                    <option value="日">日</option>
+                                    <!--
+									<option value="日">日</option>
                                     <option value="周">周</option>
                                     <option value="月">月</option>
                                     <option value="季">季</option>
                                     <option value="年">年</option>
+									-->
+									<option value="月">月</option>
                                 </select>
                             </td>
                         </tr>

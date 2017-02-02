@@ -105,7 +105,7 @@
                             <span class="red" ng-if="data.targetAmount > data.targetAmount">未完成指标</span>
                             <span class="green" ng-if="data.targetAmount<=data.actualAmount">完成指标</span>
                         </td>
-                        <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editmp(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                        <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editmp(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deletemp(data)"><i class="iconfont icon-del f14"></i></button></td>
                     </tr>
                     <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
                     </tbody>
@@ -159,7 +159,7 @@
                             <span class="red" ng-if="data.targetAmount > data.targetAmount">未完成指标</span>
                             <span class="green" ng-if="data.targetAmount<=data.actualAmount">完成指标</span>
                         </td>
-                        <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editmpFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                        <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editmpFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deletemp(data)"><i class="iconfont icon-del f14"></i></button></td>
                     </tr>
                     <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
                     </tbody>

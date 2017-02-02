@@ -3,11 +3,14 @@
     <div class="sidebar-collapse">
         <ul side-navigation2 class="nav metismenu" id="side-menu" optiondata="datalist">
             <!-- ng-class="{active:$state.includes('clockingIn.view')}"-->
+            <li>
+                <a ui-sref="recruitment.planlist"> <span class="nav-label">返回招聘计划</span> </a>
+            </li>
             <li ng-class="{active:$state.includes('planlist.dtplanlist')}">
                 <a ui-sref="planlist.dtplanlist"><i class="iconfont icon-wodeshenqing f18"></i> <span class="nav-label">{{positionName}}({{positionCount}})</span> </a>
             </li>
-            <li class="active" ng-class="{active:$state.includes('planlist.dtfpositions')}">
-                <a><i class="iconfont icon-zichankupsd"></i> <span class="nav-label">发布职位</span> <span class="fa arrow"></span></a>
+            <li ng-class="{active:$state.includes('planlist.dtfpositions')}">
+                <a><i class="iconfont icon-zichankupsd"></i> <span class="nav-label">渠道发布</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li ui-sref-active="active">
                         <a ui-sref="planlist.dtfpositions({'type':0})"><span class="nav-label">全部</span> </a>
@@ -21,14 +24,14 @@
                 </ul>
             </li>
             <li ng-class="{active:$state.includes('planlist.dtresumemsg')}">
-                <a ui-sref="planlist.dtresumemsg"><i class="iconfont icon-shezhi f18"></i> <span class="nav-label">简历管理</span> </a>
+                <a ui-sref="planlist.dtresumemsg"><i class="iconfont icon-shezhi f18"></i> <span class="nav-label">职位简历</span> </a>
             </li>
-            <li ng-class="{active:$state.includes('planlist.planlist')}">
-                <a><i class="iconfont icon-zichankupsd"></i> <span class="nav-label">招聘流程</span> <span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li ui-sref-active="active" ng-repeat="data in datalist">
-                        <a><span class="nav-label">{{data.flowNodeName}}</span> <span class="fa arrow"></span></a>
-                        <ul class="nav nav-third-level">
+            <!-- <li ng-class="{active:$state.includes('planlist.planlist')}"> -->
+                <!-- <a><i class="iconfont icon-zichankupsd"></i> <span class="nav-label">面试流程</span> <span class="fa arrow"></span></a> -->
+                <!-- <ul class="nav nav-second-level"> -->
+                    <li ng-class="{active:$state.includes('planlist.dtprocess')}" ng-repeat="data in datalist | orderBy:['flowNodeSequence']">
+                        <a><i class="iconfont icon-zichankupsd"></i><span class="nav-label">{{data.flowNodeName}}</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
                             <li ui-sref-active="active">
                                 <a ui-sref="planlist.dtprocess({'type':0,'flowNodeName':data.flowNodeName,'flowNodeSequence':data.flowNodeSequence})"><span class="nav-label">进行中 </span> </a>
                             </li>
@@ -40,7 +43,10 @@
                             </li>
                         </ul>
                     </li>
-                </ul>
+                <!-- </ul> -->
+            <!-- </li> -->
+            <li ng-class="{active:$state.includes('planlist.hirelist')}">
+                <a ui-sref="planlist.hirelist"><i class="iconfont icon-shezhi f18"></i> <span class="nav-label">已录用</span> </a>
             </li>
             </ul>
             

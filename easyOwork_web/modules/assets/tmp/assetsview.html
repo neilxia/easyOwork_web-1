@@ -13,11 +13,12 @@
         <li class="active">资产详情</li>
     </ol>
     <div class="p20">
-        编号：006
+        编号：{{datadt.id}}
         <span class="ml20">类别：{{datadt.assetType}}</span>
         <span class="ml20">名称：{{datadt.assetName}} </span>
         <span class="ml20">型号：{{datadt.assetModel}}</span>
-        <span class="ml20">当前状态：<span class="orange">{{datadt.assetType}}</span></span>
+        <span class="ml20" ng-if="datadt.userDTO">当前状态：已分配</span>
+        <span class="ml20" ng-if="!datadt.userDTO">当前状态：未分配</span>
     </div>
     <div class="nose-panel bte">
         <div class="nose-panel-body">
@@ -34,7 +35,7 @@
                 <tr ng-repeat="data in datadt.assetHistoryList">
                     <td class="pl20">{{data.actionDate}}</td>
                     <td>{{data.userDTO.name}}</td>
-                    <td>王晓松</td>
+                    <td>{{data.createBy}}</td>
                     <td>{{data.actionType}}</td>
                 </tr>
                 <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->

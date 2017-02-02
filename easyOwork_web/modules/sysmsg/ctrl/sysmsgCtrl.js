@@ -25,7 +25,7 @@ function listCtrl(){
             switch(name){
                 case 'name':{
                     if(data.length>60){
-                        MsgService.tomsg('最大60个字符！');
+                        MsgService.tomsg('企业名称最大60个字符！');
                         return false;
                     }else {
                         $scope.EPinfo.name=data;
@@ -34,7 +34,7 @@ function listCtrl(){
                 }
                 case 'shortName':{
                     if(data.length>20){
-                        MsgService.tomsg('最大60个字符！');
+                        MsgService.tomsg('企业简称最大60个字符！');
                         return false;
                     }else {
                         $scope.EPinfo.shortName=data;

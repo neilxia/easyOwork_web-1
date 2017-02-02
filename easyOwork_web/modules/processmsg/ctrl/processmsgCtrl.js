@@ -138,7 +138,8 @@ function addpcsCtrl(){
                 //提交编辑
                 $scope.ok=function(state){
                     if(!state){return;} //状态判断
-                    row.userDTO=$scope.processDefStep.myselected[0];
+                    if($scope.processDefStep.myselected != null)
+                    	row.userDTO=$scope.processDefStep.myselected[0];
                     $modalInstance.close();
                 };
                 $scope.cancel = function () {

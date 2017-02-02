@@ -21,7 +21,7 @@
                 <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
             </span>
         </form>
-        <button class="btn btn-default btn-sm" ng-click="addmodelFun()">新增模板</button>
+        <button class="btn btn-default btn-sm" ng-click="addmodelFun()">新增项目模板</button>
         <button class="btn btn-default btn-sm" ng-click="deleteAll()">批量删除</button>
     </div>
     <div class="nose-panel">
@@ -30,8 +30,8 @@
                 <thead>
                 <tr>
                     <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
-                    <th>模板类型</th>
-                    <th width="100">模板名称</th>
+                    <th>行业</th>
+                    <th width="200">模板名称</th>
                     <th width="125">操作</th>
                 </tr>
                 </thead>
@@ -68,7 +68,7 @@
             <div class="modal-body">
                 <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
                     <tr>
-                        <td width="60">模板类型</td>
+                        <td width="60">行业</td>
                         <td class="pl10 form-inline">
                             <select class="form-control wd150" ng-model="selectedName" ng-options="x for x in thisTypes">
                             </select>

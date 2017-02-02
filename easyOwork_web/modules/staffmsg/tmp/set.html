@@ -84,7 +84,7 @@
         <div class="whitemodal">
             <div class="modal-header">
                 <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
-                <div class="f16">新增配置项</div>
+                <div class="f16">新增福利项</div>
             </div>
                 <form name="thisform" ng-submit="ok(thisform.$valid)" novalidate="novalidate">
 
@@ -112,11 +112,14 @@
                         <td class="g9">周期</td>
                         <td class="pl5">
                             <select class="form-control input-sm" name="period" ng-model="addconfigform.period">
-                                <option value="日">日</option>
+                                <!--
+								<option value="日">日</option>
                                 <option value="周">周</option>
                                 <option value="月">月</option>
                                 <option value="季">季</option>
                                 <option value="年">年</option>
+								-->
+								<option value="月">月</option>
                             </select>
                         </td>
                     </tr>
@@ -152,7 +155,7 @@
         <div class="whitemodal">
             <div class="modal-header">
                 <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
-                <div class="f16">编辑配置项</div>
+                <div class="f16">编辑福利项</div>
             </div>
             <form name="thisform" ng-submit="ok(thisform.$valid)" novalidate="novalidate">
 
@@ -180,11 +183,14 @@
                             <td class="g9">周期</td>
                             <td class="pl5">
                                 <select class="form-control input-sm" name="period" ng-model="addconfigform.period">
+									<!--
                                     <option value="日">日</option>
                                     <option value="周">周</option>
                                     <option value="月">月</option>
                                     <option value="季">季</option>
                                     <option value="年">年</option>
+									-->	
+									<option value="月">月</option>
                                 </select>
                             </td>
                         </tr>
@@ -221,7 +227,7 @@
         <div class="whitemodal">
             <div class="modal-header">
                 <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
-                <div class="f16">新增社保配置项</div>
+                <div class="f16">新增社保公积金项</div>
             </div>
             <form name="thisform" ng-submit="ok(thisform.$valid)" novalidate="novalidate">
 

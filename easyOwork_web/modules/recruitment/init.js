@@ -8,6 +8,7 @@ app.controller('dtplanmenuCtrl',dtplanmenuCtrl());
 app.controller('dtplanlistCtrl',dtplanlistCtrl());
 app.controller('dtfpositionsCtrl',dtfpositionsCtrl());
 app.controller('dtresumemsgCtrl',dtresumemsgCtrl());
+app.controller('dthiredresumemsgCtrl',dthiredresumemsgCtrl());
 app.controller('dtprocessCtrl',dtprocessCtrl());
 app.controller('dtprocessofferCtrl',dtprocessofferCtrl());
 app.controller('dtprocessrzCtrl',dtprocessrzCtrl());
