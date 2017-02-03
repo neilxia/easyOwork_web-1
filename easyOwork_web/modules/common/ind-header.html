@@ -33,7 +33,7 @@
                 </div>
             </li>
             <li class="usrbox">
-                <div class="imgbox bdrs50 f_l"><img src="{{userinfoall.photoUrl||'./images/headportrait02.jpg'}}" alt=""></div>
+                <div class="imgbox bdrs50 f_l"><img ng-src="{{userinfoall.photoUrl||'./images/headportrait02.jpg'}}" alt=""></div>
                 <div class="dropdown pull-right ml10 mt10" dropdown>
                     <span dropdown-toggle>{{userinfoall.name || '暂无'}} <span class="caret"></span></span>
                     <ul class="dropdown-menu" role="menu">
@@ -45,8 +45,6 @@
             </li>
         </ul>
         <div class="leftbox">
-            <span  class="logo"><img src="./images/logo.png" height="26" alt=""></span>
-            <span class="ml20 mr20 line2 mt5"></span>
             <span class="f20">{{companyinfo.name}}</span>
         </div>
     </div>
