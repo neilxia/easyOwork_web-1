@@ -38,7 +38,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
         .state('login', {
             url: "/login",
             templateUrl: "modules/login/tmp/login.html",
-            data: { pageTitle: '企易登录',specialClass: 'bg-login'},
+            data: { pageTitle: '青辉阳登录',specialClass: 'bg-login'},
             resolve:{
                 loadPlugin:function($ocLazyLoad){
                     return $ocLazyLoad.load([
