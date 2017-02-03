@@ -92,7 +92,7 @@
                     <div tabset class="towntabbox01 towntabbox02" >
                         <div tab>
                             <div tab-heading>我提交的审批({{inquiryProcessesData.length}})</div>
-                            <div class="ind-medo_com" slim-scroll box-height="300">
+                            <div class="ind-medo_com" slim-scroll box-height="320">
                                 <table  width="98%" cellpadding="0" cellspacing="0">
                                     <tr class="poi" ng-repeat="data in inquiryProcessesData" ng-click="chakanpcsFun(data)">
                                         <td width="70">
@@ -114,7 +114,7 @@
                         </div>
                         <div tab>
                             <div tab-heading>提交给我的审批({{inquiryHandData.length}})</div>
-                            <div class="ind-medo_com" slim-scroll box-height="300">
+                            <div class="ind-medo_com" slim-scroll box-height="320">
                                 <table  width="98%" cellpadding="0" cellspacing="0">
                                     <tr class="poi" ng-repeat="data in inquiryHandData" ng-click="chakanauditFun(data)">
                                         <td width="70">
@@ -182,7 +182,7 @@
             <div class="panel mb15">
                 <div class="panel-heading"><a class="f_r"><i class="iconfont icon-right f14" ui-sref="notice.view"></i></a><span class="f16">公告</span></div>
                 <div class="pl15 pr5">
-                    <ul class="ind-notice_com pr10" slim-scroll box-height="183" >
+                    <ul class="ind-notice_com pr10" slim-scroll box-height="203" >
                         <li ng-repeat="data in inquiryAnnouncementsData" ui-sref="notice.view({data:data})">
                         <a>
                             <div class="h20 ovh">{{data.name}}</div>

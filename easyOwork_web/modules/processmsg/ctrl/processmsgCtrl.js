@@ -782,7 +782,8 @@ function addsetpcsCtrl(){
                 //提交编辑
                 $scope.ok=function(state){
                     if(!state){return;} //状态判断
-                    row.userDTO=$scope.processDefStep.myselected[0];
+                    if($scope.processDefStep.myselected != null && $scope.processDefStep.myselected.length>0)
+                    	row.userDTO=$scope.processDefStep.myselected[0];
                     $modalInstance.close();
                 };
                 $scope.cancel = function () {
@@ -794,6 +795,10 @@ function addsetpcsCtrl(){
         //删除审批人
         $scope.deleteapprover=function($index){
             $scope.processmodal.processDefStepDTOList.splice($index, 1);
+            //重新计算stepNo
+            angular.forEach($scope.processmodal.processDefStepDTOList, function(obj1, key1) {
+            	$scope.processmodal.processDefStepDTOList[key1].stepNo = key1+1;
+        	});
         }
 
 
