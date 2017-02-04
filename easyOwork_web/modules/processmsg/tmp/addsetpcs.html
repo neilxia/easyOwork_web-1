@@ -3,13 +3,13 @@
     <div class="payetilebox">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
         <ul>
-            <li class="active">添加流程</li>
+            <li class="active">添加/修改审批模板</li>
         </ul>
     </div>
     <ol class="breadbox">
         <li>工作面板</li>
         <li>审批设置</li>
-        <li class="active">添加流程</li>
+        <li class="active">添加/修改审批模板</li>
     </ol>
     <div class="nose-panel">
         <!--流程模板-->
@@ -18,17 +18,17 @@
             <!--<button ng-show="tableisDisabled" ng-click="changeeditable()" class="btn btn-primary editbtn">保存流程配置</button>-->
             <div class="pct60 f12">
 				<div class="cf mb10">
-                    <div class="col-xs-2 t_r pt7 g9">流程名称</div>
+                    <div class="col-xs-2 t_r pt7 g9">审批模板名称</div>
                     <div class="col-xs-10"><input type="text" class="form-control" placeholder="输入流程名称" ng-model="processmodal.name"></div>
                 </div>
                 <div class="cf mb10">
-                    <div class="col-xs-2 t_r pt7 g9">流程类型</div>
+                    <div class="col-xs-2 t_r pt7 g9">审批模板类型</div>
                     <div class="col-xs-10 form-inline">
                         <button ng-repeat="data in prosclasslist" class="btn btn-default mr5" ng-model="$parent.pcsclass" btn-radio="'{{data.name}}'">{{data.name}}</button>
                     </div>
                 </div>
                 <div class="cf mb10">
-                    <div class="col-xs-2 t_r pt7 g9">流程描述</div>
+                    <div class="col-xs-2 t_r pt7 g9">描述</div>
                     <div class="col-xs-10"><textarea class="form-control" cols="6" placeholder="输入简要的流程描述" ng-model="processmodal.description"></textarea></div>
                 </div>
                 <div class="cf mb10">

@@ -63,8 +63,8 @@ function loginCtrl(){
             });
             function loginModalCtrl ($scope, $modalInstance) {
                 $scope.Zh={
-                    registername:'luochangqing@qinghuiyang.com',
-                    registerPassword:'password'
+                    registername:'',
+                    registerPassword:''
                 };
 
                 $scope.ok = function (state) {

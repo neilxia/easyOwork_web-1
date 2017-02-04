@@ -319,7 +319,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                     return $ocLazyLoad.load([
                         {
                             //jstree
-                            files: ['plugins/jstree/style.css','plugins/jstree/jstree.min.js','plugins/jstree/ngJsTree.js']
+                            files: ['plugins/jsTree/style.css','plugins/jsTree/jstree.min.js','plugins/jsTree/ngJsTree.js']
                         },
                         {
                             //时间控件
@@ -1174,7 +1174,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                         },*/
                         {
                             //jstree
-                            files: ['plugins/jstree/style.css','plugins/jstree/jstree.min.js','plugins/jstree/ngJsTree.js']
+                            files: ['plugins/jsTree/style.css','plugins/jsTree/jstree.min.js','plugins/jsTree/ngJsTree.js']
                         }
 
 
