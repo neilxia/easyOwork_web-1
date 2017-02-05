@@ -487,7 +487,7 @@ angular.module('qiyi')
         //$scope.searchText=$rootScope.$stateParams.name;
         $scope.searchFun=function(){
             if(!$scope.searchText)return;
-            $state.go("staffmsg.search",{name:$scope.searchText})
+            $state.go("colleague.search",{name:$scope.searchText})
         }
     }])
 ;

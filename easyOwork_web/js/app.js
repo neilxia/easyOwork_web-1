@@ -16,7 +16,8 @@
         'qiyi.servicesRest',
         'qiyi.interceptors',
         'qiyi.filters',
-        'qiyi.staffmsg',//员工
+        'qiyi.staffmsg',//员工管理
+        'qiyi.colleague',//同事
         //'qiyi.enterprisemsg', //组织结构
         'qiyi.structuremsg', //组织结构
         'qiyi.sysmsg', //系统设置

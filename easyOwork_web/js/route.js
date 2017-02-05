@@ -125,7 +125,39 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             }
         })
 
+        /*========同事=============================================================================================== */
+        .state('colleague', {
+            abstract: true,
+            url: "/colleague",
+            data: { pageTitle: '同事', specialClass: 'bgf2' },
+            views: {
+                '': {
+                    templateUrl: 'modules/common/content.html'
+                },
+                'main@colleague': {
+                    templateUrl: 'modules/common/myContent.html'
+                },
+                'menu@colleague': {
+                    templateUrl: 'modules/colleague/tmp/menu.html'
+                }
+            }
 
+
+        })
+        
+        .state('colleague.search', {
+            url: "/search?name",
+            templateUrl: 'modules/sysmsg/tmp/search.html',
+            data: { pageTitle: '同事查询'}
+
+        })
+        .state('colleague.searchlist', {
+            url: "/searchlist",
+            templateUrl: 'modules/colleague/tmp/searchlist.html',
+            data: { pageTitle: '同事查询'}
+
+        })
+        
         /*========员工管理=============================================================================================== */
         .state('staffmsg', {
             abstract: true,
@@ -178,23 +210,11 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             }
 
         })
-        .state('staffmsg.search', {
-            url: "/search?name",
-            templateUrl: 'modules/sysmsg/tmp/search.html',
-            data: { pageTitle: '员工搜索'}
-
-        })
-        .state('staffmsg.searchlist', {
-            url: "/searchlist",
-            templateUrl: 'modules/staffmsg/tmp/searchlist.html',
-            data: { pageTitle: '员工查询'}
-
-        })
-        /*========职务权限=============================================================================================== */
+        /*========角色权限=============================================================================================== */
         .state('permissions', {
             abstract: true,
             url: "/permissions",
-            data: { pageTitle: '职务权限' },
+            data: { pageTitle: '角色权限' },
             views: {
                 '': {
                     templateUrl: 'modules/common/content.html'
@@ -210,13 +230,13 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
         .state('permissions.list', {
             url: "/list",
             templateUrl: 'modules/permissions/tmp/list.html',
-            data: { pageTitle: '职务权限'}
+            data: { pageTitle: '角色权限'}
 
         })
         .state('permissions.addpromis', {
             url: "/addpromis",	//添加和编辑使用一个页面
             templateUrl: 'modules/permissions/tmp/addpromis.html',
-            data: { pageTitle: '职务权限'},
+            data: { pageTitle: '角色权限'},
             resolve:{
                 loadPlugin:function($ocLazyLoad){
                     return $ocLazyLoad.load([
@@ -232,7 +252,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
         .state('permissions.editpromis', {
             url: "/addpromis/:selectedRole",	//添加和编辑使用一个页面
             templateUrl: 'modules/permissions/tmp/addpromis.html',
-            data: { pageTitle: '职务权限'},
+            data: { pageTitle: '角色权限'},
             resolve:{
                 loadPlugin:function($ocLazyLoad){
                     return $ocLazyLoad.load([
@@ -574,7 +594,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             templateUrl: 'modules/notice/tmp/view.html',
             data: { pageTitle: '公告详情'}
         })
-        /*========工资管理========================================================== */
+        /*========薪资管理========================================================== */
         .state('salarymsg', {
             abstract: true,
             url: "/salarymsg",
@@ -605,17 +625,17 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
         .state('salarymsg.issue', {
             url: "/issue",
             templateUrl: 'modules/salarymsg/tmp/issue.html',
-            data: { pageTitle: '工资发放'}
+            data: { pageTitle: '薪资发放'}
         })
         .state('salarymsg.issueview', {
             url: "/issueview?year&month",
             templateUrl: 'modules/salarymsg/tmp/view.html',
-            data: { pageTitle: '工资发放详情'}
+            data: { pageTitle: '薪资发放详情'}
         })
         .state('salarymsg.list', {
             url: "/list?year&month",
             templateUrl: 'modules/salarymsg/tmp/list.html',
-            data: { pageTitle: '工资单查询'}
+            data: { pageTitle: '薪资查询'}
         })
 
         /*========考勤========================================================== */

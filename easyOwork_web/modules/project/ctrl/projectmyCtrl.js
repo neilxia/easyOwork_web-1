@@ -1,7 +1,6 @@
 //列表
 function projectmylistCtrl(){
     return['$rootScope','$scope','$modal','$filter','projectService','MsgService','LocalStorage','Common','noseService',function($rootScope,$scope,$modal,$filter,projectService,MsgService,LocalStorage,Common,noseService){
-        debugger;
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.initFun = function(){
             //inquiryProjectDefFun();//查询项目类型
@@ -68,6 +67,14 @@ function projectmydtmainlistCtrl(){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                     $scope.datadt=data.body.data.projects[0];
+                    var myTaskList = [];
+                    //filter out my task only
+                    angular.forEach($scope.datadt.projectTaskDTOList, function(item) {
+                        if (item.toUserDTO!=null && item.toUserDTO.name==userinfo.name) {
+                        	myTaskList.push(item);
+                        }
+                    });
+                    $scope.datadt.projectTaskDTOList = myTaskList;
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
                 }

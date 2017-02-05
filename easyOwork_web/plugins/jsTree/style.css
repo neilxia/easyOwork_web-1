@@ -374,10 +374,10 @@
   box-sizing: border-box;
 }
 .jstree-default .jstree-wholerow-hovered {
-  background: #fffcf8;
+  background: #f5e7d6;
 }
 .jstree-default .jstree-wholerow-clicked {
-  background-color: #fff9f2;
+  background-color: #f1be81;
   /*background: -moz-linear-gradient(top, #fff9f2 0%, #a8e4ff 100%);*/
   /*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff9f2), color-stop(100%, #a8e4ff));*/
   /*background: -webkit-linear-gradient(top, #fff9f2 0%, #a8e4ff 100%);*/

@@ -484,14 +484,14 @@ function employeesService(){
 
                 //查询本人/其他员工信息
                 $scope.options={
-                    "type":"",		//必填项,ID(员工号), EMAIL(电子邮件),MOBILE(手机号码),NAME(名字),ORG(部门名称),ROLE(职位),ALL(查询所有员工)
+                    "type":"",		//必填项,ID(员工号), EMAIL(电子邮件),MOBILE(手机号码),NAME(名字),ORG(部门名称),ROLE(角色),ALL(查询所有员工)
                     "id":"",	//type为ID时必填, 员工号
                     "personalEmail":"",	//type为EMAIL时必填, 邮件地址
                     "personalPhoneCountryCode":"",	//type为MOBILE时必填, 电话号码
                     "personalPhone":"",		//type为MOBILE时必填, 电话号码
                     "name":"",	//type为NAME时必填, 姓名
                     "orgName":"",	//type为ORG时必填, 部门名称
-                    "roleName":""	//type为职位时必填, 职位名称
+                    "roleName":""	//type为角色时必填, 角色名称
                 };
                 function inquiryEmployeeFun(state){
                     if(!state){return;}

@@ -49,7 +49,7 @@ function permissionsCtrl(){
         	//多条删除
         	if(roleName == "" || roleName == undefined){
 	        	if($('input:checkbox[name=selectedFunction]:checked').length==0){
-	        		notify({ message: '请选择职务', classes: 'orange iconfont icon-one', templateUrl:'modules/common/prompt.html' ,prompt:true});
+	        		notify({ message: '请选择角色', classes: 'orange iconfont icon-one', templateUrl:'modules/common/prompt.html' ,prompt:true});
 	        		return;
 	        	}
         	}
@@ -151,7 +151,7 @@ function permissionsaddCtrl(){
                 	 $scope.populateTreeGrid();
                 	 $scope.functionGrid = $("#functionGrid").TreeGrid($scope.treegirdoptions);
                 	
-                	//如果从编辑页面过来, 则默认填充职位名称和描述, 以及相关的权限
+                	//如果从编辑页面过来, 则默认填充角色名称和描述, 以及相关的权限
                 	 //var selectedRole = $stateParams.selectedRole;
                  	 if($scope.editMode){	//编辑模式
                  		$scope.thisform.roleName = $scope.selectedRole.roleName;

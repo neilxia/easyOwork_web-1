@@ -145,7 +145,7 @@
             </div>
             <!--考勤-->
             <div class="panel mb15">
-                <div class="panel-heading"><a class="f_r"><i class="iconfont icon-right f14" ui-sref="clockingIn.list"></i></a><span class="f16">考勤</span></div>
+                <div class="panel-heading poi" ui-sref="clockingIn.list"><a class="f_r"><i class="iconfont icon-right f14"></i></a><span class="f16">考勤</span></div>
                 <div class="panel-body">
                     <table class="t_c" cellspacing="0" cellpadding="0" width="100%">
                         <tr>
@@ -180,7 +180,7 @@
             </div>
             <!--公告-->
             <div class="panel mb15">
-                <div class="panel-heading"><a class="f_r"><i class="iconfont icon-right f14" ui-sref="notice.view"></i></a><span class="f16">公告</span></div>
+                <div class="panel-heading poi" ui-sref="notice.view"><a class="f_r"><i class="iconfont icon-right f14"></i></a><span class="f16">公告</span></div>
                 <div class="pl15 pr5">
                     <ul class="ind-notice_com pr10" slim-scroll box-height="203" >
                         <li ng-repeat="data in inquiryAnnouncementsData" ui-sref="notice.view({data:data})">

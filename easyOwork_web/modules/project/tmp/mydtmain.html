@@ -48,7 +48,7 @@
                             <td width="60" valign="top">项目阶段</td>
                             <td>
                                 <ul class="project-mgsdt">
-                                    <li ng-class="{'sucs':data.status=='已完成'}" ng-repeat="data in datadt.projectStageDTOList">
+                                    <li ng-class="{'sucs':data.status=='已完成'}" ng-repeat="data in datadt.projectStageDTOList | orderBy:['seqNo']">
                                         <div class="titlebox"><span class="sign bdrs50"></span></div>
                                         <div class="textbox">
                                             <div>{{data.projectStageName}}({{data.status}})</div>
@@ -83,7 +83,7 @@
                                 <tbody>
                                 <tr ng-repeat="data in datadt.projectTaskDTOList">
                                     <td class="pl20">{{data.taskName}}</td>
-                                    <td>{{data.taskName}}</td>
+                                    <td>{{data.projectStageDTO.projectStageName}}</td>
                                     <td>{{data.startDate}} ~ {{data.endDate}}</td>
                                     <td>{{data.toUserDTO.name}}</td>
                                     <td>

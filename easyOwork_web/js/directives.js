@@ -920,7 +920,7 @@ function selectdepyuan($timeout){
                     //查询员工列表
                     $scope.inquiryEmployeeFun=function(name){
                         $scope.options={
-                            "type":'ORG',		//必填项,ID(员工号), EMAIL(电子邮件),MOBILE(手机号码),NAME(名字),ORG(部门名称),ROLE(职位),ALL(查询所有员工)
+                            "type":'ORG',		//必填项,ID(员工号), EMAIL(电子邮件),MOBILE(手机号码),NAME(名字),ORG(部门名称),ROLE(角色),ALL(查询所有员工)
                             "orgName":name	//type为ORG时必填, 部门名称
                         };
 

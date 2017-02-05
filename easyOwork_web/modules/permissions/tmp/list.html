@@ -3,21 +3,21 @@
     <div class="payetilebox">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="init()" title="刷新"></a></div>
         <ul>
-            <li class="active">职务权限</li>
+            <li class="active">角色权限</li>
         </ul>
     </div>
     <ol class="breadbox">
         <li>工作面板</li>
-        <li class="active">职务权限</li>
+        <li class="active">角色权限</li>
     </ol>
     <div class="btnbox">
         <form class="f_r form-inline">
             <span class="form-group-sm search-group">
-                <input type="text" class="form-control wd180" ng-model="form.searchRoleName" placeholder="职务名称">
+                <input type="text" class="form-control wd180" ng-model="form.searchRoleName" placeholder="角色名称">
                 <span class="searchbtn" ng-click="searchRole()"><i class="iconfont icon-sousuo f18"></i></span>
             </span>
         </form>
-        <a class="btn btn-default btn-sm" ng-click="add()">新增职务</a>
+        <a class="btn btn-default btn-sm" ng-click="add()">新增角色</a>
         <button class="btn btn-default btn-sm" ng-click="delete()">删除</button>
     </div>
     <div class="nose-panel">
@@ -26,7 +26,7 @@
                 <thead>
                 <tr>
                     <th width="50" class="t_r"><input icheck type="checkbox" ng-model="form.selectedRoles"></th>
-                    <th width="80" >职务名称</th>
+                    <th width="80" >角色名称</th>
                     <th>权限</th>
                     <th width="150">创建时间</th>
                     <th width="96">操作</th>
@@ -104,7 +104,7 @@
                                             <option value="">选择部门</option>
                                         </select>
                                         <select class="form-control wd197" name="" id="">
-                                            <option value="">选择职务</option>
+                                            <option value="">选择角色</option>
                                         </select>
                                         </div>
                                     </td>
