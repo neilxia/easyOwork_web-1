@@ -111,6 +111,14 @@ function permissionsCtrl(){
  			   }
      		}
         };
+        $scope.viewRole=function(roleName){
+        	for(var i=0;i<$scope.roles.length;i++){
+ 			   if($scope.roles[i].roleName==roleName){
+ 				  $state.go('permissions.viewpromis',{selectedRole:$scope.roles[i]});
+ 				  break;
+ 			   }
+     		}
+        };
         
         $scope.init();
 
@@ -254,6 +262,97 @@ function permissionsaddCtrl(){
             })
             
         };
+        $scope.init();
+    }]
+}
+
+function permissionsviewCtrl(){
+    return['$scope','$modal','$state','roleService','$stateParams','MsgService',function($scope,$modal,$state,roleService,$stateParams,MsgService){
+    	
+    	$scope.treegirdoptions={
+    			id:"Function",
+                displayLevel:2,
+                columns:[
+                    {headerText: "功能名称", dataField: "name", width:'200'},
+                    {headerText: "功能描述", dataField: "gndescribe",width:'auto'}
+                ],
+                data:[
+                ],
+                showCheckbox:true,
+                autoChecked:true
+            }
+    	
+    	$scope.FuncListAllFunctions = function(){
+        	var promise = roleService.inquiryFunction({body:{}});
+        	promise.success(function(data, status, headers, config){
+        		 var sts=data.body.status;
+                 var data=data.body.data;
+                 if(sts.statusCode==0){
+                	 $scope.functionList = data.functionList;
+                	 $scope.populateTreeGrid();
+                	 $scope.functionGrid = $("#functionGrid").TreeGrid($scope.treegirdoptions);
+                	
+                	//如果从编辑页面过来, 则默认填充角色名称和描述, 以及相关的权限
+                	 //var selectedRole = $stateParams.selectedRole;
+                 	 //if($scope.editMode){	//编辑模式
+                 		$scope.thisform.roleName = $scope.selectedRole.roleName;
+                 		$scope.thisform.roleDesc = $scope.selectedRole.roleDesc;
+                 		var roleFunctionList = $scope.selectedRole.functionList;
+                 		for(var i=0; i<roleFunctionList.length; i++){
+                 			var functionName = roleFunctionList[i].functionName;
+                 			var tridValue = $('tr.dataTr td:contains('+functionName+') span').attr('trid');
+                 			debugger;
+                 			$("tr.dataTr[id="+tridValue+"] td:first div").addClass('checked');
+                 			$("tr.dataTr input[type='checkbox'][trid="+tridValue+"]").attr('checked',true);
+                 			//$("tr.dataTr[id="+tridValue+"] td:first div").click();
+                 		}
+                 		$('input').iCheck('disable');
+                 	 //}
+                	 
+                 }else{
+                	 MsgService.tomsg(sts.errorDesc);
+                 }
+        	})
+        };
+        $scope.populateTreeGrid = function(){
+        	$scope.treegirdoptions.data = [];	//clean grid data
+        	for(var i=0;i<$scope.functionList.length;i++){
+ 			   var appCode = $scope.functionList[i].applicationCode;
+ 			   var appDesc = $scope.functionList[i].applicationDesc;
+ 			   var appName = $scope.functionList[i].applicationName;
+ 			   var functionCode = $scope.functionList[i].functionCode;
+ 			   var functionName = $scope.functionList[i].functionName;
+ 			   var functionDesc = $scope.functionList[i].functionDesc;
+ 			   var level1 = {"id":appCode,"name":appName,"children":[]};
+ 			   var level2 = {"id":functionCode,"name":functionName,"gndescribe":functionDesc};
+ 			   var isFound = false;
+ 			   for(var j=0;j<$scope.treegirdoptions.data.length;j++){
+ 				  if($scope.treegirdoptions.data[j].id == appCode){
+ 					 $scope.treegirdoptions.data[j].children.push(level2);
+ 					 isFound = true;
+ 					 break;
+ 				  }
+ 			   }
+ 			   if(!isFound){
+ 				  level1.children.push(level2);
+ 				  $scope.treegirdoptions.data.push(level1);			  
+ 			   }
+     		}
+        }
+        $scope.thisform = {
+        		"roleName":"",
+        		"roleDesc":""
+        	};
+		//$scope.thisform=$scope.thisform;
+        $scope.init = function(){
+        	$scope.editMode = false;
+        	var selectedRole = $stateParams.selectedRole;
+        	if(selectedRole != undefined && selectedRole != ""){	//编辑模式
+        		$scope.editMode = true;
+        		$scope.selectedRole = selectedRole;
+        	}
+        	$scope.FuncListAllFunctions();
+        }
         $scope.init();
     }]
 }

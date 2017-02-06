@@ -265,6 +265,22 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                 }
             }
         })
+        .state('permissions.viewpromis', {
+            url: "/viewpromis/:selectedRole",	//添加和编辑使用一个页面
+            templateUrl: 'modules/permissions/tmp/viewpromis.html',
+            data: { pageTitle: '角色权限'},
+            resolve:{
+                loadPlugin:function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            // TreeGrid
+                            files: ['plugins/TreeGrid/TreeGrid.css','plugins/TreeGrid/TreeGrid-1.1.js']
+                        }
+
+                    ])
+                }
+            }
+        })
         /*========审批流程=============================================================================================== */
         .state('processmsg', {
             abstract: true,
@@ -679,9 +695,19 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             templateUrl: 'modules/clockingIn/tmp/list.html',
             data: { pageTitle: '考勤列表'}
         })
+        .state('clockingIn.my', {
+            url: "/my",
+            templateUrl: 'modules/clockingIn/tmp/my.html',
+            data: { pageTitle: '我的考勤'}
+        })
         .state('clockingIn.view', {
             url: "/view:row",
             templateUrl: 'modules/clockingIn/tmp/view.html',
+            data: { pageTitle: '考勤详情'}
+        })
+        .state('clockingIn.myview', {
+            url: "/myview:row",
+            templateUrl: 'modules/clockingIn/tmp/myview.html',
             data: { pageTitle: '考勤详情'}
         })
         .state('clockingIn.set', {

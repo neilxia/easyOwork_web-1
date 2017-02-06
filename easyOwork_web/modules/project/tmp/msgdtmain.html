@@ -176,7 +176,7 @@
                                     <th width="100">手机号码</th>
                                     <th width="100">E-mail</th>
                                     <th width="100">部门</th>
-                                    <th width="100">职位</th>
+                                    <!-- <th width="100">职位</th> -->
                                     <th width="60">操作</th>
                                 </tr>
                                 </thead>
@@ -188,7 +188,7 @@
                                     <td>{{data.userDTO.personalPhone || '---'}}</td>
                                     <td>{{data.userDTO.personalEmail || '---'}}</td>
                                     <td>{{data.userDTO.orgList[0].name || '---'}}</td>
-                                    <td>{{data.userDTO.roleList[0].name || '---'}}</td>
+                                    <!-- <td>{{data.userDTO.roleList[0].name || '---'}}</td> -->
                                     <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editStage(data)"><i class="iconfont icon-bianji f14"></i></button></td>
                                 </tr>
                                 <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
@@ -211,7 +211,7 @@
                                     <th width="100">手机号码</th>
                                     <th width="100">E-mail</th>
                                     <th width="100">部门</th>
-                                    <th width="100">职位</th>
+                                    <!-- <th width="100">职位</th> -->
                                     <th width="60">操作</th>
                                 </tr>
                                 </thead>
@@ -222,7 +222,7 @@
                                     <td>{{data.personalPhone || '---'}}</td>
                                     <td>{{data.personalEmail || '---'}}</td>
                                     <td>{{data.orgList[0].name || '---'}}</td>
-                                    <td>{{data.roleList[0].name || '---'}}</td>
+                                    <!-- <td>{{data.roleList[0].name || '---'}}</td> -->
                                     <td><button class="btn btn-danger btn-xs h30" title="删除" ng-click="deleteUserProject(data)"><i class="iconfont icon-del f14"></i></button></td>
                                 </tr>
                                 <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->

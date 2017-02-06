@@ -1,0 +1,49 @@
+<div id="page-wrapper" ng-controller="permissionsviewCtrl">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
+        <ul>
+            <li class="active">新增角色</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li>角色权限</li>
+        <li class="active">查看角色</li>
+    </ol>
+    <form name="form" novalidate="novalidate">
+    <div class="p20 f12">
+        <table cellspacing="0" cellpadding="0" width="100%" class="line30td">
+            <tr>
+                <td width="70"><span class="g9">角色名称</span></td>
+                <td>
+                    <div class="nose-group wd400">
+                        <input readonly type="text" class="form-control wd400" name="roleName"  placeholder="输入角色名称" ng-model="thisform.roleName" ng-maxlength="20" required>
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
+                <td valign="top"><span class="g9">角色描述</span></td>
+                <td>
+                    <div class="nose-group wd400">
+                        <textarea readonly name="roleDesc" type="text" class="form-control" rows="4" placeholder="输入角色描述信息" ng-model="thisform.roleDesc" ng-maxlength="200"></textarea>
+                    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <div id="functionGrid" nosetree-grid options="treegirdoptions" thistree="treegird"></div>
+        </div>
+        <div class="nose-panel-footer cf bte">
+            <button class="btn btn-default wd80" ui-sref="permissions.list">取消</button>
+        </div>
+    </div>
+	</form>
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>

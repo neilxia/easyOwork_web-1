@@ -94,7 +94,7 @@
                             <div tab-heading>我提交的审批({{inquiryProcessesData.length}})</div>
                             <div class="ind-medo_com" slim-scroll box-height="320">
                                 <table  width="98%" cellpadding="0" cellspacing="0">
-                                    <tr class="poi" ng-repeat="data in inquiryProcessesData" ng-click="chakanpcsFun(data)">
+                                    <tr class="poi" ng-repeat="data in inquiryProcessesData | orderBy:['-createDate']" ng-click="chakanpcsFun(data)">
                                         <td width="70">
                                             <div class="imgheader head-sm">
                                                 <span class="bdrs50"><img ng-src="{{userinfoall.photoUrl || './images/headportrait02.jpg'}}" alt=""></span>
@@ -116,7 +116,7 @@
                             <div tab-heading>提交给我的审批({{inquiryHandData.length}})</div>
                             <div class="ind-medo_com" slim-scroll box-height="320">
                                 <table  width="98%" cellpadding="0" cellspacing="0">
-                                    <tr class="poi" ng-repeat="data in inquiryHandData" ng-click="chakanauditFun(data)">
+                                    <tr class="poi" ng-repeat="data in inquiryHandData | orderBy:['statusDesc']" ng-click="chakanauditFun(data)">
                                         <td width="70">
                                             <div class="imgheader head-sm">
                                                 <span class="bdrs50"><img ng-src="{{userinfoall.photoUrl || './images/headportrait02.jpg'}}" alt=""></span>

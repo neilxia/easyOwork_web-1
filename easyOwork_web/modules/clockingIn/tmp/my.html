@@ -1,19 +1,24 @@
-<div id="page-wrapper" ng-controller="clockingInviewCtrl" ng-init="init()">
+<div id="page-wrapper" ng-controller="clockingInlistCtrl" ng-init="myinit()">
     <!--主要内容-->
     <div class="payetilebox">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="init()" title="刷新"></a></div>
         <ul>
-            <li class="active">{{yearMonth.attendanceYear}}年{{yearMonth.attendanceMonth}}月出勤记录</li>
+            <li class="active">我的考勤</li>
         </ul>
     </div>
     <ol class="breadbox">
         <li>工作面板</li>
-        <li>考勤管理</li>
-        <li>考勤统计</li>
-        <li class="active">个人出勤记录</li>
+        <li class="active">我的考勤</li>
     </ol>
     <div class="btnbox">
-        <button class="btn btn-default btn-sm" ui-sref="clockingIn.list">返回</button>
+        <!--<div class="line28 f_l">搜索“ <span class="red ng-binding">1</span> ”，共搜索到<span class="red ng-binding">1</span>条记录</div>-->
+        <form class="f_r form-inline">
+            <span class="form-group-sm search-group">
+                <input type="datetime" class="form-control" placeholder="工资年月" date-time id="attendanceDate" ng-model="form.attendanceDate" min-view="month" format="yyyy-MM" auto-close="true">
+                <span class="abs_r" style="right:40px"><i class="iconfont icon-rili"></i></span>
+                <i class="iconfont icon-sousuo ml10 poi" ng-click="changeYearMonth()"></i>
+            </span>
+        </form>
     </div>
     <div class="nose-panel">
         <div class="nose-panel-body">
@@ -21,37 +26,36 @@
                 <thead>
                 <tr>
                     <th><span class="pl15">姓名</span></th>
-                    <th width="100">年-月-日</th>
-                    <th width="100">星期</th>
-                    <th width="100">签到时间</th>
-                    <th width="100">签退时间</th>
-                    <th width="100">状态</th>
-                    <!--<th width="100">早退</th>-->
+                    <th width="100">员工编号</th>
+                    <th width="120">部门</th>
+                    <th width="100">年-月</th>
+                    <th width="80">应出勤</th>
+                    <th width="80">出勤正常</th>
+                    <th width="80">未出勤</th>
+                    <th width="80">未签退</th>
+                    <th width="80">迟到</th>
+                    <th width="80">早退</th>
+                    <th width="60">操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="data in attendanceslist">
+<!--| filter:form.searchValue | filter:{dataType:selectedReportType} |-->
+                <tr ng-repeat="data in attendanceslist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
                     <td><span class="pl15">{{data.userDTO.name}}</span></td>
-                    <td>{{data.attendanceYear}}-{{data.attendanceMonth}}-{{data.attendanceDay}}</td>
-                    <td>
-                    <span ng-if="data.weekDay==0">星期天</span>
-                    <span ng-if="data.weekDay==1">星期六</span>
-                    <span ng-if="data.weekDay>1">星期{{data.weekDay}}</span>
-                    </td>
-                    <td ng-if="data.inHour==0 && data.inMinute==0">无</td>
-                    <td ng-if="data.inHour!=0 || data.inMinute!=0">{{data.inHour}}:{{data.inMinute}}</td>
-                    <td ng-if="data.outHour==0 && data.outMinute==0">无</td>
-                    <td ng-if="data.outHour!=0 || data.outMinute!=0">{{data.outHour}}:{{data.outMinute}}</td>
-                    <td><span>{{data.result}}</span></td>
-                    <!--<td><span class="red">00:07</span></td>-->
+                    <td>{{data.userDTO.id}}</td>
+                    <td>{{data.userDTO.orgList[0].name}}</td>
+                    <td>{{data.attendanceYear}}-{{data.attendanceMonth}}</td>
+                    <td>{{data.totalCount}}</td>
+                    <td>{{data.normalCount}}</td>
+                    <td>{{data.notInCount}}</td>
+                    <td>{{data.notOutCount}}</td>
+                    <td>{{data.lateInCount}}</td>
+                    <td>{{data.earlyOutCount}}</td>
+                    <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="clockingIn.myview({row:data})"><i class="iconfont icon-chakan f14"></i></button></td>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <!--<div class="nose-panel-footer cf bte">
-            <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
-            <div class="g9">共 {{thispages.total || '0'}} 条数据</div>
-        </div>-->
     </div>
 
 
@@ -60,13 +64,14 @@
 </div>
 
 <!--工资单明细-->
+<!--
 <script type="text/ng-template" id="s_issueDetail.html">
     <div class="whitemodal">
         <div class="modal-header">
             <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
             <div class="f16">{{thisname}}部门</div>
         </div>
-        <!--{{baseForm.$valid}}-->
+        &lt;!&ndash;{{baseForm.$valid}}&ndash;&gt;
         <form role="baseForm" name="baseForm"  ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
             <div class="modal-body bte">
                 <div>
@@ -89,7 +94,7 @@
                             <td width="60" class="g9">&nbsp;</td>
                         </tr>
                     </table>
-                    <div class="salary_line01"><span>收入明细页</span></div>
+                    <div class="salary_line01"><span>收入明显页</span></div>
                     <table cellpadding="0" cellspacing="0" width="80%" class="line40td">
                         <tr>
                             <td  width="100" class="f16 pr10 t_r">5000,00</td>
@@ -104,7 +109,7 @@
                             <td width="60" class="g9">&nbsp;</td>
                         </tr>
                     </table>
-                    <div class="salary_line01"><span>收入明细页</span></div>
+                    <div class="salary_line01"><span>扣除明显页</span></div>
                     <table cellpadding="0" cellspacing="0" width="80%" class="line40td">
                         <tr>
                             <td width="100" class="f16 pr10 t_r">600,00</td>
@@ -141,7 +146,7 @@
                             <td width="60" class="g9">&nbsp;</td>
                         </tr>
                     </table>
-                    <div class="salary_line01"><span>收入明细页</span></div>
+                    <div class="salary_line01"><span>收入明显页</span></div>
                     <table cellpadding="0" cellspacing="0" width="80%" class="line40td">
                         <tr>
                             <td  width="100" class="f16 pr10 t_r">5000,00</td>
@@ -156,7 +161,7 @@
                             <td width="60" class="g9">&nbsp;</td>
                         </tr>
                     </table>
-                    <div class="salary_line01"><span>收入明细页</span></div>
+                    <div class="salary_line01"><span>扣除明显页</span></div>
                     <table cellpadding="0" cellspacing="0" width="80%" class="line40td">
                         <tr>
                             <td width="100" class="f16 pr10 t_r">600,00</td>
@@ -175,8 +180,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">修改</button>
+                <button type="submit" class="btn btn-primary wd80">定薪</button>
             </div>
         </form>
     </div>
-</script>
+</script>-->

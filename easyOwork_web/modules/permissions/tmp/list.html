@@ -25,7 +25,7 @@
             <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
                 <thead>
                 <tr>
-                    <th width="50" class="t_r"><input icheck type="checkbox" ng-model="form.selectedRoles"></th>
+                    <th width="20" class="t_r"><!-- <input icheck type="checkbox" ng-model="form.selectedRoles"> --></th>
                     <th width="80" >角色名称</th>
                     <th>权限</th>
                     <th width="150">创建时间</th>
@@ -34,12 +34,14 @@
                 </thead>
                 <tbody>
                 <tr  ng-repeat="role in roles|filter:{roleName:form.searchRoleName}">
-                    <td class="t_r"><input icheck name="selectedFunction" type="checkbox" value="{{role.roleName}}" ng-model="checkedRow"></td>
+                    <td class="t_r"><!-- <input icheck name="selectedFunction" type="checkbox" value="{{role.roleName}}" ng-model="checkedRow"> --></td>
                     <td>{{role.roleName}}</td>
                     <td>{{role.functionSummary|cut:true:40:' ...'}}</td>
                     <td>{{role.creationDate}}</td>
-                    <td><button class="btn btn-default btn-xs h30 ml5" title="编辑" ng-click="changeRole(role.roleName)"><i class="iconfont icon-bianji f14"></i></button>
-                    <button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(role.roleName)"><i class="iconfont icon-del f14"></i></button></td>
+                    <td>
+                    <button ng-show="role.roleName!='平台管理员'" class="btn btn-default btn-xs h30 ml5" title="编辑" ng-click="changeRole(role.roleName)"><i class="iconfont icon-bianji f14"></i></button>
+                    <button ng-show="role.roleName=='平台管理员'" class="btn btn-default btn-xs h30 ml5" title="查看" ng-click="viewRole(role.roleName)"><i class="iconfont icon-chakan f14"></i></button>
+                    <button ng-show="role.roleName!='平台管理员'" class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(role.roleName)"><i class="iconfont icon-del f14"></i></button></td>
                 </tr>
                 </tbody>
             </table>
@@ -97,7 +99,7 @@
                                     <td class="pl5"><input type="text" class="form-control" placeholder="输入员工编号"></td>
                                 </tr>
                                 <tr>
-                                    <td class="g9">所属岗位</td>
+                                    <td class="g9">所属部门</td>
                                     <td class="pl5">
                                         <div class="form-inline">
                                         <select class="form-control wd195" name="" id="">

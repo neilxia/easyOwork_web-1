@@ -5,6 +5,7 @@ var app = angular.module('qiyi.permissions',[]);
 //app.controller('myCtrl',myCtrl());
 app.controller('permissionsCtrl',permissionsCtrl());
 app.controller('permissionsaddCtrl',permissionsaddCtrl());
+app.controller('permissionsviewCtrl',permissionsviewCtrl());
 app.filter('cut', function () {
 	  return function (value, wordwise, max, tail) {
 		    if (!value) return '';
