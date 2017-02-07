@@ -2,7 +2,7 @@
 	<div style="height: 90px; width: 100%; background-color: #1a263b">
 
 	</div>
-	<div class="clearfix" style="margin:40px">
+	<div class="content-section clearfix" style="margin-left:40px;margin-right:40px">
 			<h2>隐私声明</h2>
 				<p >用户名和密码</p>
 				<p>如果您打算使用青辉阳企业工作平台，您需要选择一个用户名和密码。您只能通过您的密码来使用您的账号。如果您泄漏了密码，您可能丢失了您的企业信息，并且有可能导致对您不利的司法行为。 </p>
@@ -38,3 +38,11 @@
 				<p>我公司网站上的链接服务可以直接进入其它站点，这些链接的站点不受我公司的控制，我公司对任何与本站链接网站的内容不负责任。 </p>
 
 	</div>
+<script type="text/javascript">
+	var headerHeight = $('#header').height();
+	var footerHeight = $('#footer').height()+46;
+	var contentHeight = $('.content-section').height();
+	var windowHeight = $(window).height();
+	if((headerHeight+contentHeight+footerHeight)<windowHeight)
+	$('.content-section').height(windowHeight-headerHeight-footerHeight);
+</script>

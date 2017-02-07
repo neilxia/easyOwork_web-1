@@ -2,7 +2,7 @@
 	<div style="height: 90px; width: 100%; background-color: #1a263b">
 
 	</div>
-	<div class="pay-section clearfix" style="text-align:center;height:400px">
+	<div class="content-section clearfix" style="text-align:center;height:400px">
 		
 		<div class="col-xs-12">
 			<form class="form-horizontal" role="form">
@@ -21,3 +21,11 @@
 			</form>
 		</div>
 	</div>
+<script type="text/javascript">
+	var headerHeight = $('#header').height();
+	var footerHeight = $('#footer').height()+46;
+	var contentHeight = $('.content-section').height();
+	var windowHeight = $(window).height();
+	if((headerHeight+contentHeight+footerHeight)<windowHeight)
+	$('.content-section').height(windowHeight-headerHeight-footerHeight);
+</script>

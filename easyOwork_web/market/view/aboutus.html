@@ -2,7 +2,7 @@
 	<div style="height: 90px; width: 100%; background-color: #1a263b">
 
 	</div>
-	<div class="clearfix" style="margin:40px">
+	<div class="content-section clearfix" style="margin-left:40px;margin-right:40px">
 			<h2 style="text-align:center">公司简介</h2>
 				<p>成都青辉阳科技有限公司(简称: 青辉阳)成立于2016年, 是中国领先的企业级信息服务企业. 青辉阳深耕企业级信息服务领域, 公司推出的企业全角色工作平台帮助企业节约IT成本, 提高工作效率
 				,在使用过程中平台提供大量数据支持, 让决策者随时查看公司运营成本等重要数据, 以做出正确的决策. </p>
@@ -15,3 +15,12 @@
 				<p>- 定制化:　可以为客户提供服务器专项，指定服务器，功能定制服务.</p>
 				<p>青辉阳，追求卓越, 在企业级信息服务领域不断前行.</p>
 	</div>
+	
+	<script type="text/javascript">
+	var headerHeight = $('#header').height();
+	var footerHeight = $('#footer').height()+46;
+	var contentHeight = $('.content-section').height();
+	var windowHeight = $(window).height();
+	if((headerHeight+contentHeight+footerHeight)<windowHeight)
+	$('.content-section').height(windowHeight-headerHeight-footerHeight);
+</script>
