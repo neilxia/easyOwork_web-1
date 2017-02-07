@@ -93,16 +93,7 @@
                                             <label> <input icheck type="radio" name="sex" ng-model="user.sex" value="女"> 女</label>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td class="g9">出生日期</td>
-                                        <td class="pl5">
-                                            <div class="qiyi-group nose-group line20td">
-                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.birthDate.$dirty && baseForm.birthDate.$invalid" popover="请输入正确出生日期" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                                <input type="datetime" name="birthDate" class="form-control" date-time ng-model="user.birthDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true">
-                                                <span class="abs_r" style="top: 4px;"><i class="iconfont icon-rili"></i></span>
-                                            </div>
-                                        </td>
-                                    </tr>
+
                                     <tr>
                                         <td class="g9">电子邮箱</td>
                                         <td class="pl5">
@@ -112,10 +103,6 @@
                                                 <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.personalEmail.$dirty && baseForm.personalEmail.$invalid" popover="正确的邮箱地址" popover-placement="bottom" popover-trigger="mouseenter"></i>
                                                 <input type="text"  name="personalEmail" ng-model="user.personalEmail"  multiple-email class="form-control" placeholder="重要, 用于员工登录和接收密码; 邮箱和电话选一必填">
                                             </div>
-
-
-
-
                                         </td>
                                     </tr>
                                     <tr>
@@ -128,41 +115,56 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="g9">员工编号</td>
-                                        <td class="pl5">
-                                            <div class="nose-group"  ng-class="{'has-error':baseForm.id.$dirty && baseForm.id.$invalid}">
-                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.id.$dirty && baseForm.id.$invalid" popover="请输入最大6位数字的编号" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                                <input type="text" class="form-control" name="id" ng-model="user.id" isnumber  ng-maxlength="6" />
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
                                         <td class="g9">所属部门</td>
                                         <td class="pl5">
                                             <span selectdep options="'bm'" myselected="user.orgList" class="wd190 f_l" title="选择部门"></span>
                                             <span selectdep options="'gw'" myselected="user.roleList" class="wd190 f_r" title="选择角色"></span>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td class="g9">入职日期</td>
-                                        <td class="pl5">
-                                            <div class="qiyi-group nose-group line20td" ng-class="{'has-error':baseForm.joiningDate.$dirty && baseForm.joiningDate.$invalid}">
-                                                <i class="iconfont icon-tishi f20 abs_r" style="right: -25px;" ng-show="baseForm.joiningDate.$dirty && baseForm.joiningDate.$invalid" popover="请选择入职日期" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                                <input type="datetime" name="joiningDate" class="form-control" date-time ng-model="user.joiningDate" view="date" min-view="date" format="yyyy-MM-dd" auto-close="true">
-                                                <span class="abs_r" style="top: 4px;"><i class="iconfont icon-rili"></i></span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="g9">毕业院校</td>
-                                        <td class="pl5">
-                                            <div class="nose-group"  ng-class="{'has-error':baseForm.university.$dirty && baseForm.university.$invalid}">
-                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.university.$dirty && baseForm.university.$error.maxlength" popover="请输入毕业院校全称不能超过40字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                                <input type="text" class="form-control" name="university" ng-model="user.university" ng-maxlength="40" placeholder="请输入毕业院校全称" />
-                                            </div>
-                                        </td>
-                                    </tr>
                                 </table>
+                                <div showhid>
+                                    <div class="t_c pt10"><span class="g9 f12">下面是非必填隐藏字段</span><span class="ml5"><button class="btn btn-xs btn-default" type="button">显示</button></span></div>
+                                    <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5 dropdown" style="display: none;">
+                                        <tr>
+                                            <td width="60" class="g9">员工编号</td>
+                                            <td class="pl5">
+                                                <div class="nose-group"  ng-class="{'has-error':baseForm.id.$dirty && baseForm.id.$invalid}">
+                                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.id.$dirty && baseForm.id.$invalid" popover="请输入最大6位数字的编号" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                    <input type="text" class="form-control" name="id" ng-model="user.id" isnumber  ng-maxlength="6" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="g9">出生日期</td>
+                                            <td class="pl5">
+                                                <div class="qiyi-group nose-group line20td">
+                                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.birthDate.$dirty && baseForm.birthDate.$invalid" popover="请输入正确出生日期" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                    <input type="datetime" name="birthDate" class="form-control" date-time ng-model="user.birthDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true">
+                                                    <span class="abs_r" style="top: 4px;"><i class="iconfont icon-rili"></i></span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="g9">入职日期</td>
+                                            <td class="pl5">
+                                                <div class="qiyi-group nose-group line20td" ng-class="{'has-error':baseForm.joiningDate.$dirty && baseForm.joiningDate.$invalid}">
+                                                    <i class="iconfont icon-tishi f20 abs_r" style="right: -25px;" ng-show="baseForm.joiningDate.$dirty && baseForm.joiningDate.$invalid" popover="请选择入职日期" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                    <input type="datetime" name="joiningDate" class="form-control" date-time ng-model="user.joiningDate" view="date" min-view="date" format="yyyy-MM-dd" auto-close="true">
+                                                    <span class="abs_r" style="top: 4px;"><i class="iconfont icon-rili"></i></span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="g9">毕业院校</td>
+                                            <td class="pl5">
+                                                <div class="nose-group"  ng-class="{'has-error':baseForm.university.$dirty && baseForm.university.$invalid}">
+                                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.university.$dirty && baseForm.university.$error.maxlength" popover="请输入毕业院校全称不能超过40字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                    <input type="text" class="form-control" name="university" ng-model="user.university" ng-maxlength="40" placeholder="请输入毕业院校全称" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                             <div class="col-xs-3 pl20 pt5 t_c">
                                 <div class="headportbox bdrs4 mauto">

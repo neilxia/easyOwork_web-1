@@ -90,48 +90,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td width="60">联系电话</td>
-                        <td class="pl10">
-                            <div class="nose-group" ng-class="{'has-error':baseForm.personalPhone.$dirty && baseForm.personalPhone.$invalid}">
-                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.personalPhone.$dirty && baseForm.personalPhone.$invalid" popover="请输入联系电话" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                <input type="text"  name="personalPhone" ng-model="modalform.customerPhone"  multiple-tell class="form-control" placeholder="请输入联系电话">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="60">客户级别</td>
-                        <td class="pl10">
-                            <select class="form-control" ng-model="modalform.customerLevel">
-                                <option value="NORMAL">一般</option>
-                                <option value="IMPORTANT">重要</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="60">客户地址</td>
-                        <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.customerAddress" placeholder="输入客户地址">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="60">邮编号码</td>
-                        <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.customerPostCode" placeholder="输入邮政编码">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="60">公司网址</td>
-                        <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.customerWebsite" placeholder="输入公司网址">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="60">客户来源</td>
-                        <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.customerSource" placeholder="输入客户来源">
-                        </td>
-                    </tr>
+
                     <tr>
                         <td width="60">负责人员</td>
                         <td class="pl10">
@@ -139,6 +98,53 @@
                         </td>
                     </tr>
                 </table>
+                <div showhid>
+                    <div class="t_c pt10"><span class="g9 f12">下面是非必填隐藏字段</span><span class="ml5"><button class="btn btn-xs btn-default" type="button">显示</button></span></div>
+                    <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5 dropdown" style="display: none;">
+                        <tr>
+                            <td width="60">联系电话</td>
+                            <td class="pl10">
+                                <div class="nose-group" ng-class="{'has-error':baseForm.personalPhone.$dirty && baseForm.personalPhone.$invalid}">
+                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.personalPhone.$dirty && baseForm.personalPhone.$invalid" popover="请输入联系电话" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                    <input type="text"  name="personalPhone" ng-model="modalform.customerPhone"  multiple-tell class="form-control" placeholder="请输入联系电话">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="60">客户级别</td>
+                            <td class="pl10">
+                                <select class="form-control" ng-model="modalform.customerLevel">
+                                    <option value="NORMAL">一般</option>
+                                    <option value="IMPORTANT">重要</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="60">客户地址</td>
+                            <td class="pl10">
+                                <input type="text" class="form-control" ng-model="modalform.customerAddress" placeholder="输入客户地址">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="60">邮编号码</td>
+                            <td class="pl10">
+                                <input type="text" class="form-control" ng-model="modalform.customerPostCode" placeholder="输入邮政编码">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="60">公司网址</td>
+                            <td class="pl10">
+                                <input type="text" class="form-control" ng-model="modalform.customerWebsite" placeholder="输入公司网址">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="60">客户来源</td>
+                            <td class="pl10">
+                                <input type="text" class="form-control" ng-model="modalform.customerSource" placeholder="输入客户来源">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>

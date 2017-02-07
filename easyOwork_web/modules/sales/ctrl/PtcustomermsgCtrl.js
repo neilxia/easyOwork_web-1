@@ -111,6 +111,8 @@ function PtcustomermsgCtrl(){
                 $scope.projectDefNames=projectDefs;
                 $scope.modalform={};
                 $scope.modalform.customerLevel="NORMAL";
+                $scope.modalform.myselected=[userinfo];
+                $scope.modalform.selectedallarr=[[],[userinfo]];
                 $scope.RndNum=function(){
                     $scope.modalform.projectId=noseService.RndNum(8);
                 }
@@ -407,6 +409,8 @@ function PtcustomerdtmainmsgCtrl(){
                 $scope.thename='新增';
                 $scope.gcStatusArr=gcStatusArr;
                 $scope.modalform={};
+                $scope.modalform.myActivity=[userinfo];
+                $scope.modalform.myActivityall=[[],[userinfo]];
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
@@ -429,7 +433,6 @@ function PtcustomerdtmainmsgCtrl(){
                 $scope.thename='编辑';
                 $scope.modalform=row;
                 $scope.modalform.myActivity=[row.userDTO];
-                debugger;
                 $scope.modalform.myActivityall=[[],[row.userDTO]];
                 //[[],[row.userDTO]]
                 //提交增加

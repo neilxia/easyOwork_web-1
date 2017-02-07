@@ -135,6 +135,7 @@ function projectmsglistCtrl(){
                 $scope.thename='新增';
                 $scope.projectDefNames=projectDefs;
                 $scope.modalform={};
+                $scope.modalform.startDate=noseService.getNowDate();
                 $scope.RndNum=function(){
                     $scope.modalform.projectId=noseService.RndNum(8);
                 }
@@ -430,6 +431,7 @@ function projectmsgdtmainlistCtrl(){
                 $scope.thisStage=Stage;
                 $scope.modalform={};
                 $scope.modalform.projectStageName=Stage[0].projectStageName;
+                $scope.modalform.startDate=noseService.getNowDate();
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断

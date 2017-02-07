@@ -59,6 +59,7 @@ function loginCtrl(){
         function loginbox() {
             var modalInstance = $modal.open({
                 templateUrl: 'modules/login/tmp/login_modal.html',
+                backdrop: true,
                 controller: loginModalCtrl
             });
             function loginModalCtrl ($scope, $modalInstance) {
@@ -117,6 +118,7 @@ function loginCtrl(){
             var modalInstance = $modal.open({
                 templateUrl: 'modules/login/tmp/register_modal.html',
                 controller: registerModalCtrl,
+                backdrop: true,
                 resolve:{
                     items: function () {
                         return $scope.cpname;
@@ -223,6 +225,7 @@ function loginCtrl(){
             var modalInstance = $modal.open({
                 templateUrl: 'modules/login/tmp/findpwd_modal.html',
                 controller: findpwdModalCtrl,
+                backdrop: true,
                 windowClass: "animated fadeIn"
             });
 

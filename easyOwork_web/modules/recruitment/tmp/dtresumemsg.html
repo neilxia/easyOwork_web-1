@@ -79,24 +79,6 @@
                             <input type="text" class="form-control" ng-model="modalform.resumeName" placeholder="输入简历名称">
                         </td>
                     </tr>
-                    <tr>
-                        <td width="60">联系电话</td>
-                        <td class="pl10">
-                            <div class="nose-group" ng-class="{'has-error':baseForm.contactMobileNo.$dirty && baseForm.contactMobileNo.$invalid}">
-                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.contactMobileNo.$dirty && baseForm.contactMobileNo.$invalid" popover="请输入11位手机号" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                <input type="text"  name="contactMobileNo" ng-model="modalform.resumeMobileNo"  multiple-email class="form-control" placeholder="输入联系人手机号码">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="60">E-mail</td>
-                        <td class="pl10">
-                            <div class="nose-group" ng-class="{'has-error':baseForm.personalEmail.$dirty && baseForm.personalEmail.$invalid}">
-                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.personalEmail.$dirty && baseForm.personalEmail.$invalid" popover="正确的邮箱地址" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                <input type="text"  name="personalEmail" ng-model="modalform.resumeEmail"  multiple-email class="form-control" placeholder="输入电子邮箱">
-                            </div>
-                        </td>
-                    </tr>
 					<tr ng-show="modalform.resumeUrl">
                         <td width="60">简历</td>
                         <td class="pl10">
@@ -104,16 +86,37 @@
                         </td>
                     </tr>
                     <tr>
-                        <td width="60">
-							 <div class="btn btn-default upheadbtn">
-                                <input type="file" id="resumeFile"  ng-model="modalform.resumeUrl" nv-file-select uploader="resumeUploader"/>简历上传
-                            </div>
-						</td>
+                        <td width="60">&nbsp;</td>
                         <td class="pl10">
-                           
+                            <div class="btn btn-default btn-sm upheadbtn">
+                                <input type="file" id="resumeFile" ng-model="modalform.resumeUrl" nv-file-select uploader="resumeUploader"/>简历上传
+                            </div>
                         </td>
                     </tr>
                 </table>
+                <div showhid>
+                    <div class="t_c pt10"><span class="g9 f12">下面是非必填隐藏字段</span><span class="ml5"><button class="btn btn-xs btn-default" type="button">显示</button></span></div>
+                    <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5 dropdown" style="display: none;">
+                        <tr>
+                            <td width="60">联系电话</td>
+                            <td class="pl10">
+                                <div class="nose-group" ng-class="{'has-error':baseForm.contactMobileNo.$dirty && baseForm.contactMobileNo.$invalid}">
+                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.contactMobileNo.$dirty && baseForm.contactMobileNo.$invalid" popover="请输入11位手机号" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                    <input type="text"  name="contactMobileNo" ng-model="modalform.resumeMobileNo"  multiple-email class="form-control" placeholder="输入联系人手机号码">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="60">E-mail</td>
+                            <td class="pl10">
+                                <div class="nose-group" ng-class="{'has-error':baseForm.personalEmail.$dirty && baseForm.personalEmail.$invalid}">
+                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.personalEmail.$dirty && baseForm.personalEmail.$invalid" popover="正确的邮箱地址" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                    <input type="text"  name="personalEmail" ng-model="modalform.resumeEmail"  multiple-email class="form-control" placeholder="输入电子邮箱">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>

@@ -1,203 +1,211 @@
 <!--banner-->
 <!--主要内容-->
-<div class="container pt20" ng-init="initFun()">
-    <div class="row">
-        <div class="col-nose-3">
-            <!--个人资料-->
-            <div class="panel">
-                <div class="panel-body personal t_c">
-                    <div class="imgheader"><span class="bdrs50"><img ng-src="{{userinfoall.photoUrl||'./images/headportrait02.jpg'}}" width="100%" alt=""></span></div>
-                    <div class="f20 mt5">{{userinfoall.name}}</div>
-                    <ul class="introbox g9 mt5">
-                        <li>{{userinfoall.orgList[0].name}}</li>
-                        <li>{{userinfoall.personalPhone}}</li>
-                        <li>{{userinfoall.personalEmail}}</li>
-                    </ul>
-                    <div class="mt15"><button class="btn btn-default btn-block" ui-sref="my.set">完善资料</button></div>
-                </div>
-            </div>
-            <!--备忘录-->
-            <div class="panel mt15">
-                <div class="panel-heading"><!--<span class="f_r"><i class="iconfont icon-right f14"></i></span>--><span class="f16">备忘录</span><span class="f16 f_r poi" ng-click="addmemosFun()"><i class="iconfont icon-add g9"></i></span></div>
-                <div class="pl15 pr5 pb10 pt10">
-                    <ul class="ind_memo_list f12" slim-scroll box-height="135">
-                        <li class="bdrs4" ng-repeat="data in memoslist">
-                            <a class="iconfont icon-close2 f14 g9 f_r" ng-click="deletememosFun(data)"></a>
-                            {{data.content}}
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-nose-6">
-        <!-- 
-            <div class="ind-flexslider mb15" id="ind_banner">
-                <ul class="slides">
-                    <li class="bdrs4"><img src="./images/ind-pic01.jpg" alt=""></li>
-                    <li class="bdrs4"><img src="./images/ind-pic01.jpg" alt=""></li>
-                </ul>
-            </div>
-         -->
-            <div class="panel">
-                <div class="panel-body">
-                    <ul class="ind-kanban t_c f12">
-                        <li>
-                            <div class="f30 ">
-                            <a ui-sref="salarymsg.list" class="bluelow" ng-if="statistics.lastSalaryMonth">{{statistics.lastSalaryMonth}}<font class="f20">月</font></a>
-                            <span class="bluelow" ng-if="!statistics.lastSalaryMonth">无</span>
-                            </div>
-                            <div>我的薪资</div>
-                            <div class="orange mt5"><button class="btn btn-default btn-xs" ui-sref="salarymsg.list" >查看</button></div>
-                        </li>
-                        <li>
-                            <div class="f30"><a ui-sref="task.receivelist" class="red">{{statistics.taskCount}}</a></div>
-                            <div>我的任务</div>
-                            <div class="mt5"><button class="btn btn-default btn-xs" ui-sref="task.addtask">创建</button></div>
-                        </li>
-                        <li>
-                            <div class="f30"><a ui-sref="project.mylist" class="orange">{{statistics.projectCount}}</a></div>
-                            <div>参与的项目</div>
-                            <div class="mt5"><button class="btn btn-default btn-xs" ui-sref="project.mylist">查看</button></div>
-                        </li>
-                        <li accessId="A007-001">
-                            <div class="f30"><a ui-sref="sales.customerlist" class="teal">{{statistics.customerCount}}</a></div>
-                            <div>我的客户</div>
-                            <div class="mt5"><button class="btn btn-default btn-xs" ui-sref="sales.customerlist">添加</button></div>
-                        </li>
-                        <li>
-                            <div class="f30 "><a ui-sref="report.sendlist" class="red">{{statistics.reportCount}}</a></div>
-                            <div>收到的报告</div>
-                            <div class="mt5"><button class="btn btn-default btn-xs" ui-sref="report.addreport">提交</button></div>
-                        </li>
-                        <li accessId="A004-001">
-                            <div class="f30 orange">{{statistics.recruitCount}}</div>
-                            <div>招聘计划</div>
-                            <div class="mt5"><button class="btn btn-default btn-xs">添加</button></div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="panel mt15">
-                <div class="panel-body">
-<!--                    <div class="dropdown pull-right f_r mt8 b mr5" dropdown="">
-                        <a dropdown-toggle="" aria-haspopup="true" aria-expanded="false"><i class="iconfont icon-more f20"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="">我的申请</a></li>
-                            <li><a href="">我的报销</a></li>
-                            <li><a href="">我参与的项目</a></li>
-                            <li><a href="">我的申请</a></li>
-                            <li><a href="">我的报销</a></li>
-                        </ul>
-                    </div>-->
-                    <div tabset class="towntabbox01 towntabbox02" >
-                        <div tab>
-                            <div tab-heading>我提交的审批({{inquiryProcessesData.length}})</div>
-                            <div class="ind-medo_com" slim-scroll box-height="320">
-                                <table  width="98%" cellpadding="0" cellspacing="0">
-                                    <tr class="poi" ng-repeat="data in inquiryProcessesData | orderBy:['-createDate']" ng-click="chakanpcsFun(data)">
-                                        <td width="70">
-                                            <div class="imgheader head-sm">
-                                                <span class="bdrs50"><img ng-src="{{userinfoall.photoUrl || './images/headportrait02.jpg'}}" alt=""></span>
-                                            </div>
-                                        </td>
-                                        <td class="pl15 pr15">
-                                            <div class="h40 ovh">
-                                                <a href="">{{data.title}}</a>
-                                                <span class="f_r g9 f12" ng-class="{'orange':data.statusDesc=='审批中','green':data.statusDesc=='已同意','red':data.statusDesc=='已拒绝','g9':data.statusDesc=='已撤回'}">{{data.statusDesc}}</span>
-                                            </div>
-                                            <div class="g9 f12 mt10"><span class="f_r">{{data.createDate}}</span>当前审批人: {{data.processStepDTOList[data.currentStepNo-1].userDTO.name}}</div>
-                                        </td>
-                                        <td width="12"><i class="iconfont icon-right f12"></i></td>
-                                    </tr>
-                                </table>
-                            </div>
+<div class="pt20 pl20 pr20" ng-init="initFun()">
+    <table width="100%" cellspacing="0" cellpadding="0">
+        <tr>
+            <td width="280" valign="top">
+                <div style="width: 260px;">
+                    <!--个人资料-->
+                    <div class="panel">
+                        <div class="panel-body personal t_c">
+                            <div class="imgheader"><span class="bdrs50"><img ng-src="{{userinfoall.photoUrl||'./images/headportrait02.jpg'}}" width="100%" alt=""></span></div>
+                            <div class="f20 mt5">{{userinfoall.name}}</div>
+                            <ul class="introbox g9 mt5">
+                                <li>{{userinfoall.orgList[0].name}}</li>
+                                <li>{{userinfoall.personalPhone}}</li>
+                                <li>{{userinfoall.personalEmail}}</li>
+                            </ul>
+                            <div class="mt15"><button class="btn btn-default btn-block" ui-sref="my.set">完善资料</button></div>
                         </div>
-                        <div tab>
-                            <div tab-heading>提交给我的审批({{inquiryHandData.length}})</div>
-                            <div class="ind-medo_com" slim-scroll box-height="320">
-                                <table  width="98%" cellpadding="0" cellspacing="0">
-                                    <tr class="poi" ng-repeat="data in inquiryHandData | orderBy:['statusDesc']" ng-click="chakanauditFun(data)">
-                                        <td width="70">
-                                            <div class="imgheader head-sm">
-                                                <span class="bdrs50"><img ng-src="{{userinfoall.photoUrl || './images/headportrait02.jpg'}}" alt=""></span>
-                                            </div>
-                                        </td>
-                                        <td class="pl15 pr15">
-                                            <div class="h40 ovh">
-                                                <a href="">{{data.title}}</a>
-                                                <span class="f_r g9 f12" ng-class="{'orange':data.statusDesc=='审批中','green':data.statusDesc=='已同意','red':data.statusDesc=='已拒绝','g9':data.statusDesc=='已撤回'}">{{data.statusDesc}}</span>
-                                            </div>
-                                            <div class="g9 f12 mt10"><span class="f_r">{{data.createDate}}</span>申请人: {{data.launchUserDTO.name}}</div>
-                                        </td>
-                                        <td width="12"><i class="iconfont icon-right f12"></i></td>
-                                    </tr>
-                                </table>
+                    </div>
+                    <!--备忘录-->
+                    <div class="panel mt15">
+                        <div class="panel-heading"><!--<span class="f_r"><i class="iconfont icon-right f14"></i></span>--><span class="f16">备忘录</span><span class="f16 f_r poi" ng-click="addmemosFun()"><i class="iconfont icon-add g9"></i></span></div>
+                        <div class="pl15 pr5 pb10 pt10">
+                            <ul class="ind_memo_list f12" slim-scroll box-height="135">
+                                <li class="bdrs4" ng-repeat="data in memoslist">
+                                    <a class="iconfont icon-close2 f14 g9 f_r" ng-click="deletememosFun(data)"></a>
+                                    {{data.content}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td valign="top">
+                <div>
+                    <!--
+                        <div class="ind-flexslider mb15" id="ind_banner">
+                            <ul class="slides">
+                                <li class="bdrs4"><img src="./images/ind-pic01.jpg" alt=""></li>
+                                <li class="bdrs4"><img src="./images/ind-pic01.jpg" alt=""></li>
+                            </ul>
+                        </div>
+                     -->
+                    <div class="panel">
+                        <div class="panel-body">
+                            <ul class="ind-kanban t_c f12">
+                                <li>
+                                    <div class="f30 ">
+                                        <a ui-sref="salarymsg.list" class="bluelow" ng-if="statistics.lastSalaryMonth">{{statistics.lastSalaryMonth}}<font class="f20">月</font></a>
+                                        <span class="bluelow" ng-if="!statistics.lastSalaryMonth">无</span>
+                                    </div>
+                                    <div>我的薪资</div>
+                                    <div class="orange mt5"><button class="btn btn-default btn-xs" ui-sref="salarymsg.list" >查看</button></div>
+                                </li>
+                                <li>
+                                    <div class="f30"><a ui-sref="task.receivelist" class="red">{{statistics.taskCount}}</a></div>
+                                    <div>我的任务</div>
+                                    <div class="mt5"><button class="btn btn-default btn-xs" ui-sref="task.addtask">创建</button></div>
+                                </li>
+                                <li>
+                                    <div class="f30"><a ui-sref="project.mylist" class="orange">{{statistics.projectCount}}</a></div>
+                                    <div>参与的项目</div>
+                                    <div class="mt5"><button class="btn btn-default btn-xs" ui-sref="project.mylist">查看</button></div>
+                                </li>
+                                <li accessId="A007-001">
+                                    <div class="f30"><a ui-sref="sales.customerlist" class="teal">{{statistics.customerCount}}</a></div>
+                                    <div>我的客户</div>
+                                    <div class="mt5"><button class="btn btn-default btn-xs" ui-sref="sales.customerlist">添加</button></div>
+                                </li>
+                                <li>
+                                    <div class="f30 "><a ui-sref="report.sendlist" class="red">{{statistics.reportCount}}</a></div>
+                                    <div>收到的报告</div>
+                                    <div class="mt5"><button class="btn btn-default btn-xs" ui-sref="report.addreport">提交</button></div>
+                                </li>
+                                <li accessId="A004-001">
+                                    <div class="f30 orange">{{statistics.recruitCount}}</div>
+                                    <div>招聘计划</div>
+                                    <div class="mt5"><button class="btn btn-default btn-xs">添加</button></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel mt15">
+                        <div class="panel-body">
+                            <!--                    <div class="dropdown pull-right f_r mt8 b mr5" dropdown="">
+                                                    <a dropdown-toggle="" aria-haspopup="true" aria-expanded="false"><i class="iconfont icon-more f20"></i></a>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a href="">我的申请</a></li>
+                                                        <li><a href="">我的报销</a></li>
+                                                        <li><a href="">我参与的项目</a></li>
+                                                        <li><a href="">我的申请</a></li>
+                                                        <li><a href="">我的报销</a></li>
+                                                    </ul>
+                                                </div>-->
+                            <div tabset class="towntabbox01 towntabbox02" >
+                                <div tab>
+                                    <div tab-heading>我提交的审批({{inquiryProcessesData.length}})</div>
+                                    <div class="ind-medo_com" slim-scroll box-height="320">
+                                        <table  width="98%" cellpadding="0" cellspacing="0">
+                                            <tr class="poi" ng-repeat="data in inquiryProcessesData | orderBy:['-createDate']" ng-click="chakanpcsFun(data)">
+                                                <td width="70">
+                                                    <div class="imgheader head-sm">
+                                                        <span class="bdrs50"><img ng-src="{{userinfoall.photoUrl || './images/headportrait02.jpg'}}" alt=""></span>
+                                                    </div>
+                                                </td>
+                                                <td class="pl15 pr15">
+                                                    <div class="h40 ovh">
+                                                        <a href="">{{data.title}}</a>
+                                                        <span class="f_r g9 f12" ng-class="{'orange':data.statusDesc=='审批中','green':data.statusDesc=='已同意','red':data.statusDesc=='已拒绝','g9':data.statusDesc=='已撤回'}">{{data.statusDesc}}</span>
+                                                    </div>
+                                                    <div class="g9 f12 mt10"><span class="f_r">{{data.createDate}}</span>当前审批人: {{data.processStepDTOList[data.currentStepNo-1].userDTO.name}}</div>
+                                                </td>
+                                                <td width="12"><i class="iconfont icon-right f12"></i></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div tab>
+                                    <div tab-heading>提交给我的审批({{inquiryHandData.length}})</div>
+                                    <div class="ind-medo_com" slim-scroll box-height="320">
+                                        <table  width="98%" cellpadding="0" cellspacing="0">
+                                            <tr class="poi" ng-repeat="data in inquiryHandData | orderBy:['statusDesc']" ng-click="chakanauditFun(data)">
+                                                <td width="70">
+                                                    <div class="imgheader head-sm">
+                                                        <span class="bdrs50"><img ng-src="{{userinfoall.photoUrl || './images/headportrait02.jpg'}}" alt=""></span>
+                                                    </div>
+                                                </td>
+                                                <td class="pl15 pr15">
+                                                    <div class="h40 ovh">
+                                                        <a href="">{{data.title}}</a>
+                                                        <span class="f_r g9 f12" ng-class="{'orange':data.statusDesc=='审批中','green':data.statusDesc=='已同意','red':data.statusDesc=='已拒绝','g9':data.statusDesc=='已撤回'}">{{data.statusDesc}}</span>
+                                                    </div>
+                                                    <div class="g9 f12 mt10"><span class="f_r">{{data.createDate}}</span>申请人: {{data.launchUserDTO.name}}</div>
+                                                </td>
+                                                <td width="12"><i class="iconfont icon-right f12"></i></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-nose-3">
-            <!--新手帮助-->
-            <div class="panel p5 t_c mb15"  accessId="A001-001">
-                <a ng-click="initCompanyHelp()"><i class="iconfont icon-ninwen f18 orange mr5 mt-2"></i>企业初始化帮助</a>
-            </div>
-            <!--考勤-->
-            <div class="panel mb15">
-                <div class="panel-heading poi" ui-sref="clockingIn.list"><a class="f_r"><i class="iconfont icon-right f14"></i></a><span class="f16">考勤</span></div>
-                <div class="panel-body">
-                    <table class="t_c" cellspacing="0" cellpadding="0" width="100%">
-                        <tr>
-                            <td width="70">
-                                <div>上班</div>
-                                <div class="g9">{{fromTime}}</div>
-                            </td>
-                            <td width="70">
-                                <div class="f20 orange" ng-show="attendance.inHour">{{attendance.inHour}}:{{attendance.inMinute}}</div>
-                            </td>
-                            <td rowspan='2'>
-                                <div class="g9">{{currentDate.cweek}}</div>
-                                <div class="f36"><span current-time="'HH:mm'"></span></div>
-                                <div class="g9">{{currentDate.cdate}}</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div>下班</div>
-                                <div class="g9">{{toTime}}</div>
-                            </td>
-                            <td width="70">
-                                <div class="f20 orange" ng-show="attendance.inHour&&attendance.outHour>0">{{attendance.outHour}}:{{attendance.outMinute}}</div>
-                            </td>
-                        </tr>
-                    </table>
-                    <div class="mt15">
-                    <button class="btn btn-primary btn-block" ng-if="!attendance.inHour"ng-click="signInOutFun('IN')">签到</button>
-                    <button class="btn btn-primary btn-block" ng-if="attendance.inHour&&!attendance.outHour"ng-click="signInOutFun('OUT')">签退</button>
+            </td>
+            <td width="280" valign="top">
+                <div class="f_r" style="width: 260px;">
+                    <!--新手帮助-->
+                    <div class="panel p5 t_c mb15"  accessId="A001-001">
+                        <a ng-click="initCompanyHelp()"><i class="iconfont icon-ninwen f18 orange mr5 mt-2"></i>企业初始化帮助</a>
                     </div>
-                </div>
-            </div>
-            <!--公告-->
-            <div class="panel mb15">
-                <div class="panel-heading poi" ui-sref="notice.view"><a class="f_r"><i class="iconfont icon-right f14"></i></a><span class="f16">公告</span></div>
-                <div class="pl15 pr5">
-                    <ul class="ind-notice_com pr10" slim-scroll box-height="203" >
-                        <li ng-repeat="data in inquiryAnnouncementsData" ui-sref="notice.view({data:data})">
-                        <a>
-                            <div class="h20 ovh">{{data.name}}</div>
-                            <div class="g9 mt3 f12"><span class="f_r">{{data.announcementDate}}</span>{{data.createBy}}</div>
-                        </a>
-                        </li>
-                        <!--<li>
-                            <a class="add-box">查看全部</a>
-                        </li>-->
-                    </ul>
-                </div>
-            </div>
+                    <!--考勤-->
+                    <div class="panel mb15">
+                        <div class="panel-heading poi" ui-sref="clockingIn.list"><a class="f_r"><i class="iconfont icon-right f14"></i></a><span class="f16">考勤</span></div>
+                        <div class="panel-body">
+                            <table class="t_c" cellspacing="0" cellpadding="0" width="100%">
+                                <tr>
+                                    <td width="70">
+                                        <div>上班</div>
+                                        <div class="g9">{{fromTime}}</div>
+                                    </td>
+                                    <td width="70">
+                                        <div class="f20 orange" ng-show="attendance.inHour">{{attendance.inHour}}:{{attendance.inMinute}}</div>
+                                    </td>
+                                    <td rowspan='2'>
+                                        <div class="g9">{{currentDate.cweek}}</div>
+                                        <div class="f36"><span current-time="'HH:mm'"></span></div>
+                                        <div class="g9">{{currentDate.cdate}}</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div>下班</div>
+                                        <div class="g9">{{toTime}}</div>
+                                    </td>
+                                    <td width="70">
+                                        <div class="f20 orange" ng-show="attendance.inHour&&attendance.outHour>0">{{attendance.outHour}}:{{attendance.outMinute}}</div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="mt15">
+                                <button class="btn btn-primary btn-block" ng-if="!attendance.inHour"ng-click="signInOutFun('IN')">签到</button>
+                                <button class="btn btn-primary btn-block" ng-if="attendance.inHour&&!attendance.outHour"ng-click="signInOutFun('OUT')">签退</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--公告-->
+                    <div class="panel mb15">
+                        <div class="panel-heading poi" ui-sref="notice.view"><a class="f_r"><i class="iconfont icon-right f14"></i></a><span class="f16">公告</span></div>
+                        <div class="pl15 pr5">
+                            <ul class="ind-notice_com pr10" slim-scroll box-height="203" >
+                                <li ng-repeat="data in inquiryAnnouncementsData" ui-sref="notice.view({data:data})">
+                                    <a>
+                                        <div class="h20 ovh">{{data.name}}</div>
+                                        <div class="g9 mt3 f12"><span class="f_r">{{data.announcementDate}}</span>{{data.createBy}}</div>
+                                    </a>
+                                </li>
+                                <!--<li>
+                                    <a class="add-box">查看全部</a>
+                                </li>-->
+                            </ul>
+                        </div>
+                    </div>
 
-        </div>
-    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
 </div>
 
 <!--模板-->

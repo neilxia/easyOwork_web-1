@@ -184,27 +184,34 @@
                         </td>
                     </tr>
                     <tr>
-                        <td width="60">提醒时间</td>
-                        <td class="pl10">
-                            <div class="qiyi-group line20td">
-                                <input type="datetime" name="remindTime" class="form-control" date-time ng-model="modalform.remindTime" view="date"  format="yyyy-MM-dd HH:mm" auto-close="true" placeholder="选择开始时间">
-                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
                         <td width="60">负责人员</td>
                         <td class="pl10">
                             <div selectdepyuan yuangong="1" myselected="modalform.myActivity" selectedallarr="modalform.myActivityall"></div>
                         </td>
                     </tr>
-                    <tr>
-                        <td width="60" valign="top">备忘</td>
-                        <td class="pl10">
-                            <textarea class="form-control" rows="3" ng-model="modalform.memo" maxlength="100" placeholder="请输入备忘"></textarea>
-                        </td>
-                    </tr>
                 </table>
+                <div showhid>
+                    <div class="t_c pt10"><span class="g9 f12">下面是非必填隐藏字段</span><span class="ml5"><button class="btn btn-xs btn-default" type="button">显示</button></span></div>
+                    <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5 dropdown" style="display: none;">
+                        <tr>
+                            <td width="60">提醒时间</td>
+                            <td class="pl10">
+                                <div class="qiyi-group line20td">
+                                    <input type="datetime" name="remindTime" class="form-control" date-time ng-model="modalform.remindTime" view="date"  format="yyyy-MM-dd HH:mm" auto-close="true" placeholder="选择开始时间">
+                                    <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60" valign="top">备忘</td>
+                            <td class="pl10">
+                                <textarea class="form-control" rows="3" ng-model="modalform.memo" maxlength="100" placeholder="请输入备忘"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>

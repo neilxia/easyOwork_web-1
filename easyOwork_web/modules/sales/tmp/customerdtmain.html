@@ -229,19 +229,13 @@
                     <tr>
                         <td width="60">过程名称</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" placeholder="输入销售过程名称" ng-model="modalform.saleName">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="60">销售金额</td>
-                        <td class="pl10">
-                            <input type="number" class="form-control" placeholder="设置销售金额(元)" ng-model="modalform.saleAmount">
+                            <input type="text" class="form-control" placeholder="输入销售过程名称" ng-model="modalform.saleName" required>
                         </td>
                     </tr>
                     <tr>
                         <td width="60">销售阶段</td>
                         <td class="pl10">
-                            <select class="form-control" ng-model="modalform.saleStage">
+                            <select class="form-control" ng-model="modalform.saleStage" required>
                                 <option value="">选择销售阶段</option>
                                 <option value="接洽客户">接洽客户</option>
                                 <option value="确定需求">确定需求</option>
@@ -252,32 +246,42 @@
                         </td>
                     </tr>
                     <tr>
-                        <td width="60">机会来源</td>
-                        <td class="pl10">
-                            <select class="form-control" ng-model="modalform.saleSource">
-                                <option value="">选择机会来源</option>
-                                <option value="广告">广告</option>
-                                <option value="研讨会">研讨会</option>
-                                <option value="搜索引擎">搜索引擎</option>
-                                <option value="客户介绍">客户介绍</option>
-                                <option value="其他">其他</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
                         <td width="60">负责人员</td>
                         <td class="pl10">
                             <div selectdepyuan yuangong="1" myselected="modalform.mycourseall" selectedallarr="modalform.courseall"></div>
                         </td>
                     </tr>
-                    <tr>
-                        <td width="60" valign="top">销售备忘</td>
-                        <td class="pl10">
-                            <textarea class="form-control" rows="3" ng-model="modalform.memo" maxlength="100" placeholder="请输入销售备忘"></textarea>
-                        </td>
-                    </tr>
-
                 </table>
+                <div showhid>
+                    <div class="t_c pt10"><span class="g9 f12">下面是非必填隐藏字段</span><span class="ml5"><button class="btn btn-xs btn-default" type="button">显示</button></span></div>
+                    <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5 dropdown" style="display: none;">
+                        <tr>
+                            <td width="60">销售金额</td>
+                            <td class="pl10">
+                                <input type="number" class="form-control" placeholder="设置销售金额(元)" ng-model="modalform.saleAmount">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="60">机会来源</td>
+                            <td class="pl10">
+                                <select class="form-control" ng-model="modalform.saleSource">
+                                    <option value="">选择机会来源</option>
+                                    <option value="广告">广告</option>
+                                    <option value="研讨会">研讨会</option>
+                                    <option value="搜索引擎">搜索引擎</option>
+                                    <option value="客户介绍">客户介绍</option>
+                                    <option value="其他">其他</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="60" valign="top">销售备忘</td>
+                            <td class="pl10">
+                                <textarea class="form-control" rows="3" ng-model="modalform.memo" maxlength="100" placeholder="请输入销售备忘"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
@@ -315,44 +319,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <td width="60">合同金额</td>
-                        <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.contractAmount" placeholder="设置合同金额(元)">
-                        </td>
-                    </tr>
-                    <!--<tr>
-                        <td width="60">应收金额</td>
-                        <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.receivable" placeholder="设置应收金额(元)">
-                        </td>
-                    </tr>-->
-                    <tr>
-                        <td width="60" valign="top">实收金额</td>
-                        <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.collectedAmount" placeholder="实收金额(元)">
-                            <!--<select class="form-control">
-                                <option>部分收款</option>
-                            </select>
-                            <div class="mt10">
-                                <input type="text" class="form-control" placeholder="设置合同金额(元)">
-                            </div>-->
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="60">合同周期</td>
-                        <td class="pl10">
-                            <div class="qiyi-group line20td f_l" style="width: 210px;">
-                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.startDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="选择开始时间">
-                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
-                            </div>
-                            <div class="qiyi-group line20td f_l ml10" style="width: 209px;">
-                                <input type="datetime" name="endDate" class="form-control" date-time ng-model="modalform.endDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="选择结束时间">
-                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
                         <td width="60">合同附件</td>
                         <td class="pl10">
                             <div class="btn btn-default upheadbtn">
@@ -361,8 +327,49 @@
                             <a ng-href="{{modalform.url}}">{{modalform.contractName}}</a> <a class="red f12" ng-click="deleteDocument()">删除</a>
                         </td>
                     </tr>
-
                 </table>
+                <div showhid>
+                    <div class="t_c pt10"><span class="g9 f12">下面是非必填隐藏字段</span><span class="ml5"><button class="btn btn-xs btn-default" type="button">显示</button></span></div>
+                    <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5 dropdown" style="display: none;">
+                        <tr>
+                            <td width="60">合同金额</td>
+                            <td class="pl10">
+                                <input type="text" class="form-control" ng-model="modalform.contractAmount" placeholder="设置合同金额(元)">
+                            </td>
+                        </tr>
+                        <!--<tr>
+                            <td width="60">应收金额</td>
+                            <td class="pl10">
+                                <input type="text" class="form-control" ng-model="modalform.receivable" placeholder="设置应收金额(元)">
+                            </td>
+                        </tr>-->
+                        <tr>
+                            <td width="60" valign="top">实收金额</td>
+                            <td class="pl10">
+                                <input type="text" class="form-control" ng-model="modalform.collectedAmount" placeholder="实收金额(元)">
+                                <!--<select class="form-control">
+                                    <option>部分收款</option>
+                                </select>
+                                <div class="mt10">
+                                    <input type="text" class="form-control" placeholder="设置合同金额(元)">
+                                </div>-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="60">合同周期</td>
+                            <td class="pl10">
+                                <div class="qiyi-group line20td f_l" style="width: 210px;">
+                                    <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.startDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="选择开始时间">
+                                    <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                                </div>
+                                <div class="qiyi-group line20td f_l ml10" style="width: 209px;">
+                                    <input type="datetime" name="endDate" class="form-control" date-time ng-model="modalform.endDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="选择结束时间">
+                                    <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
@@ -450,27 +457,34 @@
                         </td>
                     </tr>
                     <tr>
-                        <td width="60">提醒时间</td>
-                        <td class="pl10">
-                            <div class="qiyi-group line20td">
-                                <input type="datetime" name="remindTime" class="form-control" date-time ng-model="modalform.remindTime" view="date"  format="yyyy-MM-dd HH:mm" auto-close="true" placeholder="选择开始时间">
-                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
                         <td width="60">负责人员</td>
                         <td class="pl10">
                             <div selectdepyuan yuangong="1" myselected="modalform.myActivity" selectedallarr="modalform.myActivityall"></div>
                         </td>
                     </tr>
-                    <tr>
-                        <td width="60" valign="top">备忘</td>
-                        <td class="pl10">
-                            <textarea class="form-control" rows="3" ng-model="modalform.memo" maxlength="100" placeholder="请输入备忘"></textarea>
-                        </td>
-                    </tr>
                 </table>
+                <div showhid>
+                    <div class="t_c pt10"><span class="g9 f12">下面是非必填隐藏字段</span><span class="ml5"><button class="btn btn-xs btn-default" type="button">显示</button></span></div>
+                    <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5 dropdown" style="display: none;">
+                        <tr>
+                            <td width="60">提醒时间</td>
+                            <td class="pl10">
+                                <div class="qiyi-group line20td">
+                                    <input type="datetime" name="remindTime" class="form-control" date-time ng-model="modalform.remindTime" view="date"  format="yyyy-MM-dd HH:mm" auto-close="true" placeholder="选择开始时间">
+                                    <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60" valign="top">备忘</td>
+                            <td class="pl10">
+                                <textarea class="form-control" rows="3" ng-model="modalform.memo" maxlength="100" placeholder="请输入备忘"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>

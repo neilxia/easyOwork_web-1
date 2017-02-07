@@ -83,7 +83,7 @@
                     <tr>
                         <td width="40">类型</td>
                         <td class="pl10">
-                            <select class="form-control input-sm" ng-model="modalform.assetType" ng-options="x.name as x.name for x in listClass">
+                            <select class="form-control input-sm" ng-model="modalform.assetType" ng-options="x.name as x.name for x in listClass" required>
                                 <option value="">选择类型</option>
                             </select>
                         </td>
@@ -91,46 +91,52 @@
                     <tr>
                         <td>编号</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.id" placeholder="输入资产编号">
+                            <input type="text" class="form-control" ng-model="modalform.id" placeholder="输入资产编号" required>
                         </td>
                     </tr>
                     <tr>
                         <td>厂商</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.assetName" placeholder="输入资产名称">
+                            <input type="text" class="form-control" ng-model="modalform.assetName" placeholder="输入资产名称" required>
                         </td>
                     </tr>
                     <tr>
                         <td>型号</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.assetModel" placeholder="输入资产型号">
+                            <input type="text" class="form-control" ng-model="modalform.assetModel" placeholder="输入资产型号" required>
                         </td>
                     </tr>
-                    <tr>
-                        <td>价格</td>
-                        <td class="pl10">
-                            <input type="number" class="form-control" ng-model="modalform.price" placeholder="输入价格(元)">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>购买日期</td>
-                        <td class="pl10">
-                            <div class="form-inline">
-                                <div class="qiyi-group dib line20td">
-                                    <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.startDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true">
-                                    <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
-                                </div>
-                                <input type="text" class="form-control dib ml5" ng-model="modalform.age"  style="width: 243px;" placeholder="服务年限">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td valign="top">描述</td>
-                        <td class="pl10">
-                            <textarea class="form-control" ng-model="modalform.description"  rows="3" placeholder="输入资产描述"></textarea>
-                        </td>
-                    </tr>
+
                 </table>
+                <div showhid>
+                    <div class="t_c pt10"><span class="g9 f12">下面是非必填隐藏字段</span><span class="ml5"><button class="btn btn-xs btn-default" type="button">显示</button></span></div>
+                    <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5 dropdown" style="display: none;">
+                        <tr>
+                            <td width="40">价格</td>
+                            <td class="pl10">
+                                <input type="number" class="form-control" ng-model="modalform.price" placeholder="输入价格(元)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>日期</td>
+                            <td class="pl10">
+                                <div class="form-inline">
+                                    <div class="qiyi-group dib line20td">
+                                        <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.startDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="购买日期">
+                                        <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                                    </div>
+                                    <input type="text" class="form-control dib ml5" ng-model="modalform.age"  style="width: 243px;" placeholder="服务年限">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top">描述</td>
+                            <td class="pl10">
+                                <textarea class="form-control" ng-model="modalform.description"  rows="3" placeholder="输入资产描述"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>

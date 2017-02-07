@@ -98,32 +98,38 @@
                             <input type="text" class="form-control" ng-model="modalform.planName" placeholder="输入招聘名称">
                         </td>
                     </tr>
-                    <tr>
-                        <td>发起人员</td>
-                        <td class="pl10">
-                            <div selectdepyuan yuangong="1" myselected="modalform.sponsor" selectedallarr="modalform.sponsorarr"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>完成时间</td>
-                        <td class="pl10">
-                            <div class="qiyi-group line20td">
-                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.planEndDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true">
-                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr ng-if="thename=='编辑'">
-                        <td>计划状态</td>
-                        <td class="pl10">
-                            <select class="form-control" ng-model="modalform.planStatus">
-                                <option value="未完成">未完成</option>
-                                <option value="已完成">已完成</option>
-                                <option value="已取消">已取消</option>
-                            </select>
-                        </td>
-                    </tr>
+
                 </table>
+                <div showhid>
+                    <div class="t_c pt10"><span class="g9 f12">下面是非必填隐藏字段</span><span class="ml5"><button class="btn btn-xs btn-default" type="button">显示</button></span></div>
+                    <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5 dropdown" style="display: none;">
+                        <tr>
+                            <td width="60">发起人员</td>
+                            <td class="pl10">
+                                <div selectdepyuan yuangong="1" myselected="modalform.sponsor" selectedallarr="modalform.sponsorarr"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>完成时间</td>
+                            <td class="pl10">
+                                <div class="qiyi-group line20td">
+                                    <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.planEndDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true">
+                                    <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-if="thename=='编辑'">
+                            <td>计划状态</td>
+                            <td class="pl10">
+                                <select class="form-control" ng-model="modalform.planStatus">
+                                    <option value="未完成">未完成</option>
+                                    <option value="已完成">已完成</option>
+                                    <option value="已取消">已取消</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>

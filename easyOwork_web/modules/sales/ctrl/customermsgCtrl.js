@@ -112,6 +112,8 @@ function customermsgCtrl(){
                 $scope.projectDefNames=projectDefs;
                 $scope.modalform={};
                 $scope.modalform.customerLevel="NORMAL";
+                $scope.modalform.myselected=[userinfo];
+                $scope.modalform.selectedallarr=[[],[userinfo]];
                 $scope.RndNum=function(){
                     $scope.modalform.projectId=noseService.RndNum(8);
                 }
@@ -273,6 +275,8 @@ function customerdtmainmsgCtrl(){
             function modalCtrl ($scope, $modalInstance) {
                 $scope.thename='新增';
                 $scope.modalform={};
+                $scope.modalform.mycourseall=[userinfo];
+                $scope.modalform.courseall=[[],[userinfo]];
                 $scope.modalform.saleStage="接洽客户";
                 //$scope.modalform.projectStageName=Stage[0].projectStageName;
                 //提交增加
@@ -323,7 +327,6 @@ function customerdtmainmsgCtrl(){
             if(change!='DELETE'){
                 var startDate=$filter('date')(row.startDate,'yyyy-MM-dd');
                 var endDate=$filter('date')(row.endDate,'yyyy-MM-dd');
-                debugger;
                 $scope.options={
                     'actionType':change,		//ADD, MODIFY, DELETE
                     "contractName":oldrow.contractName || "",	//合同名称
@@ -632,6 +635,8 @@ function customerdtmainmsgCtrl(){
                 $scope.thename='新增';
                 $scope.gcStatusArr=gcStatusArr;
                 $scope.modalform={};
+                $scope.modalform.myActivity=[userinfo];
+                $scope.modalform.myActivityall=[[],[userinfo]];
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断

@@ -20,7 +20,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                     templateUrl: 'modules/main.html'
                 }
             },
-            data: { pageTitle: '首页' ,specialClass: 'bg-ind' ,widthClass:'container' },
+            data: { pageTitle: '首页' ,specialClass: 'bg-ind'  },//,widthClass:'container'
             resolve:{
                 loadPlugin:function($ocLazyLoad){
                     return $ocLazyLoad.load([

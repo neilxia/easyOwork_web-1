@@ -98,6 +98,8 @@ debugger;
                 $scope.modalform={
                     status:'PLAN'
                 };
+                $scope.modalform.myselected=[userinfo];
+                $scope.modalform.selectedallarr=[[],[userinfo]];
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
@@ -489,6 +491,8 @@ function activitydtmainCtrl(){
                 $scope.thename='新增';
                 $scope.gcStatusArr=gcStatusArr;
                 $scope.modalform={};
+                $scope.modalform.myActivity=[userinfo];
+                $scope.modalform.myActivityall=[[],[userinfo]];
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断

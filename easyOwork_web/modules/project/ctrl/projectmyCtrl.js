@@ -99,7 +99,6 @@ function projectmydtmainlistCtrl(){
                     "projectStageName":row.projectStageName || ''	//项目阶段名称
                 }
             };
-            debugger;
             var promise = projectService.changeProjectTask({body:$scope.options});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;

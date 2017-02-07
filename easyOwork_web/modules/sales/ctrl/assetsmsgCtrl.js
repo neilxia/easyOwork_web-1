@@ -128,6 +128,8 @@ function assetsmsgCtrl(){
                 $scope.thename='新增';
                 $scope.datalist=datalist;
                 $scope.modalform={};
+                $scope.modalform.mycourseall=[userinfo];
+                $scope.modalform.courseall=[[],[userinfo]];
                 if(datalist.length>0){
                     $scope.modalform.customerName=datalist[0].customerName;
                 }
@@ -159,7 +161,7 @@ function assetsmsgCtrl(){
                 $scope.thename='编辑';
                 $scope.datalist=datalist;
                 $scope.modalform=row;
-                modalform.customerName=row.customerDTO.customerName
+                $scope.modalform.customerName=row.customerDTO.customerName;
                 $scope.modalform.mycourseall=[row.userDTO];
                 $scope.modalform.courseall=[[],[row.userDTO]];
                 //提交增加
@@ -371,6 +373,8 @@ function assetsdtmainmsgCtrl(){
                 $scope.thename='新增';
                 $scope.gcStatusArr=gcStatusArr;
                 $scope.modalform={};
+                $scope.modalform.myActivity=[userinfo];
+                $scope.modalform.myActivityall=[[],[userinfo]];
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断

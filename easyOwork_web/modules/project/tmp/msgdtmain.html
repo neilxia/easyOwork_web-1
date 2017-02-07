@@ -278,14 +278,14 @@
                     <tr>
                         <td width="60">选择阶段</td>
                         <td class="pl10">
-                            <select class="form-control" ng-model="modalform.projectStageName" ng-options="x.projectStageName as x.projectStageName for x in thisStage">
+                            <select class="form-control" ng-model="modalform.projectStageName" ng-options="x.projectStageName as x.projectStageName for x in thisStage" required>
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <td width="60">任务名称</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.taskName" placeholder="输入任务名称">
+                            <input type="text" class="form-control" ng-model="modalform.taskName" placeholder="输入任务名称" required>
                         </td>
                     </tr>
                     <tr>
@@ -298,27 +298,33 @@
                         <td width="60">任务周期</td>
                         <td class="pl10">
                             <div class="qiyi-group line20td f_l" style="width: 210px;">
-                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.startDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="选择开始时间">
+                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.startDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="选择开始时间" required>
                                 <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
                             </div>
                             <div class="qiyi-group line20td f_l ml10" style="width: 209px;">
-                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.endDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="选择结束时间">
+                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.endDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="选择结束时间" required>
                                 <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td width="60" valign="top">任务描述</td>
-                        <td class="pl10">
-                            <div class="nose-group" ng-class="{'has-error':baseForm.content.$dirty && baseForm.content.$invalid}">
-                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$invalid" popover="输入任务描述文字" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$error.maxlength" popover="不大于100字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                <textarea class="form-control" rows="4" name="content" placeholder="输入任务描述文字，不大于100字" ng-maxlength="100" ng-model="modalform.description" required></textarea>
-                            </div>
 
-                        </td>
-                    </tr>
                 </table>
+                <div showhid>
+                    <div class="t_c pt10"><span class="g9 f12">下面是非必填隐藏字段</span><span class="ml5"><button class="btn btn-xs btn-default" type="button">显示</button></span></div>
+                    <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5 dropdown" style="display: none;">
+                        <tr>
+                            <td width="60" valign="top">任务描述</td>
+                            <td class="pl10">
+                                <div class="nose-group" ng-class="{'has-error':baseForm.content.$dirty && baseForm.content.$invalid}">
+                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$invalid" popover="输入任务描述文字" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$error.maxlength" popover="不大于100字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                    <textarea class="form-control" rows="4" name="content" placeholder="输入任务描述文字，不大于100字" ng-maxlength="100" ng-model="modalform.description" required></textarea>
+                                </div>
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>

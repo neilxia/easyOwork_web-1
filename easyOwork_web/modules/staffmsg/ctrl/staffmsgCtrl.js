@@ -160,7 +160,6 @@ function staffmsgCtrl(){
                     autoUpload:false
                 });
                 htUploader.onAfterAddingFile = function(fileItem){
-                    debugger;
                     htUploader.cancelAll();
                      var file = $("#contract").get(0).files[0];
                      var filePath = LocalStorage.getObject('userinfo').entId+'/employee/contract/'+noseService.randomWord(false, 32)+'_';
@@ -195,7 +194,7 @@ function staffmsgCtrl(){
                      "newPersonalPhone":"",		//手机号码
                      "orgList":[],		//所属部门名称
                      "joiningDate":"",		//入职日期
-                     "roleList":[],	//角色数组, 可多个角色
+                     "roleList":[{name:'普通员工'}],	//角色数组, 可多个角色
                      //"contractUrl":"",		//合同文件地址
                      //"contract":{},
                      "salaryTypeList":[],
@@ -263,6 +262,7 @@ function staffmsgCtrl(){
                 };
                 
                 $scope.user=row;
+                debugger;
 /*                $scope.bbbb=function(){
                     $scope.user.orgList;
                 }*/

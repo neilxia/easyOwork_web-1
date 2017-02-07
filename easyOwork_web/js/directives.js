@@ -536,7 +536,7 @@ function pwCheck($timeout){
 }
 
 
-/*=========展开关闭collapseH========================================================================*/
+/*=========展开关闭collapseH=========================================*/
 function collapseH(){
     return{
         restrict: 'A',
@@ -623,8 +623,32 @@ function collapseH(){
     }
 }
 
+/*=========showhid=========================================*/
+function showhid(){
+    return{
+        restrict: 'A',
+        scope: {
+            options:'='
+        },
+        link:function(scope,element,attr){
+            var defaults ={
+                toggleclick:".btn",
+                togglecom:".dropdown",
+                clickEve:null
+            };
+            var opt = $.extend(defaults,scope.options);
+            var toggleboxObj=element;
+            var clickObj=$(opt.toggleclick,toggleboxObj);
+            var comObj=$(opt.togglecom,toggleboxObj);
+            clickObj.click(function(){
+                clickObj.parents('.t_c').hide();
+                comObj.show();
+            });
+        }
+    }
+}
 
-/*=========nosetreeGrid========================================================================*/
+/*=========nosetreeGrid==============================================*/
 function nosetreeGrid($timeout){
     return{
         restrict: 'A',
@@ -1232,6 +1256,7 @@ angular
     .directive('reloadRoute', reloadRoute) //刷新当前页
     .directive('pwCheck', pwCheck) //验证两次密码是否一致
     .directive('collapseH', collapseH) //展开关闭collapseH
+    .directive('showhid', showhid) //展开关闭showhid
     .directive('nosetreeGrid', nosetreeGrid) //nosetreeGrid
     .directive('ngenter', ngenter) //回车事件
     .directive('selectdep', selectdep) //选择部门

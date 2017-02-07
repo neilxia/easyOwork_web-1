@@ -106,30 +106,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <td width="60">客户名称</td>
-                        <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.customerName" placeholder="输入客户名称">
-                        </td>
-                    </tr>
-                    <tr ng-show="thename=='编辑'">
-                        <td width="60">负责人员</td>
-                        <td class="pl10">
-                            <div selectdepyuan yuangong="1" myselected="modalform.myselected" selectedallarr="modalform.selectedallarr"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="60">合同金额</td>
-                        <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.projectAmount" placeholder="输入合同金额 (元)">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="60">成本预算</td>
-                        <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.projectCost" placeholder="输入成本金额 (元)">
-                        </td>
-                    </tr>
-                    <tr>
                         <td width="60">项目周期</td>
                         <td class="pl10">
                             <div class="qiyi-group line20td f_l" style="width: 210px;">
@@ -142,18 +118,47 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td width="60" valign="top">项目描述</td>
+                    <tr ng-show="thename=='编辑'">
+                        <td width="60">负责人员</td>
                         <td class="pl10">
-                            <div class="nose-group" ng-class="{'has-error':baseForm.content.$dirty && baseForm.content.$invalid}">
-                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$invalid" popover="输入项目描述文字" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$error.maxlength" popover="不大于100字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                <textarea class="form-control" rows="4" name="content" placeholder="输入项目描述文字，不大于100字" ng-maxlength="100" ng-model="modalform.projectDesc" required></textarea>
-                            </div>
-
+                            <div selectdepyuan yuangong="1" myselected="modalform.myselected" selectedallarr="modalform.selectedallarr"></div>
                         </td>
                     </tr>
                 </table>
+                <div showhid>
+                    <div class="t_c pt10"><span class="g9 f12">下面是非必填隐藏字段</span><span class="ml5"><button class="btn btn-xs btn-default" type="button">显示</button></span></div>
+                    <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5 dropdown" style="display: none;">
+                        <tr>
+                            <td width="60">客户名称</td>
+                            <td class="pl10">
+                                <input type="text" class="form-control" ng-model="modalform.customerName" placeholder="输入客户名称">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="60">合同金额</td>
+                            <td class="pl10">
+                                <input type="text" class="form-control" ng-model="modalform.projectAmount" placeholder="输入合同金额 (元)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="60">成本预算</td>
+                            <td class="pl10">
+                                <input type="text" class="form-control" ng-model="modalform.projectCost" placeholder="输入成本金额 (元)">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60" valign="top">项目描述</td>
+                            <td class="pl10">
+                                <div class="nose-group" ng-class="{'has-error':baseForm.content.$dirty && baseForm.content.$invalid}">
+                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$invalid" popover="输入项目描述文字" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$error.maxlength" popover="不大于100字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                    <textarea class="form-control" rows="4" name="content" placeholder="输入项目描述文字，不大于100字" ng-maxlength="100" ng-model="modalform.projectDesc" required></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>

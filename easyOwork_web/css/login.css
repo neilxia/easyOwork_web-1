@@ -1,12 +1,16 @@
 /*注册背景图*/
 .bg-login{
+    width: 100%;
     height: 100%;
+    min-width: 1200px;
+    position: relative;
 }
 .login_banner{ width: 100%;  height: 475px; position:relative; overflow: hidden;}
-.login-flexslider{ width: 100%;  height: 100%; position: absolute; left: 0; right: 0; z-index: 0;}
+.login-flexslider{ width: 100%; height: 100%; position: absolute; left: 0; right: 0; z-index: 0;}
 .login-flexslider .slides li{ height: 100%;}
 .login-flexslider .slides li>a{ display: block; width: 100%; height: 100%; background-position: center center; background-repeat: no-repeat; background-size: 100% 100%;}
 .login-flexslider .flex-control-nav{ bottom: 90px; z-index: 2;}
+/*.loginpage{min-width: 1200px;}*/
 .loginpage .abs_l{ top: 22px; left: 50px; z-index: 1;}
 .loginpage .abs_r{ top: 22px; right: 50px; z-index: 1;}
 
