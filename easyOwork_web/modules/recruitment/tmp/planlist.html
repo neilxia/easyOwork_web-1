@@ -95,21 +95,20 @@
                     <tr>
                         <td width="60">招聘名称</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.planName" placeholder="输入招聘名称">
+                            <input type="text" class="form-control" ng-model="modalform.planName" placeholder="输入招聘名称" required>
                         </td>
                     </tr>
-
+                    <tr>
+                        <td>发起人员</td>
+                        <td class="pl10">
+                            <div selectdepyuan yuangong="1" myselected="modalform.sponsor" selectedallarr="modalform.sponsorarr"></div>
+                        </td>
+                    </tr>
                 </table>
                 <div showhid>
                     <table cellpadding="0" cellspacing="0" width="100%" class="line40td dropdown" style="display: none;">
                         <tr>
-                            <td width="60">发起人员</td>
-                            <td class="pl10">
-                                <div selectdepyuan yuangong="1" myselected="modalform.sponsor" selectedallarr="modalform.sponsorarr"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>完成时间</td>
+                            <td width="60">完成时间</td>
                             <td class="pl10">
                                 <div class="qiyi-group line20td">
                                     <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.planEndDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true">

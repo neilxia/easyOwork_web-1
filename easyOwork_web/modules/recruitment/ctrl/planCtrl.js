@@ -73,7 +73,6 @@ function planlistCtrl(){
                     "planName":row.planName		//招聘计划名称
                 };
             }
-            debugger;
             var promise = RecruitFlowService.changeRecruitPlan({body:$scope.options});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
@@ -98,6 +97,8 @@ function planlistCtrl(){
             function modalCtrl ($scope, $modalInstance) {
                 $scope.thename='新增';
                 $scope.modalform={};
+                $scope.modalform.sponsor=[userinfo];
+                $scope.modalform.sponsorarr=[[],[userinfo]];
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
@@ -123,6 +124,7 @@ function planlistCtrl(){
                 //[[],[row.userDTO]]
                 //提交增加
                 $scope.ok = function (state) {
+
                     if(!state){return;} //状态判断
                     changeRecruitPlanFun('MODIFY',$scope.modalform,$modalInstance,oldrow);
                 };
