@@ -632,7 +632,7 @@ function showhid(){
         },
         link:function(scope,element,attr){
             var defaults ={
-                toggleclick:".btn",
+                toggleclick:".clickbtn",
                 togglecom:".dropdown",
                 clickEve:null
             };
@@ -641,9 +641,17 @@ function showhid(){
             var clickObj=$(opt.toggleclick,toggleboxObj);
             var comObj=$(opt.togglecom,toggleboxObj);
             clickObj.click(function(){
-                clickObj.parents('.t_c').hide();
-                comObj.show();
+                if(comObj.is(':hidden')){
+                    clickObj.find('.fa').addClass('fa-flip-vertical');
+                    comObj.show();
+                }else{
+                    clickObj.find('.fa').removeClass('fa-flip-vertical');
+                    comObj.hide();
+                }
+
             });
+
+
         }
     }
 }
