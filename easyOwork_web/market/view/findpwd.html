@@ -2,7 +2,7 @@
 	<div style="height: 90px; width: 100%; background-color: #1a263b">
 
 	</div>
-	<div class="buy-section clearfix" ng-controller="findpwdCtrl" ng-init="init()">
+	<div class="content-section clearfix" ng-controller="findpwdCtrl" ng-init="init()">
 		<div class="col-xs-8" style="padding-top:40px">
 			
 			<form class="form-horizontal" role="form" ng-show="verifyStep">
@@ -72,3 +72,11 @@
 			<image src="/market/svg/safe.svg"></image>
 		</div>
 	</div>
+<script type="text/javascript">
+	var headerHeight = $('#header').height();
+	var footerHeight = $('#footer').height()+46;
+	var contentHeight = $('.content-section').height();
+	var windowHeight = $(window).height();
+	if((headerHeight+contentHeight+footerHeight)<windowHeight)
+	$('.content-section').height(windowHeight-headerHeight-footerHeight);
+</script>

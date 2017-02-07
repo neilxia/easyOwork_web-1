@@ -1,7 +1,7 @@
 <div style="height: 90px; width: 100%; background-color: #1a263b">
 
 	</div>
-	<div class="clearfix" style="margin:40px">
+	<div class="content-section clearfix" style="margin-left:40px;margin-right:40px">
 <h1>服务协议</h1>
 			<h4> 本协议是使用青辉阳企业全角色工作平台服务的用户（以下简称“用户”或“您”）与青辉阳公司就青辉阳工作平台的使用等相关事宜所签订的协议，<span class="blod">请用户在点击“同意”按钮之前，详细阅读本协议，用户可以选择不接受该协议条款，</span>但用户点击“同意”按钮并提交后，依据《中华人民共和国合同法》《中华人民共和国电信条例》《互联网信息服务管理办法》等相关法律法规的规定，本协议<span class="blod">即构成双方合法有效、对双方具有约束力的法律文件。</span></h4>
 				<p class="title">一、协议的签署</p>
@@ -88,3 +88,11 @@
 				<p class="texindent">本协议之效力、解释、执行与争议解决均适用中华人民共和国大陆地区法律，如无相关法律规定的，则应参照通用国际商业惯例和（或）行业惯例。用户与本平台一致同意，若因履行本协议而产生的争议，双方本着友好协商解决，协商不成的，双方同意提交本平台运营公司注册地有管辖权的人民法院诉讼解决。</p>
 				<p class="texindent">本平台再次重申，在注册成为本平台用户之前，请仔细、详尽的阅读本协议，<span class="bold">对协议中加粗标黑的部分，因关系用户自身的责任与义务，请着重阅读。一经注册，用户应严格遵守该协议的所有条款，本平台有权根据经营的需要随时修改本协议，对于修改后的协议，用户可随时查阅。若用户对修订后的协议有异议，请及时联系本平台或停止使用本平台服务。</span></p>
 </div>
+<script type="text/javascript">
+	var headerHeight = $('#header').height();
+	var footerHeight = $('#footer').height()+46;
+	var contentHeight = $('.content-section').height();
+	var windowHeight = $(window).height();
+	if((headerHeight+contentHeight+footerHeight)<windowHeight)
+	$('.content-section').height(windowHeight-headerHeight-footerHeight);
+</script>
