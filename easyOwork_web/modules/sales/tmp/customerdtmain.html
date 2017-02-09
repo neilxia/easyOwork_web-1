@@ -57,12 +57,12 @@
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="data in datadt.saleList">
-                                    <td class="pl20">{{data.saleName}}</td>
+                                    <td class="pl20"><a class="a_prime" ui-sref="sales.assetsmsgdtmain({'name':data.saleName})">{{data.saleName}}</a></td>
                                     <td>￥{{data.saleAmount}}</td>
                                     <!--<td>{{data.saleAmount}}</td>-->
                                     <td>{{data.saleStage}}</td>
-                                    <td class="orange">{{data.userDTO.name}}</td>
-                                    <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="sales.assetsmsgdtmain({'name':data.saleName})"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editcourse(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deletecourse(data)"><i class="iconfont icon-del f14"></i></button></td>
+                                    <td>{{data.userDTO.name}}</td>
+                                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editcourse(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deletecourse(data)"><i class="iconfont icon-del f14"></i></button></td>
                                 </tr>
                                 <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
                                 </tbody>
@@ -96,7 +96,7 @@
                                     <td>{{data.startDate}} ~ {{data.endDate}}</td>
                                     <td>{{data.status}}</td>
                                     <td><a class="btn btn-danger ml5 btn-xs h30" title="下载" href="{{data.url}}" target="_blank"><i class="iconfont icon-xiazai f14"></i></a></td>
-                                    <td class="green">￥{{data.collectedAmount}}</td>
+                                    <td>￥{{data.collectedAmount}}</td>
                                     <td>
                                         <span class="red" ng-if="data.collectedAmount==0">未收款</span>
                                         <span class="red" ng-if="0 < data.collectedAmount < data.contractAmount">部分收款</span>
@@ -160,7 +160,7 @@
                                     <td class="pl20">{{data.activityName}}</td>
                                     <td>{{data.startDate}} <br> {{data.endDate}}</td>
                                     <td>{{data.remindTime}}</td>
-                                    <td class="orange">{{data.userDTO.name}}</td>
+                                    <td>{{data.userDTO.name}}</td>
                                     <!--<td class="orange">{{data.userDTO.name}}</td>-->
                                     <td><!--<button class="btn btn-default btn-xs h30" title="查看" ><i class="iconfont icon-chakan f14"></i></button>--><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editActivityFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deleteActivity(data)"><i class="iconfont icon-del f14"></i></button></td>
                                 </tr>

@@ -35,16 +35,14 @@
                     <th>标题</th>
                     <th width="300">分配人姓名</th>
                     <th width="100">状态</th>
-                    <th width="100">操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="task in tasklist | filter:{status:selectedTaskStatus} | filter:form.searchValue | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
                     <td class="t_l"> {{task.startDate}} 到 {{task.endDate}}</td>
-                    <td>{{task.title}}</td>
+                    <td><a class="a_prime" ng-click="viewTask(task)">{{task.title}}</a></td>
                     <td><span class="mr5">{{task.userDTO.name}}</span></td>
                     <td>{{task.status}}</td>
-                    <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="viewTask(task)"><i class="iconfont icon-chakan f14"></i></button></td>
                 </tr>
                 </tbody>
             </table>

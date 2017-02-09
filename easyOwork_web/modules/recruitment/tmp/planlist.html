@@ -49,7 +49,7 @@
                     <td class="pl20">{{data.planName}}</td>
                     <td>{{data.sponsor.name}}</td>
                     <td>{{data.sponsor.orgList[0].name}}</td>
-                    <td><span class="red">{{data.planStatus || "----"}}</span></td>
+                    <td><span>{{data.planStatus || "----"}}</span></td>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
@@ -60,10 +60,10 @@
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
-                    <td>{{pttion.positionName}} ({{pttion.positionCount}})</td>
+                    <td><a class="a_prime" ui-sref="planlist.dtplanlist({planName:data.planName,positionName:pttion.positionName,positionCount:pttion.positionCount})">{{pttion.positionName}} ({{pttion.positionCount}})</a></td>
                     <td>{{pttion.planOnboardDate}}</td>
                     <td>{{pttion.positionRequirement | characters:14 }}</td>
-                    <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="planlist.dtplanlist({planName:data.planName,positionName:pttion.positionName,positionCount:pttion.positionCount})"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editPositionFun(pttion,data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deletePosition(pttion,data)"><i class="iconfont icon-del f14"></i></button></td>
+                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editPositionFun(pttion,data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deletePosition(pttion,data)"><i class="iconfont icon-del f14"></i></button></td>
                 </tr>
                 <tr ng-if="data.recruitPositionDTOList.length>0 && !$last"><td colspan="8" style="padding:0;height:0;border-bottom: #eee solid 4px;"></td></tr>
                 <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->

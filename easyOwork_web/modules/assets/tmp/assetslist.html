@@ -44,15 +44,15 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="data in datalist | filter:{'assetType':selectclass==null?'':selectclass,'assetName':sltname} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
-                    <td class="pl20">{{data.id}}</td>
+                    <td class="pl20"><a class="a_prime" ui-sref="assets.assetsview({'data':data})">{{data.id}}</a></td>
                     <td>{{data.assetType}}</td>
                     <td>{{data.assetName}}</td>
                     <td>{{data.assetModel}}</td>
                     <td><span ng-if="data.price">￥{{data.price}}</span></td>
                     <td>{{data.startDate}}</td>
-                    <td><span class="orange">{{data.userDTO.name || '---'}}</span></td>
-                    <td><span class="orange">{{data.userDTO.name?'已分配':'未分配'}}</span></td>
-                    <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="assets.assetsview({'data':data})"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                    <td><span>{{data.userDTO.name || '---'}}</span></td>
+                    <td><span>{{data.userDTO.name?'已分配':'未分配'}}</span></td>
+                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
                 </tr>
                 <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
                 </tbody>

@@ -35,13 +35,12 @@
                     <th width="80">未签退</th>
                     <th width="80">迟到</th>
                     <th width="80">早退</th>
-                    <th width="60">操作</th>
                 </tr>
                 </thead>
                 <tbody>
 <!--| filter:form.searchValue | filter:{dataType:selectedReportType} |-->
                 <tr ng-repeat="data in attendanceslist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
-                    <td><span class="pl15">{{data.userDTO.name}}</span></td>
+                    <td><span class="pl15"><a class="a_prime" ui-sref="clockingIn.myview({row:data})">{{data.userDTO.name}}</a></span></td>
                     <td>{{data.userDTO.id}}</td>
                     <td>{{data.userDTO.orgList[0].name}}</td>
                     <td>{{data.attendanceYear}}-{{data.attendanceMonth}}</td>
@@ -51,7 +50,6 @@
                     <td>{{data.notOutCount}}</td>
                     <td>{{data.lateInCount}}</td>
                     <td>{{data.earlyOutCount}}</td>
-                    <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="clockingIn.myview({row:data})"><i class="iconfont icon-chakan f14"></i></button></td>
                 </tr>
                 </tbody>
             </table>

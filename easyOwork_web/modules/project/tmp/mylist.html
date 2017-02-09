@@ -33,13 +33,12 @@
                     <th width="300">完成进度</th>
                     <th width="100">负责人员</th>
                     <th width="130">健康度</th>
-                    <th width="125">操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 <!--'projectDefDomain':selectedType==null?'':selectedType,-->
                 <tr ng-repeat="data in datalist | filter:{'userDTO':ygselected[0].name,'projectStatus':selectedStatus,'projectName':sltname} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
-                    <td class="pl20">{{data.projectName}}</td>
+                    <td class="pl20"><a class="a_prime" ui-sref="project.mydtmain({name:data.projectName})">{{data.projectName}}</a></td>
                     <td>{{data.projectId}}</td>
                     <td>
                         <progressbar value="data.projectProgress" type="warning" class="progress-striped progress-small active pct80 f_l"></progressbar>
@@ -47,13 +46,12 @@
 
                         <!--<progressbar value="40" type="success" class="progress-striped progress-small active"></progressbar>-->
                     </td>
-                    <td class="orange">{{data.userDTO.name}}</td>
+                    <td>{{data.userDTO.name}}</td>
                     <td>
                     	<span class="bdrs50" ng-show="data.projectHealth=='严重'" style="display:inline-block;width:30px;height:30px;background-color:red"></span>
                         <span class="bdrs50" ng-show="data.projectHealth=='轻度'" style="display:inline-block;width:30px;height:30px;background-color:orange"></span>
                         <span class="bdrs50" ng-show="data.projectHealth=='正常'" style="display:inline-block;width:30px;height:30px;background-color:green"></span>
                     </td>
-                    <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="project.mydtmain({name:data.projectName})"><i class="iconfont icon-chakan f14"></i></button><!-- <button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button> --></td>
                 </tr>
                 </tbody>
             </table>

@@ -39,8 +39,8 @@
                 <tr ng-repeat="data in datalist | filter:{'projectDefDomain':selectedType==null?'':selectedType,'projectDefName':sltname} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
                     <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
                     <td>{{data.projectDefDomain}}</td>
-                    <td>{{data.projectDefName}}</td>
-                    <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="project.modelphase({name:data.projectDefName})"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                    <td><a class="a_prime" ui-sref="project.modelphase({name:data.projectDefName})">{{data.projectDefName}}</a></td>
+                    <td><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
                 </tr>
                 </tbody>
             </table>

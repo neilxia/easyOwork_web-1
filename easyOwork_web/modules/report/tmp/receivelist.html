@@ -35,7 +35,6 @@
                     <th width="200">周期</th>
                     <th>标题</th>
                     <th width="300">撰写人姓名</th>
-                    <th width="100">操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -60,9 +59,8 @@
 	                        </div>
 	                    </div>
                     </td>
-                    <td>{{report.title}}</td>
+                    <td><a class="a_prime" ng-click="viewReport(report)">{{report.title}}</a></td>
                     <td><span class="mr5">{{report.userDTO.name}}</span></td>
-                    <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="viewReport(report)"><i class="iconfont icon-chakan f14"></i></button></td>
                 </tr>
                 </tbody>
             </table>

@@ -25,14 +25,14 @@
                     <tr>
                         <td width="250"><span class="g9">活动名称：</span>{{datadt.campaignName}}</td>
                         <td width="250"><span class="g9">开始/结束：</span>{{datadt.startDate}}~{{datadt.endDate}}</td>
-                        <td width="150"><span class="g9">负责人员：</span><span class="orange">{{datadt.userDTO.name}}</span></td>
+                        <td width="150"><span class="g9">负责人员：</span><span>{{datadt.userDTO.name}}</span></td>
                         <td width="150"><span class="g9">活动状态：</span>{{datadt.status | activestatus}}</td>
                         <td width="300"><span class="g9">活动类型：</span>{{datadt.campaignType}}</td>
                     </tr>
                     <tr>
                         <td><span class="g9">预计成本：</span>￥{{datadt.planCost}}</td>
                         <td><span class="g9">实际成本：</span>￥{{datadt.actualCost}}</td>
-                        <td><span class="g9">参与人员：</span><span class="orange">
+                        <td><span class="g9">参与人员：</span><span>
                             <span ng-repeat="joiner in datadt.joiners">{{joiner.name}}</span>
                         </span></td>
                         <td colspan="2"><span class="g9">活动描述：</span>{{datadt.campaignDesc}}</td>
@@ -64,8 +64,8 @@
                                     <td class="pl20">{{data.customerName}}</td>
                                     <td>{{data.customerPhone}}</td>
                                     <!--<td>{{data.customerPostCode}}</td>-->
-                                    <td class="orange">{{data.customerLevel | qystatus}}</td>
-                                    <td class="orange">{{data.customerSource || '无'}}</td>
+                                    <td>{{data.customerLevel | qystatus}}</td>
+                                    <td>{{data.customerSource || '无'}}</td>
                                     <td><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editCustomerFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deleteCustomer(data)"><i class="iconfont icon-del f14"></i></button></td>
                                 </tr>
                                 </tbody>
@@ -124,7 +124,7 @@
                                     <td class="pl20">{{data.activityName}}</td>
                                     <td>{{data.startDate}} <br> {{data.endDate}}</td>
                                     <td>{{data.remindTime}}</td>
-                                    <td class="orange">{{data.userDTO.name}}</td>
+                                    <td>{{data.userDTO.name}}</td>
                                     <!--<td class="orange">{{data.userDTO.name}}</td>-->
                                     <td><!--<button class="btn btn-default btn-xs h30" title="查看" ><i class="iconfont icon-chakan f14"></i></button>--><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editActivityFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deleteActivity(data)"><i class="iconfont icon-del f14"></i></button></td>
                                 </tr>

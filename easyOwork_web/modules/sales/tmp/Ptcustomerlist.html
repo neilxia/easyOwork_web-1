@@ -38,12 +38,12 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="data in datalist | filter:{'userDTO':ygselected[0].name,'customerLevel':selectedStatus,'customerName':sltname} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
-                    <td class="pl20">{{data.customerName}}</td>
+                    <td class="pl20"><a class="a_prime" ui-sref="sales.Ptcustomerdtmain({'name':data.customerName})">{{data.customerName}}</a></td>
                     <td>{{data.customerPhone}}</td>
                     <!--<td>{{data.customerPostCode}}</td>-->
-                    <td class="orange">{{data.customerLevel | qystatus}}</td>
-                    <td class="orange">{{data.customerSource || '无'}}</td>
-                    <td><button class="btn btn-default btn-xs h30" title="查看" ui-sref="sales.Ptcustomerdtmain({'name':data.customerName})"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                    <td>{{data.customerLevel | qystatus}}</td>
+                    <td>{{data.customerSource || '无'}}</td>
+                    <td><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
                 </tr>
 <!--
                 <tr>

@@ -33,7 +33,6 @@
                         <th width="150">申请时间</th>
                         <th width="120">申请人</th>
                         <th width="100">审批结果</th>
-                        <th width="60">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,12 +46,11 @@
                 </tr>-->
                     <tr ng-repeat="data in inquiryProcessesData | filter:{'status':Processstatus,'processType':selectedproclass.name,'title':processtitle} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
                         <td><span class="pl15">{{data.processType}}</span></td>
-                        <td>{{data.title}}</td>
+                        <td><a class="a_prime" ng-click="chakanFun(data)">{{data.title}}</a></td>
                         <td>{{data.processUuid}}</td>
                         <td>{{data.createDate}}</td>
                         <td>{{data.launchUserDTO.name}}</td>
                         <td><span ng-class="{'orange':data.status=='审批中','green':data.status=='已同意','red':data.status=='已拒绝','g9':data.status=='已撤回'}">{{data.statusDesc}}</span></td>
-                        <td><button class="btn btn-default btn-xs h30" title="查看" ng-click="chakanFun(data)"><i class="iconfont icon-chakan f14"></i></button></td>
                     </tr>
 
                 </tbody>

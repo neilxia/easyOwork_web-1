@@ -39,12 +39,12 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="data in datalist | filter:{'assetType':selectclass==null?'':selectclass,'assetName':sltname} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
-                    <td class="pl20">{{data.id}}</td>
+                    <td class="pl20"><a ui-sref="assets.assetsview({'data':data})" class="a_prime">{{data.id}}</a></td>
                     <td>{{data.assetType}}</td>
                     <td>{{data.assetName}}</td>
                     <td>{{data.assetModel}}</td>
-                    <td><span class="orange">{{data.userDTO.name?'已分配':'未分配'}}</span></td>
-                    <td><button class="btn btn-default btn-xs h30 mr5" title="查看" ui-sref="assets.assetsview({'data':data})"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs h30" title="分配" ng-click="addmodelFun(data)"><i class="iconfont icon-fenpeizichanpsd f14"></i></button></td>
+                    <td><span>{{data.userDTO.name?'已分配':'未分配'}}</span></td>
+                    <td><button class="btn btn-default btn-xs h30" title="分配" ng-click="addmodelFun(data)"><i class="iconfont icon-fenpeizichanpsd f14"></i></button></td>
                 </tr>
                 </tbody>
             </table>

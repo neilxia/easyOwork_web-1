@@ -588,7 +588,7 @@ function customerdtmainmsgCtrl(){
                     "activityType":row.activityType || '',		//活动类型
                     "startDate":startDate || '',		//活动开始时间
                     "endDate":endDate || '',		//活动结束时间
-                    "remindTime":remindTime || '',		//提醒时间
+                    "remindTime":remindTime,		//提醒时间
                     "memo":row.memo || '',		//备忘
                     "userDTO":row.myActivity[0] || '',
                     "customerDTO":{

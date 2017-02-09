@@ -40,13 +40,13 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="data in datalist | filter:{'assetType':selectclass==null?'':selectclass,'assetName':sltname} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
-                    <td class="pl20">{{data.id}}</td>
+                    <td class="pl20"><a class="a_prime" ui-sref="assets.assetsview({'data':data})">{{data.id}}</a></td>
                     <td>{{data.assetType}}</td>
                     <td>{{data.assetName}}</td>
                     <td>{{data.assetModel}}</td>
-                    <td><span class="orange">{{data.userDTO.name}}</span></td>
+                    <td><span>{{data.userDTO.name}}</span></td>
                     <td>{{data.userDTO.id || '---'}}</td>
-                    <td><button class="btn btn-default btn-xs h30 mr5" title="查看" ui-sref="assets.assetsview({'data':data})"><i class="iconfont icon-chakan f14"></i></button><button class="btn btn-default btn-xs h30" title="回收" ng-click="delete(data)"><i class="iconfont icon-huishoupsd f14"></i></button></td>
+                    <td><button class="btn btn-default btn-xs h30" title="回收" ng-click="delete(data)"><i class="iconfont icon-huishoupsd f14"></i></button></td>
                 </tr>
                 </tbody>
             </table>
