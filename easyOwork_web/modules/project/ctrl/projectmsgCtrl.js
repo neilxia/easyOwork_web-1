@@ -18,6 +18,62 @@ function projectmsglistCtrl(){
             pageNum:1,
             pageSize:10
         };
+        $scope.startDatexx='2016-01-02';
+        $scope.today='2016-01-02';
+        $scope.views = ['year', 'month', 'date', 'hours', 'minutes'];
+
+        $scope.callbackState = 'Callback: Not fired';
+
+        $scope.changeDate = function (modelName, newDate) {
+            console.log(modelName + ' has had a date change. New value is ' + newDate.format());
+            $scope.callbackState = 'Callback: Fired';
+        }
+
+        $scope.changeMinMax = function (modelName, newValue) {
+            //minDate or maxDate updated. Generate events to update relevant pickers
+
+            var values = {
+                minDate: false,
+                maxDate: false,
+            }
+
+            if (modelName === 'dates.minDate') {
+                values.minDate = newValue;
+                $scope.$broadcast('pickerUpdate', ['pickerMinDate', 'pickerMinDateDiv', 'pickerMaxSelector'], values);
+                values.maxDate = $scope.dates.maxDate;
+            } else if (modelName === 'dates.maxDate') {
+                values.maxDate = newValue;
+                $scope.$broadcast('pickerUpdate', ['pickerMaxDate', 'pickerMaxDateDiv', 'pickerMinSelector'], values);
+                values.minDate = $scope.dates.minDate;
+            }
+
+            //For either min/max update, update the pickers which use both.
+            $scope.$broadcast('pickerUpdate', ['pickerBothDates', 'pickerBothDatesDiv'], values);
+        }
+
+        $scope.changeData = function (type) {
+            var values = {},
+                pickersToUpdate = ['pickerMinDate', 'pickerMaxDate', 'pickerBothDates', 'pickerMinDateDiv', 'pickerMaxDateDiv', 'pickerBothDatesDiv', 'pickerRange'];
+
+            switch (type) {
+                case 'view':
+                    values.view = $scope.options.view;
+                    break;
+                case 'minView':
+                    values.minView = $scope.options.minView;
+                    break;
+                case 'maxView':
+                    values.maxView = $scope.options.maxView;
+                    break;
+                case 'format':
+                    values.format = $scope.options.format;
+                    break;
+            }
+
+            if (values) {
+                $scope.$broadcast('pickerUpdate', pickersToUpdate, values);
+            }
+        }
         //查询项目模板
         function inquiryProjectDefFun(){
             $scope.options={};
@@ -66,6 +122,7 @@ function projectmsglistCtrl(){
             if(oldrow==undefined){oldrow=row}
             var startDate=$filter('date')(row.startDate,'yyyy-MM-dd');
             var endDate=$filter('date')(row.endDate,'yyyy-MM-dd');
+            debugger;
             if(change!='DELETE'){
                 $scope.options={
                     "actionType":change,		//ADD, MODIFY, DELETE
@@ -138,6 +195,9 @@ function projectmsglistCtrl(){
                 $scope.modalform.startDate=noseService.getNowDate();
                 $scope.RndNum=function(){
                     $scope.modalform.projectId=noseService.RndNum(8);
+                }
+                $scope.changeDate=function(){
+                    alert(11);
                 }
                 //提交增加
                 $scope.ok = function (state) {
@@ -241,6 +301,7 @@ function projectmsgdtmainlistCtrl(){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                     $scope.datadt=data.body.data.projects[0];
+                    debugger;
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
                 }
@@ -384,7 +445,7 @@ function projectmsgdtmainlistCtrl(){
                     "startDate":startDate || '',	//任务开始时间
                     "endDate":endDate || '',	//任务结束时间
                     "fromUserDTO":userinfo,
-                    "toUserDTO":row.mytask[0],
+                    "toUserDTO":row.mytask,
                     "projectDTO":{
                         "projectName":$scope.datadt.projectName || ''	//项目名称
                     },
@@ -423,12 +484,16 @@ function projectmsgdtmainlistCtrl(){
                 resolve:{
                     Stage : function() {
                         return $scope.datadt.projectStageDTOList;
+                    },
+                    UserDTOList : function() {
+                        return $scope.datadt.projectUserDTOList;
                     }
                 }
             });
-            function modalCtrl ($scope, $modalInstance,Stage) {
+            function modalCtrl ($scope, $modalInstance,Stage,UserDTOList) {
                 $scope.thename='新增';
                 $scope.thisStage=Stage;
+                $scope.thisUserDTOList=UserDTOList;
                 $scope.modalform={};
                 $scope.modalform.projectStageName=Stage[0].projectStageName;
                 $scope.modalform.startDate=noseService.getNowDate();
@@ -451,14 +516,25 @@ function projectmsgdtmainlistCtrl(){
                 resolve:{
                     Stage : function() {
                         return $scope.datadt.projectStageDTOList;
+                    },
+                    UserDTOList : function() {
+                        return $scope.datadt.projectUserDTOList;
                     }
                 }
             });
-            function modalCtrl ($scope, $modalInstance,Stage) {
+            function modalCtrl ($scope, $modalInstance,Stage,UserDTOList) {
                 $scope.thename='编辑';
                 $scope.modalform=row;
                 $scope.thisStage=Stage;
-                $scope.modalform.taskall=[[],[row.toUserDTO]];
+                $scope.thisUserDTOList=UserDTOList;
+                $scope.modalform.projectStageName=row.projectStageDTO.projectStageName;
+                angular.forEach(UserDTOList,function(val,ind){
+                    if(val.name==row.toUserDTO.name){
+                        $scope.modalform.mytask=val;
+                    }
+                });
+                //$scope.modalform.mytask=row.toUserDTO;
+                //$scope.modalform.taskall=[[],[row.toUserDTO]];
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断

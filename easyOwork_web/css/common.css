@@ -188,7 +188,7 @@ textarea{resize: none;}
 
 /*group*/
 .nose-group{position: relative; }
-.nose-group .abs_r{ right: -25px; top: 4px;}
+.nose-group .abs_r{ right: -25px; top: 4px; z-index: 11;}
 .nose-group .popover-content{word-break:keep-all; white-space:nowrap;  }
 .has-error .abs_r ,.has-error .popover-content{ color: #df3c36;}
 
@@ -287,7 +287,7 @@ textarea{resize: none;}
     border-color: #2f4050;
 }
 .navbar-static-side {
-    z-index: 2001;
+    z-index: 999;
     position: absolute;
     width: 220px;
     min-height: 852px;

@@ -801,7 +801,9 @@ function selectdep($timeout){
                     //c = a.concat(b);
                     $scope.ok = function () {
                         //$modalInstance.close();
-                        //$scope.yourCtrl();
+                        if(items=='gw'){
+                            $scope.yourCtrl();
+                        }
                         $modalInstance.close($scope.selected);
                     };
                     $scope.cancel = function () {
@@ -813,7 +815,7 @@ function selectdep($timeout){
 
                     $scope.treeConfig = {
                         core : {
-                            multiple : false, //多选
+                            multiple : items=='gw' ? true:false, //多选
                             animation: true,
                             error : function(error) {
                                 $log.error('treeCtrl: error from js tree - ' + angular.toJson(error));
@@ -830,8 +832,8 @@ function selectdep($timeout){
                             }
                         },
                         version : 1,
-                        //"plugins" : [ "wholerow", "checkbox" ]
-                        plugins : ["wholerow"]
+                        "plugins" : items=='gw' ? [ "wholerow", "checkbox" ] :["wholerow"]
+                        //plugins : ["wholerow"]
                     };
                     $scope.changedCB=function(e,item){
                         $scope.selected=[item.node];

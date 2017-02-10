@@ -5490,7 +5490,7 @@ button.close {
   border-top-width: 0;
   border-bottom-color: #999999;
   border-bottom-color: rgba(0, 0, 0, 0.25);
-  top: -11px;
+  top: -16px;
 }
 .popover.bottom > .arrow:after {
   content: " ";

@@ -266,7 +266,8 @@
                 }
 
                 var s = l.format || g.format, t = f.inheritedData("$formController"), u = h(l.views)(e) || g.views.concat(), v = l.view || u[0], w = u.indexOf(v), x = l.dismiss ? h(l.dismiss)(e) : g.dismiss, y = null, z = l.position || g.position, A = null;
-                if (-1 === w && u.splice(w, 1), u.unshift(v), m.$formatters.push(n), m.$parsers.unshift(o), a.isDefined(l.minDate)) {
+                //if (-1 === w && u.splice(w, 1), u.unshift(v), m.$formatters.push(n), m.$parsers.unshift(o), a.isDefined(l.minDate)) {
+                if (-1 === w && u.splice(w, 1), u.unshift(v), m.$formatters.push(n), a.isDefined(l.minDate)) {
                     var B;
                     m.$validators.min = function (b) {
                         return !i.isValidDate(b) || a.isUndefined(B) || b >= B

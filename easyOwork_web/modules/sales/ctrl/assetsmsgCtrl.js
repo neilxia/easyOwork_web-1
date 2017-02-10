@@ -103,7 +103,7 @@ function assetsmsgCtrl(){
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
-                    inquiryCustomerFun();
+                    inquirySaleFun();
                     $modalInstance.close();
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);

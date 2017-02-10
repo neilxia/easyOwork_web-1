@@ -291,7 +291,14 @@
                     <tr>
                         <td width="60">分配任务</td>
                         <td class="pl10">
-                            <div selectdepyuan yuangong="1" myselected="modalform.mytask" selectedallarr="modalform.taskall"></div>
+                            <select class="form-control" ng-model="modalform.mytask" ng-options="x as (x.orgList[0].name +'--'+ x.name) for x in thisUserDTOList" required>
+                                <option value="">请选择</option>
+                            </select>
+                            <!--<select class="form-control" ng-model="modalform.mytask">
+                                <option value="">请选择</option>
+                                <option ng-repeat="x in thisUserDTOList" value="{{x}}">{{x.orgList[0].name}} {{x.name}}</option>
+                            </select>-->
+                            <!--<div selectdepyuan yuangong="1" myselected="modalform.mytask" selectedallarr="modalform.taskall"></div>-->
                         </td>
                     </tr>
                     <tr>
@@ -465,7 +472,7 @@
 								项目进度:
 							</div>
                             <div class="nose-group col-xs-4">
-                                <input type="number" name="progress" class="form-control" placeholder="项目进度, 输入整数" ng-model="progress" required></input>
+                                <input type="number" name="progress" class="form-control" placeholder="项目进度, 输入整数" ng-model="progress" required />
                             </div>
 							<div class="col-xs-4 t_l">
 								%

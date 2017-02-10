@@ -55,7 +55,13 @@ function staffmsgCtrl(){
                 return;
             }
             var orgList=row.orgList.length == 0 ?[]:[{"name":row.orgList[0].text || row.orgList[0].name}];
-            var roleList=row.roleList.length == 0?[]:[{"name":row.roleList[0].text || row.roleList[0].name}];
+            var roleList=[];
+            angular.forEach(row.roleList,function(val,ind){
+                roleList.push({"name":val.text || val.name})
+            });
+            debugger;
+
+            //var roleList=row.roleList.length == 0?[]:[{"name":row.roleList[0].text || row.roleList[0].name}];
             var salaryTypeList=getsalaryTypeList(row.salaryTypeList);
             salaryTypeList= salaryTypeList.length == 0?[]:salaryTypeList;
 
@@ -239,7 +245,6 @@ function staffmsgCtrl(){
                     autoUpload:false
                 });
                 htUploader.onAfterAddingFile = function(fileItem){
-                    debugger;
                     htUploader.cancelAll();
                      var file = $("#contract").get(0).files[0];
                      var filePath = LocalStorage.getObject('userinfo').entId+'/employee/contract/'+noseService.randomWord(false, 32)+'_';
@@ -262,7 +267,6 @@ function staffmsgCtrl(){
                 };
                 
                 $scope.user=row;
-                debugger;
 /*                $scope.bbbb=function(){
                     $scope.user.orgList;
                 }*/
