@@ -77,10 +77,11 @@
                                 <tr>
                                     <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
                                     <th>任务名称</th>
-                                    <th width="100">所在项目阶段</th>
+                                    <th width="100">项目阶段</th>
                                     <th width="160">开始/结束时间</th>
                                     <th width="100">实施人列表</th>
                                     <th width="100">任务状态</th>
+                                    <th width="100">完成百分比</th>
                                     <th width="90">操作</th>
                                 </tr>
                                 </thead>
@@ -88,10 +89,11 @@
                                 <tr ng-repeat="data in datadt.projectTaskDTOList">
                                     <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
                                     <td>{{data.taskName}}</td>
-                                    <td>{{data.taskName}}</td>
+                                    <td>{{data.projectStageDTO.projectStageName}}</td>
                                     <td>{{data.startDate}} ~ {{data.endDate}}</td>
                                     <td>{{data.toUserDTO.name}}</td>
                                     <td>{{data.status}}</td>
+                                    <td>{{data.progress}}%</td>
                                     <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editTask(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deleteTask(data)"><i class="iconfont icon-del f14"></i></button></td>
                                 </tr>
                                 </tbody>

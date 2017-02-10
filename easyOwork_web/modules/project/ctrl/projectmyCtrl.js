@@ -87,11 +87,12 @@ function projectmydtmainlistCtrl(){
 
         /*=======任务=======*/
         //添加/修改/删除
-        function changeProjectTaskFun(change,row){
+        function changeProjectTaskFun(change,row,$modalInstance){
             $scope.options={
                 'actionType':change,		//ADD, MODIFY, DELETE
                 "taskName":row.taskName || '',	//任务名称
-                "status":'已完成',	//任务状态
+                "status":row.status,	//任务状态
+                "progress":row.progress,	//任务完成百分比
                 "projectDTO":{
                     "projectName":$scope.datadt.projectName || ''	//项目名称
                 },
@@ -115,30 +116,33 @@ function projectmydtmainlistCtrl(){
         }
 
         //完成
-        $scope.editTask=function(row){
+        /*$scope.editTask=function(row){
             Common.openConfirmWindow('','你确定要完成这个任务！').then(function() {
                 changeProjectTaskFun('MODIFY',row);
             });
-        };
-/*        $scope.editTask = function (row) {
+        };*/
+        $scope.editTask = function (row) {
             var oldrow=angular.copy(row);
             var modalInstance = $modal.open({
-                templateUrl: 'addTask.html',
-                controller: modalCtrl,
-                resolve:{
-                    Stage : function() {
-                        return $scope.datadt.projectStageDTOList;
-                    }
-                }
+                templateUrl: 'edittask.html',
+                controller: modalCtrl
             });
-            function modalCtrl ($scope, $modalInstance,Stage) {
+            function modalCtrl ($scope, $modalInstance) {
                 $scope.thename='编辑';
                 $scope.modalform=row;
-                $scope.thisStage=Stage;
-                $scope.modalform.taskall=[[],[row.toUserDTO]];
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
+                    changeProjectTaskFun('MODIFY',$scope.modalform,$modalInstance,oldrow);
+                };
+                $scope.start = function (state) {
+                    if(!state){return;} //状态判断
+                    $scope.modalform.status="已开始"
+                    changeProjectTaskFun('MODIFY',$scope.modalform,$modalInstance,oldrow);
+                };
+                $scope.reject = function (state) {
+                    if(!state){return;} //状态判断
+                    $scope.modalform.status="已拒绝"
                     changeProjectTaskFun('MODIFY',$scope.modalform,$modalInstance,oldrow);
                 };
                 $scope.cancel = function () {
@@ -146,7 +150,7 @@ function projectmydtmainlistCtrl(){
                     $modalInstance.dismiss('cancel');
                 };
             };
-        };*/
+        };
 
 
 
