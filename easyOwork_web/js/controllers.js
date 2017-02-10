@@ -30,7 +30,7 @@ angular.module('qiyi')
             if(data.attendances.length>0){
         		$scope.attendance = data.attendances[0];
         	}else{
-        		$scope.attendance = {};
+        		$scope.attendance = null;
         	}
             //备忘录
             $scope.memoslist=data.memos;

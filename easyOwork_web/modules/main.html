@@ -160,10 +160,10 @@
                                         <div class="g9">{{fromTime}}</div>
                                     </td>
                                     <td width="70">
-                                        <div class="f20 orange" ng-show="attendance.inHour&&attendance.inHour>9&&attendance.inMinute>9">{{attendance.inHour}}:{{attendance.inMinute}}</div>
-                                        <div class="f20 orange" ng-show="attendance.inHour&&attendance.inHour<10&&attendance.inMinute>9">0{{attendance.inHour}}:{{attendance.inMinute}}</div>
-                                        <div class="f20 orange" ng-show="attendance.inHour&&attendance.inHour>9&&attendance.inMinute<10">{{attendance.inHour}}:0{{attendance.inMinute}}</div>
-                                        <div class="f20 orange" ng-show="attendance.inHour&&attendance.inHour<10&&attendance.inMinute<10">0{{attendance.inHour}}:0{{attendance.inMinute}}</div>
+                                        <div class="f20 orange" ng-show="attendance.inHour>9&&attendance.inMinute>9">{{attendance.inHour}}:{{attendance.inMinute}}</div>
+                                        <div class="f20 orange" ng-show="attendance.inHour<10&&attendance.inMinute>9">0{{attendance.inHour}}:{{attendance.inMinute}}</div>
+                                        <div class="f20 orange" ng-show="attendance.inHour>9&&attendance.inMinute<10">{{attendance.inHour}}:0{{attendance.inMinute}}</div>
+                                        <div class="f20 orange" ng-show="attendance.inHour<10&&attendance.inMinute<10">0{{attendance.inHour}}:0{{attendance.inMinute}}</div>
                                     </td>
                                     <td rowspan='2'>
                                         <div class="g9">{{currentDate.cweek}}</div>
@@ -177,16 +177,16 @@
                                         <div class="g9">{{toTime}}</div>
                                     </td>
                                     <td width="70">
-                                        <div class="f20 orange" ng-show="attendance.inHour&&attendance.outHour>0&&attendance.outHour>9&&attendance.outMinute>9">{{attendance.outHour}}:{{attendance.outMinute}}</div>
-                                        <div class="f20 orange" ng-show="attendance.inHour&&attendance.outHour>0&&attendance.outHour<10&&attendance.outMinute>9">0{{attendance.outHour}}:{{attendance.outMinute}}</div>
-                                        <div class="f20 orange" ng-show="attendance.inHour&&attendance.outHour>0&&attendance.outHour>9&&attendance.outMinute<10">{{attendance.outHour}}:0{{attendance.outMinute}}</div>
-                                        <div class="f20 orange" ng-show="attendance.inHour&&attendance.outHour>0&&attendance.outHour<10&&attendance.outMinute<10">0{{attendance.outHour}}:0{{attendance.outMinute}}</div>
+                                        <div class="f20 orange" ng-show="attendance&&(attendance.outHour>0||attendance.outMinute)&&attendance.outHour>9&&attendance.outMinute>9">{{attendance.outHour}}:{{attendance.outMinute}}</div>
+                                        <div class="f20 orange" ng-show="attendance&&(attendance.outHour>0||attendance.outMinute)&&attendance.outHour<10&&attendance.outMinute>9">0{{attendance.outHour}}:{{attendance.outMinute}}</div>
+                                        <div class="f20 orange" ng-show="attendance&&(attendance.outHour>0||attendance.outMinute)&&attendance.outHour>9&&attendance.outMinute<10">{{attendance.outHour}}:0{{attendance.outMinute}}</div>
+                                        <div class="f20 orange" ng-show="attendance&&(attendance.outHour>0||attendance.outMinute)&&attendance.outHour<10&&attendance.outMinute<10">0{{attendance.outHour}}:0{{attendance.outMinute}}</div>
                                     </td>
                                 </tr>
                             </table>
                             <div class="mt15">
-                                <button class="btn btn-primary btn-block" ng-if="!attendance.inHour"ng-click="signInOutFun('IN')">签到</button>
-                                <button class="btn btn-primary btn-block" ng-if="attendance.inHour&&!attendance.outHour"ng-click="signInOutFun('OUT')">签退</button>
+                                <button class="btn btn-primary btn-block" ng-if="!attendance"ng-click="signInOutFun('IN')">签到</button>
+                                <button class="btn btn-primary btn-block" ng-if="attendance&&!attendance.outHour&&!attendance.outMinute"ng-click="signInOutFun('OUT')">签退</button>
                             </div>
                         </div>
                     </div>
