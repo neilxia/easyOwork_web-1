@@ -12,7 +12,7 @@ function clockingInlistCtrl(){
                 attendanceMonth:date.getMonth()+1,
                 attendanceDay:date.getDate()
             }
-        $scope.init = function(){
+        $scope.initFun=function(){
             if(attendance.attendanceMonth<10)
         		$scope.form = {"attendanceDate":attendance.attendanceYear+"-0"+attendance.attendanceMonth};
         	else
@@ -126,7 +126,7 @@ function clockingInviewCtrl(){
             pageNum:1,
             pageSize:10
         };*/
-        $scope.init = function(){
+        $scope.initFun=function(){
             inquiryAttendanceFun();
         };
         //查询考勤记录当月

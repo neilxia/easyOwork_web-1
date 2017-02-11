@@ -4,7 +4,7 @@
 <div id="page-wrapper" ng-controller="customerdtmainmsgCtrl" ng-init="initFun()">
     <!--主要内容-->
     <div class="payetilebox">
-        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="init()" title="刷新"></a></div>
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="initFun()" title="刷新"></a></div>
         <ul>
             <li class="active">客户详情</li>
         </ul>
@@ -431,13 +431,13 @@
                     <tr>
                         <td width="60">活动名称</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.activityName" placeholder="输入活动名称">
+                            <input type="text" class="form-control" ng-model="modalform.activityName" placeholder="输入活动名称" required>
                         </td>
                     </tr>
                     <tr>
                         <td width="60">活动类型</td>
                         <td class="pl10">
-                            <select class="form-control" ng-model="modalform.activityType">
+                            <select class="form-control" ng-model="modalform.activityType" required>
                                 <option value="">活动类型</option>
                                 <option value="拜访客户">拜访客户</option>
                                 <option value="会议">会议</option>
@@ -449,11 +449,11 @@
                         <td width="60">活动周期</td>
                         <td class="pl10">
                             <div class="qiyi-group line20td f_l" style="width: 210px;">
-                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.startDate" view="date"  format="yyyy-MM-dd HH:mm"  auto-close="true" placeholder="选择开始时间">
+                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.startDate" view="date"  format="yyyy-MM-dd HH:mm"  auto-close="true" placeholder="选择开始时间" required>
                                 <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
                             </div>
                             <div class="qiyi-group line20td f_l ml10" style="width: 209px;">
-                                <input type="datetime" name="endDate" class="form-control" date-time ng-model="modalform.endDate" view="date"  format="yyyy-MM-dd HH:mm"  auto-close="true" placeholder="选择结束时间">
+                                <input type="datetime" name="endDate" class="form-control" date-time ng-model="modalform.endDate" view="date"  format="yyyy-MM-dd HH:mm"  auto-close="true" placeholder="选择结束时间" required>
                                 <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
                             </div>
                         </td>
@@ -462,6 +462,7 @@
                         <td width="60">负责人员</td>
                         <td class="pl10">
                             <div selectdepyuan yuangong="1" myselected="modalform.myActivity" selectedallarr="modalform.myActivityall"></div>
+                            <input type="hidden" ng-model="modalform.myActivity" required>
                         </td>
                     </tr>
                 </table>
@@ -509,40 +510,46 @@
                     <tr>
                         <td width="60">联系人</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.contactName" placeholder="输入联系人名称">
+                            <input type="text" class="form-control" ng-model="modalform.contactName" placeholder="输入联系人名称" required ng-maxlength="20">
                         </td>
                     </tr>
-                    <tr>
-                        <td>电子邮箱</td>
-                        <td class="pl10">
-                            <div class="nose-group" ng-class="{'has-error':baseForm.contactEmail.$dirty && baseForm.contactEmail.$invalid}">
-                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.contactEmail.$dirty && baseForm.contactEmail.$invalid" popover="正确的邮箱地址" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                <input type="text"  name="contactEmail" ng-model="modalform.contactEmail"  multiple-email class="form-control" placeholder="输入联系人电子邮箱">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>手机号码</td>
-                        <td class="pl10">
-                            <div class="nose-group" ng-class="{'has-error':baseForm.contactMobileNo.$dirty && baseForm.contactMobileNo.$invalid}">
-                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.contactMobileNo.$dirty && baseForm.contactMobileNo.$invalid" popover="请输入11位手机号" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                <input type="text"  name="contactMobileNo" ng-model="modalform.contactMobileNo"  multiple-email class="form-control" placeholder="输入联系人手机号码">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="60">职位</td>
-                        <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.contactPosition" placeholder="输入联系人职位">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="60" valign="top">备注</td>
-                        <td class="pl10">
-                            <textarea class="form-control" rows="3" ng-model="modalform.contactMemo" maxlength="100" placeholder="请输入备注"></textarea>
-                        </td>
-                    </tr>
+
                 </table>
+                <div showhid>
+                    <table cellpadding="0" cellspacing="0" width="100%" class="line40td dropdown" style="display: none;">
+                        <tr>
+                            <td width="60">电子邮箱</td>
+                            <td class="pl10">
+                                <div class="nose-group" ng-class="{'has-error':baseForm.contactEmail.$dirty && baseForm.contactEmail.$invalid}">
+                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.contactEmail.$dirty && baseForm.contactEmail.$invalid" popover="正确的邮箱地址" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                    <input type="text"  name="contactEmail" ng-model="modalform.contactEmail"  multiple-email class="form-control" placeholder="输入联系人电子邮箱">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>手机号码</td>
+                            <td class="pl10">
+                                <div class="nose-group" ng-class="{'has-error':baseForm.contactMobileNo.$dirty && baseForm.contactMobileNo.$invalid}">
+                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.contactMobileNo.$dirty && baseForm.contactMobileNo.$invalid" popover="请输入11位手机号" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                    <input type="text"  name="contactMobileNo" ng-model="modalform.contactMobileNo"  multiple-email class="form-control" placeholder="输入联系人手机号码">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="60">职位</td>
+                            <td class="pl10">
+                                <input type="text" class="form-control" ng-model="modalform.contactPosition" placeholder="输入联系人职位">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="60" valign="top">备注</td>
+                            <td class="pl10">
+                                <textarea class="form-control" rows="3" ng-model="modalform.contactMemo" maxlength="100" placeholder="请输入备注"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="pt10" style="padding-left: 70px;"><a class="clickbtn" title="展开/收起"><i class="fa fa-lg fa-angle-down"></i><span class="f12 g9 ml5">选填字段</span></a></div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>

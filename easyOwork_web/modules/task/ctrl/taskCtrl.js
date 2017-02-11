@@ -7,7 +7,7 @@ function sendtaskCtrl(){
             pageNum:1,
             pageSize:10
         };
-    	$scope.init = function(){
+    	$scope.initFun=function(){
     		inquiryCreatedTasks();
     	};
     	function inquiryCreatedTasks(){
@@ -43,7 +43,7 @@ function sendtaskCtrl(){
                 promise.success(function(data, status, headers, config){
                 	var sts=data.body.status;
                     if(sts.statusCode==0){
-                    	$scope.init();
+                    	$scope.initFun();
                     }else{
                         MsgService.tomsg(data.body.status.errorDesc);
                     }
@@ -71,7 +71,7 @@ function sendtaskCtrl(){
                 promise.success(function(data, status, headers, config){
                 	var sts=data.body.status;
                     if(sts.statusCode==0){
-                    	$scope.init();
+                    	$scope.initFun();
                     }else{
                         MsgService.tomsg(data.body.status.errorDesc);
                     }
@@ -97,7 +97,7 @@ function receivetaskCtrl(){
             pageNum:1,
             pageSize:10
         };
-    	$scope.init = function(){
+    	$scope.initFun=function(){
     		inquiryAssignedTasks();
     	};
     	function inquiryAssignedTasks(){
@@ -136,7 +136,7 @@ function addtaskCtrl(){
     	
     	var userinfo=LocalStorage.getObject('userinfo');
     	$scope.editMode = false;
-    	$scope.init = function(){
+    	$scope.initFun=function(){
 	    	$scope.task={
 	    		"taskType":"",
 	    		"title":"",
@@ -221,7 +221,7 @@ function viewtaskCtrl(){
     return['$scope', '$modal' ,'$compile','$state','roleService','MsgService','taskService','LocalStorage','$stateParams','noseService',function($scope,$modal,$compile,$state,roleService,MsgService,taskService,LocalStorage,$stateParams,noseService){
     	
     	var userinfo=LocalStorage.getObject('userinfo');
-    	$scope.init = function(){
+    	$scope.initFun=function(){
 	    	var selectedTask = $stateParams.selectedTask;
 	    	if(selectedTask != undefined && selectedTask != null){
 	    		$scope.task = selectedTask;

@@ -21,8 +21,7 @@ function permissionsCtrl(){
         	"searchRoleName":"",
         	"selectedRoles":{}
         };
-        $scope.init = function(){
-        	debugger;
+        $scope.initFun=function(){
         	FuncListAllRoles();
         };
         
@@ -120,7 +119,7 @@ function permissionsCtrl(){
      		}
         };
         
-        $scope.init();
+        $scope.initFun();
 
     }]
 }
@@ -211,7 +210,7 @@ function permissionsaddCtrl(){
         		"roleDesc":""
         	};
 		//$scope.thisform=$scope.thisform;
-        $scope.init = function(){
+        $scope.initFun=function(){
         	$scope.editMode = false;
         	var selectedRole = $stateParams.selectedRole;
         	if(selectedRole != undefined && selectedRole != ""){	//编辑模式
@@ -262,7 +261,7 @@ function permissionsaddCtrl(){
             })
             
         };
-        $scope.init();
+        $scope.initFun();
     }]
 }
 
@@ -344,7 +343,7 @@ function permissionsviewCtrl(){
         		"roleDesc":""
         	};
 		//$scope.thisform=$scope.thisform;
-        $scope.init = function(){
+        $scope.initFun=function(){
         	$scope.editMode = false;
         	var selectedRole = $stateParams.selectedRole;
         	if(selectedRole != undefined && selectedRole != ""){	//编辑模式
@@ -353,6 +352,6 @@ function permissionsviewCtrl(){
         	}
         	$scope.FuncListAllFunctions();
         }
-        $scope.init();
+        $scope.initFun();
     }]
 }

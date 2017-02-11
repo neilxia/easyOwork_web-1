@@ -2,7 +2,7 @@
 function analysisListCtrl(){
     return['$rootScope','$scope', '$modal' ,'$compile','$state','roleService','notify','analysisService','$stateParams',function($rootScope,$scope,$modal,$compile,$state,roleService,notify,analysisService,$stateParams){
     	
-    	$scope.init = function(){
+    	$scope.initFun=function(){
     		$scope.getAnalysisSummary();
     	}
     	$scope.getAnalysisSummary = function(){
@@ -56,7 +56,7 @@ function analysisEmployeeCtrl(){
         	        }
         	    ]
     	};
-		$scope.init = function(){
+		$scope.initFun=function(){
 			var chartType=$rootScope.$stateParams.type;
 			if(chartType == 'org')
 				$scope.getOrgEmployeeChart();
@@ -147,7 +147,7 @@ function analysisProjectCtrl(){
         	        }
         	    ]
     	};
-		$scope.init = function(){
+		$scope.initFun=function(){
 			var currentYear = new Date().getFullYear();
 			$scope.currentYear = currentYear;
 			$scope.changeYear(currentYear);
@@ -236,7 +236,7 @@ function analysisCustomerCtrl(){
         	        }
         	    ]
     	};
-		$scope.init = function(){
+		$scope.initFun=function(){
 			var chartType=$rootScope.$stateParams.type;
 			if(chartType == 'customer')
 				$scope.getCustomerCustomerChart();

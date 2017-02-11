@@ -1,7 +1,7 @@
 function noticelistCtrl(){
     return['$scope','$modal','$state','$http','noticeService','MsgService','LocalStorage','Common',function($scope,$modal,$state,$http,noticeService,MsgService,LocalStorage,Common){
 
-        $scope.init = function(){
+        $scope.initFun=function(){
             inquiryAnnouncementsFun();
         };
         var userinfo=LocalStorage.getObject('userinfo');

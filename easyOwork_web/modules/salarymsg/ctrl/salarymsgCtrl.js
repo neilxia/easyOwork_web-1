@@ -1,7 +1,7 @@
 
 function salarymsgissueCtrl(){
     return['$scope', '$modal' ,'$compile','$state','roleService','MsgService','salaryService','LocalStorage','Common',function($scope,$modal,$compile,$state,roleService,MsgService,salaryService,LocalStorage,Common){
-        $scope.init=function(){
+        $scope.initFun=function(){
             inquiryPayrollSummaryFun();//查询薪酬总额
         }
         var date = new Date();
@@ -72,7 +72,7 @@ function salarymsglistCtrl(){
             attendanceDay:date.getDate()
         }
         $scope.form = {};
-        $scope.init=function(){
+        $scope.initFun=function(){
         	if(thismonth<10)
         		$scope.form = {"payrollDate":thisyear+"-0"+thismonth};
         	else
