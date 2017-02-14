@@ -726,10 +726,10 @@ function selectdep($timeout){
                 };
                 function getNewarr(arr,parentId){
                     angular.forEach(arr,function(val,ind){
-                        if(val.childOrgs.length>0){
-                            getNewarr(val.childOrgs,ind)
-                        }
                         var idname=parentId=='#'?ind.toString():(parentId+'-'+ind);
+                        if(val.childOrgs.length>0){
+                            getNewarr(val.childOrgs,idname)
+                        }
                         pmData.push({id:idname,parent:parentId,text:val.name});
                     });
                 }
@@ -739,7 +739,6 @@ function selectdep($timeout){
                     var datas=data.body;
                     if(datas.status.statusCode==0){
                         getNewarr(datas.data.orgs,'#');
-
                     }else{
                         MsgService.tomsg(data.body.status.errorDesc);
                     }
@@ -894,10 +893,10 @@ function selectdepyuan($timeout){
             getCompanyOrg();
             function getNewarr(arr,parentId){
                 angular.forEach(arr,function(val,ind){
-                    if(val.childOrgs.length>0){
-                        getNewarr(val.childOrgs,ind)
-                    }
                     var idname=parentId=='#'?ind.toString():(parentId+'-'+ind);
+                    if(val.childOrgs.length>0){
+                        getNewarr(val.childOrgs,idname)
+                    }
                     pmData.push({id:idname,parent:parentId,text:val.name,state: { opened: true}});
                 });
             }

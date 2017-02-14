@@ -339,6 +339,7 @@
                         <td class="pl10">
                             <div class="btn btn-default upheadbtn">
                                 <input type="file" id="saleContract" nv-file-select uploader="saleContractUploader"/>本地上传
+                                <input type="hidden" ng-model="modalform.url" required>
                             </div>
                             <a ng-href="{{modalform.url}}" target="_blank">{{modalform.contractName}}</a> <a class="red f12" ng-click="deleteDocument()">删除</a>
                         </td>
@@ -416,6 +417,7 @@
                         <td width="60" valign="top">
                             <div class="btn btn-default upheadbtn dib">
                                 <input type="file" id="saleDocumentFile" nv-file-select uploader="saleDocumentUploader"/>上传文档
+                                <input type="hidden" ng-model="modalform.documentUrl" required>
                             </div>
                         </td>
                         <td class="pl10">
@@ -453,7 +455,7 @@
                         <td width="60">活动类型</td>
                         <td class="pl10">
                             <select class="form-control" ng-model="modalform.activityType" required>
-                                <option value="">活动类型</option>
+                                <option value="">选择类型</option>
                                 <option value="拜访客户">拜访客户</option>
                                 <option value="会议">会议</option>
                                 <option value="其他">其他</option>

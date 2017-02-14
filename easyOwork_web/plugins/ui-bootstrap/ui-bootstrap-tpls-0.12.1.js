@@ -2095,8 +2095,8 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
 
         var $modalProvider = {
             options: {
-                backdrop: 'static', //can be also false or 'static' cj
-                keyboard: true
+                backdrop: 'static', //can be also false or 'static' //cj
+                keyboard: false //cj true
             },
             $get: ['$injector', '$rootScope', '$q', '$http', '$templateCache', '$controller', '$modalStack',
                 function ($injector, $rootScope, $q, $http, $templateCache, $controller, $modalStack) {

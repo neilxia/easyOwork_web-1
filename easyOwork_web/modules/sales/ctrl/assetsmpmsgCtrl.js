@@ -60,7 +60,8 @@ function assetsmpmsgCtrl(){
         };
         $scope.inquirySalelist=function(year,org,user){
             year=$filter('date')(year,'yyyy');
-            year=year?year:curryear;
+            //year=year?year:curryear;
+            year=year?year:"";
             var thisorg={};
             if(org){
                 thisorg.name=org.text || ""
@@ -73,7 +74,7 @@ function assetsmpmsgCtrl(){
             if(oldrow==undefined){oldrow=row}
             if(change!='DELETE'){
                 var year=$filter('date')(row.year,'yyyy');
-                var month=$filter('date')(row.month,'M');
+                var month=$filter('date')(row.month,'yyyy-M');
 
                 $scope.options={
                     "actionType":change,		//ADD, MODIFY, DELETE
@@ -96,8 +97,9 @@ function assetsmpmsgCtrl(){
                     $scope.options.year=curryear;
                     $scope.options.quarter=row.quarter;
                 }else if(row.targetType=='MONTH'){
-                    $scope.options.year=curryear;
-                    $scope.options.month=month;
+                    var montharr=month.split('-');
+                    $scope.options.year=montharr[0];
+                    $scope.options.month=montharr[1];
                 }
             }else {
                 $scope.options={
@@ -162,6 +164,12 @@ function assetsmpmsgCtrl(){
             function modalCtrl ($scope, $modalInstance,item) {
                 $scope.thename='编辑';
                 $scope.modalform=row;
+                if(row.targetType=='YEAR'){
+                    $scope.modalform.year=row.year+'-01-01';
+                }
+                if(row.targetType=='MONTH'){
+                    $scope.modalform.month=row.year+'-'+row.month;
+                }
                 $scope.radioModel=item;
                 $scope.modalform.orgDTO=[row.orgDTO];
                 $scope.modalform.myuserDTO=[row.userDTO];

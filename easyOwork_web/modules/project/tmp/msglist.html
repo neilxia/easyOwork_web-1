@@ -87,7 +87,7 @@
                         <td width="60">项目编号</td>
                         <td class="pl10">
                             <div class="form-inline">
-                                <input type="text" class="form-control" ng-model="modalform.projectId" style="width: 344px;">
+                                <input type="text" class="form-control" ng-model="modalform.projectId" style="width: 344px;" required>
                                 <button class="btn btn-default" type="button" ng-click="RndNum()">随机生成</button>
                             </div>
                         </td>
@@ -95,7 +95,7 @@
                     <tr ng-show="thename!='编辑'">
                         <td width="60">项目模板</td>
                         <td class="pl10">
-                            <select class="form-control" ng-model="modalform.projectDefName" ng-options="x.projectDefName as x.projectDefName for x in projectDefNames">
+                            <select class="form-control" ng-model="modalform.projectDefName" ng-options="x.projectDefName as x.projectDefName for x in projectDefNames" required>
                                 <option value=''>请选择</option>
                             </select>
                         </td>
@@ -103,7 +103,7 @@
                     <tr>
                         <td width="60">项目名称</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.projectName" placeholder="输入项目名称">
+                            <input type="text" class="form-control" ng-model="modalform.projectName" placeholder="输入项目名称" required>
                         </td>
                     </tr>
                     <tr>
@@ -111,11 +111,11 @@
                         <td class="pl10">
                             <!--{{modalform.startDate}}-->
                             <div class="qiyi-group line20td f_l" style="width: 210px;">
-                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.startDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="选择开始时间">
+                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.startDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="选择开始时间" required>
                                 <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
                             </div>
                             <div class="qiyi-group line20td f_l ml10" style="width: 209px;">
-                                <input type="datetime" name="endDate" class="form-control" date-time ng-model="modalform.endDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="选择结束时间">
+                                <input type="datetime" name="endDate" class="form-control" date-time ng-model="modalform.endDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="选择结束时间" required>
                                 <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
                             </div>
                         </td>
@@ -124,6 +124,7 @@
                         <td width="60">负责人员</td>
                         <td class="pl10">
                             <div selectdepyuan yuangong="1" myselected="modalform.myselected" selectedallarr="modalform.selectedallarr"></div>
+                            <input type="hidden" ng-model="modalform.myselected" required>
                         </td>
                     </tr>
                 </table>

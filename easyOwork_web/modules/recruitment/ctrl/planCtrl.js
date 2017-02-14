@@ -73,6 +73,7 @@ function planlistCtrl(){
                     "planName":row.planName		//招聘计划名称
                 };
             }
+            debugger;
             var promise = RecruitFlowService.changeRecruitPlan({body:$scope.options});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;

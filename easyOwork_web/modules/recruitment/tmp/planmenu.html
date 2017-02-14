@@ -29,7 +29,8 @@
             <!-- <li ng-class="{active:$state.includes('planlist.planlist')}"> -->
                 <!-- <a><i class="iconfont icon-zichankupsd"></i> <span class="nav-label">面试流程</span> <span class="fa arrow"></span></a> -->
                 <!-- <ul class="nav nav-second-level"> -->
-                    <li ng-class="{active:$state.includes('planlist.dtprocess')}" ng-repeat="data in datalist | orderBy:['flowNodeSequence']">
+                    <!--<li ng-class="{active:$state.includes('planlist.dtprocess')}" ng-repeat="data in datalist | orderBy:['flowNodeSequence']">-->
+                    <li ng-repeat="data in datalist | orderBy:['flowNodeSequence']">
                         <a><i class="iconfont icon-zichankupsd"></i><span class="nav-label">{{data.flowNodeName}}</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li ui-sref-active="active">

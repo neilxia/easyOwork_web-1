@@ -74,13 +74,13 @@
         <div class="dropdown pull-left" dropdown="">
             <a dropdown-toggle="" aria-haspopup="true" aria-expanded="false"><i class="iconfont icon-more f20"></i></a>
             <ul class="dropdown-menu" role="menu">
-            	<li><a ng-class="{active:$state.includes('sysmsg')}" ui-sref="sysmsg.info" accessId="A001-001||A001-002"><i class="iconfont icon-shezhi mr5"></i>企业设置</a></li>
-            	<li><a ng-class="{active:$state.includes('structuremsg')}" ui-sref="structuremsg.list" accessId="A001-001"><i class="iconfont icon-zuzhi mr5"></i>组织架构</a></li>
-            	<li><a ng-class="{active:$state.includes('permissions')}" ui-sref="permissions.list" accessId="A001-003"><i class="iconfont icon-peizhi mr5"></i>权限</a></li>
+            	<li accessId="A001-001||A001-002"><a ng-class="{active:$state.includes('sysmsg')}" ui-sref="sysmsg.info" ><i class="iconfont icon-shezhi mr5"></i>企业设置</a></li>
+            	<li accessId="A001-001"><a ng-class="{active:$state.includes('structuremsg')}" ui-sref="structuremsg.list" ><i class="iconfont icon-zuzhi mr5"></i>组织架构</a></li>
+            	<li accessId="A001-003"><a ng-class="{active:$state.includes('permissions')}" ui-sref="permissions.list" ><i class="iconfont icon-peizhi mr5"></i>权限</a></li>
             	<!-- <li><a ng-class="{active:$state.includes('notice')}" ui-sref="notice.list"><i class="iconfont icon-gonggao mr5"></i>公告</a></li> -->
                 <li><a ng-class="{active:$state.includes('clockingIn')}" ui-sref="clockingIn.my"><i class="iconfont icon-kaoqing mr5"></i>考勤</a></li>
                 <li><a ng-class="{active:$state.includes('salarymsg')}" ui-sref="salarymsg.list"><i class="iconfont icon-gongzi mr5"></i>薪资</a></li>
-                <li><a ng-class="{active:$state.includes('analysis')}" ui-sref="analysis.list" accessId="A016-001"><i class="iconfont icon-juece mr5"></i>决策</a></li>
+                <li accessId="A016-001"><a ng-class="{active:$state.includes('analysis')}" ui-sref="analysis.list" ><i class="iconfont icon-juece mr5"></i>决策</a></li>
             </ul>
         </div>
         <!--<a><i class="iconfont icon-more"></i></a>-->

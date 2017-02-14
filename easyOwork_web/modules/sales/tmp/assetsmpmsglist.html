@@ -200,6 +200,7 @@
                     <tr>
                         <td width="60">选择周期</td>
                         <td class="pl10">
+
                             <div class="qiyi-group line20td" ng-if="modalform.targetType=='YEAR'">
                                 <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.year" view="year" min-view="year" format="yyyy"  auto-close="true">
                                 <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
@@ -211,7 +212,7 @@
                                 <option value="4">4季度</option>
                             </select>
                             <div class="qiyi-group line20td" ng-if="modalform.targetType=='MONTH'">
-                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.month" view="month" min-view="month" format="M"  auto-close="true" required>
+                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.month" view="month" min-view="month" format="yyyy-MM"  auto-close="true" required>
                                 <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
                             </div>
                         </td>
