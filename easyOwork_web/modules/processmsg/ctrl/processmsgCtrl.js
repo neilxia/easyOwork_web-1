@@ -196,7 +196,7 @@ function addpcsCtrl(){
 
 /*====================我的申请=================================*/
 function mypcsCtrl(){
-    return['$rootScope','$scope', '$modal','Common','processService','LocalStorage',function($rootScope,$scope,$modal,Common,processService,LocalStorage){
+    return['$rootScope','$scope', '$modal','Common','processService','LocalStorage','MsgService',function($rootScope,$scope,$modal,Common,processService,LocalStorage,MsgService){
 
         //$scope.active=true;
         var userinfo=LocalStorage.getObject('userinfo');
@@ -296,7 +296,7 @@ function mypcsCtrl(){
 }
 /*====================我的申请详情=================================*/
 function mypcsdetailCtrl(){
-    return['$rootScope','$scope','LocalStorage','Common','processService',function($rootScope,$scope,LocalStorage,Common,processService){
+    return['$rootScope','$scope','LocalStorage','Common','processService','MsgService',function($rootScope,$scope,LocalStorage,Common,processService,MsgService){
         $scope.pcsdetail = LocalStorage.getObject('pcsdetail');
         //撤回流程
         $scope.changeProcessFun=function(row){
@@ -326,7 +326,7 @@ function mypcsdetailCtrl(){
 }
 /*====================我的审批=================================*/
 function myauditCtrl(){
-    return['$rootScope','$scope', '$modal','Common','processService','LocalStorage',function($rootScope,$scope,$modal,Common,processService,LocalStorage){
+    return['$rootScope','$scope', '$modal','Common','processService','LocalStorage','MsgService',function($rootScope,$scope,$modal,Common,processService,LocalStorage,MsgService){
 
         //$scope.active=true;
         var userinfo=LocalStorage.getObject('userinfo');
@@ -806,7 +806,7 @@ function addsetpcsCtrl(){
 }
 /*====================流程设置=================================*/
 function setpcsCtrl(){
-    return['$scope','$modal','LocalStorage','processService',"Common",function($scope,$modal,LocalStorage,processService,Common){
+    return['$scope','$modal','LocalStorage','processService','Common','MsgService',function($scope,$modal,LocalStorage,processService,Common,MsgService){
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.initFun=function(){
             inquiryProcessModelTypeFun();
@@ -882,7 +882,7 @@ function setpcsCtrl(){
 
 /*====================类别设置=================================*/
 function setpcsclassCtrl(){
-    return['$scope', '$modal','processService','LocalStorage','Common',function($scope,$modal,processService,LocalStorage,Common){
+    return['$scope', '$modal','processService','LocalStorage','Common','MsgService',function($scope,$modal,processService,LocalStorage,Common,MsgService){
         $scope.bigTotalItems = 11;
         $scope.bigCurrentPage = 1;
         $scope.maxSize = 5;

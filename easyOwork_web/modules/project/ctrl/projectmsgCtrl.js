@@ -203,6 +203,7 @@ function projectmsglistCtrl(){
                 $scope.ok = function (state) {
                     debugger;
                     if(!state){return;} //状态判断
+                    if($scope.modalform.projectDefName==null||$scope.modalform.projectDefName=='') return;
                     changeProjectsxFun('ADD',$scope.modalform,$modalInstance);
                 };
                 $scope.cancel = function () {

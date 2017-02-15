@@ -95,7 +95,7 @@
                     <tr ng-show="thename!='编辑'">
                         <td width="60">项目模板</td>
                         <td class="pl10">
-                            <select class="form-control" ng-model="modalform.projectDefName" ng-options="x.projectDefName as x.projectDefName for x in projectDefNames" required>
+                            <select class="form-control" ng-model="modalform.projectDefName" ng-options="x.projectDefName as x.projectDefName for x in projectDefNames">
                                 <option value=''>请选择</option>
                             </select>
                         </td>
@@ -124,7 +124,7 @@
                         <td width="60">负责人员</td>
                         <td class="pl10">
                             <div selectdepyuan yuangong="1" myselected="modalform.myselected" selectedallarr="modalform.selectedallarr"></div>
-                            <input type="hidden" ng-model="modalform.myselected" required>
+                            <input type="hidden" ng-model="modalform.myselected" ngRequired="thename=='编辑'">
                         </td>
                     </tr>
                 </table>

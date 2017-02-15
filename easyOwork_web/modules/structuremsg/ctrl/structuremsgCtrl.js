@@ -2,7 +2,7 @@
  * Created by Nose on 2016/9/7.
  */
 function structuremsgCtrl(){
-    return['$scope','$modal','LocalStorage','companyService','Common',function($scope,$modal,LocalStorage,companyService,Common){
+    return['$scope','$modal','LocalStorage','companyService','Common','MsgService',function($scope,$modal,LocalStorage,companyService,Common,MsgService){
         var userinfo;
         $scope.treedataisready=true;
         $scope.initFun=function(){

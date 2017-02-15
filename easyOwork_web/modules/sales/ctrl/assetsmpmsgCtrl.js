@@ -11,6 +11,7 @@ function assetsmpmsgCtrl(){
             user:''
         };
         $scope.initFun = function(){
+        	$scope.dateJson.curryear=date;
             inquirySaleTargetFun(curryear);
         };
 
@@ -56,7 +57,9 @@ function assetsmpmsgCtrl(){
             });
         }
         $scope.inquirySaleTargetFun=function(){
-            inquirySaleTargetFun(curryear);
+        	year=$filter('date')($scope.dateJson.curryear,'yyyy');
+            year=year?year:"";
+            inquirySaleTargetFun(year);
         };
         $scope.inquirySalelist=function(year,org,user){
             year=$filter('date')(year,'yyyy');
@@ -111,7 +114,9 @@ function assetsmpmsgCtrl(){
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
-                    inquirySaleTargetFun(curryear);
+                	var year=$filter('date')($scope.dateJson.curryear,'yyyy');
+                    year=year?year:"";
+                    inquirySaleTargetFun(year);
                     $modalInstance.close();
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);

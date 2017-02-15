@@ -79,7 +79,7 @@
                                 <tr>
                                     <th class="pl20">活动类型</th>
                                     <th width="160">开始与结束时间</th>
-                                    <th width="100">提醒时间</th>
+                                    <!-- <th width="100">提醒时间</th> -->
                                     <th width="100">负责人员</th>
                                     <!--<th width="100">参与人员</th>-->
                                     <th width="90">操作</th>
@@ -89,7 +89,7 @@
                                 <tr ng-repeat="data in datadt.activityList">
                                     <td class="pl20">{{data.activityName}}</td>
                                     <td>{{data.startDate}} <br> {{data.endDate}}</td>
-                                    <td>{{data.remindTime}}</td>
+                                    <!-- <td>{{data.remindTime}}</td> -->
                                     <td class="orange">{{data.userDTO.name}}</td>
                                     <!--<td class="orange">{{data.userDTO.name}}</td>-->
                                     <td><!--<button class="btn btn-default btn-xs h30" title="查看" ><i class="iconfont icon-chakan f14"></i></button>--><button class="btn btn-default btn-xs ml5 h30" title="编辑" ng-click="editActivityFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deleteActivity(data)"><i class="iconfont icon-del f14"></i></button></td>
@@ -485,7 +485,7 @@
                 </table>
                 <div showhid>
                     <table cellpadding="0" cellspacing="0" width="100%" class="line40td dropdown" style="display: none;">
-                        <tr>
+                        <!--<tr>
                             <td width="60">提醒时间</td>
                             <td class="pl10">
                                 <div class="qiyi-group line20td">
@@ -493,7 +493,7 @@
                                     <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
                                 </div>
                             </td>
-                        </tr>
+                        </tr>-->
 
                         <tr>
                             <td width="60" valign="top">备忘</td>

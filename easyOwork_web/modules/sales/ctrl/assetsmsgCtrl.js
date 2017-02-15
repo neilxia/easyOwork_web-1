@@ -327,7 +327,7 @@ function assetsdtmainmsgCtrl(){
                     "activityType":row.activityType || '',		//活动类型
                     "startDate":startDate || '',		//活动开始时间
                     "endDate":endDate || '',		//活动结束时间
-                    "remindTime":remindTime || '',		//提醒时间
+                    //"remindTime":remindTime || '',		//提醒时间
                     "memo":row.memo || '',		//备忘
                     "userDTO":row.myActivity[0] || '',
                     "saleDTO":{
@@ -603,6 +603,9 @@ function assetsdtmainmsgCtrl(){
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                 };
+                $scope.deleteDocument = function () {
+                    $scope.modalform = {};
+                };
             };
         };
         //编辑
@@ -617,6 +620,32 @@ function assetsdtmainmsgCtrl(){
                 $scope.modalform=row;
                 $scope.modalform.mycourseall=[row.userDTO];
                 $scope.modalform.courseall=[[],[row.userDTO]];
+                var saleContractUploader = $scope.saleContractUploader = new FileUploader({
+                    url: '', //不使用默认URL上传
+                    queueLimit: 1,     //文件个数
+                    removeAfterUpload: true,   //上传后删除文件
+                    autoUpload:false
+                });
+                saleContractUploader.onAfterAddingFile = function(fileItem){
+                	saleContractUploader.cancelAll();
+                    var file = $("#saleContract").get(0).files[0];
+                    var filePath = LocalStorage.getObject('userinfo').entId+'/sale/contract/'+noseService.randomWord(false, 32)+'_';
+                    var key= filePath+file.name;
+                    var promise = OSSService.uploadFile(filePath,file);
+                    promise.success(function (data, status, headers, config) {
+                        var urlPromise = OSSService.getUrl({'body':{'key':key}});
+                        urlPromise.success(function (data, status, headers, config) {
+                            var sts=data.body.status;
+                            if(sts.statusCode==0){
+                                $scope.modalform.url = data.body.data.url;
+                                $scope.modalform.contractName = file.name;
+                            }
+                        });
+                    });
+                    promise.error(function (data, status, headers, config) {
+                        MsgService.tomsg('文件上传失败');
+                    });
+                };
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
@@ -625,6 +654,9 @@ function assetsdtmainmsgCtrl(){
                 $scope.cancel = function () {
                     angular.copy(oldrow, row);
                     $modalInstance.dismiss('cancel');
+                };
+                $scope.deleteDocument = function () {
+                    $scope.modalform = {};
                 };
             };
         };
