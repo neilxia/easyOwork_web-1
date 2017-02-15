@@ -70,7 +70,11 @@
                     <tr>
                         <td width="60">客户名称</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" placeholder="输入客户名称">
+                            <div class="nose-group"  ng-class="{'has-error':baseForm.xxxxxx.$dirty && baseForm.xxxxxx.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.xxxxxx.$dirty && baseForm.xxxxxx.$error.required" popover="不能为空" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.xxxxxx.$dirty && baseForm.xxxxxx.$error.maxlength" popover="不能超过20个字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="xxxxxx" ng-model="modalform.xxxxxx"  placeholder="输入客户名称" ng-maxlength="20" required />
+                            </div>
                         </td>
                     </tr>
                     <tr>

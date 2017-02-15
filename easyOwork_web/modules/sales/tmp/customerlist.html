@@ -75,10 +75,12 @@
                     <tr>
                         <td width="60">客户名称</td>
                         <td class="pl10">
-                            <div class="nose-group"  ng-class="{'has-error':baseForm.name.$dirty && baseForm.name.$invalid}">
-                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.name.$dirty && baseForm.name.$error.required" popover="客户名称不能为空" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                <input type="text" class="form-control" name="name" ng-model="modalform.customerName"  placeholder="输入客户名称" ng-maxlength="20" required />
+                            <div class="nose-group"  ng-class="{'has-error':baseForm.customerName.$dirty && baseForm.customerName.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.customerName.$dirty && baseForm.customerName.$error.required" popover="不能为空" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.customerName.$dirty && baseForm.customerName.$error.maxlength" popover="不能超过20个字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="customerName" ng-model="modalform.customerName"  placeholder="输入客户名称" ng-maxlength="20" required />
                             </div>
+
                         </td>
                     </tr>
                     <tr>

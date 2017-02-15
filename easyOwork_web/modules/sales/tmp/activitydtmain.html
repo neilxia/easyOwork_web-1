@@ -276,7 +276,11 @@
                     <tr>
                         <td width="60">活动名称</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.activityName" placeholder="输入活动名称" required>
+                            <div class="nose-group"  ng-class="{'has-error':baseForm.activityName.$dirty && baseForm.activityName.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.activityName.$dirty && baseForm.activityName.$error.required" popover="不能为空" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.activityName.$dirty && baseForm.activityName.$error.maxlength" popover="不能超过20个字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="activityName" ng-model="modalform.activityName"  placeholder="输入活动名称" ng-maxlength="20" required />
+                            </div>
                         </td>
                     </tr>
                     <tr>

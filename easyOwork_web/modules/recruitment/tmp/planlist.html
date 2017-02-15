@@ -95,7 +95,11 @@
                     <tr>
                         <td width="60">招聘名称</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.planName" placeholder="输入招聘名称" required>
+                            <div class="nose-group"  ng-class="{'has-error':baseForm.planName.$dirty && baseForm.planName.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.planName.$dirty && baseForm.planName.$error.required" popover="不能为空" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.planName.$dirty && baseForm.planName.$error.maxlength" popover="不能超过20个字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="planName" ng-model="modalform.planName"  placeholder="输入招聘名称" ng-maxlength="20" required />
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -150,7 +154,11 @@
                     <tr>
                         <td width="60">职位名称</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.positionName" placeholder="输入职位名称">
+                            <div class="nose-group"  ng-class="{'has-error':baseForm.positionName.$dirty && baseForm.positionName.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.positionName.$dirty && baseForm.positionName.$error.required" popover="不能为空" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.positionName.$dirty && baseForm.positionName.$error.maxlength" popover="不能超过20个字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="positionName" ng-model="modalform.positionName"  placeholder="输入职位名称" ng-maxlength="20" required />
+                            </div>
                         </td>
                     </tr>
                     <tr>

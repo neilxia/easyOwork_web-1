@@ -287,7 +287,11 @@
                     <tr>
                         <td width="60">任务名称</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.taskName" placeholder="输入任务名称" required>
+                            <div class="nose-group"  ng-class="{'has-error':baseForm.taskName.$dirty && baseForm.taskName.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.taskName.$dirty && baseForm.taskName.$error.required" popover="不能为空" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.taskName.$dirty && baseForm.taskName.$error.maxlength" popover="不能超过20个字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="taskName" ng-model="modalform.taskName"  placeholder="输入任务名称" ng-maxlength="20" required />
+                            </div>
                         </td>
                     </tr>
                     <tr>

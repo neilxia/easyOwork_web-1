@@ -103,7 +103,11 @@
                     <tr>
                         <td width="60">项目名称</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.projectName" placeholder="输入项目名称" required>
+                            <div class="nose-group"  ng-class="{'has-error':baseForm.projectName.$dirty && baseForm.projectName.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.projectName.$dirty && baseForm.projectName.$error.required" popover="不能为空" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.projectName.$dirty && baseForm.projectName.$error.maxlength" popover="不能超过20个字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="projectName" ng-model="modalform.projectName"  placeholder="输入项目名称" ng-maxlength="20" required />
+                            </div>
                         </td>
                     </tr>
                     <tr>

@@ -97,7 +97,11 @@
                     <tr>
                         <td>厂商</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.assetName" placeholder="输入资产名称" required>
+                            <div class="nose-group"  ng-class="{'has-error':baseForm.assetName.$dirty && baseForm.assetName.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.assetName.$dirty && baseForm.assetName.$error.required" popover="不能为空" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.assetName.$dirty && baseForm.assetName.$error.maxlength" popover="不能超过20个字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="assetName" ng-model="modalform.assetName"  placeholder="输入资产名称" ng-maxlength="20" required />
+                            </div>
                         </td>
                     </tr>
                     <tr>

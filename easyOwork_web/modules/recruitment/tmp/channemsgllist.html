@@ -86,7 +86,11 @@
                     <tr ng-hide="true">
                         <td width="60">渠道名称</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.companyName" placeholder="输入渠道名称" required>
+                            <div class="nose-group"  ng-class="{'has-error':baseForm.companyName.$dirty && baseForm.companyName.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.companyName.$dirty && baseForm.companyName.$error.required" popover="不能为空" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.companyName.$dirty && baseForm.companyName.$error.maxlength" popover="不能超过20个字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="companyName" ng-model="modalform.companyName"  placeholder="输入渠道名称" ng-maxlength="20" required />
+                            </div>
                         </td>
                     </tr>
                     <tr>

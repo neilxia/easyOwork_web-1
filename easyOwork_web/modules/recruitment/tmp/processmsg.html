@@ -60,7 +60,11 @@
                     <tr>
                         <td width="60">流程名称</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" ng-model="modalform.flowNodeName" placeholder="输入流程名称">
+                            <div class="nose-group"  ng-class="{'has-error':baseForm.flowNodeName.$dirty && baseForm.flowNodeName.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.flowNodeName.$dirty && baseForm.flowNodeName.$error.required" popover="不能为空" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.flowNodeName.$dirty && baseForm.flowNodeName.$error.maxlength" popover="不能超过20个字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="flowNodeName" ng-model="modalform.flowNodeName"  placeholder="输入流程名称" ng-maxlength="20" required />
+                            </div>
                         </td>
                     </tr>
                 </table>

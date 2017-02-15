@@ -316,7 +316,7 @@
 							<div class="nose-group" ng-class="{'has-error':baseForm.progress.$dirty && baseForm.progress.$invalid}">
                                 <i class="iconfont icon-tishi f20 abs_r" style="right:-40px" ng-show="baseForm.progress.$dirty && baseForm.progress.$invalid" popover="输入完成百分比" popover-placement="bottom" popover-trigger="mouseenter"></i>
 								<i class="iconfont icon-tishi f20 abs_r" style="right:-40px" ng-show="baseForm.progress.$dirty && baseForm.progress.$error.max" popover="百分比不大于100" popover-placement="bottom" popover-trigger="mouseenter"></i>
-								<input ng-disabled="modalform.status!='已开始'" type="number" class="form-control" name="progress" ng-model="modalform.progress" min="0" max="100" required></input>
+								<input ng-disabled="modalform.status!='已开始'" type="number" class="form-control" name="progress" ng-model="modalform.progress" min="0" max="100" required />
                             </div>
                         </td>
 						<td>%</td>

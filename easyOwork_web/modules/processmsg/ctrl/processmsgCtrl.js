@@ -659,11 +659,11 @@ function addsetpcsCtrl(){
             }
         };
 
+        var oldname=angular.copy($scope.processmodal.name);
 
     //    总流程添加
         $scope.addprocessmodalFun=function(){
             if($scope.pcsclass=='' || $scope.processmodal.name==''){
-                
             }
             //如果用于成本核算, 检查是否选择金额字段
             if($scope.processmodal.cost){
@@ -703,10 +703,13 @@ function addsetpcsCtrl(){
                     val.end=true;
                 }
             })
+            $scope.processmodal.newName=$scope.processmodal.name;
+            $scope.processmodal.name=oldname;
+
+            debugger;
+
             var promise = processService.changeProcessModel({'body':$scope.processmodal});
             promise.success(function(data, status, headers, config){
-                debugger;
-
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                 	$state.go('processmsg.setpcs');

@@ -91,7 +91,11 @@
                     <tr>
                         <td width="60">过程名称</td>
                         <td class="pl10">
-                            <input type="text" class="form-control" placeholder="输入销售过程名称" ng-model="modalform.saleName">
+                            <div class="nose-group"  ng-class="{'has-error':baseForm.saleName.$dirty && baseForm.saleName.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.saleName.$dirty && baseForm.saleName.$error.required" popover="不能为空" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.saleName.$dirty && baseForm.saleName.$error.maxlength" popover="不能超过20个字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="saleName" ng-model="modalform.saleName"  placeholder="输入销售过程名称" ng-maxlength="20" required />
+                            </div>
                         </td>
                     </tr>
                     <tr>

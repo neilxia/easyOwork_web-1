@@ -355,6 +355,7 @@ function salarymsgviewCtrl(){
                         var sts=data.body.status;
                         if(sts.statusCode==0){
                             //MsgService.tomsg();
+                            inquiryEmployeeFun();
                             $modalInstance.close();
                         }else{
                             MsgService.tomsg(data.body.status.errorDesc);
