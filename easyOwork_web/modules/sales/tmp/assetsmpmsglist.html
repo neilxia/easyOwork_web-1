@@ -40,14 +40,14 @@
                        </td>
                        <td>￥{{data.targetAmount}}</td>
                        <td class="orange">
-                           <progressbar value="data.actualAmount/data.targetAmount * 100" type="warning" class="progress-striped progress-small active pct60 f_l"></progressbar>
-                           <div class="f_l ml5 mt-3">{{data.actualAmount/data.targetAmount * 100}}% ￥{{data.actualAmount}}</div>
+                           <progressbar value="data.progress" type="warning" class="progress-striped progress-small active pct60 f_l"></progressbar>
+                           <div class="f_l ml5 mt-3">{{data.progress}}% ￥{{data.actualAmount}}</div>
 
                            <!--<progressbar value="40" type="success" class="progress-striped progress-small active"></progressbar>-->
                        </td>
                        <!--<td class="orange">樱空释</td>-->
                        <td class="green">
-                           <span class="red" ng-if="data.targetAmount > data.targetAmount">未完成指标</span>
+                           <span class="red" ng-if="data.targetAmount > data.actualAmount">未完成指标</span>
                            <span class="green" ng-if="data.targetAmount <= data.actualAmount">完成指标</span>
                        </td>
                        <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editmpFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deletemp(data)"><i class="iconfont icon-del f14"></i></button></td>
@@ -97,12 +97,12 @@
                         </td>
                         <td>￥{{data.targetAmount}}</td>
                         <td class="orange">
-                            <progressbar value="data.actualAmount/data.targetAmount * 100" type="warning" class="progress-striped progress-small active pct60 f_l"></progressbar>
-                            <div class="f_l ml5 mt-3">{{data.actualAmount/data.targetAmount * 100}}% ￥{{data.actualAmount}}</div>
+                            <progressbar value="data.progress" type="warning" class="progress-striped progress-small active pct60 f_l"></progressbar>
+                            <div class="f_l ml5 mt-3">{{data.progress}}% ￥{{data.actualAmount}}</div>
                         </td>
                         <td class="orange">{{data.orgDTO.name}}</td>
                         <td class="green">
-                            <span class="red" ng-if="data.targetAmount > data.targetAmount">未完成指标</span>
+                            <span class="red" ng-if="data.targetAmount > data.actualAmount">未完成指标</span>
                             <span class="green" ng-if="data.targetAmount<=data.actualAmount">完成指标</span>
                         </td>
                         <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editmp(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deletemp(data)"><i class="iconfont icon-del f14"></i></button></td>
@@ -151,12 +151,12 @@
                         </td>
                         <td>￥{{data.targetAmount}}</td>
                         <td class="orange">
-                            <progressbar value="data.actualAmount/data.targetAmount * 100" type="warning" class="progress-striped progress-small active pct60 f_l"></progressbar>
-                            <div class="f_l ml5 mt-3">{{data.actualAmount/data.targetAmount * 100}}% ￥{{data.actualAmount}}</div>
+                            <progressbar value="data.progress" type="warning" class="progress-striped progress-small active pct60 f_l"></progressbar>
+                            <div class="f_l ml5 mt-3">{{data.progress}}% ￥{{data.actualAmount}}</div>
                         </td>
                         <td class="orange">{{data.userDTO.name}}</td>
                         <td class="green">
-                            <span class="red" ng-if="data.targetAmount > data.targetAmount">未完成指标</span>
+                            <span class="red" ng-if="data.targetAmount > data.actualAmount">未完成指标</span>
                             <span class="green" ng-if="data.targetAmount<=data.actualAmount">完成指标</span>
                         </td>
                         <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editmpFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deletemp(data)"><i class="iconfont icon-del f14"></i></button></td>
