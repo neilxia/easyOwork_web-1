@@ -389,6 +389,9 @@ function CustomerService(){
             //POST 5.10.16	查询销售目标
             inquirySaleTarget:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquirySaleTarget',form)
+            },
+            inquiryCustomerHistory:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryCustomerHistory',form)
             }
         }
     }];

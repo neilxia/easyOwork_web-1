@@ -195,6 +195,7 @@ function customerdtmainmsgCtrl(){
         var userinfo=LocalStorage.getObject('userinfo');
         $scope.initFun = function(){
             inquiryCustomerFun();//查询
+            inquiryCustomerHistoryFun();
         };
 
 
@@ -214,6 +215,24 @@ function customerdtmainmsgCtrl(){
             });
             promise.error(function(data, status, headers, config){
                 MsgService.tomsg(data.body.status.errorDesc);
+            });
+        }
+        
+        function inquiryCustomerHistoryFun(){
+            $scope.options={
+                "customerName":$rootScope.$stateParams.name		//如查询单个客户, 传入该数据
+            };
+            var promise = CustomerService.inquiryCustomerHistory({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    $scope.customerHistories=data.body.data.customerHistories;
+                }else{
+                    //MsgService.tomsg(data.body.status.errorDesc);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                //MsgService.tomsg(data.body.status.errorDesc);
             });
         }
 
