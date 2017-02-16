@@ -505,6 +505,7 @@ function backButton($window){
     }
 }
 
+
 /*=========刷新当前页==============================*/
 function reloadRoute($window){
     return {
@@ -535,6 +536,15 @@ function pwCheck($timeout){
     }
 }
 
+/*=========时间轴==============================*/
+function timelinr($window){
+    return {
+        restrict: 'A',
+        link: function (scope, elem, attrs) {
+            $().timelinr(scope.options);
+        }
+    }
+}
 
 /*=========展开关闭collapseH=========================================*/
 function collapseH(){
@@ -1262,6 +1272,7 @@ angular
     .directive('onFinishRender', onFinishRender)
     .directive('getCode', getCode) //获取验证码
     .directive('backButton', backButton) //返回
+    .directive('timelinr', timelinr) //timelinr时间轴
     .directive('reloadRoute', reloadRoute) //刷新当前页
     .directive('pwCheck', pwCheck) //验证两次密码是否一致
     .directive('collapseH', collapseH) //展开关闭collapseH

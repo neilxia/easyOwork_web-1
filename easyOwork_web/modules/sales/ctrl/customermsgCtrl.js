@@ -805,5 +805,10 @@ function customerdtmainmsgCtrl(){
         };
 
 
+        /*======客户跟踪=======*/
+        $scope.timelineoptions={
+
+        }
+
     }]
 }
