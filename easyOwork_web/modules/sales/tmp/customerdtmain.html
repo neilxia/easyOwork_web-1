@@ -266,10 +266,10 @@
 						</div>
 					</div>
 					<div tab>
-						<div tab-heading>客户跟踪</div>
+						<div tab-heading>客户跟踪({{customerHistories.length}})</div>
 						<div class="ind-medo_com">
 
-							<div id="timeline" timelinr options="timelineoptions">
+							<div id="timeline" options="timelineoptions">
 								<ul id="dates">
 									<li ng-repeat="customerHistory in customerHistories"><a
 										href="#{{customerHistory.actionDate}}">{{customerHistory.actionDate}}</a>

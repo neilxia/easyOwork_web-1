@@ -227,6 +227,8 @@ function customerdtmainmsgCtrl(){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                     $scope.customerHistories=data.body.data.customerHistories;
+                    $scope.$apply();
+                    $('#timeline').timelinr($scope.timelineoptions);
                 }else{
                     //MsgService.tomsg(data.body.status.errorDesc);
                 }
