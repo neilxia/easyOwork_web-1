@@ -1705,7 +1705,12 @@ angular.module('ui.bootstrap.dropdown', [])
         this.toggle = function( open ) {
             return scope.isOpen = arguments.length ? !!open : !scope.isOpen;
         };
-
+        this.showdown = function( open ) {
+            return scope.isOpen = true;
+        };
+        this.hidedown = function( open ) {
+            return scope.isOpen = false;
+        };
         // Allow other directives to watch status
         this.isOpen = function() {
             return scope.isOpen;
@@ -1751,6 +1756,16 @@ angular.module('ui.bootstrap.dropdown', [])
             controller: 'DropdownController',
             link: function(scope, element, attrs, dropdownCtrl) {
                 dropdownCtrl.init( element );
+                var hideDropdown = function(event) {
+                    event.preventDefault();
+                    if ( !element.hasClass('disabled') && !attrs.disabled ) {
+                        scope.$apply(function() {
+                            dropdownCtrl.hidedown();
+                        });
+                    }
+                };
+                element.find('.dropdown-menu').bind('mouseleave', hideDropdown);
+
             }
         };
     })
@@ -1770,12 +1785,15 @@ angular.module('ui.bootstrap.dropdown', [])
 
                     if ( !element.hasClass('disabled') && !attrs.disabled ) {
                         scope.$apply(function() {
-                            dropdownCtrl.toggle();
+                            dropdownCtrl.showdown();
+                            //dropdownCtrl.toggle();
                         });
                     }
                 };
 
-                element.bind('click', toggleDropdown);
+                element.bind('mouseenter', toggleDropdown);
+
+
 
                 // WAI-ARIA
                 element.attr({ 'aria-haspopup': true, 'aria-expanded': false });

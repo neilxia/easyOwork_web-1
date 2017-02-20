@@ -12,30 +12,34 @@
         <li class="active">个人信息</li>
     </ol>
     <div class="p20 rel">
-    <!-- 
-        <div class="row">
-            <div class="col-xs-6">
-                <dl class="sysmsg-info-htab cf bdrs4">
-                    <dt><i class="iconfont icon-yirenzheng green f36"></i></dt>
-                    <dd>
-                        <div>已认证企业</div>
-                        <div class="mt10 g6 f12">上传营业执照，参与企业实名认证，享受更多优质服务。</div>
-                    </dd>
-                </dl>
+        <!--
+            <div class="row">
+                <div class="col-xs-6">
+                    <dl class="sysmsg-info-htab cf bdrs4">
+                        <dt><i class="iconfont icon-yirenzheng green f36"></i></dt>
+                        <dd>
+                            <div>已认证企业</div>
+                            <div class="mt10 g6 f12">上传营业执照，参与企业实名认证，享受更多优质服务。</div>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="col-xs-6">
+                    <dl class="sysmsg-info-htab cf bdrs4 graybox">
+                        <dt><i class="iconfont icon-weirenzheng red f36"></i></dt>
+                        <dd>
+                            <div>已认证企业</div>
+                            <div class="mt10 g6 f12">上传营业执照，参与企业实名认证，享受更多优质服务。</div>
+                        </dd>
+                    </dl>
+                </div>
             </div>
-            <div class="col-xs-6">
-                <dl class="sysmsg-info-htab cf bdrs4 graybox">
-                    <dt><i class="iconfont icon-weirenzheng red f36"></i></dt>
-                    <dd>
-                        <div>已认证企业</div>
-                        <div class="mt10 g6 f12">上传营业执照，参与企业实名认证，享受更多优质服务。</div>
-                    </dd>
-                </dl>
-            </div>
-        </div>
-         -->
+             -->
         <div class="mysetheadpic">
-            <div class="imgbox bdrs50"><img src="{{userinfo.photoUrl || './images/headportrait01.png'}}" alt=""></div>
+            <div class="imgbox bdrs50 white f18">
+                <span>{{userinfo.name}}</span>
+                <img ng-show="userinfo.photoUrl" src="{{userinfo.photoUrl}}" alt="">
+                <!--<img ng-src="{{userinfo.photoUrl||'./images/headportrait02.jpg'}}" alt=""></div>-->
+            </div>
             <div class="mt10">
                 <div  class="btn btn-default btn-xs upheadbtn">
                     <input type="file" id="photo" nv-file-select accept="image/*" uploader="htUploader"/>上传头像
@@ -43,13 +47,10 @@
             </div>
         </div>
         <div class="pb10">
-            <table class="line40td" cellpadding="0" cellspacing="0" width="100%">
+            <table class="line40td" cellpadding="0" cellspacing="0" width="700">
                 <tr>
                     <td width="60" align="right">基本信息</td>
                     <td class="pl20"><span class="g6 f12">员工姓名：</span><span class="f16">{{userinfo.name}}</span></td>
-                </tr>
-                <tr>
-                    <td width="60" align="right">&nbsp;</td>
                     <td class="pl20">
                         <span class="g6 f12 f_l">出生日期：</span>
                         <span class="f_l" ng-show="birthDateshow">
@@ -72,100 +73,94 @@
                         <span>{{userinfo.orgList[0].name}}</span>
                         <!--<span editable-text="userinfo.shortName" e-form="textBtnForm" onbeforesave="changeEmployeeFun($data,'shortName')">{{userinfo.shortName || '无'}}</span> <span class="ml5 orange poi" ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible">修改</span>-->
                     </td>
-                </tr>
-                <tr>
-                    <td width="60" align="right">&nbsp;</td>
                     <td class="pl20">
                         <span class="g6 f12">职位：</span>
                         <span>{{userinfo.position}}</span>
-                        <!--<span editable-text="userinfo.contactName" e-form="contactName" onbeforesave="changeEmployeeFun($data,'contactName')">{{userinfo.contactName || '无'}}</span> <span class="ml5 orange poi" ng-click="contactName.$show()" ng-hide="contactName.$visible">修改</span></td>-->
+                        <!--<span editable-text="userinfo.contactName" e-form="contactName" onbeforesave="changeEmployeeFun($data,'contactName')">{{userinfo.contactName || '无'}}</span> <span class="ml5 orange poi" ng-click="contactName.$show()" ng-hide="contactName.$visible">修改</span>-->
+                    </td>
                 </tr>
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
                     <td class="pl20">
                         <span class="g6 f12">平台角色：</span>
                         <span ng-repeat="role in userinfo.roleList">{{role.name}}</span>
-                        <!--<span editable-text="userinfo.contactName" e-form="contactName" onbeforesave="changeEmployeeFun($data,'contactName')">{{userinfo.contactName || '无'}}</span> <span class="ml5 orange poi" ng-click="contactName.$show()" ng-hide="contactName.$visible">修改</span></td>-->
-                </tr>
-                <tr>
-                    <td width="60" align="right">&nbsp;</td>
+                        <!--<span editable-text="userinfo.contactName" e-form="contactName" onbeforesave="changeEmployeeFun($data,'contactName')">{{userinfo.contactName || '无'}}</span> <span class="ml5 orange poi" ng-click="contactName.$show()" ng-hide="contactName.$visible">修改</span>-->
+                    </td>
                     <td class="pl20">
                         <span class="g6 f12">证件类型：</span>
                         <span>{{userinfo.idType}}</span>
-                        <!--<span editable-text="userinfo.contactName" e-form="contactName" onbeforesave="changeEmployeeFun($data,'contactName')">{{userinfo.contactName || '无'}}</span> <span class="ml5 orange poi" ng-click="contactName.$show()" ng-hide="contactName.$visible">修改</span></td>-->
+                        <!--<span editable-text="userinfo.contactName" e-form="contactName" onbeforesave="changeEmployeeFun($data,'contactName')">{{userinfo.contactName || '无'}}</span> <span class="ml5 orange poi" ng-click="contactName.$show()" ng-hide="contactName.$visible">修改</span>-->
+                    </td>
                 </tr>
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
                     <td class="pl20">
                         <span class="g6 f12">证件号码：</span>
                         <span>{{userinfo.idNo}}</span>
-                </tr>
-                <tr>
-                    <td width="60" align="right">&nbsp;</td>
+                    </td>
                     <td class="pl20">
                         <span class="g6 f12">民族：</span>
                         <span>{{userinfo.nation}}</span>
+                    </td>
                 </tr>
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
                     <td class="pl20">
                         <span class="g6 f12">政治面貌：</span>
                         <span>{{userinfo.politicalStatus}}</span>
-                </tr>
-                <tr>
-                    <td width="60" align="right">&nbsp;</td>
+                    </td>
                     <td class="pl20">
                         <span class="g6 f12">婚姻状况：</span>
                         <span>{{userinfo.maritalStatus}}</span>
+                    </td>
                 </tr>
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
                     <td class="pl20">
                         <span class="g6 f12">转正日期：</span>
                         <span>{{userinfo.confirmationDate}}</span>
-                </tr>
-                <tr>
-                    <td width="60" align="right">&nbsp;</td>
+                    </td>
+
                     <td class="pl20">
                         <span class="g6 f12">学历：</span>
                         <span>{{userinfo.qualification}}</span>
+                    </td>
                 </tr>
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
                     <td class="pl20">
                         <span class="g6 f12">籍贯：</span>
                         <span>{{userinfo.birthOfOrigin}}</span>
-                </tr>
-                <tr>
-                    <td width="60" align="right">&nbsp;</td>
+                    </td>
+
                     <td class="pl20">
                         <span class="g6 f12">参加工作日期：</span>
                         <span>{{userinfo.firstJobDate}}</span>
+                    </td>
                 </tr>
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
                     <td class="pl20">
                         <span class="g6 f12">现住地址：</span>
                         <span>{{userinfo.homeAddress}}</span>
-                </tr>
-                <tr>
-                    <td width="60" align="right">&nbsp;</td>
+                    </td>
+
                     <td class="pl20">
                         <span class="g6 f12">紧急联系人姓名：</span>
                         <span>{{userinfo.urgentContactName1}}</span>
+                    </td>
                 </tr>
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
                     <td class="pl20">
                         <span class="g6 f12">紧急联系人电话：</span>
                         <span>{{userinfo.urgentContactNo1}}</span>
-                </tr>
-                <tr>
-                    <td width="60" align="right">&nbsp;</td>
+                    </td>
+
                     <td class="pl20">
                         <span class="g6 f12 f_l">入职日期：</span>
                         <span>{{userinfo.joiningDate}}</span>
-                        <!-- 
+                        <!--
                         <span class="f_l" ng-show="joiningDateshow">
                             {{userinfo.joiningDate}}
                             <span class="ml5 orange poi" ng-click="joiningDatetoggle()">修改</span>
@@ -182,12 +177,16 @@
                 </tr>
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
-                    <td class="pl20"><span class="g6 f12">毕业院校：</span><span>{{userinfo.university}}</span>
-                        <!-- <span editable-text="userinfo.university" e-form="university" onbeforesave="changeEmployeeFun($data,'university')">{{userinfo.university || '无'}}</span> <span class="ml5 orange poi" ng-click="university.$show()" ng-hide="university.$visible">修改</span> -->
+                    <td class="pl20"><span class="g6 f12">毕业院校：</span>
+                        <span editable-text="userinfo.university" e-form="university" onbeforesave="changeEmployeeFun($data,'university')">{{userinfo.university || '无'}}</span> <span class="ml5 orange poi" ng-click="university.$show()" ng-hide="university.$visible">修改</span>
                     </td>
                 </tr>
             </table>
         </div>
+
+
+
+
         <div class="pt10 pb10">
             <table class="line40td" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
@@ -220,11 +219,11 @@
                         </span>
                         <div class="f_l form-inline" ng-show="!userpw">
                             <form role="baseForm" name="baseForm"  ng-submit="changePasswordFun(baseForm.$valid)" novalidate="novalidate">
-                            <div>旧密码：<input class="form-control input-sm" type="password" placeholder="请输入旧密码" ng-model="userchangepw.password"></div>
-                            <div class="mt5">新密码：<input class="form-control input-sm" type="password" placeholder="请输入新密码" ng-model="userchangepw.newPassword"></div>
-                            <div style="padding-left: 56px;" class="mt5">
-                                <a class="btn btn-sm btn-default"  ng-click="userpwtoggle()">取消</a> <button class="btn ml5 btn-sm btn-primary" type="submit">确定</button>
-                            </div>
+                                <div>旧密码：<input class="form-control input-sm" type="password" placeholder="请输入旧密码" ng-model="userchangepw.password"></div>
+                                <div class="mt5">新密码：<input class="form-control input-sm" type="password" placeholder="请输入新密码" ng-model="userchangepw.newPassword"></div>
+                                <div style="padding-left: 56px;" class="mt5">
+                                    <a class="btn btn-sm btn-default"  ng-click="userpwtoggle()">取消</a> <button class="btn ml5 btn-sm btn-primary" type="submit">确定</button>
+                                </div>
                             </form>
                         </div>
                     </td>

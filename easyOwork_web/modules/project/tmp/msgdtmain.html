@@ -69,6 +69,18 @@
                         <div tab-heading>任务列表({{datadt.projectTaskDTOList.length}})</div>
                         <div class="ind-medo_com" slim-scroll box-height="300">
                             <div class="btnbox">
+                                <form class="f_r form-inline">
+                                    <div selectdepyuan yuangong="1" myselected="ygselected" selectedallarr="ygselectedallarr" size="'sm'" class="wd170 dib" title="实施人"></div>
+                                    <select class="form-control input-sm dib" ng-init="selectedStatus=''" ng-model="selectedStatus" ng-options="x.val as x.name for x in projectStatusArr">
+                                    </select>
+                                    <select class="form-control input-sm dib" ng-init="selectedStatus=''" ng-model="selectedStage" ng-options="x.projectStageName as x.projectStageName for x in datadt.projectStageDTOList">
+                                        <option value="">选择阶段</option>
+                                    </select>
+            <!--<span class="form-group-sm search-group">
+                <input type="text" class="form-control wd180" ng-model="sltname" placeholder="搜索名称">
+                <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
+            </span>-->
+                                </form>
                                 <button class="btn btn-default btn-sm" ng-click="addTask()">新增</button>
                                 <button class="btn btn-default btn-sm" ng-click="deleteAllTask()">删除</button>
                             </div>
@@ -86,7 +98,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="data in datadt.projectTaskDTOList">
+                                <tr ng-repeat="data in datadt.projectTaskDTOList | filter:{'toUserDTO':ygselected[0].name,'status':selectedStatus,'projectStageDTO':selectedStage?selectedStage:''}">
                                     <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
                                     <td>{{data.taskName}}</td>
                                     <td>{{data.projectStageDTO.projectStageName}}</td>

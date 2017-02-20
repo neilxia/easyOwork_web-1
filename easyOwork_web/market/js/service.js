@@ -3,7 +3,7 @@
  */
 var app=angular.module('market.service',[]);
 
-app.factory('commonService',[function(){
+app.factory('commonService',['RecruitFlowService',function(RecruitFlowService){
     return {
         /*
          ** randomWord 产生任意长度随机字母数字组合

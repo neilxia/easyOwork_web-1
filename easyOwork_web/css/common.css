@@ -236,7 +236,7 @@ textarea{resize: none;}
 .topnav .rightbox .dropdown-alerts .divider{ margin: 0;}
 .topnav .rightbox .dropdown-alerts > li > a{padding:15px 10px 15px 20px; white-space: inherit;}
 .topnav .rightbox .usrbox{ margin-top: 6px;}
-.topnav .rightbox .usrbox .imgbox{ width: 36px; height: 36px; overflow: hidden;}
+.topnav .rightbox .usrbox .imgbox{ width: 36px; height: 36px; background-color: #82c188; color: #fff; overflow: hidden;}
 .topnav .rightbox .usrbox .imgbox img{ width: 100%;}
 .topnav .rightbox .usrbox .dropdown-menu{ min-width: 65px;}
 

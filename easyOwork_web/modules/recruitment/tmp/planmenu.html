@@ -1,7 +1,7 @@
 <nav class="navbar-default navbar-static-side" ng-controller="dtplanmenuCtrl" id="navbar-default" role="navigation" ng-init="initFun()">
     <!-- <div class="sidebar-collapse" accessid="A002-001"> -->
     <div class="sidebar-collapse">
-        <ul side-navigation2 class="nav metismenu" id="side-menu" optiondata="datalist">
+        <ul side-navigation2 class="nav metismenu" id="side-menu" optiondata="mundata">
             <!-- ng-class="{active:$state.includes('clockingIn.view')}"-->
             <li>
                 <a ui-sref="recruitment.planlist"> <span class="nav-label">返回招聘计划</span> </a>
@@ -13,41 +13,49 @@
                 <a><i class="iconfont icon-zichankupsd"></i> <span class="nav-label">渠道发布</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li ui-sref-active="active">
-                        <a ui-sref="planlist.dtfpositions({'type':0})"><span class="nav-label">全部</span> </a>
+                        <a ui-sref="planlist.dtfpositions({'type':0})"><span class="nav-label">全部({{mundata.channelTotalCount}})</span> </a>
                     </li>
                     <li ui-sref-active="active">
-                        <a ui-sref="planlist.dtfpositions({'type':1})"><span class="nav-label">已发布</span> </a>
+                        <a ui-sref="planlist.dtfpositions({'type':1})"><span class="nav-label">已发布({{mundata.channelPublishCount}})</span> </a>
                     </li>
                     <li ui-sref-active="active">
-                        <a ui-sref="planlist.dtfpositions({'type':2})"><span class="nav-label">未发布</span> </a>
+                        <a ui-sref="planlist.dtfpositions({'type':2})"><span class="nav-label">未发布({{mundata.channelTotalCount-mundata.channelPublishCount}})</span> </a>
                     </li>
                 </ul>
             </li>
             <li ng-class="{active:$state.includes('planlist.dtresumemsg')}">
-                <a ui-sref="planlist.dtresumemsg"><i class="iconfont icon-shezhi f18"></i> <span class="nav-label">职位简历</span> </a>
+                <a ui-sref="planlist.dtresumemsg"><i class="iconfont icon-shezhi f18"></i> <span class="nav-label">职位简历({{mundata.resumeCount}})</span> </a>
             </li>
-            <!-- <li ng-class="{active:$state.includes('planlist.planlist')}"> -->
-                <!-- <a><i class="iconfont icon-zichankupsd"></i> <span class="nav-label">面试流程</span> <span class="fa arrow"></span></a> -->
-                <!-- <ul class="nav nav-second-level"> -->
-                    <!--<li ng-class="{active:$state.includes('planlist.dtprocess')}" ng-repeat="data in datalist | orderBy:['flowNodeSequence']">-->
-                    <li ng-repeat="data in datalist | orderBy:['flowNodeSequence']">
-                        <a><i class="iconfont icon-zichankupsd"></i><span class="nav-label">{{data.flowNodeName}}</span> <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li ui-sref-active="active">
-                                <a ui-sref="planlist.dtprocess({'type':0,'flowNodeName':data.flowNodeName,'flowNodeSequence':data.flowNodeSequence})"><span class="nav-label">进行中 </span> </a>
-                            </li>
-                            <li ui-sref-active="active">
-                                <a ui-sref="planlist.dtprocess({'type':1,'flowNodeName':data.flowNodeName,'flowNodeSequence':data.flowNodeSequence})"><span class="nav-label">待定 </span> </a>
-                            </li>
-                            <li ui-sref-active="active">
-                                <a ui-sref="planlist.dtprocess({'type':2,'flowNodeName':data.flowNodeName,'flowNodeSequence':data.flowNodeSequence})"><span class="nav-label">淘汰 </span> </a>
-                            </li>
-                        </ul>
+            <!--<li ng-repeat="data in datalist | orderBy:['flowNodeSequence']">
+                <a><i class="iconfont icon-zichankupsd"></i><span class="nav-label">{{data.flowNodeName}}</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li ui-sref-active="active">
+                        <a ui-sref="planlist.dtprocess({'type':0,'flowNodeName':data.flowNodeName,'flowNodeSequence':data.flowNodeSequence})"><span class="nav-label">进行中 </span> </a>
                     </li>
-                <!-- </ul> -->
-            <!-- </li> -->
+                    <li ui-sref-active="active">
+                        <a ui-sref="planlist.dtprocess({'type':1,'flowNodeName':data.flowNodeName,'flowNodeSequence':data.flowNodeSequence})"><span class="nav-label">待定 </span> </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="planlist.dtprocess({'type':2,'flowNodeName':data.flowNodeName,'flowNodeSequence':data.flowNodeSequence})"><span class="nav-label">淘汰 </span> </a>
+                    </li>
+                </ul>
+            </li>-->
+            <li ng-repeat="data in mundata.nodeList | orderBy:['nodeDTO.flowNodeSequence']">
+                <a><i class="iconfont icon-zichankupsd"></i><span class="nav-label">{{data.nodeDTO.flowNodeName}}</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li ui-sref-active="active">
+                        <a ui-sref="planlist.dtprocess({'type':0,'flowNodeName':data.nodeDTO.flowNodeName,'flowNodeSequence':data.nodeDTO.flowNodeSequence})"><span class="nav-label">进行中({{data.nodeNormalCount}}) </span> </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="planlist.dtprocess({'type':1,'flowNodeName':data.nodeDTO.flowNodeName,'flowNodeSequence':data.nodeDTO.flowNodeSequence})"><span class="nav-label">待定({{data.nodeHoldCount}}) </span> </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="planlist.dtprocess({'type':2,'flowNodeName':data.nodeDTO.flowNodeName,'flowNodeSequence':data.nodeDTO.flowNodeSequence})"><span class="nav-label">淘汰({{data.nodeRejectCount}}) </span> </a>
+                    </li>
+                </ul>
+            </li>
             <li ng-class="{active:$state.includes('planlist.hirelist')}">
-                <a ui-sref="planlist.hirelist"><i class="iconfont icon-shezhi f18"></i> <span class="nav-label">已录用</span> </a>
+                <a ui-sref="planlist.hirelist"><i class="iconfont icon-shezhi f18"></i> <span class="nav-label">已录用({{mundata.hiredCount}})</span> </a>
             </li>
             </ul>
             

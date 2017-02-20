@@ -126,8 +126,8 @@ app.factory('MsgService',['$rootScope','notify',function($rootScope,notify){
         }
     }
 }]);
-app.factory('Common', ['$q','$modal',
-    function ($q,$modal) {
+app.factory('Common', ['$q','$modal','RecruitFlowService',
+    function ($q,$modal,RecruitFlowService) {
         return {
             openConfirmWindow: function(modalTitle,modalContent,modalInstance) {
                 var deferred = $q.defer();
@@ -228,6 +228,31 @@ app.factory('Common', ['$q','$modal',
                     val=2; //时间相等
                 }
                 return val;
+            },
+            //查询简历在各个招聘节点数量
+            inquiryRecruitPositionSummaryFun:function($scope,planName,positionName){
+                //var newObj=[];
+                if ($scope) {
+                    var options={
+                        "planName":planName,
+                        "positionName":positionName
+                    };
+                    var promise = RecruitFlowService.inquiryRecruitPositionSummary({body:options});
+
+                    promise.success(function(data, status, headers, config){
+                        var sts=data.body.status;
+                        if(sts.statusCode==0){
+
+                            $scope.mundata=data.body.data;
+                        }else{
+                            MsgService.tomsg(data.body.status.errorDesc);
+                        }
+                    });
+                    promise.error(function(data, status, headers, config){
+                        MsgService.tomsg(data.body.status.errorDesc);
+                    });
+                }
+                //return newObj;
             }
         }
     }]);

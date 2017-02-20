@@ -431,6 +431,15 @@ function projectmsgdtmainlistCtrl(){
         }
 
         /*=======任务=======*/
+        $scope.projectStatusArr=[
+            {name:'全部状态',val:''},
+            {name:'已分配',val:'已分配'},
+            {name:'已开始',val:'已开始'},
+            {name:'已拒绝',val:'已拒绝'},
+            {name:'未分配',val:'未分配'},
+            {name:'已完成',val:'已完成'},
+            {name:'已取消',val:'已取消'}
+        ]
         //添加/修改/删除
         function changeProjectTaskFun(change,row,$modalInstance,oldrow){
             if(oldrow==undefined){oldrow=row}

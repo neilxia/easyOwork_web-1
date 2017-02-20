@@ -12,8 +12,8 @@
         //'jqxTreeGrid',                 // jqxTreeGrid
         'qiyi.config',
         'qiyi.route',
-        'qiyi.services',
         'qiyi.servicesRest',
+        'qiyi.services',
         'qiyi.interceptors',
         'qiyi.filters',
         'qiyi.staffmsg',//员工管理

@@ -482,6 +482,7 @@ function projectService(){
             inquiryMyProject:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryMyProject',form)
             }
+
         }
     }];
 }
@@ -552,6 +553,10 @@ function RecruitFlowService(){
             //POST 5.13.12	查询招聘流程中简历
             inquiryRecruitResumeByFlowNode:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryRecruitResumeByFlowNode',form)
+            },
+            //POST 5.13.11	查询简历在各个招聘节点数量
+            inquiryRecruitPositionSummary:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryRecruitPositionSummary',form)
             }
 
         }

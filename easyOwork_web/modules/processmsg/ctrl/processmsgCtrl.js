@@ -441,15 +441,17 @@ function myauditdetailCtrl(){
         	$scope.jujue=false;
         }
         //批准拒绝
-        $scope.rejectdproFun=function(state){
+        $scope.rejectdproFun=function(state,msg){
             if(!state) return;
             Common.openConfirmWindow('','您确定要拒绝申请么？').then(function() {
-            	$scope.changeProcessFun('REJECT',$scope.pcsdetail)
+                $scope.pcsdetail.rejectMsg=msg;
+                $scope.changeProcessFun('REJECT',$scope.pcsdetail)
             });
         }
       //批准同意
-        $scope.agreedproFun=function(){
+        $scope.agreedproFun=function(msg){
             Common.openConfirmWindow('','您确定要批准申请么？').then(function() {
+                $scope.pcsdetail.rejectMsg=msg;
             	$scope.changeProcessFun('APPROVE',$scope.pcsdetail)
             });
         }
@@ -459,7 +461,7 @@ function myauditdetailCtrl(){
             $scope.options={
                 "actionType":change	,	//APPROVE, REJECT, WITHDRAW
                 "processUuid":row.processUuid,	//流程编号
-                "message":$scope.rejectMsg	//批准拒绝时添加的信息
+                "message":row.rejectMsg || ''	//批准拒绝时添加的信息
             };
             var promise = processService.changeProcess({body:$scope.options});
             promise.success(function(data, status, headers, config){

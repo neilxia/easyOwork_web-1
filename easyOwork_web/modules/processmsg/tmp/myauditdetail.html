@@ -26,13 +26,13 @@
                         <button class="btn btn-primary btn-xs ml10" ng-click="tongyitoggle()">同意</button>
                         <button class="btn btn-default btn-xs ml10" ng-click="jujuetoggle()">拒绝</button>
                         <div class="wd300 pt5" ng-show="jujue">
-                            <form role="baseForm" name="baseForm"  ng-submit="rejectdproFun(baseForm.$valid)" novalidate="novalidate">
+                            <form role="baseForm" name="baseForm"  ng-submit="rejectdproFun(baseForm.$valid,rejectMsg)" novalidate="novalidate">
                             <textarea class="form-control" cols="4" ng-model="rejectMsg" placeholder="请输入拒绝理由" maxlength="200" required></textarea>
                             <button type="submit" class="btn btn-primary btn-xs mt3" >提交</button>
                             </form>
                         </div>
                         <div class="wd300 pt5" ng-show="tongyi">
-                            <form role="baseForm" ng-submit="agreedproFun()" novalidate="novalidate">
+                            <form role="baseForm" ng-submit="agreedproFun(rejectMsg)" novalidate="novalidate">
                             <textarea class="form-control" cols="4" ng-model="rejectMsg" placeholder="请输入备注" maxlength="200" ></textarea>
                             <button type="submit" class="btn btn-primary btn-xs mt3" >提交</button>
                             </form>
