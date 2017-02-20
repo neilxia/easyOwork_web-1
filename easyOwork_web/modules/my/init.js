@@ -6,4 +6,5 @@ var app = angular.module('qiyi.my',[]);
 app.controller('mySetCtrl',mySetCtrl());
 app.controller('mySalaryCtrl',mySalaryCtrl());
 app.controller('myAttendanceCtrl',myAttendanceCtrl());
+app.controller('myAttendanceViewCtrl',myAttendanceViewCtrl());
 app.controller('pOrderCtrl',orderCtrl());

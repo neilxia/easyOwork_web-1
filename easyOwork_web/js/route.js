@@ -769,6 +769,11 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             templateUrl: 'modules/my/tmp/attendance.html',
             data: { pageTitle: '我的考勤'}
         })
+        .state('my.attendanceview', {
+            url: "/attendanceview:row",
+            templateUrl: 'modules/my/tmp/attendanceview.html',
+            data: { pageTitle: '我的考勤详情'}
+        })
         .state('my.order', {
             url: "/order",
             templateUrl: 'modules/my/tmp/order.html',

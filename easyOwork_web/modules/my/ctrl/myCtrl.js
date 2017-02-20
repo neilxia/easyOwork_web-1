@@ -21,7 +21,21 @@ function mySetCtrl(){
                 "joiningDate":userinfo.joiningDate || "",		//入职日期
                 "roleList":userinfo.roleList,
                 'entId':userinfo.entId,
-                'tokenId':userinfo.tokenId
+                'tokenId':userinfo.tokenId,
+                "position":userinfo.position,
+                "idType":userinfo.idType,
+                "idNo":userinfo.idNo,
+                "nation":userinfo.nation,
+                "politicalStatus":userinfo.politicalStatus,
+                "maritalStatus":userinfo.maritalStatus,
+                "confirmationDate":userinfo.confirmationDate,
+                "qualification":userinfo.qualification,
+                "birthOfOrigin":userinfo.birthOfOrigin,
+                "firstJobDate":userinfo.firstJobDate,
+                "birthOfPlace":userinfo.birthOfPlace,
+                "homeAddress":userinfo.homeAddress,
+                "urgentContactName1":userinfo.urgentContactName1,
+                "urgentContactNo1":userinfo.urgentContactNo1
                 //"contractUrl":row.contractUrl || "",		//合同文件地址
                 //"contract":row.contract,
                 //"salaryTypeList":userinfo.salaryTypeList

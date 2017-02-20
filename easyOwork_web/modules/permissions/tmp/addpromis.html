@@ -20,7 +20,7 @@
                     <div class="nose-group wd400"  ng-class="{'has-error':form.roleName.$dirty && form.roleName.$invalid}">
                         <i class="iconfont icon-tishi f20 abs_r" ng-show="form.roleName.$dirty && form.roleName.$error.required" popover="输入角色名称" popover-placement="bottom" popover-trigger="mouseenter"></i>
                         <i class="iconfont icon-tishi f20 abs_r" ng-show="form.roleName.$dirty && form.roleName.$error.maxlength" popover="最大20个字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                        <input type="text" class="form-control wd400" name="roleName"  placeholder="输入角色名称" ng-model="thisform.roleName" ng-maxlength="20" required>
+                        <input type="text" class="form-control wd400" name="roleName"  placeholder="输入角色名称" ng-model="thisform.roleName" ng-maxlength="20" ng-disabled="thisform.roleName=='平台管理员'" required>
                     </div>
 
                 </td>
@@ -30,7 +30,7 @@
                 <td>
                     <div class="nose-group wd400" ng-class="{'has-error':form.roleDesc.$dirty && form.roleDesc.$invalid}">
                         <i class="iconfont icon-tishi f20 abs_r" ng-show="form.roleDesc.$dirty && form.roleDesc.$error.maxlength" popover="最大200个字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                        <textarea name="roleDesc" type="text" class="form-control" rows="4" placeholder="输入角色描述信息" ng-model="thisform.roleDesc" ng-maxlength="200"></textarea>
+                        <textarea name="roleDesc" type="text" class="form-control" rows="4" ng-model="thisform.roleDesc" ng-disabled="thisform.roleName=='平台管理员'" ng-maxlength="200"></textarea>
                     </div>
 
                 </td>

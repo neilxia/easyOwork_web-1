@@ -20,8 +20,13 @@ function mySalaryCtrl(){
         }
         $scope.changeYearMonth = function(){
         	var payrollDate = $("#payrollDate").val();
-        	thisyear = payrollDate.substring(0,4);
-        	thismonth = payrollDate.substring(5,7);
+        	if(payrollDate == null || payrollDate == ""){
+        		return;
+        	}else{
+        		thisyear = payrollDate.substring(0,4);
+            	thismonth = payrollDate.substring(5,7);
+        	}
+        	
         	inquiryEmployeeFun();
         }
         //查询本人/其他员工信息列表

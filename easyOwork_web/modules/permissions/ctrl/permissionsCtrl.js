@@ -305,7 +305,6 @@ function permissionsviewCtrl(){
                  			$("tr.dataTr input[type='checkbox'][trid="+tridValue+"]").attr('checked',true);
                  			//$("tr.dataTr[id="+tridValue+"] td:first div").click();
                  		}
-                 		$('input').iCheck('disable');
                  	 //}
                 	 
                  }else{

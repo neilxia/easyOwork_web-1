@@ -3,12 +3,13 @@
     <div class="payetilebox">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
         <ul>
-            <li class="active">个人中心</li>
+            <li class="active">个人信息</li>
         </ul>
     </div>
     <ol class="breadbox">
         <li>工作面板</li>
-        <li class="active">个人中心</li>
+        <li>个人中心</li>
+        <li class="active">个人信息</li>
     </ol>
     <div class="p20 rel">
     <!-- 
@@ -75,14 +76,96 @@
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
                     <td class="pl20">
-                        <span class="g6 f12">任职岗位：</span>
-                        <span>{{userinfo.roleList[0].name}}</span>
+                        <span class="g6 f12">职位：</span>
+                        <span>{{userinfo.position}}</span>
                         <!--<span editable-text="userinfo.contactName" e-form="contactName" onbeforesave="changeEmployeeFun($data,'contactName')">{{userinfo.contactName || '无'}}</span> <span class="ml5 orange poi" ng-click="contactName.$show()" ng-hide="contactName.$visible">修改</span></td>-->
                 </tr>
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
                     <td class="pl20">
+                        <span class="g6 f12">平台角色：</span>
+                        <span ng-repeat="role in userinfo.roleList">{{role.name}}</span>
+                        <!--<span editable-text="userinfo.contactName" e-form="contactName" onbeforesave="changeEmployeeFun($data,'contactName')">{{userinfo.contactName || '无'}}</span> <span class="ml5 orange poi" ng-click="contactName.$show()" ng-hide="contactName.$visible">修改</span></td>-->
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">证件类型：</span>
+                        <span>{{userinfo.idType}}</span>
+                        <!--<span editable-text="userinfo.contactName" e-form="contactName" onbeforesave="changeEmployeeFun($data,'contactName')">{{userinfo.contactName || '无'}}</span> <span class="ml5 orange poi" ng-click="contactName.$show()" ng-hide="contactName.$visible">修改</span></td>-->
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">证件号码：</span>
+                        <span>{{userinfo.idNo}}</span>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">民族：</span>
+                        <span>{{userinfo.nation}}</span>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">政治面貌：</span>
+                        <span>{{userinfo.politicalStatus}}</span>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">婚姻状况：</span>
+                        <span>{{userinfo.maritalStatus}}</span>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">转正日期：</span>
+                        <span>{{userinfo.confirmationDate}}</span>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">学历：</span>
+                        <span>{{userinfo.qualification}}</span>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">籍贯：</span>
+                        <span>{{userinfo.birthOfOrigin}}</span>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">参加工作日期：</span>
+                        <span>{{userinfo.firstJobDate}}</span>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">现住地址：</span>
+                        <span>{{userinfo.homeAddress}}</span>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">紧急联系人姓名：</span>
+                        <span>{{userinfo.urgentContactName1}}</span>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
+                        <span class="g6 f12">紧急联系人电话：</span>
+                        <span>{{userinfo.urgentContactNo1}}</span>
+                </tr>
+                <tr>
+                    <td width="60" align="right">&nbsp;</td>
+                    <td class="pl20">
                         <span class="g6 f12 f_l">入职日期：</span>
+                        <span>{{userinfo.joiningDate}}</span>
+                        <!-- 
                         <span class="f_l" ng-show="joiningDateshow">
                             {{userinfo.joiningDate}}
                             <span class="ml5 orange poi" ng-click="joiningDatetoggle()">修改</span>
@@ -93,14 +176,14 @@
                             <span class="abs_r" style="top: 2px;"><i class="iconfont icon-rili"></i></span>
                         </div>
                         <span class="ml5" ng-click="changeEmployeeFun(userinfo.joiningDate,'joiningDate')" ng-show="!joiningDateshow"><button class="btn ml5 btn-sm btn-primary">确定</button></span>
-
+						 -->
 
                     </td>
                 </tr>
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
-                    <td class="pl20"><span class="g6 f12">毕业院校：</span>
-                        <span editable-text="userinfo.university" e-form="university" onbeforesave="changeEmployeeFun($data,'university')">{{userinfo.university || '无'}}</span> <span class="ml5 orange poi" ng-click="university.$show()" ng-hide="university.$visible">修改</span>
+                    <td class="pl20"><span class="g6 f12">毕业院校：</span><span>{{userinfo.university}}</span>
+                        <!-- <span editable-text="userinfo.university" e-form="university" onbeforesave="changeEmployeeFun($data,'university')">{{userinfo.university || '无'}}</span> <span class="ml5 orange poi" ng-click="university.$show()" ng-hide="university.$visible">修改</span> -->
                     </td>
                 </tr>
             </table>

@@ -39,8 +39,7 @@
                     <td>{{role.functionSummary|cut:true:40:' ...'}}</td>
                     <td>{{role.creationDate}}</td>
                     <td>
-                    <button ng-show="role.roleName!='平台管理员'" class="btn btn-default btn-xs h30 ml5" title="编辑" ng-click="changeRole(role.roleName)"><i class="iconfont icon-bianji f14"></i></button>
-                    <button ng-show="role.roleName=='平台管理员'" class="btn btn-default btn-xs h30 ml5" title="查看" ng-click="viewRole(role.roleName)"><i class="iconfont icon-chakan f14"></i></button>
+                    <button class="btn btn-default btn-xs h30 ml5" title="编辑" ng-click="changeRole(role.roleName)"><i class="iconfont icon-bianji f14"></i></button>
                     <button ng-show="role.roleName!='平台管理员'" class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(role.roleName)"><i class="iconfont icon-del f14"></i></button></td>
                 </tr>
                 </tbody>

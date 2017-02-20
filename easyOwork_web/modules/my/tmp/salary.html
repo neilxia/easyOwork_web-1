@@ -3,19 +3,19 @@
     <div class="payetilebox">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="initFun()" title="刷新"></a></div>
         <ul>
-            <li class="active">薪资查询</li>
+            <li class="active">我的薪资</li>
         </ul>
     </div>
     <ol class="breadbox">
         <li>工作面板</li>
-        <li>薪资</li>
-        <li class="active">薪资查询</li>
+        <li>个人中心</li>
+        <li class="active">我的薪资</li>
     </ol>
     <div class="btnbox">
         <!--<div class="line28 f_l">搜索“ <span class="red ng-binding">1</span> ”，共搜索到<span class="red ng-binding">1</span>条记录</div>-->
         <form class="f_r form-inline">
             <span class="form-group-sm search-group">
-            	<input type="datetime" class="form-control" placeholder="工资年月" date-time id="payrollDate" ng-model="form.payrollDate" min-view="month" format="yyyy-MM" auto-close="true">
+            	<input type="datetime" class="form-control" placeholder="工资年月" date-time id="payrollDate" ng-model="form.payrollDate" min-view="month" format="yyyy-MM" auto-close="true" ngenter="changeYearMonth()">
                 <span class="abs_r" style="right:40px"><i class="iconfont icon-rili"></i></span>
                 <i class="iconfont icon-sousuo ml10 poi" ng-click="changeYearMonth()"></i>
             </span>
@@ -29,9 +29,10 @@
                     <th><span class="pl15">姓名</span></th>
                     <th width="200">员工编号</th>
                     <th width="200">部门</th>
-                    <th width="200">工资状态</th>
-                    <th width="200">到账金额</th>
-                    <th width="60">详细信息</th>
+                    <th width="120">年-月</th>
+                    <th width="120">工资状态</th>
+                    <th width="120">到账金额</th>
+                    <th width="120">详细信息</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -39,6 +40,7 @@
                     <td><span class="pl15">{{data.userDTO.name}}</span></td>
                     <td>{{data.userDTO.id}}</td>
                     <td>{{data.userDTO.orgList[0].name}}</td>
+                    <td>{{form.payrollDate}}</td>
                     <td>
                     	<span ng-show="data.status=='CONFIRMED'" class="label label-success">已生成</span>
                     	<span ng-show="data.status!='CONFIRMED'" class="label label-warning">未生成</span>
