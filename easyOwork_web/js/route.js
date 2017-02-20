@@ -96,7 +96,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                     templateUrl: 'modules/common/myContent.html'
                 },
                 'menu@structuremsg': {
-                    templateUrl: 'modules/structuremsg/tmp/menu.html'
+                    templateUrl: 'modules/sysmsg/tmp/menu.html'
                 }
             }
         })
@@ -210,6 +210,11 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             }
 
         })
+        .state('staffmsg.positionlist', {
+            url: "/positionlist",
+            templateUrl: 'modules/staffmsg/tmp/positionlist.html',
+            data: { pageTitle: '职位设置'}
+        })
         /*========角色权限=============================================================================================== */
         .state('permissions', {
             abstract: true,
@@ -223,7 +228,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                     templateUrl: 'modules/common/myContent.html'
                 },
                 'menu@permissions': {
-                    templateUrl: 'modules/permissions/tmp/menu.html'
+                    templateUrl: 'modules/sysmsg/tmp/menu.html'
                 }
             }
         })
@@ -280,6 +285,12 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                     ])
                 }
             }
+        })
+        .state('permissions.accountlist', {
+            url: "/accountlist",
+            templateUrl: 'modules/permissions/tmp/accountlist.html',
+            data: { pageTitle: '账户列表'}
+
         })
         /*========审批流程=============================================================================================== */
         .state('processmsg', {
@@ -623,7 +634,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                     templateUrl: 'modules/common/myContent.html'
                 },
                 'menu@salarymsg': {
-                    templateUrl: 'modules/salarymsg/tmp/menu.html'
+                    templateUrl: 'modules/staffmsg/tmp/menu.html'
                 }
             },
             resolve:{
@@ -747,6 +758,16 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             url: "/set",
             templateUrl: 'modules/my/tmp/set.html',
             data: { pageTitle: '个人中心'}
+        })
+        .state('my.salary', {
+            url: "/salary",
+            templateUrl: 'modules/my/tmp/salary.html',
+            data: { pageTitle: '我的薪资'}
+        })
+        .state('my.attendance', {
+            url: "/attendance",
+            templateUrl: 'modules/my/tmp/attendance.html',
+            data: { pageTitle: '我的考勤'}
         })
         .state('my.order', {
             url: "/order",
@@ -922,7 +943,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                     templateUrl: 'modules/common/myContent.html'
                 },
                 'menu@recruitment': {
-                    templateUrl: 'modules/recruitment/tmp/menu.html'
+                    templateUrl: 'modules/staffmsg/tmp/menu.html'
                 }
             }
         })

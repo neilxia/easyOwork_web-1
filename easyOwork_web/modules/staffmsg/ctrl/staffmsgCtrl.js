@@ -10,9 +10,10 @@ function staffmsgCtrl(){
         $scope.orgListFilter = function (item) {
             return item.orgList[0].name === $scope.sltorgList[0].text || null;
         };
+        /*
         $scope.roleListFilter = function (item) {
             return item.roleList[0].name === $scope.sltroleList[0].text;
-        };
+        };*/
 
         //查询本人/其他员工信息列表
         //分页
@@ -55,11 +56,11 @@ function staffmsgCtrl(){
                 return;
             }
             var orgList=row.orgList.length == 0 ?[]:[{"name":row.orgList[0].text || row.orgList[0].name}];
+            /*
             var roleList=[];
             angular.forEach(row.roleList,function(val,ind){
                 roleList.push({"name":val.text || val.name})
-            });
-            debugger;
+            });*/
 
             //var roleList=row.roleList.length == 0?[]:[{"name":row.roleList[0].text || row.roleList[0].name}];
             var salaryTypeList=getsalaryTypeList(row.salaryTypeList);
@@ -67,6 +68,8 @@ function staffmsgCtrl(){
 
             var birthDate=$filter('date')(row.birthDate,'yyyy-MM-dd');
             var joiningDate=$filter('date')(row.joiningDate,'yyyy-MM-dd');
+            var firstJobDate=$filter('date')(row.firstJobDate,'yyyy-MM-dd');
+            var confirmationDate=$filter('date')(row.confirmationDate,'yyyy-MM-dd');
             $scope.options={
                 "actionType":change,			// ADD, MODIFY, DELETE
                 "userUuid":row.userUuid || null,
@@ -81,12 +84,24 @@ function staffmsgCtrl(){
                 "personalPhoneCountryCode":'86',
                 "orgList":orgList,		//所属部门名称
                 "joiningDate":joiningDate || "",		//入职日期
-                "roleList":roleList,	//角色数组, 可多个角色
+                "roleList":row.roleList,	//角色数组, 可多个角色
                 //"contractUrl":row.contractUrl || "",		//合同文件地址
                 //"contract":row.contract,
                 "salaryTypeList":salaryTypeList,
                 "currentSalary":row.currentSalary,
-                "currentSalaryStartDate":row.currentSalaryStartDate
+                "currentSalaryStartDate":row.currentSalaryStartDate,
+                "position":row.position || "",
+                "idType":row.idType || "",
+                "idNo":row.idNo || "",
+                "nation":row.nation || "",
+            	"politicalStatus":row.politicalStatus || "",
+            	"firstJobDate":firstJobDate || "",
+            	"confirmationDate":confirmationDate || "",
+            	"qualification":row.qualification || "",
+            	"birthOfOrigin":row.birthOfOrigin || "",
+            	"homeAddress":row.homeAddress || "",
+            	"urgentContactName1":row.urgentContactName1 || "",
+            	"urgentContactNo1":row.urgentContactNo1 || ""
             };
             if(row.isContractModified)
             	$scope.options.contract = row.contract;
@@ -155,7 +170,7 @@ function staffmsgCtrl(){
         $scope.addstaff=function(){
             var modalInstance = $modal.open({
                 templateUrl: 'addstaff.html',
-                size:'md',
+                size:'lg',
                 controller: modalCtrl
             });
             function modalCtrl ($scope, $modalInstance,FileUploader) {
@@ -200,12 +215,24 @@ function staffmsgCtrl(){
                      "newPersonalPhone":"",		//手机号码
                      "orgList":[],		//所属部门名称
                      "joiningDate":"",		//入职日期
-                     "roleList":[{name:'普通员工'}],	//角色数组, 可多个角色
+                     //"roleList":[],	//角色数组, 可多个角色
                      //"contractUrl":"",		//合同文件地址
                      //"contract":{},
                      "salaryTypeList":[],
                      "currentSalary":"",
-                 	 "currentSalaryStartDate":""
+                 	 "currentSalaryStartDate":"",
+                 	 "position":"",
+                 	 "idType":"",
+                 	 "idNo":"",
+                 	 "nation":"",
+                 	 "politicalStatus":"",
+                 	"firstJobDate":"",
+                	"confirmationDate":"",
+                	"qualification":"",
+                	"birthOfOrigin":"",
+                	"homeAddress":"",
+                	"urgentContactName1":"",
+                	"urgentContactNo1":""
                  };
 
                 $scope.ok = function(state) {
@@ -231,7 +258,7 @@ function staffmsgCtrl(){
         $scope.editstaff = function (row) {
             var modalInstance = $modal.open({
                 templateUrl: 'addstaff.html',
-                size:'md',
+                size:'lg',
                 controller: modalCtrl
             });
             function modalCtrl ($scope, $modalInstance) {
@@ -349,7 +376,32 @@ function staffmsgCtrl(){
                 MsgService.tomsg(data.body.status.errorDesc);
             });
         };
-
+        
+        getPositionsFun();
+        //配置项列表
+        function getPositionsFun(){
+            var promise = companyService.getPositions({body:{}});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                	$scope.positions=data.body.data.positions;
+                }else{
+                    MsgService.tomsg(data.body.status.errorDesc);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.tomsg(data.body.status.errorDesc);
+            });
+        };
+        
+        $scope.idTypes = [{"idType":"身份证"},{"idType":"因私护照"},{"idType":"因公护照"},{"idType":"香港永久性居民身份证"},{"idType":"澳门永久性居民身份证"},{"idType":"港澳居民来往内地通行证"},{"idType":"台湾居民来往内地通行证"},{"idType":"外国人永久居留证"}];
+        $scope.qualifications = [{"qualification":"博士研究生"},{"qualification":"硕士研究生"},{"qualification":"大学本科"},{"qualification":"大学专科"},{"qualification":"高职及中专"},{"qualification":"高中"},{"qualification":"初中"}];
+        $scope.nations = [{"nation":"汉族"},{"nation":"蒙古族"},{"nation":"回族"},{"nation":"藏族"},{"nation":"维吾尔族"},{"nation":"苗族"},{"nation":"彝族"},{"nation":"壮族"},{"nation":"布依族"},{"nation":"朝鲜族"},{"nation":"满族"},{"nation":"侗族"}
+        ,{"nation":"瑶族"},{"nation":"白族"},{"nation":"土家族"},{"nation":"哈尼族"},{"nation":"哈萨克族"},{"nation":"傣族"},{"nation":"黎族"},{"nation":"僳僳族"},{"nation":"佤族"},{"nation":"畲族"},{"nation":"高山族"},{"nation":"拉祜族"},{"nation":"水族"},{"nation":"东乡族"}
+        ,{"nation":"纳西族"},{"nation":"景颇族"},{"nation":"柯尔克孜族"},{"nation":"土族"},{"nation":"达斡尔族"},{"nation":"仫佬族"},{"nation":"羌族"},{"nation":"布朗族"},{"nation":"撒拉族"},{"nation":"毛南族"},{"nation":"仡佬族"},{"nation":"锡伯族"},{"nation":"阿昌族"},{"nation":"普米族"}
+        ,{"nation":"塔吉克族"},{"nation":"怒族"},{"nation":"乌孜别克族"},{"nation":"俄罗斯族"},{"nation":"鄂温克族"},{"nation":"德昂族"},{"nation":"保安族"},{"nation":"裕固族"},{"nation":"京族"},{"nation":"塔塔尔族"},{"nation":"独龙族"},{"nation":"鄂伦春族"},{"nation":"赫哲族"},{"nation":"门巴族"}
+        ,{"nation":"珞巴族"},{"nation":"基诺族"}];
+        $scope.politicalStatuses = [{"politicalStatus":"中共党员"},{"politicalStatus":"中共预备党员"},{"politicalStatus":"共青团员"},{"politicalStatus":"民盟盟员"},{"politicalStatus":"民建会员"},{"politicalStatus":"民进会员"},{"politicalStatus":"农工党党员"},{"politicalStatus":"致公党党员"},{"politicalStatus":"九三学社社员"},{"politicalStatus":"台盟盟员"},{"politicalStatus":"无党派民主人士"},{"politicalStatus":"国民党员"},{"politicalStatus":"群众"}];
         //编辑配置项
         $scope.editconfigitem = function (row) {
             var oldrow=angular.copy(row);

@@ -14,9 +14,9 @@
     <div class="btnbox">
         <form class="f_r form-inline">
             <span selectdep options="'bm'" size="'sm'" myselected="sltorgList" class="wd170 dib" title="选择部门"></span>
-            <span selectdep options="'gw'" size="'sm'"  myselected="sltroleList" class="wd170 dib" title="选择角色"></span>
+            <!-- <span selectdep options="'gw'" size="'sm'"  myselected="sltroleList" class="wd170 dib" title="选择角色"></span> -->
         <span class="form-group-sm search-group">
-            <input type="text" class="form-control wd180" placeholder="姓名/手机/邮箱" ng-model="sltname">
+            <input type="text" class="form-control wd180" placeholder="姓名/手机/邮箱/职位" ng-model="sltname">
             <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
         </span>
         </form>
@@ -35,7 +35,7 @@
                     <th width="80" >姓名</th>
                     <th width="50">性别</th>
                     <th>部门</th>
-                    <th width="180">角色</th>
+                    <th width="180">职位</th>
                     <th width="150">员工号</th>
                     <th width="150">邮箱</th>
                     <th width="100">手机</th>
@@ -43,12 +43,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="data in datalist | filter:sltorgList[0].text | filter:sltroleList[0].text | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                <!-- <tr ng-repeat="data in datalist | filter:sltorgList[0].text | filter:sltroleList[0].text | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize"> -->
+                <tr ng-repeat="data in datalist | filter:sltorgList[0].text | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
                     <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
                     <td>{{data.name}}</td>
                     <td>{{data.sex}}</td>
                     <td>{{data.orgList[0].name}}</td>
-                    <td><span class="mr5" ng-repeat="n in data.roleList">{{n.name}}</span></td>
+                    <td>{{data.position}}</td>
                     <td>{{data.id}}</td>
                     <td>{{data.personalEmail}}</td>
                     <td>{{data.personalPhone}}</td>
@@ -77,7 +78,7 @@
                             <div class="col-xs-9">
                                 <table cellpadding="0" cellspacing="0" width="100%" class="line40td">
                                     <tr>
-                                        <td width="60" class="g9">员工姓名</td>
+                                        <td width="70" class="g9">员工姓名</td>
                                         <td class="pl5">
                                             <div class="nose-group"  ng-class="{'has-error':baseForm.name.$dirty && baseForm.name.$invalid}">
                                                 <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.name.$dirty && baseForm.name.$error.required" popover="员工姓名不能为空" popover-placement="bottom" popover-trigger="mouseenter"></i>
@@ -89,65 +90,99 @@
 
 
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td width="60" class="g9">性别</td>
+										<td class="g9 pl30">性别</td>
                                         <td class="pl5">
                                             <label> <input icheck type="radio" name="sex" ng-model="user.sex" value="男"> 男</label>
                                             <label> <input icheck type="radio" name="sex" ng-model="user.sex" value="女"> 女</label>
                                         </td>
                                     </tr>
-
                                     <tr>
+                                        
                                         <td class="g9">电子邮箱</td>
                                         <td class="pl5">
 
 
                                             <div class="nose-group" ng-class="{'has-error':baseForm.personalEmail.$dirty && baseForm.personalEmail.$invalid}">
                                                 <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.personalEmail.$dirty && baseForm.personalEmail.$invalid" popover="正确的邮箱地址" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                                <input type="text"  name="personalEmail" ng-model="user.personalEmail"  multiple-email class="form-control" placeholder="重要, 用于员工登录和接收密码; 邮箱和电话选一必填">
+                                                <input type="text"  name="personalEmail" ng-model="user.personalEmail"  multiple-email class="form-control" placeholder="用于登录; 邮箱和电话选一必填">
                                             </div>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="g9">电话号码</td>
+										<td class="g9 pl30">电话号码</td>
                                         <td class="pl5">
                                             <div class="nose-group" ng-class="{'has-error':baseForm.personalPhone.$dirty && baseForm.personalPhone.$invalid}">
                                                 <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.personalPhone.$dirty && baseForm.personalPhone.$invalid" popover="请输入11位手机号" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                                <input type="text"  name="personalPhone" ng-model="user.personalPhone"  multiple-email class="form-control" placeholder="重要, 用于员工登录和接收密码;邮箱和电话选一必填">
+                                                <input type="text"  name="personalPhone" ng-model="user.personalPhone"  multiple-email class="form-control" placeholder="用于登录;邮箱和电话选一必填">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="g9">所属部门</td>
+                                        <td class="g9">部门</td>
                                         <td class="pl5">
                                             <span selectdep options="'bm'" myselected="user.orgList" title="选择部门"></span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="g9"></td>
-                                        <td class="pl5">
-                                            <span selectdep options="'gw'" myselected="user.roleList" title="选择角色"></span>
                                         </td>
                                     </tr>
                                 </table>
                                 <div showhid>
                                     <table cellpadding="0" cellspacing="0" width="100%" class="line40td dropdown" style="display: none;">
                                         <tr>
-                                            <td width="60" class="g9">员工编号</td>
+											<td class="g9">职位</td>
+                                        <td class="pl5">
+                                            <select class="form-control" ng-model="user.position" ng-options="x.name as x.name for x in positions">
+                                				<option value=''>选择职位</option>
+                            				</select>
+                                        </td>
+                                            <td class="g9 pl30">员工编号</td>
                                             <td class="pl5">
                                                 <div class="nose-group"  ng-class="{'has-error':baseForm.id.$dirty && baseForm.id.$invalid}">
                                                     <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.id.$dirty && baseForm.id.$invalid" popover="请输入最大6位数字的编号" popover-placement="bottom" popover-trigger="mouseenter"></i>
                                                     <input type="text" class="form-control" name="id" ng-model="user.id" isnumber  ng-maxlength="6" />
                                                 </div>
                                             </td>
+											
                                         </tr>
+									<tr>
+                                        <td class="g9">证件类型</td>
+                                        <td class="pl5">
+                                            <select class="form-control" ng-model="user.idType" ng-options="x.idType as x.idType for x in idTypes">
+                                				<option value=''>选择证件类型</option>
+                            				</select>
+                                        </td>
+ 										<td class="g9 pl30">证件号码</td>
+                                        <td class="pl5">
+                                            <div class="nose-group"  ng-class="{'has-error':baseForm.idNo.$dirty && baseForm.idNo.$invalid}">
+                                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.idNo.$dirty && baseForm.idNo.$invalid" popover="请输入最大20位数字的证件号码" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                    <input type="text" class="form-control" name="idNo" ng-model="user.idNo" isnumber  ng-maxlength="20" />
+                                              </div>
+                                        </td>
+                                    </tr>
+									<tr>
+                                        <td class="g9">民族</td>
+                                        <td class="pl5">
+                                            <select class="form-control" ng-model="user.nation" ng-options="x.nation as x.nation for x in nations">
+                                				<option value=''>选择民族</option>
+                            				</select>
+                                        </td>
+ 										<td class="g9 pl30">政治面貌</td>
+                                        <td class="pl5">
+                                            <select class="form-control" ng-model="user.politicalStatus" ng-options="x.politicalStatus as x.politicalStatus for x in politicalStatuses">
+                                				<option value=''>选择政治面貌</option>
+                            				</select>
+                                        </td>
+                                    </tr>
                                         <tr>
                                             <td class="g9">出生日期</td>
                                             <td class="pl5">
                                                 <div class="qiyi-group nose-group line20td">
                                                     <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.birthDate.$dirty && baseForm.birthDate.$invalid" popover="请输入正确出生日期" popover-placement="bottom" popover-trigger="mouseenter"></i>
                                                     <input type="datetime" name="birthDate" class="form-control" date-time ng-model="user.birthDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true">
+                                                    <span class="abs_r" style="top: 4px;"><i class="iconfont icon-rili"></i></span>
+                                                </div>
+                                            </td>
+											<td class="g9 pl30">参加工作日期</td>
+                                            <td class="pl5">
+                                                <div class="qiyi-group nose-group line20td">
+                                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.firstJobDate.$dirty && baseForm.firstJobDate.$invalid" popover="请输入正确日期" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                    <input type="datetime" name="firstJobDate" class="form-control" date-time ng-model="user.firstJobDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true">
                                                     <span class="abs_r" style="top: 4px;"><i class="iconfont icon-rili"></i></span>
                                                 </div>
                                             </td>
@@ -161,13 +196,63 @@
                                                     <span class="abs_r" style="top: 4px;"><i class="iconfont icon-rili"></i></span>
                                                 </div>
                                             </td>
+											<td class="g9 pl30">转正日期</td>
+											<td class="pl5">
+                                                <div class="qiyi-group nose-group line20td" ng-class="{'has-error':baseForm.confirmationDate.$dirty && baseForm.confirmationDate.$invalid}">
+                                                    <i class="iconfont icon-tishi f20 abs_r" style="right: -25px;" ng-show="baseForm.confirmationDate.$dirty && baseForm.confirmationDate.$invalid" popover="请选择转正日期" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                    <input type="datetime" name="confirmationDate" class="form-control" date-time ng-model="user.confirmationDate" view="date" min-view="date" format="yyyy-MM-dd" auto-close="true">
+                                                    <span class="abs_r" style="top: 4px;"><i class="iconfont icon-rili"></i></span>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td class="g9">毕业院校</td>
+											<td class="g9">学历</td>
+                                            <td class="pl5">
+                                                <div class="nose-group">
+                                                    <select class="form-control" ng-model="user.qualification" ng-options="x.qualification as x.qualification for x in qualifications">
+                                						<option value=''>选择学历</option>
+                            						</select>
+                                                </div>
+                                            </td>
+                                            <td class="g9 pl30">毕业院校</td>
                                             <td class="pl5">
                                                 <div class="nose-group"  ng-class="{'has-error':baseForm.university.$dirty && baseForm.university.$invalid}">
                                                     <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.university.$dirty && baseForm.university.$error.maxlength" popover="请输入毕业院校全称不能超过40字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
                                                     <input type="text" class="form-control" name="university" ng-model="user.university" ng-maxlength="40" placeholder="请输入毕业院校全称" />
+                                                </div>
+                                            </td>
+                                        </tr>
+										<tr>
+											<td class="g9">紧急联系人</td>
+                                            <td class="pl5">
+                                                <div class="nose-group"  ng-class="{'has-error':baseForm.urgentContactName1.$dirty && baseForm.urgentContactName1.$invalid}">
+                                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.urgentContactName1.$dirty && baseForm.urgentContactName1.$error.maxlength" popover="请输入联系人姓名不能超过20字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                    <input type="text" class="form-control" name="urgentContactName1" ng-model="user.urgentContactName1" ng-maxlength="20" placeholder="请输入联系人姓名" />
+                                                </div>
+                                            </td>
+                                            <td class="g9 pl30">联系人电话</td>
+                                            <td class="pl5">
+                                                <div class="nose-group" ng-class="{'has-error':baseForm.urgentContactNo1.$dirty && baseForm.urgentContactNo1.$invalid}">
+                                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.urgentContactNo1.$dirty && baseForm.urgentContactNo1.$invalid" popover="请输入11位手机号" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                <input type="text"  name="urgentContactNo1" ng-model="user.urgentContactNo1"  multiple-email class="form-control" placeholder="请输入手机号码">
+                                            </div>
+                                            </td>
+                                        </tr>
+										<tr>
+											<td class="g9">籍贯</td>
+                                            <td class="pl5" colspan="3">
+                                                <div class="nose-group"  ng-class="{'has-error':baseForm.birthOfOrigin.$dirty && baseForm.birthOfOrigin.$invalid}">
+                                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.birthOfOrigin.$dirty && baseForm.birthOfOrigin.$error.maxlength" popover="请输入籍贯不能超过60字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                    <input type="text" class="form-control" name="birthOfOrigin" ng-model="user.birthOfOrigin" ng-maxlength="60" placeholder="请输入籍贯" />
+                                                </div>
+                                            </td>
+                                        </tr>
+										<tr>
+											<td class="g9">现住地址</td>
+                                            <td class="pl5" colspan="3">
+                                                <div class="nose-group"  ng-class="{'has-error':baseForm.homeAddress.$dirty && baseForm.homeAddress.$invalid}">
+                                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.homeAddress.$dirty && baseForm.homeAddress.$error.maxlength" popover="请输入现住地址不能超过60字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                                    <input type="text" class="form-control" name="homeAddress" ng-model="user.homeAddress" ng-maxlength="60" placeholder="请输入现住地址" />
                                                 </div>
                                             </td>
                                         </tr>

@@ -1,0 +1,100 @@
+<div id="page-wrapper" ng-controller="mySalaryCtrl" ng-init="initFun()">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="initFun()" title="刷新"></a></div>
+        <ul>
+            <li class="active">薪资查询</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li>薪资</li>
+        <li class="active">薪资查询</li>
+    </ol>
+    <div class="btnbox">
+        <!--<div class="line28 f_l">搜索“ <span class="red ng-binding">1</span> ”，共搜索到<span class="red ng-binding">1</span>条记录</div>-->
+        <form class="f_r form-inline">
+            <span class="form-group-sm search-group">
+            	<input type="datetime" class="form-control" placeholder="工资年月" date-time id="payrollDate" ng-model="form.payrollDate" min-view="month" format="yyyy-MM" auto-close="true">
+                <span class="abs_r" style="right:40px"><i class="iconfont icon-rili"></i></span>
+                <i class="iconfont icon-sousuo ml10 poi" ng-click="changeYearMonth()"></i>
+            </span>
+        </form>
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
+                <thead>
+                <tr>
+                    <th><span class="pl15">姓名</span></th>
+                    <th width="200">员工编号</th>
+                    <th width="200">部门</th>
+                    <th width="200">工资状态</th>
+                    <th width="200">到账金额</th>
+                    <th width="60">详细信息</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                    <td><span class="pl15">{{data.userDTO.name}}</span></td>
+                    <td>{{data.userDTO.id}}</td>
+                    <td>{{data.userDTO.orgList[0].name}}</td>
+                    <td>
+                    	<span ng-show="data.status=='CONFIRMED'" class="label label-success">已生成</span>
+                    	<span ng-show="data.status!='CONFIRMED'" class="label label-warning">未生成</span>
+                    </td>
+                    <td>{{data.totalIncome-data.totalDeduction}}</td>
+                    <td><button ng-if="data.status=='CONFIRMED'" class="btn btn-default btn-xs h30" title="查看" ng-click="s_issueDetail(data)"><i class="iconfont icon-chakan f14"></i></button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
+
+<!--工资单明细-->
+<script type="text/ng-template" id="s_issueDetail.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">工资单查询</div>
+        </div>
+        <!--{{baseForm.$valid}}-->
+        <form role="baseForm" name="baseForm"  ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+            <div class="modal-body bte line28" style="min-height:280px;">
+                <div class="mt15">
+                    <span class="f16">{{userinfo.userDTO.name}}</span>
+                </div>
+                <div class="row f16 mt10">
+                    <div class="col-xs-3 t_r">{{inquiryPayrollData.totalIncome}}</div>
+                    <div class="col-xs-3"><span class="g9 f12">总收入</span></div>
+                    <div class="col-xs-3 t_r">{{inquiryPayrollData.totalDeduction}}</div>
+                    <div class="col-xs-3"><span class="g9 f12">扣除金额</span></div>
+                    <div class="col-xs-3 t_r">{{inquiryPayrollData.totalIncome-inquiryPayrollData.totalDeduction}}</div>
+                    <div class="col-xs-3"><span class="g9 f12">到账金额</span></div>
+                </div>
+                <div class="h5"></div>
+                <div class="salary_line01"><span>收入明细页</span></div>
+                <div class="row f16 mt10">
+                        <span ng-repeat="data in inquiryPayrollData.payrollItems | filter:{income:true}">
+                            <div class="col-xs-3 t_r">{{data.itemAmount}}</div>
+                            <div class="col-xs-3"><span class="g9 f12">{{data.itemName}}</span></div>
+                        </span>
+                </div>
+                <div class="h10"></div>
+                <div class="salary_line01"><span>收入明细页</span></div>
+                <div class="row f16 mt10">
+                        <span ng-repeat="data in inquiryPayrollData.payrollItems | filter:{income:false}">
+                            <div class="col-xs-3 t_r">{{data.itemAmount}}</div>
+                            <div class="col-xs-3"><span class="g9 f12">{{data.itemName}}</span></div>
+                        </span>
+                </div>
+            </div>
+            <div class="modal-footer">&nbsp;</div>
+        </form>
+    </div>
+</script>

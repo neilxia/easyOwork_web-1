@@ -94,6 +94,12 @@ function companyService(){
             //POST 	B0004-修改公司部门
             changeCompanyOrg:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/changeCompanyOrg',form)
+            },
+            changePosition:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changePosition',form)
+            },
+            getPositions:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/getPositions',form)
             }
         }
     }];

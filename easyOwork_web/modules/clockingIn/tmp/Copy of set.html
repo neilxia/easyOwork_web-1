@@ -1,0 +1,74 @@
+<div id="page-wrapper" ng-controller="clockingInsetCtrl" ng-init="initFun()">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="initFun()" title="刷新"></a></div>
+        <ul>
+            <li class="active">考勤设置</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li>考勤管理</li>
+        <li class="active">考勤设置</li>
+    </ol>
+    <div class="btnbox">
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <table class="table table-hover bbe editwd100" cellspacing="0" cellpadding="0" width="100%;">
+                <thead>
+                <tr>
+                    <th width="150" class="pl15">名称</th>
+                    <th >值</th>
+                    <th width="350">描述</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <!--<tr ng-repeat="data in dataslist">-->
+                <tr ng-repeat="data in dataslist">
+                    <td class="pl20">{{data.nameas}}</td>
+                    <td>
+                        <span ng-if="data.name!='WORKING_DAY'">
+                        <span  editable-time="data.value" e-form="Vcode" onbeforesave="setWorkingTimeFun($data,data.name)" >{{data.value || '无'}}</span> <span class="ml5 poi orange" ng-click="Vcode.$show()" ng-hide="Vcode.$visible">修改</span>
+</span>
+
+
+                        <span ng-if="data.name=='WORKING_DAY'">
+                            <span ng-repeat="data in seleworking" class="mr5" ng-if="seleworked">{{data.text}}</span>
+                        <label ng-repeat="data in workingDay" class="mr5" ng-if="!seleworked"><input icheck type="checkbox" ng-model="data.checked" value="{{data.value}}">{{data.text}}</label>
+                        <button type="button" class="btn btn-primary btn-xs" ng-click="setWorkingTimeFun('','WORKING_DAY')" ng-if="!seleworked">确定</button>
+                        <span class="ml5 poi orange" ng-if="seleworked" ng-click="seleworkedopen()">修改</span>
+                        </span>
+
+                    </td>
+                    <td>{{data.description}}</td>
+                </tr>
+
+                <!--<tr>
+                    <td class="pl20">工作日自定义</td>
+                    <td class="line24">
+                        &lt;!&ndash;<a href="#" editable-checklist="user.status" e-ng-options="s.value as s.text for s in statuses">
+
+                        </a>&ndash;&gt;
+                        &lt;!&ndash;<span editable-checklist="workingDay" e-form="workingDay" e-ng-options="s.value as s.text for s in workingDay">
+                            {{workingDay}}
+                        </span>
+                        <span class="ml5 poi orange" ng-click="workingDay.$show()" ng-hide="workingDay.$visible">修改</span>&ndash;&gt;
+
+
+                    </td>
+                    <td>{{data.description}}</td>
+                </tr>-->
+                </tbody>
+            </table>
+        </div>
+        <!--<div class="nose-panel-footer cf bte">
+            <pagination class="pagination-sm yi-page m0 f_r" total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize"  boundary-links="true"></pagination>
+            <div class="g9">共 3625 条数据</div>
+        </div>-->
+    </div>
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
