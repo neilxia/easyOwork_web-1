@@ -19,7 +19,7 @@
                 <li ng-repeat="data in pcsdetail.processStepDTOList" ng-class="{'sucs':data.status=='APPROVED','jing':data.status=='PENDING'}">
                     <span class="sign"></span>
                     <div class="textbox" ng-if="data.status=='APPROVED'">
-                        {{data.stepName}} | {{data.userDTO.name}} <span class="green ml10">同意</span> <span class="g9 ml10">{{data.actionDate}}</span>
+                        {{data.stepName}} | {{data.userDTO.name}} <span class="green ml10">同意</span> <span class="g9 ml10">{{data.actionDate}}</span><span class="g9 ml10" ng-if="data.message">({{data.message}})</span>
                     </div>
                     <div class="textbox" ng-if="data.status=='PENDING'&&data.stepNo==pcsdetail.currentStepNo">
                         {{data.stepName}} | {{data.userDTO.name}} <span class="orange ml10">待处理</span> <button class="btn btn-default btn-xs ml10" ng-if="pcsdetail.status!='WITHDRAW'" ng-click="changeProcessFun(pcsdetail)">撤回申请</button>
@@ -28,7 +28,7 @@
                         {{data.stepName}} | {{data.userDTO.name}}
                     </div>
                     <div class="textbox" ng-if="data.status=='REJECTED'">
-                        {{data.stepName}} | {{data.userDTO.name}} <span class="red ml10">拒绝</span> <span class="g9 ml10">{{data.actionDate}}</span>
+                        {{data.stepName}} | {{data.userDTO.name}} <span class="red ml10">拒绝</span> <span class="g9 ml10">{{data.actionDate}}</span> <span class="g9 ml10" ng-if="data.message">({{data.message}})</span>
                     </div>
                 </li>
                 <!--

@@ -430,23 +430,30 @@ function myauditdetailCtrl(){
         $scope.pcsdetail = LocalStorage.getObject('pcsdetail');
         //撤回流程
         $scope.jujue=false;
+        $scope.tongyi=false;
         $scope.jujuetoggle=function(){
             $scope.jujue = !$scope.jujue;
+            $scope.tongyi=false;
         }
         //批准同意
-        $scope.agreedproFun=function(){
-            Common.openConfirmWindow('','您确定要批准同意申请么？').then(function() {
-                $scope.changeProcessFun('APPROVE',$scope.pcsdetail)
-            });
+        $scope.tongyitoggle=function(){
+        	$scope.tongyi = !$scope.tongyi;
+        	$scope.jujue=false;
         }
         //批准拒绝
         $scope.rejectdproFun=function(state){
             if(!state) return;
-            Common.openConfirmWindow('','您确定要批准拒绝申请么？').then(function() {
+            Common.openConfirmWindow('','您确定要拒绝申请么？').then(function() {
             	$scope.changeProcessFun('REJECT',$scope.pcsdetail)
             });
         }
-        $scope.rejectMsg="";
+      //批准同意
+        $scope.agreedproFun=function(){
+            Common.openConfirmWindow('','您确定要批准申请么？').then(function() {
+            	$scope.changeProcessFun('APPROVE',$scope.pcsdetail)
+            });
+        }
+
         $scope.changeProcessFun=function(change,row){
             //批准/拒绝/撤回流程
             $scope.options={
