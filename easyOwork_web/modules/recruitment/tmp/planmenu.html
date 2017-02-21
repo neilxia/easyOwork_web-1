@@ -41,7 +41,7 @@
                 </ul>
             </li>-->
             <li ng-repeat="data in mundata.nodeList | orderBy:['nodeDTO.flowNodeSequence']">
-                <a><i class="iconfont icon-zichankupsd"></i><span class="nav-label">{{data.nodeDTO.flowNodeName}}</span> <span class="fa arrow"></span></a>
+                <a><i class="iconfont icon-zichankupsd"></i><span class="nav-label">{{data.nodeDTO.flowNodeName}}({{data.nodeTotalCount}})</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li ui-sref-active="active">
                         <a ui-sref="planlist.dtprocess({'type':0,'flowNodeName':data.nodeDTO.flowNodeName,'flowNodeSequence':data.nodeDTO.flowNodeSequence})"><span class="nav-label">进行中({{data.nodeNormalCount}}) </span> </a>

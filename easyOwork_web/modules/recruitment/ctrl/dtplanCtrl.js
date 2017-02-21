@@ -46,7 +46,6 @@ function dtplanlistCtrl(){
         //查询list
         function inquiryRecruitPlanFun(){
             //查询简历在各个招聘节点数量
-            Common.inquiryRecruitPositionSummaryFun($rootScope,$scope.planName,$scope.positionName);
             $scope.options={
                 "planName":$scope.planName	//按名称查询
             };
@@ -94,12 +93,12 @@ function dtplanlistCtrl(){
                     "planName":row.planName		//招聘计划名称
                 };
             }
-            debugger;
             var promise = RecruitFlowService.changeRecruitPlan({body:$scope.options});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                     inquiryRecruitPlanFun();
+                    Common.inquiryRecruitPositionSummaryFun($rootScope,$scope.planName,$scope.positionName);
                     $modalInstance.close();
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
@@ -180,7 +179,6 @@ function dtfpositionsCtrl(){
         //查询list
         function inquiryRecruitPositionChannelFun(){
             //查询简历在各个招聘节点数量
-            Common.inquiryRecruitPositionSummaryFun($rootScope,$scope.planName,$scope.positionName);
             $scope.options={
                 "planName":$scope.planName || '',	//招聘计划名称
                 "positionName":$scope.positionName || ''	//职位名称
@@ -249,6 +247,7 @@ function dtfpositionsCtrl(){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                     inquiryRecruitPositionChannelFun();
+                    Common.inquiryRecruitPositionSummaryFun($rootScope,$scope.planName,$scope.positionName);
                     $modalInstance.close();
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
@@ -353,7 +352,6 @@ function dtresumemsgCtrl(){
         //查询list
         function inquiryRecruitResumeFun(){
             //查询简历在各个招聘节点数量
-            Common.inquiryRecruitPositionSummaryFun($rootScope,$scope.planName,$scope.positionName);
             $scope.options={
                 "planName":$scope.planName,	//招聘计划名称
                 "positionName":$scope.positionName		//职位名称
@@ -431,6 +429,7 @@ function dtresumemsgCtrl(){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                     inquiryRecruitResumeFun();
+                    Common.inquiryRecruitPositionSummaryFun($rootScope,$scope.planName,$scope.positionName);
                     $modalInstance.close();
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
@@ -615,7 +614,6 @@ function dthiredresumemsgCtrl(){
         //查询list
         function inquiryRecruitHiredResumeFun(){
             //查询简历在各个招聘节点数量
-            Common.inquiryRecruitPositionSummaryFun($rootScope,$scope.planName,$scope.positionName);
             $scope.options={
                 "planName":$scope.planName,	//招聘计划名称
                 "positionName":$scope.positionName		//职位名称
@@ -661,7 +659,6 @@ function dtprocessCtrl(){
         //查询list
         function inquiryRecruitResumeByFlowNodeFun(){
             //查询简历在各个招聘节点数量
-            Common.inquiryRecruitPositionSummaryFun($rootScope,$scope.planName,$scope.positionName);
             $scope.options={
                 "recruitPositionDTO":{	//职位
                     "planName":$scope.planName,
@@ -736,6 +733,7 @@ function dtprocessCtrl(){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                     inquiryRecruitResumeByFlowNodeFun();
+                    Common.inquiryRecruitPositionSummaryFun($rootScope,$scope.planName,$scope.positionName);
                     $modalInstance.close();
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);

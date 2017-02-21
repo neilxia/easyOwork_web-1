@@ -2,6 +2,7 @@
  * Created by Nose on 2016/8/30.
  */
 var app=angular.module('qiyi.services',['nose.tpls']);
+var n= 1,mundata;
 
 app.factory('noseService',[function(){
     return {
@@ -238,12 +239,29 @@ app.factory('Common', ['$q','$modal','RecruitFlowService',
                         "positionName":positionName
                     };
                     var promise = RecruitFlowService.inquiryRecruitPositionSummary({body:options});
-
                     promise.success(function(data, status, headers, config){
                         var sts=data.body.status;
                         if(sts.statusCode==0){
-
-                            $scope.mundata=data.body.data;
+                            if(n==1){
+                                n++;
+                                $scope.mundata=mundata=data.body.data;
+                            }else{
+                                mundata.channelPublishCount=data.body.data.channelPublishCount;
+                                mundata.channelTotalCount=data.body.data.channelTotalCount;
+                                mundata.hiredCount=data.body.data.hiredCount;
+                                mundata.resumeCount=data.body.data.resumeCount;
+                                angular.forEach(mundata.nodeList,function(val,ind){
+                                    angular.forEach(data.body.data.nodeList,function(newval,newind){
+                                        if(ind==newind){
+                                            val.nodeHoldCount=newval.nodeHoldCount;
+                                            val.nodeNormalCount=newval.nodeNormalCount;
+                                            val.nodeRejectCount=newval.nodeRejectCount;
+                                            val.nodeTotalCount=newval.nodeTotalCount;
+                                        }
+                                    });
+                                })
+                                $scope.mundata=mundata;
+                            }
                         }else{
                             MsgService.tomsg(data.body.status.errorDesc);
                         }

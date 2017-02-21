@@ -1,5 +1,5 @@
 .mysetheadpic{ position: absolute; left: 700px; top: 30px; text-align: center; z-index: 1;}
-.mysetheadpic .imgbox{ width: 110px; height: 110px; line-height: 110px; background-color: #82c188; overflow:hidden; border: #ddd dashed 1px;}
+.mysetheadpic .imgbox{ width: 110px; height: 110px; line-height: 110px; background-color: #82c188; overflow:hidden; }
 .mysetheadpic .imgbox img{ width: 100%;}
 
 /*工资管理*/

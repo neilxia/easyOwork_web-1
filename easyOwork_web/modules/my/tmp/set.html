@@ -36,7 +36,7 @@
              -->
         <div class="mysetheadpic">
             <div class="imgbox bdrs50 white f18">
-                <span>{{userinfo.name}}</span>
+                <span ng-show="!userinfo.photoUrl">{{userinfo.name}}</span>
                 <img ng-show="userinfo.photoUrl" src="{{userinfo.photoUrl}}" alt="">
                 <!--<img ng-src="{{userinfo.photoUrl||'./images/headportrait02.jpg'}}" alt=""></div>-->
             </div>

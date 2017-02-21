@@ -51,8 +51,8 @@ function sideNavigation2($timeout) {
             scope.$watch('optiondata',function(oldval,newval,$scope){
                 $timeout(function(){
                     if(oldval==newval)return;
-                    element.metisMenu();
-                });
+                    $(element).metisMenu();
+                },0);
             });
         }
     };
