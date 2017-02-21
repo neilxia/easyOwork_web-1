@@ -1,0 +1,17 @@
+<nav class="navbar-default navbar-static-side" id="navbar-default" role="navigation">
+    <!-- <div class="sidebar-collapse" accessid="A002-001"> -->
+    <div class="sidebar-collapse" accessid="A018-001">
+        <ul side-navigation class="nav metismenu" id="side-menu">
+       	 	<li ng-class="{active: $state.includes('org.user')}">
+                <a ui-sref="org.user"><i class="iconfont icon-zichankupsd f18"></i> <span class="nav-label">部门员工</span></a>
+            </li>
+            <li ng-class="{active: $state.includes('org.project')||$state.includes('org.projectdetail')}">
+                <a ui-sref="org.project"><i class="iconfont icon-xiangmuguanlipsd f18"></i> <span class="nav-label">部门项目</span></a>
+            </li>
+            <li ng-class="{active: $state.includes('org.sale')||$state.includes('org.sale')}">
+                <a ui-sref="org.sale"><i class="iconfont icon-xiangmuguanlipsd f18"></i> <span class="nav-label">部门销售</span></a>
+            </li>
+            
+            
+    </div>
+</nav>

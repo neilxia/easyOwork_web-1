@@ -481,6 +481,10 @@ function projectService(){
             //POST 5.11.11	查询我参与的项目
             inquiryMyProject:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryMyProject',form)
+            },
+            
+            inquiryProjectTasks:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryProjectTasks',form)
             }
 
         }

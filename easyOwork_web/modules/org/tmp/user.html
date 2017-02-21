@@ -1,14 +1,14 @@
-<div id="page-wrapper"  ng-controller="searchlistCtrl" ng-init="initFun()">
+<div id="page-wrapper"  ng-controller="orgUserCtrl" ng-init="initFun()">
     <!--主要内容-->
     <div class="payetilebox">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
         <ul>
-            <li class="active">同事查询</li>
+            <li class="active">{{userinfo.orgList[0].name}}负责人</li>
         </ul>
     </div>
     <ol class="breadbox">
-        <li>工作面板</li>
-        <li class="active">同事查询</li>
+        <li>部门分析</li>
+        <li class="active">部门员工</li>
     </ol>
     <div class="btnbox">
     <form class="f_r form-inline">
@@ -41,8 +41,17 @@
                     <td>
 	                    <div class="btn-group">
 	                    <button type="button" class="btn btn-sm btn-default mr5"  ng-click="staffbase(data)">
-						    更多信息
+						    基本信息
 						  </button>
+						  <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						   	 更多<span class="caret"></span>
+						  </button>
+						  <ul class="dropdown-menu">
+						    <li><a ng-click="staffsalary(data)">薪酬及合同</a></li>
+						    <li><a ng-click="staffpayroll(data)">工资单</a></li>
+						    <li><a ng-click="staffproject(data)">参与的项目</a></li>
+						    <li><a ng-click="staffcustomer(data)">负责的客户</a></li>
+						  </ul>
 						</div>
                     
                     <!--  <button protectedId="{{data.userUuid}}" class="btn btn-default btn-xs h30" title="查看" ng-click="staffbase(data)"><i class="iconfont icon-chakan f14"></i></button>
@@ -128,6 +137,7 @@
 						<td class="pl5">联系人电话</td>
                         <td class="pl5">{{user.urgentContactNo1}}</td>
                     </tr>
+                    
                 </table>
             </div>
             <div class="col-xs-3 pl20 pt5 t_c">
