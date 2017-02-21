@@ -896,6 +896,11 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             templateUrl: 'modules/sales/tmp/assetsmsglist.html',
             data: { pageTitle: '销售过程'}
         })
+        .state('sales.assetsmsgsummary', {
+            url: "/assetsmsgsummary?type",
+            templateUrl: 'modules/sales/tmp/assetsmsgsummary.html',
+            data: { pageTitle: '销售统计'}
+        })
         .state('sales.assetsmsgdtmain', {
             url: "/assetsmsgdtmain?name",
             templateUrl: 'modules/sales/tmp/assetsmsgdtmain.html',

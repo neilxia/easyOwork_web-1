@@ -7,6 +7,7 @@ app.controller('PtcustomerdtmainmsgCtrl',PtcustomerdtmainmsgCtrl());
 
 app.controller('assetsmsgCtrl',assetsmsgCtrl());
 app.controller('assetsdtmainmsgCtrl',assetsdtmainmsgCtrl());
+app.controller('assetsmsgsummaryCtrl',assetsmsgsummaryCtrl());
 
 app.controller('assetsmpmsgCtrl',assetsmpmsgCtrl());
 app.controller('assetsmpdtmainmsgCtrl',assetsmpdtmainmsgCtrl());

@@ -793,3 +793,96 @@ function assetsdtmainmsgCtrl(){
 
     }]
 }
+
+function assetsmsgsummaryCtrl(){
+    return['$rootScope','$scope', '$modal' ,'$compile','$state','roleService','notify','analysisService','$stateParams','LocalStorage',function($rootScope,$scope,$modal,$compile,$state,roleService,notify,analysisService,$stateParams,LocalStorage){
+    	var userinfo=LocalStorage.getObject('userinfo');
+    	var myChart = echarts.init(document.getElementById('chart'));
+    	$scope.radioModel = "year";
+        var option = {
+        		title: {
+        	        text: ''
+        	    },
+        	    tooltip : {
+        	        trigger: 'axis'
+        	    },
+        	    legend: {
+        	        orient: 'vertical',
+        	        left: 'left',
+        	        data: []
+        	    },
+        	    xAxis:  {
+        	        type: 'category',
+        	        boundaryGap: true,
+        	        data: []
+        	    },
+        	    yAxis: {
+        	        type: 'value',
+        	        axisLabel: {
+        	            formatter: '{value}'
+        	        }
+        	    },
+        	    series : [
+        	        {
+        	            name: '客户销售曲线',
+        	            type: 'bar',
+        	            data:[],
+        	            barWidth:20,
+        	            markPoint: {
+        	                data: [
+        	                    {type: 'max', name: '最大'},
+        	                    {type: 'min', name: '最小'}
+        	                ]
+        	            }
+        	        }
+        	    ]
+    	};
+		$scope.initFun=function(){
+			$scope.options={
+	                "userDTO":{		//如查询某个销售人员所有客户, 传入该数据
+	                    "id":userinfo.id,	//员工号
+	                    "personalEmail":userinfo.personalEmail,	//邮件地址
+	                    "personalPhoneCountryCode":'86',	//电话号码国家代码
+	                    "personalPhone":userinfo.personalPhone		//电话号码
+	                },
+	                "year":0,
+	                "month":0
+	        };
+			$scope.changeType();
+			
+    	};
+    	$scope.changeType = function(){	
+    		chartType = $scope.radioModel;
+    		if(chartType == 'year'){
+    			$scope.options.year = 0;
+    			$scope.options.month = 0;
+				option.title.text='年销售金额(元)';
+			}else if(chartType == 'month'){
+				$scope.options.year=new Date().getFullYear();
+				$scope.options.month = 0;
+				option.title.text=$scope.options.year+'年每月销售金额(元)';
+			}
+			else if(chartType == 'day'){
+				$scope.options.year=new Date().getFullYear();
+				$scope.options.month=new Date().getMonth()+1;
+				option.title.text=$scope.options.year+'年'+$scope.options.month+'月'+'每日销售金额(元)';
+			}
+    		$scope.getCustomerSaleChart($scope.options);
+    	}
+    	$scope.go = function(aType, aSubType){
+    		$rootScope.$state.go('analysis.'+aType,{type:aSubType});
+    	}
+    	$scope.getCustomerSaleChart = function(options){
+	        var promise = analysisService.getCustomerSaleChart({body:options});
+        	promise.success(function(data, status, headers, config){
+        		 var sts=data.body.status;
+                 var data=data.body.data;
+                 if(sts.statusCode==0){
+                	 option.xAxis.data = data.nameArray;
+                	 option.series[0].data=data.valueArray;
+                	 myChart.setOption(option);
+                 }
+        	})
+    	};
+    }]
+}

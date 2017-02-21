@@ -53,6 +53,8 @@
                     <td class="pl20"><span class="g6 f12">员工姓名：</span><span class="f16">{{userinfo.name}}</span></td>
                     <td class="pl20">
                         <span class="g6 f12 f_l">出生日期：</span>
+                        <span>{{userinfo.birthDate}}</span>
+                        <!-- 
                         <span class="f_l" ng-show="birthDateshow">
                             {{userinfo.birthDate}}
                             <span class="ml5 orange poi" ng-click="birthDatetoggle()">修改</span>
@@ -63,7 +65,7 @@
                             <span class="abs_r" style="top: 2px;"><i class="iconfont icon-rili"></i></span>
                         </div>
                         <span class="ml5" ng-click="changeEmployeeFun(userinfo.birthDate,'birthDate')" ng-show="!birthDateshow"><button class="btn ml5 btn-sm btn-primary">确定</button></span>
-
+						 -->
                     </td>
                 </tr>
                 <tr>
@@ -177,8 +179,8 @@
                 </tr>
                 <tr>
                     <td width="60" align="right">&nbsp;</td>
-                    <td class="pl20"><span class="g6 f12">毕业院校：</span>
-                        <span editable-text="userinfo.university" e-form="university" onbeforesave="changeEmployeeFun($data,'university')">{{userinfo.university || '无'}}</span> <span class="ml5 orange poi" ng-click="university.$show()" ng-hide="university.$visible">修改</span>
+                    <td class="pl20"><span class="g6 f12">毕业院校：</span><span class="f16">{{userinfo.university}}</span>
+                        <!-- <span editable-text="userinfo.university" e-form="university" onbeforesave="changeEmployeeFun($data,'university')">{{userinfo.university || '无'}}</span> <span class="ml5 orange poi" ng-click="university.$show()" ng-hide="university.$visible">修改</span> -->
                     </td>
                 </tr>
             </table>
