@@ -53,16 +53,17 @@
 <!--主菜单-->
 <div class="topmenu whitew f16">
     <div class="{{$state.current.data.widthClass}}">
-        <a ui-sref-active="active" ui-sref="index"><i class="iconfont icon-gongzuotai mr5"></i>工作首页</a>
+        <a ui-sref-active="active" ui-sref="index"><i class="iconfont icon-gongzuotai mr5"></i>首页</a>
         <a ng-class="{active:$state.includes('colleague')}" ui-sref="colleague.searchlist">通讯录</a>
         <a ng-class="{active:$state.includes('processmsg')}" ui-sref="processmsg.mypcs"></i>审批流程</a>
         <a ng-class="{active:$state.includes('project')}" ui-sref="project.msglist">项目</a>
         <a ng-class="{active:$state.includes('report')}" ui-sref="report.sendlist">报告</a>
         <a ng-class="{active:$state.includes('task')}" ui-sref="task.sendlist">任务</a>
-        <a ng-class="{active:$state.includes('staffmsg')}" ui-sref="staffmsg.list" accessId="A003-001||A004-001||A004-002||A015-001">人力资源</a>
-        <a ng-class="{active:$state.includes('sales')}" ui-sref="sales.customerlist" accessId="A007-001">客户销售</a>
+        <a ng-class="{active:$state.includes('staffmsg')}" ui-sref="staffmsg.list" accessId="A003-001||A004-001||A004-002||A015-001">HR</a>
+        <a ng-class="{active:$state.includes('sales')}" ui-sref="sales.customerlist" accessId="A007-001">CRM</a>
         <a ng-class="{active:$state.includes('assets')}" ui-sref="assets.assetslist({'type':0})" accessId="A005-001||A005-002||A005-003">资产</a>
-        <a ng-class="{active:$state.includes('analysis')}" ui-sref="analysis.list"  accessId="A016-001">决策</a>
+        <a ng-class="{active:$state.includes('analysis')}" ui-sref="analysis.list"  accessId="A016-001">企业决策</a>
+        <a ng-class="{active:$state.includes('org')}" ui-sref="org.user"  accessId="A018-001">部门分析</a>
 		<a ng-class="{active:$state.includes('sysmsg')}" ui-sref="sysmsg.info"  accessId="A001-001||A001-002||A001-003">平台设置</a>
         <!-- 
         <div class="dropdown pull-left" dropdown="">

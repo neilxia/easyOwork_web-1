@@ -195,9 +195,8 @@ function analysisProjectCtrl(){
 function analysisCustomerCtrl(){
     return['$rootScope','$scope', '$modal' ,'$compile','$state','roleService','notify','analysisService','$stateParams',function($rootScope,$scope,$modal,$compile,$state,roleService,notify,analysisService,$stateParams){
     	
-    	
+    	$scope.radioModel = "year";
     	var chartType=$rootScope.$stateParams.type;
-    	
     	var myChart = echarts.init(document.getElementById('chart'));
         var option = {
         		title: {
@@ -213,7 +212,7 @@ function analysisCustomerCtrl(){
         	    },
         	    xAxis:  {
         	        type: 'category',
-        	        boundaryGap: false,
+        	        boundaryGap: true,
         	        data: []
         	    },
         	    yAxis: {
@@ -225,12 +224,13 @@ function analysisCustomerCtrl(){
         	    series : [
         	        {
         	            name: '客户销售曲线',
-        	            type: 'line',
+        	            type: 'bar',
         	            data:[],
+        	            barWidth:20,
         	            markPoint: {
         	                data: [
-        	                    {type: 'max', name: '最大'},
-        	                    {type: 'min', name: '最小'}
+        	                    {type: 'max', name: '最高'},
+        	                    {type: 'min', name: '最低'}
         	                ]
         	            }
         	        }
@@ -238,38 +238,86 @@ function analysisCustomerCtrl(){
     	};
 		$scope.initFun=function(){
 			var chartType=$rootScope.$stateParams.type;
-			if(chartType == 'customer')
+			$scope.options={
+	                "year":0,
+	                "month":0
+	        };
+			if(chartType == 'customer'){
+				option.title.text='年客户总数';
 				$scope.getCustomerCustomerChart();
-			else if(chartType == 'sale')
+			}
+				
+			else if(chartType == 'sale'){
+				option.title.text='年销售额(元)';
 				$scope.getCustomerSaleChart();
-s    	};
+			}
+				
+    	};
+    	$scope.changeType = function(){	
+    		var period = $scope.radioModel;
+    		if(period == 'year'){
+    			$scope.options.year = 0;
+    			$scope.options.month = 0;
+    			if(chartType == 'sale'){
+    				option.title.text='年销售额(元)';
+    			}else if(chartType == 'customer'){
+    				option.title.text='年客户总数';
+    			}
+				
+			}else if(period == 'month'){
+				$scope.options.year=new Date().getFullYear();
+				$scope.options.month = 0;
+				if(chartType == 'sale'){
+					option.title.text=$scope.options.year+'年月销售额(元)';
+    			}else if(chartType == 'customer'){
+    				option.title.text=$scope.options.year+'年月客户总数';
+    			}
+			}
+			else if(period == 'day'){
+				$scope.options.year=new Date().getFullYear();
+				$scope.options.month=new Date().getMonth()+1;
+				if(chartType == 'sale'){
+					option.title.text=$scope.options.year+'年'+$scope.options.month+'月'+'日销售额(元)';
+    			}else if(chartType == 'customer'){
+    				option.title.text=$scope.options.year+'年'+$scope.options.month+'月日客户总数';
+    			}
+				
+			}
+    		if(chartType == 'customer'){
+				$scope.getCustomerCustomerChart();
+			}
+				
+			else if(chartType == 'sale'){
+				$scope.getCustomerSaleChart();
+			}
+    	}
     	$scope.go = function(aType, aSubType){
     		$rootScope.$state.go('analysis.'+aType,{type:aSubType});
     	}
     	$scope.getCustomerCustomerChart = function(){
     		var type = $stateParams.type;
-	        var promise = analysisService.getCustomerCustomerChart({body:{}});
+	        var promise = analysisService.getCustomerCustomerChart({body:$scope.options});
         	promise.success(function(data, status, headers, config){
         		 var sts=data.body.status;
                  var data=data.body.data;
                  if(sts.statusCode==0){
                 	 option.xAxis.data = data.nameArray;
                 	 option.series[0].data=data.valueArray;
-                	 option.title.text='客户年增长';
+                	 option.series[0].name="客户人数";
                 	 myChart.setOption(option);
                  }
         	})
     	};
     	$scope.getCustomerSaleChart = function(){
     		var type = $stateParams.type;
-	        var promise = analysisService.getCustomerSaleChart({body:{}});
+	        var promise = analysisService.getCustomerSaleChart({body:$scope.options});
         	promise.success(function(data, status, headers, config){
         		 var sts=data.body.status;
                  var data=data.body.data;
                  if(sts.statusCode==0){
                 	 option.xAxis.data = data.nameArray;
                 	 option.series[0].data=data.valueArray;
-                	 option.title.text='销售年增长';
+                	 option.series[0].name="销售额";
                 	 myChart.setOption(option);
                  }
         	})

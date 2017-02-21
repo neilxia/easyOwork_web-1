@@ -31,7 +31,7 @@ function searchlistCtrl(){
         $scope.staffbase=function(row){
             var modalInstance = $modal.open({
                 templateUrl: 'staffbase.html',
-                //size:'md',
+                size:'lg',
                 controller: modalCtrl
             });
             function modalCtrl ($scope, $modalInstance) {

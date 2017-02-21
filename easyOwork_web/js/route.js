@@ -594,6 +594,47 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             data: { pageTitle: '项目分析'}
 
         })
+        /*****************部门分析***************************/
+        .state('org', {
+            abstract: true,
+            url: "/org",
+            data: { pageTitle: '部门分析' },
+            views: {
+                '': {
+                    templateUrl: 'modules/common/content.html'
+                },
+                'main@org': {
+                    templateUrl: 'modules/common/myContent.html'
+                },
+                'menu@org': {
+                    templateUrl: 'modules/org/tmp/menu.html'
+                }
+            }
+        })
+        .state('org.user', {
+            url: "/user",
+            templateUrl: 'modules/org/tmp/user.html',
+            data: { pageTitle: '部门分析'}
+
+        })
+        .state('org.project', {
+            url: "/project",
+            templateUrl: 'modules/org/tmp/project.html',
+            data: { pageTitle: '部门分析'}
+
+        })
+        .state('org.projectdetail', {
+            url: "/projectdetail?name",
+            templateUrl: 'modules/org/tmp/projectdetail.html',
+            data: { pageTitle: '部门分析'}
+
+        })
+        .state('org.sale', {
+            url: "/sale",
+            templateUrl: 'modules/org/tmp/sale.html',
+            data: { pageTitle: '部门分析'}
+
+        })
         /*========公告========================================================== */
         .state('notice', {
             abstract: true,

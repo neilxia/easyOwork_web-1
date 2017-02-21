@@ -28,6 +28,7 @@
         //'qiyi.demo',
         'qiyi.directives',
         'qiyi.analysis',
+        'qiyi.org',
         'qiyi.report',
         'qiyi.task',
         'qiyi.notice',
