@@ -1,0 +1,31 @@
+<div id="page-wrapper" ng-controller="assetsmsgsummaryCtrl" ng-init="initFun()">
+    
+    <div class="pt10 pb10 bg-fafafa t_c">
+        <div class="btn-group btn-grouptop" role="group">
+            <button class="btn btn-default wd100" ng-model="radioModel" btn-radio="'year'" ng-change="changeType()">年统计</button>
+            <button class="btn btn-default wd100" ng-model="radioModel" btn-radio="'month'" ng-change="changeType()">月统计</button>
+            <button class="btn btn-default wd100" ng-model="radioModel" btn-radio="'day'" ng-change="changeType()">日统计</button>
+        </div>
+    </div>
+    
+    <!--主要内容-->
+
+    <ol class="breadbox">
+        <li>客户销售</li>
+        <li>销售管理</li>
+        <li class="active">销售统计</li>
+    </ol>
+    <div class="nose-panel pt10">
+    	<div class="col-xs-2">
+
+   		 </div>
+        <div class="nose-panel-body col-xs-6" id="chart" style="float:left;width:650px;height:400px;">
+            
+        </div>
+        
+    </div>
+
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
