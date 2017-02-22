@@ -281,7 +281,7 @@ function salarymsgviewCtrl(){
                 //size:'sm',
                 controller: modalCtrl
             });
-            function modalCtrl ($scope, $modalInstance,salaryService) {
+            function modalCtrl ($scope, $modalInstance,salaryService,$filter) {
                 //$scope.addconfigform={};
                 //查询工资单
                 $scope.userinfo=row;
@@ -335,7 +335,54 @@ function salarymsgviewCtrl(){
                 promise.error(function(data, status, headers, config){
                     MsgService.tomsg(data.body.status.errorDesc);
                 });
-
+                //增加项
+                $scope.addincome=function(item){
+                    var modalInstance2 = $modal.open({
+                        templateUrl: 's_issueDetail-2.html',
+                        size:'sm',
+                        controller: function($scope, $modalInstance,salaryService){
+                            //提交增加
+                            $scope.ok = function (state) {
+                                if(!state){return;} //状态判断
+                                $modalInstance.close($scope.addincomename);
+                            };
+                            $scope.cancel = function () {
+                                $modalInstance.dismiss('cancel');
+                            };
+                        }
+                    });
+                    modalInstance2.result.then(function (addincomename) {
+                        $scope.inquiryPayrollData.payrollItems.push({
+                            "itemNo":$scope.inquiryPayrollData.payrollItems.length+1,	//薪酬项序列号
+                            "itemName":addincomename,	//薪酬项名称
+                            "itemAmount":0,	//薪酬项金额
+                            "income":item,	// true or false(收入项或者是扣缴项)
+                            "del":true
+                        })
+                    });
+                }
+                //删除项
+                $scope.removeincome = function (index) {
+                    var newindex;
+                    angular.forEach($scope.inquiryPayrollData.payrollItems,function(val,ind){
+                        if(val.itemNo==index){
+                            newindex = $scope.inquiryPayrollData.payrollItems.indexOf(val);
+                        }
+                    })
+                    $scope.inquiryPayrollData.payrollItems.splice(newindex, 1);
+                }
+                $scope.countTotal=function(){
+                    var totalIncome=0,totalDeduction=0;
+                    angular.forEach($scope.inquiryPayrollData.payrollItems,function(val,ind){
+                        if(val.income){
+                            totalIncome += parseInt(val.itemAmount);
+                        }else{
+                            totalDeduction += parseInt(val.itemAmount);
+                        }
+                    });
+                    $scope.inquiryPayrollData.totalIncome=totalIncome;
+                    $scope.inquiryPayrollData.totalDeduction=totalDeduction;
+                }
                 //修改工资单
                 $scope.changePayrollFun=function (state){
                     if(!state){return;}
