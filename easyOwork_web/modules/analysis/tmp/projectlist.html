@@ -1,0 +1,171 @@
+<div id="page-wrapper" ng-controller="analysisProjectListCtrl" ng-init="initFun()">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="initFun()" title="刷新"></a></div>
+        <ul>
+            <li class="active">{{userinfo.orgList[0].name}}负责人</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>部门分析</li>
+        <li class="active">部门项目</li>
+    </ol>
+    <div class="btnbox">
+        <form class="f_r form-inline">
+            <div selectdepyuan yuangong="1" myselected="ygselected" selectedallarr="ygselectedallarr" size="'sm'" class="wd170 dib" title="负责人"></div>
+            <select class="form-control input-sm dib" ng-init="selectedStatus=''" ng-model="selectedStatus" ng-options="x.val as x.name for x in projectStatusArr">
+            </select>
+            <span class="form-group-sm search-group">
+                <input type="text" class="form-control wd180" ng-model="sltname" placeholder="搜索名称">
+                <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
+            </span>
+        </form>
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
+                <thead>
+                <tr>
+                    <!-- <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th> -->
+                    <th class="pl20">项目名称</th>
+                    <th width="100">项目编号</th>
+                    <th width="300">完成进度</th>
+                    <th width="100">负责人员</th>
+                    <th width="130">健康度</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--'projectDefDomain':selectedType==null?'':selectedType,-->
+                <tr ng-repeat="data in datalist | filter:{'userDTO':ygselected[0].name,'projectStatus':selectedStatus,'projectName':sltname} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize" >
+                    <!-- <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td> -->
+                    <td class="pl20"><a class="a_prime" ui-sref="analysis.projectdetail({name:data.projectName})" >{{data.projectName}}</a></td>
+                    <td>{{data.projectId}}</td>
+                    <td>
+                        <progressbar value="data.projectProgress" type="warning" class="progress-striped progress-small active pct80 f_l"></progressbar>
+                        <div class="f_l ml5 mt-3">{{data.projectProgress}}%</div>
+
+                        <!--<progressbar value="40" type="success" class="progress-striped progress-small active"></progressbar>-->
+                    </td>
+                    <td>{{data.userDTO.name}}</td>
+                    <td>
+                    	<span class="bdrs50" ng-show="data.projectHealth=='严重'" style="display:inline-block;width:30px;height:30px;background-color:red"></span>
+                        <span class="bdrs50" ng-show="data.projectHealth=='轻度'" style="display:inline-block;width:30px;height:30px;background-color:orange"></span>
+                        <span class="bdrs50" ng-show="data.projectHealth=='正常'" style="display:inline-block;width:30px;height:30px;background-color:green"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="nose-panel-footer cf bte">
+            <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+            <div class="g9">共 {{thispages.total || '0'}} 条数据</div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
+
+<!--模板-->
+<script type="text/ng-template" id="addmodel.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">{{thename}}项目</div>
+        </div>
+        <!--{{baseForm.$valid}}-->
+        <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
+                    <tr>
+                        <td width="60">项目编号</td>
+                        <td class="pl10">
+                            <div class="form-inline">
+                                <input type="text" class="form-control" ng-model="modalform.projectId" style="width: 344px;" required>
+                                <button class="btn btn-default" type="button" ng-click="RndNum()">随机生成</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-show="thename!='编辑'">
+                        <td width="60">项目模板</td>
+                        <td class="pl10">
+                            <select class="form-control" ng-model="modalform.projectDefName" ng-options="x.projectDefName as x.projectDefName for x in projectDefNames">
+                                <option value=''>请选择</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">项目名称</td>
+                        <td class="pl10">
+                            <div class="nose-group"  ng-class="{'has-error':baseForm.projectName.$dirty && baseForm.projectName.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.projectName.$dirty && baseForm.projectName.$error.required" popover="不能为空" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.projectName.$dirty && baseForm.projectName.$error.maxlength" popover="不能超过20个字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="projectName" ng-model="modalform.projectName"  placeholder="输入项目名称" ng-maxlength="20" required />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">项目周期</td>
+                        <td class="pl10">
+                            <!--{{modalform.startDate}}-->
+                            <div class="qiyi-group line20td f_l" style="width: 210px;">
+                                <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.startDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="选择开始时间" required>
+                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                            </div>
+                            <div class="qiyi-group line20td f_l ml10" style="width: 209px;">
+                                <input type="datetime" name="endDate" class="form-control" date-time ng-model="modalform.endDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="选择结束时间" required>
+                                <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-show="thename=='编辑'">
+                        <td width="60">负责人员</td>
+                        <td class="pl10">
+                            <div selectdepyuan yuangong="1" myselected="modalform.myselected" selectedallarr="modalform.selectedallarr"></div>
+                            <input type="hidden" ng-model="modalform.myselected" ngRequired="thename=='编辑'">
+                        </td>
+                    </tr>
+                </table>
+                <div showhid>
+                    <table cellpadding="0" cellspacing="0" width="100%" class="line40td dropdown" style="display: none;">
+                        <tr>
+                            <td width="60">客户名称</td>
+                            <td class="pl10">
+                                <input type="text" class="form-control" ng-model="modalform.customerName" placeholder="输入客户名称">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="60">合同金额</td>
+                            <td class="pl10">
+                                <input type="text" class="form-control" ng-model="modalform.projectAmount" placeholder="输入合同金额 (元)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="60">成本预算</td>
+                            <td class="pl10">
+                                <input type="text" class="form-control" ng-model="modalform.projectCost" placeholder="输入成本金额 (元)">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60" valign="top">项目描述</td>
+                            <td class="pl10">
+                                <div class="nose-group" ng-class="{'has-error':baseForm.content.$dirty && baseForm.content.$invalid}">
+                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$invalid" popover="输入项目描述文字" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$error.maxlength" popover="不大于100字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                    <textarea class="form-control" rows="4" name="content" placeholder="输入项目描述文字，不大于100字" ng-maxlength="100" ng-model="modalform.projectDesc"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="pt10" style="padding-left: 70px;"><a class="clickbtn" title="展开/收起"><i class="fa fa-lg fa-angle-down"></i><span class="f12 g9 ml5">选填字段</span></a></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary wd80">确定</button>
+            </div>
+        </form>
+    </div>
+</script>

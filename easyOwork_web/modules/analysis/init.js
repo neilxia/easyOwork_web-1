@@ -1,5 +1,10 @@
 var app = angular.module('qiyi.analysis',[]);
 app.controller('analysisListCtrl',analysisListCtrl());
 app.controller('analysisEmployeeCtrl',analysisEmployeeCtrl());
+app.controller('analysisEmployeeListCtrl',analysisEmployeeListCtrl());
 app.controller('analysisProjectCtrl',analysisProjectCtrl());
+app.controller('analysisProjectListCtrl',analysisProjectListCtrl());
+app.controller('analysisProjectDetailCtrl',analysisProjectDetailCtrl());
 app.controller('analysisCustomerCtrl',analysisCustomerCtrl());
+app.controller('analysisCustomerListCtrl',analysisCustomerListCtrl());
+app.controller('analysisCustomerDetailCtrl',analysisCustomerDetailCtrl());

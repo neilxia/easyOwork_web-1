@@ -3,7 +3,7 @@
 	padding-left: 20px;
 }
 </style>
-<div id="page-wrapper" ng-controller="customerdtmainmsgCtrl"
+<div id="page-wrapper" ng-controller="orgCustomerDetailCtrl"
 	ng-init="initFun()">
 	<!--主要内容-->
 	<div class="payetilebox">
@@ -13,18 +13,15 @@
 				title="刷新"></a>
 		</div>
 		<ul>
-			<li class="active">客户详情</li>
+			<li class="active">{{userinfo.orgList[0].name}}负责人</li>
 		</ul>
 	</div>
 	<ol class="breadbox">
 		<li>工作面板</li>
-		<li>销售管理</li>
-		<li>客户管理</li>
+		<li>部门分析</li>
+		<li>部门客户</li>
 		<li class="active">客户详情</li>
 	</ol>
-	<!--    <div class="btnbox">
-        <button class="btn btn-default btn-sm" ng-click="adddynamic()">发布动态</button>
-    </div>-->
 	<div class="nose-panel">
 		<div class="nose-panel-body">
 			<div class="p20">
@@ -52,8 +49,6 @@
 						<div tab-heading>销售过程({{datadt.saleList.length}})</div>
 						<div class="ind-medo_com" slim-scroll box-height="300">
 							<div class="btnbox">
-								<button class="btn btn-default btn-sm" ng-click="addcourse()">新增</button>
-								<!--<button class="btn btn-default btn-sm" ng-click="addmodelFun()">删除</button>-->
 							</div>
 							<table class="table table-hover bbe" cellspacing="0"
 								cellpadding="0" width="100%;">
@@ -64,25 +59,15 @@
 										<!--<th width="100">销售产品</th>-->
 										<th width="100">销售阶段</th>
 										<th width="100">负责人员</th>
-										<th width="125">操作</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr ng-repeat="data in datadt.saleList">
-										<td class="pl20"><a class="a_prime"
-											ui-sref="sales.assetsmsgdtmain({'name':data.saleName})">{{data.saleName}}</a></td>
+										<td class="pl20">{{data.saleName}}</td>
 										<td>￥{{data.saleAmount}}</td>
 										<!--<td>{{data.saleAmount}}</td>-->
 										<td>{{data.saleStage}}</td>
 										<td>{{data.userDTO.name}}</td>
-										<td><button class="btn btn-default btn-xs h30" title="编辑"
-												ng-click="editcourse(data)">
-												<i class="iconfont icon-bianji f14"></i>
-											</button>
-											<button class="btn btn-danger ml5 btn-xs h30" title="删除"
-												ng-click="deletecourse(data)">
-												<i class="iconfont icon-del f14"></i>
-											</button></td>
 									</tr>
 									<!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
 								</tbody>
@@ -93,9 +78,6 @@
 						<div tab-heading>合同({{datadt.contractList.length}})</div>
 						<div class="ind-medo_com" slim-scroll box-height="300">
 							<div class="btnbox">
-								<button class="btn btn-default btn-sm"
-									ng-click="addcontractFun()">新增</button>
-								<!--<button class="btn btn-default btn-sm" ng-click="addcontractFun()">删除</button>-->
 							</div>
 							<table class="table table-hover bbe" cellspacing="0"
 								cellpadding="0" width="100%;">
@@ -108,7 +90,6 @@
 										<th width="90">合同附件</th>
 										<th width="150">已收款</th>
 										<th width="100">收款状态</th>
-										<th width="90">操作</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -127,14 +108,6 @@
 											<span class="green"
 											ng-if="data.contractAmount==data.collectedAmount">已收款</span>
 										</td>
-										<td><button class="btn btn-default btn-xs h30" title="编辑"
-												ng-click="editcontractFun(data)">
-												<i class="iconfont icon-bianji f14"></i>
-											</button>
-											<button class="btn btn-danger ml5 btn-xs h30" title="删除"
-												ng-click="deletecourse(data)">
-												<i class="iconfont icon-del f14"></i>
-											</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -145,8 +118,6 @@
 						<div tab-heading>文档({{datadt.documentList.length}})</div>
 						<div class="ind-medo_com" slim-scroll box-height="300">
 							<div class="btnbox">
-								<button class="btn btn-default btn-sm" ng-click="addDocument()">新增</button>
-								<!--<button class="btn btn-default btn-sm" ng-click="deleteAllDocument()">删除</button>-->
 							</div>
 							<table class="table table-hover bbe" cellspacing="0"
 								cellpadding="0" width="100%;">
@@ -154,24 +125,13 @@
 									<tr>
 										<th class="pl20">文档名称</th>
 										<th width="100">上传人员</th>
-										<!--<th width="100">项目阶段</th>-->
-										<th width="90">操作</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr ng-repeat="data in datadt.documentList">
 										<td class="pl20"><a href="{{data.url}}" target="_blank">{{data.name}}</a></td>
 										<td>{{data.userDTO.name}}</td>
-										<!--<td>测试</td>-->
-										<td><a target="_blank" href="{{data.url}}"
-											class="btn btn-default btn-xs h30" title="下载"><i
-												class="iconfont icon-xiazai f14"></i></a>
-										<button class="btn btn-danger ml5 btn-xs h30" title="删除"
-												ng-click="deleteDocument(data)">
-												<i class="iconfont icon-del f14"></i>
-											</button></td>
 									</tr>
-									<!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
 								</tbody>
 							</table>
 						</div>
@@ -180,9 +140,6 @@
 						<div tab-heading>日程活动({{datadt.activityList.length}})</div>
 						<div class="ind-medo_com" slim-scroll box-height="300">
 							<div class="btnbox">
-								<button class="btn btn-default btn-sm"
-									ng-click="addActivitylFun()">新增</button>
-								<!--<button class="btn btn-default btn-sm" ng-click="addmodelFun()">删除</button>-->
 							</div>
 							<table class="table table-hover bbe" cellspacing="0"
 								cellpadding="0" width="100%;">
@@ -190,10 +147,8 @@
 									<tr>
 										<th class="pl20">活动名称</th>
 										<th width="160">开始与结束时间</th>
-										<!-- <th width="100">提醒时间</th> -->
 										<th width="100">负责人员</th>
 										<!--<th width="100">参与人员</th>-->
-										<th width="90">操作</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -203,18 +158,6 @@
 										</td>
 										<!-- <td>{{data.remindTime}}</td> -->
 										<td>{{data.userDTO.name}}</td>
-										<!--<td class="orange">{{data.userDTO.name}}</td>-->
-										<td>
-											<!--<button class="btn btn-default btn-xs h30" title="查看" ><i class="iconfont icon-chakan f14"></i></button>-->
-											<button class="btn btn-default btn-xs ml5 h30" title="编辑"
-												ng-click="editActivityFun(data)">
-												<i class="iconfont icon-bianji f14"></i>
-											</button>
-											<button class="btn btn-danger ml5 btn-xs h30" title="删除"
-												ng-click="deleteActivity(data)">
-												<i class="iconfont icon-del f14"></i>
-											</button>
-										</td>
 									</tr>
 									<!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
 								</tbody>
@@ -225,39 +168,23 @@
 						<div tab-heading>联系人员({{datadt.contactList.length}})</div>
 						<div class="ind-medo_com" slim-scroll box-height="300">
 							<div class="btnbox">
-								<button class="btn btn-default btn-sm"
-									ng-click="addCustomerContactFun()">新增</button>
-								<!--<button class="btn btn-default btn-sm" ng-click="addmodelFun()">删除</button>-->
 							</div>
 							<table class="table table-hover bbe" cellspacing="0"
 								cellpadding="0" width="100%;">
 								<thead>
 									<tr>
-										<th width="50" class="t_r"><input icheck type="checkbox"
-											name="chkAll" ng-model="main.checkAll"></th>
-										<th>姓名</th>
+										<th class="pl20">姓名</th>
 										<th width="100">手机号码</th>
 										<th width="150">联系人职务/关系</th>
 										<th width="300">备注</th>
-										<th width="90">操作</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr ng-repeat="data in datadt.contactList">
-										<td class="t_r"><input icheck type="checkbox"
-											value="{{data}}" name="chkList" ng-model="data.checked"></td>
 										<td>{{data.contactName}}</td>
 										<td>{{data.contactMobileNo}}</td>
 										<td>{{data.contactPosition}}</td>
 										<td>{{data.contactMemo}}</td>
-										<td><button class="btn btn-default btn-xs h30" title="编辑"
-												ng-click="editCustomerContactFun(data)">
-												<i class="iconfont icon-bianji f14"></i>
-											</button>
-											<button class="btn btn-danger ml5 btn-xs h30" title="删除"
-												ng-click="deleteCustomerContact(data)">
-												<i class="iconfont icon-del f14"></i>
-											</button></td>
 									</tr>
 									<!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
 								</tbody>

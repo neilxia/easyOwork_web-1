@@ -582,16 +582,45 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             templateUrl: 'modules/analysis/tmp/employee.html',
             data: { pageTitle: '员工分析'}
         })
+        .state('analysis.employeelist', {
+            url: "/employeelist",
+            templateUrl: 'modules/analysis/tmp/employeelist.html',
+            data: { pageTitle: '企业员工'}
+        })
         .state('analysis.customer', {
             url: "/customer?type",
             templateUrl: 'modules/analysis/tmp/customer.html',
             data: { pageTitle: '客户分析'}
 
         })
+        .state('analysis.customerlist', {
+            url: "/customerlist",
+            templateUrl: 'modules/analysis/tmp/customerlist.html',
+            data: { pageTitle: '企业客户'}
+
+        })
+        .state('analysis.customerdetail', {
+            url: "/customerdetail?name",
+            templateUrl: 'modules/analysis/tmp/customerdetail.html',
+            data: { pageTitle: '客户详情'}
+
+        })
         .state('analysis.project', {
             url: "/project?type",
             templateUrl: 'modules/analysis/tmp/project.html',
             data: { pageTitle: '项目分析'}
+
+        })
+        .state('analysis.projectlist', {
+            url: "/projectlist",
+            templateUrl: 'modules/analysis/tmp/projectlist.html',
+            data: { pageTitle: '企业项目'}
+
+        })
+        .state('analysis.projectdetail', {
+            url: "/projectdetail?name",
+            templateUrl: 'modules/analysis/tmp/projectdetail.html',
+            data: { pageTitle: '企业项目详情'}
 
         })
         /*****************部门分析***************************/
@@ -632,6 +661,18 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
         .state('org.sale', {
             url: "/sale",
             templateUrl: 'modules/org/tmp/sale.html',
+            data: { pageTitle: '部门分析'}
+
+        })
+        .state('org.customerlist', {
+            url: "/customerlist",
+            templateUrl: 'modules/org/tmp/customerlist.html',
+            data: { pageTitle: '部门分析'}
+
+        })
+        .state('org.customerdetail', {
+            url: "/customerdetail?name",
+            templateUrl: 'modules/org/tmp/customerdetail.html',
             data: { pageTitle: '部门分析'}
 
         })

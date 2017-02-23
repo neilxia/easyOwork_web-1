@@ -1,0 +1,58 @@
+<div id="page-wrapper" ng-controller="orgCustomerCtrl" ng-init="initFun()">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="initFun()" title="刷新"></a></div>
+        <ul>
+            <li class="active">{{userinfo.orgList[0].name}}负责人</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li>部门分析</li>
+        <li class="active">部门客户</li>
+    </ol>
+    <div class="btnbox">
+        <form class="f_r form-inline">
+            <div selectdepyuan yuangong="1" myselected="ygselected" selectedallarr="ygselectedallarr" size="'sm'" class="wd170 dib" title="负责人员"></div>
+            <select class="form-control input-sm dib" ng-init="selectedStatus=''" ng-model="selectedStatus" ng-options="x.val as x.name for x in thisStatusArr">
+            </select>
+            <span class="form-group-sm search-group">
+                <input type="text" class="form-control wd180" ng-model="sltname" placeholder="搜索名称">
+                <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
+            </span>
+        </form>
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
+                <thead>
+                <tr>
+                    <th class="pl20">客户名称</th>
+                    <th width="100">联系电话</th>
+                    <!--<th width="150">邮编</th>-->
+                    <th width="100">客户级别</th>
+                    <th width="100">负责人员</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="data in datalist | filter:{'prospect':false,'userDTO':ygselected[0].name,'customerLevel':selectedStatus,'customerName':sltname} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                    <td class="pl20"><a class="a_prime" ui-sref="org.customerdetail({'name':data.customerName})">{{data.customerName}}</a></td>
+                    <td>{{data.customerPhone}}</td>
+                    <!--<td>{{data.customerPostCode}}</td>-->
+                    <td>{{data.customerLevel | qystatus}}</td>
+                    <td>{{data.userDTO.name}}</td>
+                </tr>
+                <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
+                </tbody>
+            </table>
+        </div>
+        <div class="nose-panel-footer cf bte">
+            <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+            <div class="g9">共 {{thispages.total || '0'}} 条数据</div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
