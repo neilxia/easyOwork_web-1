@@ -26,9 +26,12 @@
                     <th width="100"><span class="p15">姓名</span></th>
                     <th width="50">性别</th>
                     <th width="120">部门</th>
+                    <th width="120">职位</th>
                     <th width="150">邮箱</th>
-                    <th>手机</th>
-                    <th width="160">操作</th>
+                    <th>手机号码</th>
+                    <th>员工编号</th>
+                    <th>入职日期</th>
+                    <!-- <th width="160">操作</th> -->
                 </tr>
                 </thead>
                 <tbody>
@@ -36,8 +39,12 @@
                     <td><span class="p15">{{data.name}}</span></td>
                     <td>{{data.sex}}</td>
                     <td>{{data.orgList[0].name}}</td>
+                    <td>{{data.position}}</td>
                     <td>{{data.personalEmail}}</td>
                     <td>{{data.personalPhone}}</td>
+                    <td>{{data.id}}</td>
+                    <td>{{data.joiningDate}}</td>
+                    <!--  
                     <td>
 	                    <div class="btn-group">
 	                    <button type="button" class="btn btn-sm btn-default mr5"  ng-click="staffbase(data)">
@@ -45,9 +52,8 @@
 						  </button>
 						</div>
                     
-                    <!--  <button protectedId="{{data.userUuid}}" class="btn btn-default btn-xs h30" title="查看" ng-click="staffbase(data)"><i class="iconfont icon-chakan f14"></i></button>
-                    -->
                     </td>
+                     -->
                 </tr>
                 </tbody>
             </table>
