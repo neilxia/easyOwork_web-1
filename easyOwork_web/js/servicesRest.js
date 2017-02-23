@@ -100,6 +100,9 @@ function companyService(){
             },
             getPositions:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/getPositions',form)
+            },
+            inquiryEntLoginInfo:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryEntLoginInfo',form)
             }
         }
     }];

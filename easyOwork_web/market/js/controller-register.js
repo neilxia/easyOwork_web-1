@@ -206,8 +206,8 @@ app.controller('registerCtrl',['$rootScope','$scope','$http','commonService','Ap
         	$rootScope.loading = false;
             var sts=data.body.status;
             if(sts.statusCode==0){
-            	MsgService.tomsg('企业注册成功');
-            	$rootScope.$state.go('login');
+            	//$rootScope.$state.go('login');
+            	window.location.href="/c-"+data.body.data.shortEnglishName+"?firstTimeAccess=true";
             }else{
                 MsgService.tomsg(sts.errorDesc);
             }

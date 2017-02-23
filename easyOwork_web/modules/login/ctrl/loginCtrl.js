@@ -2,8 +2,35 @@
  * Created by Nose on 2016/8/30.
  */
 function loginCtrl(){
-    return['$scope','$rootScope','$modal','$state','publicService','noseService','LocalStorage','MsgService','roleService','accessService',function($scope,$rootScope,$modal,$state,publicService,noseService,LocalStorage,MsgService,roleService,accessService){
-        //公用登录方法
+    return['$scope','$rootScope','$modal','$state','publicService','noseService','LocalStorage','MsgService','roleService','accessService','companyService',function($scope,$rootScope,$modal,$state,publicService,noseService,LocalStorage,MsgService,roleService,accessService,companyService){
+        
+    	$scope.init = function(){
+    		var pathname = window.location.pathname;
+    		if(pathname != null && pathname != ''){
+    			if(pathname.indexOf("/c-")>-1){
+    				var shortEnglishName = pathname.replace("/c-","");
+    				if(shortEnglishName != "")
+    					var promise = companyService.inquiryEntLoginInfo({body:{"shortEnglishName":shortEnglishName}});
+    					promise.success(function(data, status, headers, config){
+	                    	var datas=data.body.data;
+	                        var sts=data.body.status;
+	                        if(sts.statusCode==0){
+	                            $scope.ent = datas;
+	                            //如果找到该企业, 并且是第一次访问, 表示是刚刚注册, 则给出提示信息
+	                            if($scope.ent.name != null && $scope.ent.name != '' && window.location.search != null && window.location.search.indexOf("firstTimeAccess=true")>-1){
+	                            	MsgService.tomsg('注册成功, 请保存企业专属登录页面\n'+'www.qinghuiyang.com'+window.location.pathname);
+	                            }
+	                        }else{
+	                        	
+	                        }
+	                    });
+	                    promise.error(function(data, status, headers, config){
+	                    });
+    			}
+    		}
+    	}
+    	
+    	//公用登录方法
         function Funlogin(options,$modalInstance){
             var promise = publicService.login({body:options});
             promise.success(function(data, status, headers, config){
@@ -253,7 +280,7 @@ function loginCtrl(){
                     promise.success(function(data, status, headers, config){
                         var sts=data.body.status;
                         if(sts.statusCode==0){
-                            MsgService.tomsg();
+                            //MsgService.tomsg();
                         }else{
                             MsgService.tomsg(sts.errorDesc);
                         }

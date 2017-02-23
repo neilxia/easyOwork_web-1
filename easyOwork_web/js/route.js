@@ -1,5 +1,5 @@
 function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
-    $urlRouterProvider.otherwise("/index");
+    $urlRouterProvider.otherwise("/login");
     //$urlRouterProvider.when("/demo/ind","/demo/ind/main");
 
     $ocLazyLoadProvider.config({
