@@ -1,6 +1,6 @@
 
 function orgSaleCtrl(){
-    return['$rootScope','$scope', '$modal' ,'$compile','$state','roleService','notify','analysisService','$stateParams','LocalStorage',function($rootScope,$scope,$modal,$compile,$state,roleService,notify,analysisService,$stateParams,LocalStorage){
+    return['$rootScope','$scope', '$modal' ,'$compile','$state','roleService','notify','analysisService','$stateParams','LocalStorage','MsgService',function($rootScope,$scope,$modal,$compile,$state,roleService,notify,analysisService,$stateParams,LocalStorage,MsgService){
     	var userinfo=LocalStorage.getObject('userinfo');
     	$scope.userinfo = userinfo;
     	var orgName = $scope.userinfo.orgList[0].name;

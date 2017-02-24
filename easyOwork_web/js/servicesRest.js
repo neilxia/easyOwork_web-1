@@ -671,8 +671,17 @@ function analysisService(){
             getSalaryEmployeeChart:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/getSalaryEmployeeChart',form)
             },
+            getSalaryEmployeeChartByOrg:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/getSalaryEmployeeChartByOrg',form)
+            },
             getRoleEmployeeChart:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/getRoleEmployeeChart',form)
+            },
+            getPositionEmployeeChart:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/getPositionEmployeeChart',form)
+            },
+            getPositionEmployeeChartByOrg:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/getPositionEmployeeChartByOrg',form)
             },
             getProjectStatusChart:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/getProjectStatusChart',form)

@@ -5,3 +5,4 @@ app.controller('orgProjectDetailCtrl',orgProjectDetailCtrl());
 app.controller('orgSaleCtrl',orgSaleCtrl());
 app.controller('orgCustomerCtrl',orgCustomerCtrl());
 app.controller('orgCustomerDetailCtrl',orgCustomerDetailCtrl());
+app.controller('orgUserAnalysisCtrl',orgUserAnalysisCtrl());

@@ -8,12 +8,7 @@ function analysisCustomerListCtrl(){
     	var mangerUuid = $scope.userinfo.orgList[0].managerUuid;
     	
         $scope.initFun = function(){
-        	//如果当前用户ID和部门经理ID不一致则不能使用该功能
-        	if($scope.userinfo.userUuid != mangerUuid){
-        		MsgService.tomsg('您不是'+orgName+'的负责人, 如信息有误, 请联系管理员设置您为负责人员');
-        	}else{
-        		inquiryCustomerFun();//查询list
-        	}
+    		inquiryCustomerFun();//查询list
         };
         $scope.thisStatusArr=[
             {name:'全部级别',val:''},

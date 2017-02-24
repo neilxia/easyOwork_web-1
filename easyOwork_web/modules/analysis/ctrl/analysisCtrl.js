@@ -78,7 +78,7 @@ function analysisEmployeeCtrl(){
         	})
     	};
     	$scope.getRoleEmployeeChart = function(){
-	        var promise = analysisService.getRoleEmployeeChart({body:{}});
+	        var promise = analysisService.getPositionEmployeeChart({body:{}});
         	promise.success(function(data, status, headers, config){
         		 var sts=data.body.status;
                  var data=data.body.data;

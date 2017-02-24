@@ -15,7 +15,7 @@ function assetsmpmsgCtrl(){
             inquirySaleTargetFun(curryear);
         };
 
-        $scope.radioModel='COMPANY';
+        $scope.radioModel='USER';
         $scope.thispages={
             total:null,
             pageNum:1,

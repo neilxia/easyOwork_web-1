@@ -1,9 +1,9 @@
 <div id="page-wrapper" ng-controller="assetsmpmsgCtrl" ng-init="initFun()">
     <div class="pt10 pb10 bg-fafafa t_c">
         <div class="btn-group btn-grouptop" role="group">
-            <button class="btn btn-default wd100" ng-model="radioModel" btn-radio="'COMPANY'" ng-change="inquirySaleTargetFun()">公司</button>
-            <button class="btn btn-default wd100" ng-model="radioModel" btn-radio="'ORG'" ng-change="inquirySaleTargetFun()">部门</button>
-            <button class="btn btn-default wd100" ng-model="radioModel" btn-radio="'USER'" ng-change="inquirySaleTargetFun()">个人</button>
+            <button class="btn btn-default wd100" ng-model="radioModel" btn-radio="'COMPANY'" ng-change="inquirySaleTargetFun()" accessId="A016-001">企业目标</button>
+            <button class="btn btn-default wd100" ng-model="radioModel" btn-radio="'ORG'" ng-change="inquirySaleTargetFun()"  accessId="A016-001||A018-001">部门目标</button>
+            <button class="btn btn-default wd100" ng-model="radioModel" btn-radio="'USER'" ng-change="inquirySaleTargetFun()">个人目标</button>
         </div>
     </div>
     <!--主要内容-->

@@ -646,6 +646,12 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             data: { pageTitle: '部门分析'}
 
         })
+        .state('org.useranalysis', {
+            url: "/useranalysis?type",
+            templateUrl: 'modules/org/tmp/useranalysis.html',
+            data: { pageTitle: '部门分析'}
+
+        })
         .state('org.project', {
             url: "/project",
             templateUrl: 'modules/org/tmp/project.html',
