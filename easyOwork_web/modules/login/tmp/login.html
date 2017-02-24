@@ -6,7 +6,7 @@
     </div>
     <div class="abs_r">
         <!-- <button type="button" class="btn btn-primary bdrs20 wd100" ng-click="registerModal()">企业注册</button> -->
-        <button type="button" class="btn btn-primary bdrs20 wd70" ng-click="loginModal()">登录</button>
+        <!--<button type="button" class="btn btn-primary bdrs20 wd70" ng-click="loginModal()">登录</button>-->
     </div>
     <div class="login-flexslider" id="login_banner">
         <ul class="slides">
@@ -17,21 +17,36 @@
     <div class="login-box white t_c animated loginscreen fadeInDown">
         <div class="f58">企业全角色工作平台</div>
         <div class="f22 mt20">让工作更简单，让沟通更高效，让信息更保密</div>
-        <div class="input-group input-group-lg mt20">
-            <!-- <input type="text" class="form-control" ng-model="cpname" placeholder="输入企业名称">
-          <span class="input-group-btn">
-            <button class="btn btn-primary wd120" type="button" ng-click="registerModal()">创建企业</button>
-          </span> -->
+        <!--<div class="input-group input-group-lg mt20">
+            <input type="text" class="form-control" ng-model="cpname" placeholder="输入企业名称">
+            <span class="input-group-btn">
+                <button class="btn btn-primary wd120" type="button" ng-click="registerModal()">创建企业</button>
+            </span>
+        </div>-->
+        <div class="pct80 mauto">
+            <form name="form" ng-submit="loginok(form.$valid)" novalidate="novalidate">
+                <div class="pl15 pr15">
+                    <div class="nose-group mt10" ng-class="{'has-error':form.registername.$dirty && form.registername.$invalid}">
+                        <i class="iconfont icon-tishi f20 abs_r" ng-show="form.registername.$dirty && form.registername.$invalid" popover="请输入11位手机号或者正确的邮箱地址" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                        <input type="text"  name="registername" ng-model="Zh.registername" required  multiple-email class="form-control input-lg" placeholder="手机号码 / 邮箱">
+                    </div>
+                    <div class="nose-group mt10"  ng-class="{'has-error':form.registerPassword.$dirty && (form.registerPassword.$error.required || form.registerPassword.$invalid)}">
+                        <i class="iconfont icon-tishi f20 abs_r" ng-show="form.registerPassword.$dirty && form.registerPassword.$error.required" popover="设置密码" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                        <i class="iconfont icon-tishi f20 abs_r" ng-show="form.registerPassword.$dirty && form.registerPassword.$invalid" popover="密码长度最少6位" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                        <input type="password" class="form-control input-lg" id="registerPassword" name="registerPassword" ng-model="Zh.registerPassword" ng-minlength="6" placeholder="设置密码，密码长度为6~32位大小写字母或数字" required />
+                    </div>
+                    <div class="mt10"><button type="submit" class="btn btn-primary btn-lg btn-block" ng-click="ok()">确定登录</button></div>
+                    <div class="t_l mt10"><!-- <span class="f_r">没有帐号， <a class="a_prime" ng-click="register()">企业免费注册</a></span> --><a ng-click=findpwd()>忘记密码？</a></div>
+                </div>
+            </form>
         </div>
-        <div class="mt20 f16">
-        	<!-- 
+        <!--<div class="mt20 f16">
             <a ng-click="loginModal()">现在登录</a>
             <span class="ml15 mr15">|</span>
             <a ng-click="findpwdModal()">忘记密码？</a>
             <span class="ml15 mr15">|</span>
             <a ng-click="registerModal('invite')">邀请注册</a>
-             -->
-        </div>
+        </div>-->
     </div>
 	 
     <div class="login-footer white t_c">

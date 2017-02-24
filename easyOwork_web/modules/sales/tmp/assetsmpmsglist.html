@@ -105,7 +105,7 @@
                             <span class="red" ng-if="data.targetAmount > data.actualAmount">未完成指标</span>
                             <span class="green" ng-if="data.targetAmount<=data.actualAmount">完成指标</span>
                         </td>
-                        <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editmp(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deletemp(data)"><i class="iconfont icon-del f14"></i></button></td>
+                        <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editmpFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deletemp(data)"><i class="iconfont icon-del f14"></i></button></td>
                     </tr>
                     <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
                     </tbody>
@@ -220,13 +220,15 @@
                     <tr ng-if="radioModel=='ORG'">
                         <td width="60">选择部门</td>
                         <td class="pl10">
-                            <span selectdep options="'bm'" myselected="modalform.orgDTO"  title="选择部门"></span>
+                            <span selectdep options="'bm'" myselected="modalform.orgDTO" myselected="modalform.orgDTOall"  title="选择部门"></span>
+                            <input type="hidden" ng-model="modalform.orgDTO" required>
                         </td>
                     </tr>
                     <tr ng-if="radioModel=='USER'">
                         <td width="60">选择个人</td>
                         <td class="pl10">
                             <div selectdepyuan yuangong="1" myselected="modalform.myuserDTO" selectedallarr="modalform.myuserDTOall"></div>
+                            <input type="hidden" ng-model="modalform.myuserDTO" required>
                         </td>
                     </tr>
                     <tr>

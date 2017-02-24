@@ -222,7 +222,14 @@
                         <div class="f_l form-inline" ng-show="!userpw">
                             <form role="baseForm" name="baseForm"  ng-submit="changePasswordFun(baseForm.$valid)" novalidate="novalidate">
                                 <div>旧密码：<input class="form-control input-sm" type="password" placeholder="请输入旧密码" ng-model="userchangepw.password"></div>
-                                <div class="mt5">新密码：<input class="form-control input-sm" type="password" placeholder="请输入新密码" ng-model="userchangepw.newPassword"></div>
+                                <div class="mt5">新密码：<input class="form-control input-sm" type="password" placeholder="请输入新密码" ng-model="userchangepw.newPassword" id="userPassword"></div>
+
+                                <div class="nose-group mt5"  ng-class="{'has-error':(baseForm.confirmPassword.$error.required || baseForm.confirmPassword.$error.pwmatch)}">
+                                    <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.confirmPassword.$error.pwmatch" popover="两次输入的密码不一致，请重新输入" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                    再输入：<input class="form-control input-sm" type="password" placeholder="请再次输入新密码" ng-model="userchangepw.confirmPassword" name="confirmPassword" pw-check="userPassword">
+                                </div>
+
+
                                 <div style="padding-left: 56px;" class="mt5">
                                     <a class="btn btn-sm btn-default"  ng-click="userpwtoggle()">取消</a> <button class="btn ml5 btn-sm btn-primary" type="submit">确定</button>
                                 </div>

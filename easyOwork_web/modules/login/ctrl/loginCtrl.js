@@ -31,7 +31,7 @@ function loginCtrl(){
     	}
     	
     	//公用登录方法
-        function Funlogin(options,$modalInstance){
+        function Funlogin(options){
             var promise = publicService.login({body:options});
             promise.success(function(data, status, headers, config){
                 var sts=data.body.status;
@@ -64,15 +64,15 @@ function loginCtrl(){
                             accessService.setAccessList(datas.functionList);
                             accessService.setUserList(datas.userList);
                             $state.go('index');
-                            $modalInstance.close();
+                            //$modalInstance.close();
                         }else{
                         	$state.go('index');
-                            $modalInstance.close();
+                            //$modalInstance.close();
                         }
                     });
                     promise.error(function(data, status, headers, config){
                     	$state.go('index');
-                        $modalInstance.close();
+                        //$modalInstance.close();
                     });
                     
                 }else{
@@ -83,7 +83,26 @@ function loginCtrl(){
             });
         }
         //登录
-        function loginbox() {
+        $scope.loginok = function (state) {
+            if(!state){return;}
+            var typearr=noseService.judgeloginClass($scope.Zh.registername);
+            $scope.options={
+                "type":typearr[0],
+                "id":typearr[1][2],
+                "personalEmail":typearr[1][0],
+                "personalPhoneCountryCode":"86",
+                "personalPhone":typearr[1][1],
+                "password":$scope.Zh.registerPassword
+            };
+            Funlogin($scope.options)
+        };
+        $scope.findpwd=function(){
+            findpwd();
+        };
+        $scope.register=function(){
+            registerModal();
+        };
+/*        function loginbox() {
             var modalInstance = $modal.open({
                 templateUrl: 'modules/login/tmp/login_modal.html',
                 backdrop: true,
@@ -109,7 +128,7 @@ function loginCtrl(){
                     Funlogin($scope.options,$modalInstance)
                 };
                 //获取用户基本信息存储在LocalStorage
-/*                function getusrinfo(){
+/!*                function getusrinfo(){
                     var promise = privatesCustomersService.getcustomer();
                     promise.success(function(data, status, headers, config){
                         if(data != null){
@@ -121,7 +140,7 @@ function loginCtrl(){
 
                         }
                     });
-                }*/
+                }*!/
 
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -137,7 +156,7 @@ function loginCtrl(){
 
             };
         };
-        $scope.loginModal=loginbox;
+        $scope.loginModal=loginbox;*/
 
         //注册
         $scope.cpname=null;

@@ -177,8 +177,10 @@ function assetsmpmsgCtrl(){
                 }
                 $scope.radioModel=item;
                 $scope.modalform.orgDTO=[row.orgDTO];
+                $scope.modalform.orgDTOall=[[],[row.orgDTO]];
                 $scope.modalform.myuserDTO=[row.userDTO];
                 $scope.modalform.myuserDTOall=[[],[row.userDTO]];
+                debugger;
                 //[[],[row.userDTO]]
                 //提交增加
                 $scope.ok = function (state) {
