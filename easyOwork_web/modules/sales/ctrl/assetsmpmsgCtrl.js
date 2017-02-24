@@ -89,7 +89,7 @@ function assetsmpmsgCtrl(){
                 };
                 if($scope.radioModel=='ORG'){
                     $scope.options.orgDTO={
-                        name:row.orgDTO[0].text
+                        name:row.orgDTO[0].text || row.orgDTO[0].name || ''
                     };
                 }else if($scope.radioModel=='USER'){
                     $scope.options.userDTO=row.myuserDTO[0];
@@ -180,7 +180,6 @@ function assetsmpmsgCtrl(){
                 $scope.modalform.orgDTOall=[[],[row.orgDTO]];
                 $scope.modalform.myuserDTO=[row.userDTO];
                 $scope.modalform.myuserDTOall=[[],[row.userDTO]];
-                debugger;
                 //[[],[row.userDTO]]
                 //提交增加
                 $scope.ok = function (state) {
