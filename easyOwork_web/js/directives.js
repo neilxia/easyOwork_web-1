@@ -47,10 +47,12 @@ function sideNavigation2($timeout) {
             optiondata:"="
         },
         link: function(scope, element) {
+            debugger;
             // Call the metsiMenu plugin and plug it to sidebar navigation
             scope.$watch('optiondata',function(oldval,newval,$scope){
+
                 $timeout(function(){
-                    if(oldval==newval)return;
+                    if(oldval==newval && typeof(newval)=='undefined')return;
                     $(element).metisMenu();
                 },0);
             });
