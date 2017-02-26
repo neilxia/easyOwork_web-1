@@ -34,6 +34,8 @@
                     <th>简历名称</th>
                     <th width="100">联系电话</th>
                     <th width="150">E-mail</th>
+                    <th width="100">面试环节</th>
+                    <th width="100">面试结果</th>
                     <th width="100">查看简历</th>
                     <th width="90">操作</th>
                 </tr>
@@ -44,6 +46,17 @@
                     <td>{{data.resumeName}}</td>
                     <td>{{data.resumeMobileNo}}</td>
                     <td>{{data.resumeEmail}}</td>
+                    <td>
+                    	<span ng-if="data.markFlag=='ACCEPTED'">已录用</span>
+                    	<span ng-if="data.markFlag=='NORMAL'||data.markFlag=='REJECT'||data.markFlag=='HOLD'">{{data.flowNodeName}}</span>
+                    	<span ng-if="data.markFlag==null">未面试</span>
+                    </td>
+                    <td>
+                    	<span ng-if="data.markFlag=='NORMAL'">进行中</span>
+                    	<span ng-if="data.markFlag=='REJECT'">已淘汰</span>
+                    	<span ng-if="data.markFlag=='HOLD'">待定</span>
+                    	<span ng-if="data.markFlag=='ACCEPTED'">已录用</span>
+                    </td>
                     <td><a class="btn btn-default btn-xs ml5 h30" title="下载" href="{{data.resumeUrl || '#'}}" target="_blank"><i class="iconfont icon-xiazai f14"></i></a></td>
                     <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editFun(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
                 </tr>

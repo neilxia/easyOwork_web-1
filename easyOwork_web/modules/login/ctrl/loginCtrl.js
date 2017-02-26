@@ -3,7 +3,7 @@
  */
 function loginCtrl(){
     return['$scope','$rootScope','$modal','$state','publicService','noseService','LocalStorage','MsgService','roleService','accessService','companyService',function($scope,$rootScope,$modal,$state,publicService,noseService,LocalStorage,MsgService,roleService,accessService,companyService){
-        
+    	var firstTimeAccess = $rootScope.$stateParams.firstTimeAccess;
     	$scope.init = function(){
     		var pathname = window.location.pathname;
     		if(pathname != null && pathname != ''){
@@ -17,8 +17,8 @@ function loginCtrl(){
 	                        if(sts.statusCode==0){
 	                            $scope.ent = datas;
 	                            //如果找到该企业, 并且是第一次访问, 表示是刚刚注册, 则给出提示信息
-	                            if($scope.ent.name != null && $scope.ent.name != '' && window.location.search != null && window.location.search.indexOf("firstTimeAccess=true")>-1){
-	                            	MsgService.tomsg('注册成功, 请保存企业专属登录页面\n'+'www.qinghuiyang.com'+window.location.pathname);
+	                            if(firstTimeAccess){
+	                            	$scope.registerSuccessMsg = '注册成功, 请保存企业登录网址:\n'+'www.qinghuiyang.com'+window.location.pathname;
 	                            }
 	                        }else{
 	                        	

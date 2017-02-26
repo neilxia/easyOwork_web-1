@@ -36,7 +36,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
         })
         //登录、注册、绑定、找回密码
         .state('login', {
-            url: "/login",
+            url: "/login?firstTimeAccess",
             templateUrl: "modules/login/tmp/login.html",
             data: { pageTitle: '青辉阳登录',specialClass: 'bg-login'},
             resolve:{

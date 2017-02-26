@@ -544,6 +544,7 @@ function dtresumemsgCtrl(){
                     var sts=data.body.status;
                     if(sts.statusCode==0){
                         inquiryRecruitResumeFun();
+                        Common.inquiryRecruitPositionSummaryFun($rootScope,$scope.planName,$scope.positionName);
                     }else{
                         MsgService.tomsg(data.body.status.errorDesc);
                     }
@@ -584,6 +585,7 @@ function dtresumemsgCtrl(){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                     inquiryRecruitResumeFun();
+                    Common.inquiryRecruitPositionSummaryFun($rootScope,$scope.planName,$scope.positionName);
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
                 }
@@ -606,6 +608,48 @@ function dthiredresumemsgCtrl(){
         	$scope.hiredCount=0;
             inquiryRecruitHiredResumeFun();
         };
+        //移除
+        $scope.deleteFun = function (row) {
+            Common.openConfirmWindow('','确定从录用列表中移除？').then(function() {
+                tellResumeForPositionFun('DELETE',{});
+            });
+        };
+        function tellResumeForPositionFun(change,row,$modalInstance,oldrow){
+            if(oldrow==undefined){oldrow=row}
+            var selectedItems=[];
+            angular.forEach($scope.datalist, function(item) {
+                if (item.checked == true) {
+                    selectedItems.push({
+                        "recruitPositionDTO": {
+                            "planName": $scope.planName || '',	//招聘计划名称
+                            "positionName": $scope.positionName || ''	//职位名称
+                        },
+                        "resumeDTO": {
+                            "resumeName": item.resumeName || ''	//简历名称
+                        },
+                        "comment":row.comment || ''
+                    });
+                }
+            });
+            $scope.options={
+                "actionType":change,
+                "positionResumes":selectedItems
+            };
+            var promise = RecruitFlowService.tellResumeForPosition({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                	inquiryRecruitHiredResumeFun();
+                    Common.inquiryRecruitPositionSummaryFun($rootScope,$scope.planName,$scope.positionName);
+                    $modalInstance.close();
+                }else{
+                    MsgService.tomsg(data.body.status.errorDesc);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.tomsg(data.body.status.errorDesc);
+            });
+        }
         $scope.thispages={
             total:null,
             pageNum:1,
@@ -753,6 +797,12 @@ function dtprocessCtrl(){
         $scope.holdFun = function (row) {
             Common.openConfirmWindow('','确定进入待定？').then(function() {
                 tellResumeForPositionFun('HOLD',{});
+            });
+        };
+        //移除
+        $scope.deleteFun = function (row) {
+            Common.openConfirmWindow('','确定从面试流程中移除？').then(function() {
+                tellResumeForPositionFun('DELETE',{});
             });
         };
         //拒绝淘汰

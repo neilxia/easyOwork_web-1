@@ -207,7 +207,7 @@ app.controller('registerCtrl',['$rootScope','$scope','$http','commonService','Ap
             var sts=data.body.status;
             if(sts.statusCode==0){
             	//$rootScope.$state.go('login');
-            	window.location.href="/c-"+data.body.data.shortEnglishName+"?firstTimeAccess=true";
+            	window.location.href="/c-"+data.body.data.shortEnglishName+"#/login?firstTimeAccess=true";
             }else{
                 MsgService.tomsg(sts.errorDesc);
             }
