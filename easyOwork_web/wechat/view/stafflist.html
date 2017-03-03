@@ -1,0 +1,62 @@
+<div class="header t_c">
+	<span class="fl"><!-- <a ui-sref="main"><i class="iconfont icon-zuo">返回</i></a> --></span>
+	通讯录
+	<span class="fr"></span>
+</div>
+
+<div class="main-container" ng-controller="staffListCtrl" ng-init="init()">
+	<div class="section">
+		<div class="">
+			<div class="row pt5 pb5 bt1">
+				<div class="col-xs-1 search">
+					<i class="iconfont icon-search f30"></i>
+				</div>
+				<div class="col-xs-11 search">
+					<input type="text" class="search-input" ng-model="sltname" placeholder="姓名/部门/电话/邮箱"></input>
+				</div>
+			</div>
+		</div>
+		<!-- 
+		<div class="section-content">
+			<div class="row pt10 pb10 bt1">
+				<div class="col-xs-12">
+						<span class="orange-color">通讯录</span><span><i class="iconfont icon-gengduo c6"></i></span><span class="c6">青辉阳</span>
+				</div>
+			</div>
+		</div>
+		<div class="section-content">
+			<div class="row mt20 pt10 pb10">
+				<div class="col-xs-12">
+					<span class="fl">销售部(2)</span>
+					<span class="fr"><i class="iconfont icon-gengduo c6"></i></span>
+				</div>
+			</div>
+			<div class="row pt10 pb10 bt1">
+				<div class="col-xs-12">
+					<span class="fl">技术部(2)</span>
+					<span class="fr"><i class="iconfont icon-gengduo c6"></i></span>
+				</div>
+			</div>
+		</div>
+		 -->
+		<div class="section-content">
+			<div class="row pt10 pb10 bb1" ng-repeat="data in datalist | filter:sltname">
+				<div class="col-xs-2 ht40 lht40">
+					<div class="imgbox t_c">
+						<span class="white-color">{{data.name}}</span>
+					</div>
+				</div>
+				<div class="col-xs-3">
+					<span class="block f18">{{data.name}}</span>
+					<span class="block c6">{{data.orgList[0].name}}</span>
+					<span class="block c6">{{data.position}}</span>
+				</div>
+				<div class="col-xs-7">
+					<span class="block pt5 t_r">{{data.personalPhone}} <i class="iconfont icon-dianhua orange-color"></i></span>
+					<span class="block pt5 t_r">{{data.personalEmail}} <i class="iconfont icon-youxiang orange-color"></i></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>

@@ -1,0 +1,49 @@
+<div class="header t_c">
+	<span class="fl"><!-- <a ui-sref="main"><i class="iconfont icon-zuo">返回</i></a> --></span>
+	收到的日报
+	<span class="fr"></span>
+</div>
+
+<div class="main-container"  ng-controller="reportListCtrl" ng-init="init()">
+	<div class="section">
+	
+		<div class="">
+			<div class="row pt5 pb5 bt1">
+				<div class="col-xs-1 search">
+					<i class="iconfont icon-search f30"></i>
+				</div>
+				<div class="col-xs-11 search">
+					<input type="text" class="search-input" ng-model="sltname" placeholder="姓名/内容"></input>
+				</div>
+			</div>
+		</div>
+		<div class="section-content" ng-repeat="report in reportlist | filter:sltname | filter:{'reportType':selectedType}" ui-sref="reportdetail({'data':report})">
+			<div class="row pt10 pb10 bt1">
+				<div class="col-xs-2">
+					<div class="orange-imgbox t_c">
+						<span class="white-color">{{report.userDTO.name}}</span>
+					</div>
+				</div>
+				<div class="col-xs-8">
+					<span class="block c7 f18">{{report.userDTO.name}}的{{report.reportType}}</span>
+					<span class="block c6">{{report.startDate}}</span>
+					<span><i class="iconfont icon-dianhua orange-color"></i>{{report.userDTO.personalPhone}}</span>
+				</div>
+				<div class="col-xs-2">
+					<span class="block c6"></span>
+				</div>
+			</div>
+			<div class="row pt10 pb10">
+				<div class="col-xs-12">
+						<span class="block c6">报告内容</span>
+						<span class="block c6">{{report.content}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row footer orange-color">
+		<div class="col-xs-4" ng-class="{'selected':selectedType=='日报'}" ng-click="selectType('日报')">日报</div>
+		<div class="col-xs-4" ng-class="{'selected':selectedType=='周报'}" ng-click="selectType('周报')">周报</div>
+		<div class="col-xs-4" ng-class="{'selected':selectedType=='月报'}" ng-click="selectType('月报')">月报</div>
+	</div>
+</div>

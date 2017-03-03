@@ -1,0 +1,66 @@
+<div class="header t_c">
+	<span class="fl"><!-- <a ui-sref="processlist"><i class="iconfont icon-zuo">返回</i></a> --></span>
+	罗长青的报销
+	<span class="fr"></span>
+</div>
+
+<div class="main-container" ng-controller="myProcessDetailCtrl" ng-init="init()">
+	<div class="section">
+		<div class="section-content">
+			<div class="row pt10 pb10 bt1">
+				<div class="col-xs-2">
+					<div class="imgbox t_c">
+						<span class="white-color">{{data.launchUserDTO.name}}</span>
+					</div>
+				</div>
+				<div class="col-xs-8">
+					<span class="block c7 f18">{{data.launchUserDTO.name}}</span>
+					<span class="block orange-color">{{data.statusDesc}}</span>
+				</div>
+				<div class="col-xs-2">
+					<span class="block c6"></span>
+				</div>
+			</div>
+			<div class="row pt10 pb10 bt1">
+				<div class="col-xs-12 pt5 pb5">
+					<span class="c6">审批编号:</span>
+					<span>{{data.processUuid}}</span>
+				</div>
+				<div class="col-xs-12 pt5 pb5">
+					<span class="c6">报销类型:</span>
+					<span>{{data.processType}}</span>
+				</div>
+				<div class="col-xs-12 pt5 pb5" ng-repeat="field in data.processFieldDTOList">
+					<span class="c6">{{field.name}}:</span>
+					<span class="orange-color">{{field.value}}</span>
+				</div>
+			</div>
+			</div>
+			<div class="section-content mt20">
+			<div class="row pt20 pb20" ng-repeat="step in data.processStepDTOList | orderBy:['stepNo']">
+				<div class="col-xs-1">
+					<div class="t_c">
+						<span><i class="iconfont icon-zhengque green-color f20"></i></span>
+					</div>
+				</div>
+				<div class="col-xs-2">
+					<div class="imgbox t_c">
+						<span class="white-color">{{step.userDTO.name}}</span>
+					</div>
+				</div>
+				<div class="col-xs-5">
+					<span class="block">{{step.userDTO.name}}</span>
+					<span class="block green-color">{{step.statusDesc}}</span>
+				</div>
+				<div class="col-xs-4">
+					<span class="c5">{{step.actionDate}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row footer orange-color">
+		<div class="col-xs-4">撤销</div>
+		<div class="col-xs-4">拒绝</div>
+		<div class="col-xs-4">撤销</div>
+	</div>
+</div>

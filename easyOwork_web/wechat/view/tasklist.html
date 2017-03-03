@@ -1,0 +1,45 @@
+<div class="header t_c">
+	<span class="fl"><!-- <a ui-sref="main"><i class="iconfont icon-zuo">返回</i></a> --></span>
+	任务列表
+	<span class="fr"></span>
+</div>
+
+<div class="main-container" ng-controller="taskListCtrl" ng-init="init()">
+	<div class="section">
+		<div class="">
+			<div class="row pt5 pb5 bt1">
+				<div class="col-xs-1 search">
+					<i class="iconfont icon-search f30"></i>
+				</div>
+				<div class="col-xs-11 search">
+					<input type="text" class="search-input" ng-model="sltname" placeholder="姓名/内容"></input>
+				</div>
+			</div>
+		</div>
+		<div class="section-content">
+			<div class="row pt10 pb10 bt1" ui-sref="taskdetail({'data':task})" ng-repeat="task in tasklist | filter:{'status':selectedStatus} | filter:sltname">
+				<div class="col-xs-2">
+					<div class="imgbox t_c">
+						<span class="white-color">{{task.userDTO.name}}</span>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<span class="block c7 f18">{{task.title}}</span>
+					<span class="block c6">开始时间: {{task.startDate}}</span>
+					<span class="block c6">结束时间: {{task.endDate}}</span>
+					<span class="block orange-color">{{task.content}}</span>
+				</div>
+				<div class="col-xs-4">
+					<span class="block c6 fr">{{task.startDate}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row footer orange-color">
+		<div class="col-xs-4" ng-class="{'selected':selectedStatus=='已完成'}" ng-click="selectStatus('已完成')">已完成</div>
+		<div class="col-xs-4" ng-class="{'selected':selectedStatus=='已分配'}" ng-click="selectStatus('已分配')">进行中</div>
+		<div class="col-xs-4" ng-class="{'selected':selectedStatus=='已拒绝'}" ng-click="selectStatus('已拒绝')">已拒绝</div>
+	</div>
+	
+</div>

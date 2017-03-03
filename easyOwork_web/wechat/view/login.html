@@ -1,0 +1,28 @@
+<div style="background-color:white" class="pt50 pb50">
+<div class="t_c pt50">
+	<span class="block"><i class="iconfont icon-denglu f50 main-color"></i></span>
+	<span class="block b main-color f18">E之助工作平台</span>
+</div>
+<form class="form-horizontal mt30" ng-controller="loginCtrl" ng-init="init()">
+  <div class="form-group">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" ng-model="form.user" ng-change="validateUser()" placeholder="电子邮件/手机号码">
+    </div>
+    <div class="col-sm-2"></div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+      <input type="password" class="form-control" ng-model="form.password" ng-change="validatePassword()" placeholder="密码">
+    </div>
+    <div class="col-sm-2"></div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-8">
+      <button type="submit" class="btn btn-primary" style="width:100%" ng-click="login()" ng-disabled="!isUserValid||!isPasswordValid">登录</button>
+    </div>
+    <div class="col-sm-2"></div>
+  </div>
+</form>
+</div>

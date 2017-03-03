@@ -1,0 +1,69 @@
+<div class="header t_c">
+	<span class="fl"></span>
+	工作台
+	<span class="fr"><a ui-sref="mylist"><i class="iconfont icon-yonghu f20 light-orange-color"></i></a></span>
+</div>
+
+<div class="main-container" ng-controller="mainCtrl" ng-init="init()">
+	<div class="section">
+		<div class="section-title">审批</div>
+		<div class="section-content">
+			<div class="row t_c">
+				<div class="col-xs-4 section-item">
+					<span class="block orange-color"><i class="iconfont icon-shenpi1 f30" ui-sref="createdprocesslist"></i></span>
+					<span class="block">我提交的</span>
+				</div>
+				<div class="col-xs-4 section-item">
+					<span class="block blue-color"><i class="iconfont icon-shenpi f30" ui-sref="myprocesslist"></i></span>
+					<span class="block">待我审批</span>
+				</div>
+				<!-- 
+				<div class="col-xs-4 section-item pt20 pb20">
+					<span class="block orange-color"><i class="iconfont icon-shenpi f30"></i></span>
+					<span class="block">审批</span>
+				</div>
+				 -->
+			</div>
+		</div>
+	</div>
+	<div class="section">
+		<div class="section-title">任务</div>
+		<div class="section-content">
+			<div class="row pt20 pb20 t_c">
+				<div class="col-xs-4">
+					<span class="block green-color"><i class="iconfont icon-renwu f30" ui-sref="tasklist({'status':'已完成'})"></i></span>
+					<span class="block">已完成</span>
+				</div>
+				<div class="col-xs-4">
+					<span class="block orange-color"><i class="iconfont icon-jinhangzhong f30" ui-sref="tasklist({'status':'已分配'})"></i></span>
+					<span class="block">进行中</span>
+				</div>
+				<!-- 
+				<div class="col-xs-4">
+					<span class="block orange-color"><i class="iconfont icon-shenpi f30"></i></span>
+					<span class="block">审批</span>
+				</div>
+				 -->
+			</div>
+		</div>
+	</div>
+	<div class="section">
+		<div class="section-title">通讯录 / 公告 / 报告</div>
+		<div class="section-content">
+			<div class="row pt20 pb20 t_c">
+				<div class="col-xs-4">
+					<span class="block green-color"><i class="iconfont icon-gonggao f30" ui-sref="announcementlist"></i></span>
+					<span class="block">公告</span>
+				</div>
+				<div class="col-xs-4">
+					<span class="block orange-color"><i class="iconfont icon-tongxunlu-copy f30" ui-sref="stafflist"></i></span>
+					<span class="block">通讯录</span>
+				</div>
+				<div class="col-xs-4">
+					<span class="block blue-color"><i class="iconfont icon-ribaogao f30" ui-sref="reportlist"></i></span>
+					<span class="block">收到的报告</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

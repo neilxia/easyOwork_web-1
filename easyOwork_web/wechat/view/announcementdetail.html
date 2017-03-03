@@ -1,0 +1,31 @@
+<div class="header t_c">
+	<span class="fl"><!-- <a ui-sref="announcementlist"><i class="iconfont icon-zuo">返回</i></a> --></span>
+	公告
+	<span class="fr"></span>
+</div>
+
+<div class="main-container" ng-controller="announcementDetailCtrl" ng-init="init()">
+	<div class="section">
+		<div class="section-content">
+			<div class="row pt10">
+				<div class="col-xs-12">
+						<span class="f20">{{data.name}}</span>
+				</div>
+				
+			</div>
+			<div class="row pb10">
+				<div class="col-xs-12">
+						<span class="c6">{{data.sentName}} {{data.announcementDate}}</span>
+				</div>
+				
+			</div>
+			<div class="row pb10">
+				<div class="col-xs-12">
+						<span>{{data.content}}</span>
+				</div>
+				
+			</div>
+			
+		</div>
+	</div>
+</div>

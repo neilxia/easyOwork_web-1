@@ -1,0 +1,57 @@
+<div class="header t_c">
+	<span class="fl"><!-- <a ui-sref="mylist"><i class="iconfont icon-zuo">返回</i></a> --></span>
+	基本资料
+	<span class="fr"></span>
+</div>
+
+<div class="main-container" ng-controller="myInfoCtrl" ng-init="init()">
+	<div class="section">
+		<div class="section-content">
+			<div class="row pt10 pb10 bt1">
+				<div class="col-xs-2 ht40 lht40">
+					<div class="imgbox t_c white-color">{{datalist[0].name}}</div>
+				</div>
+				<div class="col-xs-10  ht40 lht40">
+					<div>{{datalist[0].name}}</div>
+				</div>
+			</div>
+		</div>
+		<div class="section-content">
+			<div class="row mt20 pt10 pb10">
+				<div class="col-xs-12">
+					<span class="block c6">企业名称</span>
+					<span class="block">{{datalist[0].entName}}</span>
+				</div>
+			</div>
+			<div class="row pt10 pb10 bt1">
+				<div class="col-xs-12">
+					<span class="block c6">部门</span>
+					<span class="block">{{datalist[0].orgList[0].name}}</span>
+				</div>
+			</div>
+			<div class="row pt10 pb10 bt1">
+				<div class="col-xs-12">
+					<span class="block c6">职位</span>
+					<span class="block">{{datalist[0].position}}</span>
+				</div>
+			</div>
+			<div class="row pt10 pb10 bt1">
+				<div class="col-xs-12">
+					<span class="block c6">员工编号</span>
+					<span class="block">{{datalist[0].id}}</span>
+				</div>
+			</div>
+			<div class="row pt10 pb10 bt1">
+				<div class="col-xs-12">
+					<span class="block c6">登录帐号</span>
+					<span class="block" ng-show="datalist[0].personalEmail">{{datalist[0].personalEmail}} </span>
+					<span class="block" ng-show="datalist[0].personalPhone">{{datalist[0].personalPhone}} </span>
+				</div>
+			</div>
+			
+		</div>
+		
+		
+	</div>
+	
+</div>

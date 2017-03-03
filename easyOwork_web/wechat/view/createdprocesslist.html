@@ -1,0 +1,48 @@
+<div class="header t_c">
+	<span class="fl"><!-- <a ui-sref="main"><i class="iconfont icon-zuo">返回</i></a> --></span>
+	我审批的
+	<span class="fr"></span>
+</div>
+
+<div class="main-container" ng-controller="createdProcessListCtrl" ng-init="init()">
+	<div class="section">
+		<div class="">
+			<div class="row pt5 pb5 bt1">
+				<div class="col-xs-1 search">
+					<i class="iconfont icon-search f30"></i>
+				</div>
+				<div class="col-xs-11 search">
+					<input type="text" class="search-input" ng-model="sltname"></input>
+				</div>
+			</div>
+		</div>
+		<div class="section-content">
+			<div class="row pt10 pb10 bt1" ng-repeat="data in inquiryProcessesData | filter:{'statusDesc':selectedStatus} | filter:sltname | orderBy:['-createDate']">
+				<div class="col-xs-2">
+					<div class="imgbox t_c">
+						<span class="white-color">{{data.launchUserDTO.name}}</span>
+					</div>
+				</div>
+				<div class="col-xs-6" ui-sref="createdprocessdetail({'data':data})">
+					<span class="block c7 f18">{{data.launchUserDTO.name}}的{{data.processType}}</span>
+					<span class="block c6" ng-repeat="field in data.processFieldDTOList">{{field.name}}:{{field.value}}</span>
+					<span class="block orange-color" ng-show="data.statusDesc=='审批中'">{{data.statusDesc}} - {{data.processStepDTOList[data.currentStepNo-1].userDTO.name}}</span>
+					<span class="block green-color" ng-show="data.statusDesc=='已同意'">{{data.statusDesc}}</span>
+					<span class="block red-color" ng-show="data.statusDesc=='已拒绝'">{{data.statusDesc}} - {{data.processStepDTOList[data.currentStepNo-1].userDTO.name}}</span>
+					<span class="block g9" ng-show="data.statusDesc=='已撤回'">{{data.statusDesc}}</span>
+				</div>
+				<div class="col-xs-4">
+					<span class="block c6 fr">{{data.createDate}}</span>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div class="row footer orange-color">
+		<div class="col-xs-3" ng-class="{'selected':selectedStatus=='审批中'}" ng-click="selectStatus('审批中')">审批中</div>
+		<div class="col-xs-3" ng-class="{'selected':selectedStatus=='已同意'}" ng-click="selectStatus('已同意')">已同意</div>
+		<div class="col-xs-3" ng-class="{'selected':selectedStatus=='已拒绝'}" ng-click="selectStatus('已拒绝')">已拒绝</div>
+		<div class="col-xs-3" ng-class="{'selected':selectedStatus=='已撤回'}" ng-click="selectStatus('已撤回')">已撤回</div>
+	</div>
+	
+</div>

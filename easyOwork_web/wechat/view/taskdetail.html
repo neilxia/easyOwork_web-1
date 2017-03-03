@@ -1,0 +1,48 @@
+<div class="header t_c">
+	<span class="fl"><!-- <a ui-sref="tasklist"><i class="iconfont icon-zuo">返回</i></a> --></span>
+	任务详情
+	<span class="fr"></span>
+</div>
+
+<div class="main-container" ng-controller="taskDetailCtrl" ng-init="init()">
+	<div class="section">
+		<div class="section-content">
+			<div class="row pt10 pb10 bt1">
+				<div class="col-xs-1">
+					<span><i class="iconfont icon-zhengque green-color f30"></i></span>
+				</div>
+				<div class="col-xs-2 ht40 lht40">
+					<span>{{data.status}}</span>
+				</div>
+				<div class="col-xs-8 ht40 lht40">
+					<span class="c7 f18">{{data.title}}</span>
+				</div>
+			</div>
+			<div class="row pt10 pb10 bt1">
+				<div class="col-xs-12 pt5 pb5">
+					<span class="c6">任务发起人:</span>
+					<div class="imgbox t_c">
+						<span class="white-color">{{data.userDTO.name}}</span>
+					</div>
+				</div>
+				<div class="col-xs-12 pt5 pb5">
+					<span class="c6">开始时间:</span>
+					<span>{{data.startDate}}</span>
+				</div>
+				<div class="col-xs-12 pt5 pb5">
+					<span class="c6">结束时间:</span>
+					<span class="">{{data.endDate}}</span>
+				</div>
+				<div class="col-xs-12 pt5 pb5">
+					<span>{{data.content}}</span>
+				</div>
+			</div>
+			</div>
+			
+	</div>
+	<div class="row footer orange-color">
+		<div class="col-xs-4">接受</div>
+		<div class="col-xs-4">拒绝</div>
+		<div class="col-xs-4">完成</div>
+	</div>
+</div>
