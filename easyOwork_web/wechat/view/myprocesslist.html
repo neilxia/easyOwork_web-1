@@ -1,7 +1,7 @@
 <div class="header t_c">
 	<span class="fl"><!-- <a ui-sref="main"><i class="iconfont icon-zuo">返回</i></a> --></span>
-	我审批的
-	<span class="fr"></span>
+	待我审批
+	<span class="fr"><i class="iconfont icon-gongzuotai f18 orange-color" ui-sref="main"></i></span>
 </div>
 
 <div class="main-container" ng-controller="myProcessListCtrl" ng-init="init()">
@@ -17,10 +17,10 @@
 			</div>
 		</div>
 		<div class="section-content">
-			<div class="row pt10 pb10 bt1" ng-repeat="data in inquiryProcessesData | filter:sltname | filter:{'statusDesc':'审批中'}">
+			<div class="row pt10 pb10 bt1" ng-repeat="data in displayinquiryProcessesData = (inquiryProcessesData | filter:sltname | filter:{'statusDesc':'审批中'})">
 				<div class="col-xs-2">
-					<div class="imgbox t_c">
-						<span class="white-color">{{data.launchUserDTO.name}}</span>
+					<div class="t_c" ng-class="{'imgbox':$index%3==1,'orange-imgbox':$index%3==2,'blue-imgbox':$index%3==0}">
+						<span class="white-color">{{data.launchUserDTO.name | cutlast:2}}</span>
 					</div>
 				</div>
 				<div class="col-xs-6"  ui-sref="myprocessdetail({'data':data})">
@@ -35,5 +35,5 @@
 
 		</div>
 	</div>
-	
+	<div class="row t_c pt20" ng-if="displayinquiryProcessesData.length==0">无数据</div>
 </div>

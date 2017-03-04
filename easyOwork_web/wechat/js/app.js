@@ -10,6 +10,7 @@
         'wechat.route',
         'wechat.directives',
         'wechat.interceptors',
+        'wechat.filters',
         'wechat.servicesRest',
         'wechat.login',
         'wechat.logout',
@@ -17,6 +18,7 @@
         'wechat.process',
         'wechat.announcement',
         'wechat.task',
+        'wechat.projecttask',
         'wechat.report',
         'wechat.staff',
         'wechat.myinfo'

@@ -1,15 +1,15 @@
 <div class="header t_c">
 	<span class="fl"><!-- <a ui-sref="main"><i class="iconfont icon-zuo">返回</i></a> --></span>
 	公告列表
-	<span class="fr"></span>
+	<span class="fr"><i class="iconfont icon-gongzuotai f18 orange-color" ui-sref="main"></i></span>
 </div>
 
 <div class="main-container" ng-controller="announcementListCtrl" ng-init="init()">
 	<div class="section">
 		<div class="section-content">
-			<div class="row pt10 pb10 bt1" ng-repeat="data in inquiryAnnouncementsData">
+			<div class="row pt10 pb10 bt1" ng-repeat="data in  inquiryAnnouncementsData | orderBy: -announcementDate">
 				<div class="col-xs-2">
-					<div class="imgbox t_c">
+					<div class="t_c" ng-class="{'imgbox':$index%3==1,'orange-imgbox':$index%3==2,'blue-imgbox':$index%3==0}">
 						<span class="white-color">公告</span>
 					</div>
 				</div>
@@ -24,5 +24,6 @@
 			</div>
 		</div>
 	</div>
+	<div class="row t_c pt20" ng-if="inquiryAnnouncementsData.length==0">无数据</div>
 	
 </div>

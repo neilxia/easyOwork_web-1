@@ -1,7 +1,7 @@
 <div class="header t_c">
 	<span class="fl"><!-- <a ui-sref="main"><i class="iconfont icon-zuo">返回</i></a> --></span>
 	通讯录
-	<span class="fr"></span>
+	<span class="fr"><i class="iconfont icon-gongzuotai f18 orange-color" ui-sref="main"></i></span>
 </div>
 
 <div class="main-container" ng-controller="staffListCtrl" ng-init="init()">
@@ -42,8 +42,8 @@
 		<div class="section-content">
 			<div class="row pt10 pb10 bb1" ng-repeat="data in datalist | filter:sltname">
 				<div class="col-xs-2 ht40 lht40">
-					<div class="imgbox t_c">
-						<span class="white-color">{{data.name}}</span>
+					<div class="t_c" ng-class="{'imgbox':$index%3==1,'orange-imgbox':$index%3==2,'blue-imgbox':$index%3==0}">
+						<span class="white-color">{{data.name | cutlast:2}}</span>
 					</div>
 				</div>
 				<div class="col-xs-3">

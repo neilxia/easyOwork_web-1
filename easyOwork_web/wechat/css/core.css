@@ -235,6 +235,15 @@ body{
     -webkit-border-radius: 50%!important;
     overflow: hidden;
 }
+.blue-imgbox{
+	width: 40px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #baa2f3;
+    border-radius: 50%!important;
+    -webkit-border-radius: 50%!important;
+    overflow: hidden;
+}
 .search-input{
 	border:1px;
 	width:95%;

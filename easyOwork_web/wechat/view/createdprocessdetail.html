@@ -1,7 +1,7 @@
 <div class="header t_c">
 	<span class="fl"><!-- <a ui-sref="processlist"><i class="iconfont icon-zuo">返回</i></a> --></span>
 	罗长青的报销
-	<span class="fr"></span>
+	<span class="fr"><i class="iconfont icon-gongzuotai f18 orange-color" ui-sref="main"></i></span>
 </div>
 
 <div class="main-container" ng-controller="createdProcessDetailCtrl" ng-init="init()">
@@ -32,7 +32,7 @@
 				</div>
 				<div class="col-xs-12 pt5 pb5" ng-repeat="field in data.processFieldDTOList">
 					<span class="c6">{{field.name}}:</span>
-					<span class="orange-color">{{field.value}}</span>
+					<span>{{field.value}}</span>
 				</div>
 			</div>
 			</div>
@@ -58,8 +58,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="row footer orange-color">
-		<div class="col-xs-12 orange-color">撤销</div>
+	<div class="row footer orange-color" ng-if="data.statusDesc=='审批中'">
+		<div class="col-xs-12 orange-color" ng-click="withdrawProcess(data)">撤回</div>
 		<!-- <div class="col-xs-4">拒绝</div>
 		<div class="col-xs-4">撤销</div> -->
 	</div>

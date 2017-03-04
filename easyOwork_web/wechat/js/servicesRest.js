@@ -123,8 +123,8 @@ function employeesService(){
             inquiryWechatEmployee:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryWechatEmployee',form)
             },
-            initMain:function(form){
-                return $http.post(AppConfig.BASE_URL+'work/rest/initMain',form)
+            initWechatMain:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/initWechatMain',form)
             }
         }
     }];
@@ -215,8 +215,8 @@ function processService(){
                 return $http.post(AppConfig.BASE_URL+'work/rest/createProcess',form)
             },
             //POST 5.6.6	B0016-批准/拒绝/撤回流程
-            changeProcess:function(form){
-                return $http.post(AppConfig.BASE_URL+'work/rest/changeProcess',form)
+            changeWechatProcess:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changeWechatProcess',form)
             },
             //POST 5.6.7	B0017-查询发起的流程
             inquiryWechatCreatedProcesses:function(form){
@@ -486,8 +486,8 @@ function projectService(){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryMyProject',form)
             },
             
-            inquiryProjectTasks:function(form){
-                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryProjectTasks',form)
+            inquiryWechatProjectTasks:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryWechatProjectTasks',form)
             }
 
         }
@@ -646,8 +646,8 @@ function reportService(){
 function taskService(){
     return ['$http','AppConfig',function($http,AppConfig){
         return {
-            changeTask:function(form){
-                return $http.post(AppConfig.BASE_URL+'work/rest/changeTask',form)
+            changeWechatTask:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/changeWechatTask',form)
             },
             deleteTasks:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/deleteTasks',form)

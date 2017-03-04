@@ -19,7 +19,7 @@
             <!--<select class="form-control input-sm" ng-init="selectstate=''" ng-model="selectstate" ng-options="x.val as x.name for x in statelist">
             </select>-->
             <span class="form-group-sm search-group">
-                <input type="text" class="form-control wd180" ng-model="sltname" placeholder="搜索关键词">
+                <input type="text" class="form-control wd180" ng-model="sltname" placeholder="编号/厂商/型号/姓名">
                 <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
             </span>
         </form>
@@ -43,7 +43,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="data in datalist | filter:{'assetType':selectclass==null?'':selectclass,'assetName':sltname} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                <tr ng-repeat="data in datalist | filter:{'assetType':selectclass==null?'':selectclass} | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
                     <td class="pl20"><a class="a_prime" ui-sref="assets.assetsview({'data':data})">{{data.id}}</a></td>
                     <td>{{data.assetType}}</td>
                     <td>{{data.assetName}}</td>

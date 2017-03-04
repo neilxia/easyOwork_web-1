@@ -1,7 +1,7 @@
 <div class="header t_c">
 	<span class="fl"><!-- <a ui-sref="tasklist"><i class="iconfont icon-zuo">返回</i></a> --></span>
 	任务详情
-	<span class="fr"></span>
+	<span class="fr"><i class="iconfont icon-gongzuotai f18 orange-color" ui-sref="main"></i></span>
 </div>
 
 <div class="main-container" ng-controller="taskDetailCtrl" ng-init="init()">
@@ -40,9 +40,11 @@
 			</div>
 			
 	</div>
+	<!-- 
 	<div class="row footer orange-color">
-		<div class="col-xs-4">接受</div>
-		<div class="col-xs-4">拒绝</div>
-		<div class="col-xs-4">完成</div>
+		<div class="col-xs-6 orange-color" ng-click="updateTask('START')" ng-show="data.status=='已分配'">开始</div>
+		<div class="col-xs-6" ng-click="updateTask('REJECT')" ng-show="data.status=='已分配'">拒绝</div>
+		<div class="col-xs-12 orange-color" ng-click="updateTask('COMPLETE')" ng-show="data.status=='已开始'">完成</div>
 	</div>
+	 -->
 </div>

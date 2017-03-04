@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1488450137736'); /* IE9*/
-  src: url('iconfont.eot?t=1488450137736#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1488450137736') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1488450137736') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1488450137736#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1488614437044'); /* IE9*/
+  src: url('iconfont.eot?t=1488614437044#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1488614437044') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1488614437044') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1488614437044#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -70,6 +70,8 @@
 .icon-jine:before { content: "\e610"; }
 
 .icon-shizhong:before { content: "\e60e"; }
+
+.icon-renwu1-copy:before { content: "\e605"; }
 
 .icon-tongji1:before { content: "\e623"; }
 

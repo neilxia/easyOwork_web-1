@@ -1,7 +1,7 @@
 <div class="header t_c">
 	<span class="fl"><!-- <a ui-sref="mylist"><i class="iconfont icon-zuo">返回</i></a> --></span>
 	基本资料
-	<span class="fr"></span>
+	<span class="fr"><i class="iconfont icon-gongzuotai f18 orange-color" ui-sref="main"></i></span>
 </div>
 
 <div class="main-container" ng-controller="myInfoCtrl" ng-init="init()">
@@ -9,7 +9,7 @@
 		<div class="section-content">
 			<div class="row pt10 pb10 bt1">
 				<div class="col-xs-2 ht40 lht40">
-					<div class="imgbox t_c white-color">{{datalist[0].name}}</div>
+					<div class="imgbox t_c white-color">{{datalist[0].name | cutlast:2}}</div>
 				</div>
 				<div class="col-xs-10  ht40 lht40">
 					<div>{{datalist[0].name}}</div>

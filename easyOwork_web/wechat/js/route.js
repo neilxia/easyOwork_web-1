@@ -89,6 +89,26 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
 
     });
     $stateProvider
+    .state('projecttasklist', {
+        url: "/projecttasklist?status",
+        views: {
+            '': {
+                templateUrl: 'wechat/view/projecttasklist.html'
+            }
+        }
+
+    });
+    $stateProvider
+    .state('projecttaskdetail', {
+        url: "/projecttaskdetail?data",
+        views: {
+            '': {
+                templateUrl: 'wechat/view/projecttaskdetail.html'
+            }
+        }
+
+    });
+    $stateProvider
     .state('reportlist', {
         url: "/reportlist",
         views: {

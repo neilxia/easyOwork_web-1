@@ -39,4 +39,22 @@ app.controller('taskDetailCtrl',['$rootScope','$scope','LocalStorage','taskServi
 	$scope.init = function(){
 		$scope.data = $rootScope.$stateParams.data;
 	}
+	$scope.updateTask = function(actionType){
+		$scope.options={
+			"actionType":actionType,
+            "taskUuid":$scope.data.taskUuid
+        };
+		var promise = taskService.changeWechatTask({body:$scope.options});
+        promise.success(function(data, status, headers, config){
+        	var sts=data.body.status;
+            if(sts.statusCode==0){
+            	$rootScope.$state.go('tasklist',{'status':'已开始'});
+            }else{
+                MsgService.tomsg(data.body.status.errorDesc);
+            }
+        });
+        promise.error(function(data, status, headers, config){
+        	MsgService.tomsg(data.body.status.errorDesc);
+        });
+	};
 }]);

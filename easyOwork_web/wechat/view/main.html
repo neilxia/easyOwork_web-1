@@ -11,11 +11,11 @@
 			<div class="row t_c">
 				<div class="col-xs-4 section-item">
 					<span class="block orange-color"><i class="iconfont icon-shenpi1 f30" ui-sref="createdprocesslist"></i></span>
-					<span class="block">我提交的</span>
+					<span class="block">我提交的({{createdProcessCount}})</span>
 				</div>
 				<div class="col-xs-4 section-item">
 					<span class="block blue-color"><i class="iconfont icon-shenpi f30" ui-sref="myprocesslist"></i></span>
-					<span class="block">待我审批</span>
+					<span class="block">待我审批({{handlingProcessCount}})</span>
 				</div>
 				<!-- 
 				<div class="col-xs-4 section-item pt20 pb20">
@@ -27,7 +27,32 @@
 		</div>
 	</div>
 	<div class="section">
-		<div class="section-title">任务</div>
+		<div class="section-title">项目任务</div>
+		<div class="section-content">
+			<div class="row pt20 pb20 t_c">
+				<div class="col-xs-4">
+					<span class="block green-color"><i class="iconfont icon-renwu f30" ui-sref="projecttasklist({'status':'已完成'})"></i></span>
+					<span class="block">已完成</span>
+				</div>
+				<div class="col-xs-4">
+					<span class="block orange-color"><i class="iconfont icon-jinhangzhong f30" ui-sref="projecttasklist({'status':'已开始'})"></i></span>
+					<span class="block">进行中({{projectTaskInprogress}})</span>
+				</div>
+				<div class="col-xs-4">
+					<span class="block blue-color"><i class="iconfont icon-renwu1-copy f30" ui-sref="projecttasklist({'status':'已分配'})"></i></span>
+					<span class="block">新任务({{projectTaskNew}})</span>
+				</div>
+				<!-- 
+				<div class="col-xs-4">
+					<span class="block orange-color"><i class="iconfont icon-shenpi f30"></i></span>
+					<span class="block">审批</span>
+				</div>
+				 -->
+			</div>
+		</div>
+	</div>
+	<div class="section">
+		<div class="section-title">其他任务</div>
 		<div class="section-content">
 			<div class="row pt20 pb20 t_c">
 				<div class="col-xs-4">
@@ -35,8 +60,12 @@
 					<span class="block">已完成</span>
 				</div>
 				<div class="col-xs-4">
-					<span class="block orange-color"><i class="iconfont icon-jinhangzhong f30" ui-sref="tasklist({'status':'已分配'})"></i></span>
-					<span class="block">进行中</span>
+					<span class="block orange-color"><i class="iconfont icon-jinhangzhong f30" ui-sref="tasklist({'status':'已开始'})"></i></span>
+					<span class="block">进行中({{taskInprogress}})</span>
+				</div>
+				<div class="col-xs-4">
+					<span class="block blue-color"><i class="iconfont icon-renwu1-copy f30" ui-sref="tasklist({'status':'已分配'})"></i></span>
+					<span class="block">新任务({{taskNew}})</span>
 				</div>
 				<!-- 
 				<div class="col-xs-4">
@@ -61,7 +90,7 @@
 				</div>
 				<div class="col-xs-4">
 					<span class="block blue-color"><i class="iconfont icon-ribaogao f30" ui-sref="reportlist"></i></span>
-					<span class="block">收到的报告</span>
+					<span class="block">收到的报告({{reportCount}})</span>
 				</div>
 			</div>
 		</div>
