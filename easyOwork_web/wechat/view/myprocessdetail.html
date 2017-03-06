@@ -61,7 +61,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="row footer orange-color">
+	<div class="row footer orange-color" ng-if="data.statusDesc=='审批中'">
 		<div class="col-xs-6 orange-color" ng-click="updateProcess('APPROVE')">同意</div>
 		<div class="col-xs-6" ng-click="updateProcess('REJECT')">拒绝</div>
 	</div>
