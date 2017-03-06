@@ -8,7 +8,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
     $stateProvider
         //首页
         .state('login', {
-            url: "/login?openid",
+            url: "/login?code",
             views: {
                 '': {
                     templateUrl: 'wechat/view/login.html'
@@ -20,7 +20,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
     $stateProvider
     //首页
     .state('main', {
-        url: "/main",
+        url: "/main?code",
         views: {
             '': {
                 templateUrl: 'wechat/view/main.html'
@@ -184,6 +184,16 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
         views: {
             '': {
                 templateUrl: 'wechat/view/myinfo.html'
+            }
+        }
+
+    });
+    $stateProvider
+    .state('jssdktest', {
+        url: "/jssdktest",
+        views: {
+            '': {
+                templateUrl: 'wechat/view/jssdktest.html'
             }
         }
 

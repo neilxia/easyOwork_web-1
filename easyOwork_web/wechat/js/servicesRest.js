@@ -67,7 +67,13 @@ function publicService(){
             //POST  /work/rest/deleteNote	删除消息
             deleteNote:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/deleteNote',form)
-            }
+            },
+            getSignature:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/getSignature',form)
+            },
+            inquiryOpenIdByCode:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryOpenIdByCode',form)
+            },
         }
     }];
 }
@@ -140,6 +146,10 @@ function noticeService(){
             //POST 5.2.2	B0024-查询公告
             inquiryWechatAnnouncements:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryWechatAnnouncements',form)
+                //return $http.get('./modules/notice/json/list.json',form)
+            },
+            inquiryWechatAnnouncement:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryWechatAnnouncement',form)
                 //return $http.get('./modules/notice/json/list.json',form)
             }
         }
@@ -221,12 +231,13 @@ function processService(){
             //POST 5.6.7	B0017-查询发起的流程
             inquiryWechatCreatedProcesses:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryWechatCreatedProcesses',form)
-                //return $http.get('./modules/processmsg/json/inquiryCreatedProcesses.json',form)
             },
             //POST 5.6.8	B0018-查询待审批的流程
             inquiryWechatHandlingProcesses:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryWechatHandlingProcesses',form)
-                //return $http.get('./modules/processmsg/json/inquiryHandlingProcesses.json',form)
+            },
+            inquiryWechatProcess:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryWechatProcess',form)
             }
         }
     }];
@@ -488,8 +499,11 @@ function projectService(){
             
             inquiryWechatProjectTasks:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryWechatProjectTasks',form)
+            },
+            inquiryWechatProjectTask:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryWechatProjectTask',form)
             }
-
+            
         }
     }];
 }
@@ -638,6 +652,9 @@ function reportService(){
             },
             inquiryWechatAssignedReports:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryWechatAssignedReports',form)
+            },
+            inquiryWechatReport:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryWechatReport',form)
             }
         }
     }];
@@ -657,6 +674,9 @@ function taskService(){
             },
             inquiryWechatAssignedTasks:function(form){
                 return $http.post(AppConfig.BASE_URL+'work/rest/inquiryWechatAssignedTasks',form)
+            },
+            inquiryWechatTask:function(form){
+                return $http.post(AppConfig.BASE_URL+'work/rest/inquiryWechatTask',form)
             }
         }
     }];

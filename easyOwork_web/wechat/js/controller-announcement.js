@@ -33,6 +33,21 @@ app.controller('announcementDetailCtrl',['$rootScope','$scope','LocalStorage','n
 		$rootScope.$state.go('login');
 	}
 	$scope.init = function(){
-		$scope.data = $rootScope.$stateParams.data;
+		var announcementUuid = $rootScope.$stateParams.data;
+		$scope.options={
+                "announcementUuid":announcementUuid	//流程编号
+            };
+		var promise = noticeService.inquiryWechatAnnouncement({body:$scope.options});
+        promise.success(function(data, status, headers, config){
+            var sts=data.body.status;
+            if(sts.statusCode==0){
+            	$scope.data = data.body.data;
+            }else{
+                MsgService.tomsg(data.body.status.errorDesc);
+            }
+        });
+        promise.error(function(data, status, headers, config){
+            MsgService.tomsg(data.body.status.errorDesc);
+        });
 	}
 }]);

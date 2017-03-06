@@ -2,7 +2,7 @@
  * Created by Dumin on 2016/7/21.
  */
 var app = angular.module('wechat.login',[]);
-app.controller('loginCtrl',['$rootScope','$scope','$http','commonService','AppConfig','MsgService','$location','LocalStorage','$cookieStore',function($rootScope,$scope,$http,commonService,AppConfig,MsgService,$location,LocalStorage,$cookieStore){
+app.controller('loginCtrl',['$rootScope','$scope','$http','commonService','AppConfig','MsgService','$location','LocalStorage','publicService',function($rootScope,$scope,$http,commonService,AppConfig,MsgService,$location,LocalStorage,publicService){
 	
 	var redirect_url = $rootScope.$stateParams.redirect_url;
 	
@@ -16,7 +16,35 @@ app.controller('loginCtrl',['$rootScope','$scope','$http','commonService','AppCo
 		$scope.isUserValid=false;
 		$scope.passwordError = '';
 		$scope.isPasswordValid = false;
-		$scope.openId = $rootScope.$stateParams.openid;
+		
+		var search = window.location.search;
+		$scope.code = '';
+		if(search != null && search.length>1){
+			var searchArray = search.substr(1).split("&");
+			if(searchArray != null && searchArray.length>0){
+				for(var i=0; i<searchArray.length;i++){
+					if(searchArray[i].indexOf("code=")==0){
+						$scope.code = searchArray[i].substr(5);
+					}
+				}
+			}
+		}
+		$scope.options={
+			    "code":$scope.code 
+		    };
+			var promise = publicService.inquiryOpenIdByCode({body:$scope.options});
+	        promise.success(function(data, status, headers, config){
+	            var sts=data.body.status;
+	             if(sts.statusCode==0){
+	            	 $scope.openId = data.body.data.openId;
+	             }else{
+	            	 MsgService.tomsg(data.body.status.errorDesc);
+	             }
+	        });
+	        promise.error(function(data, status, headers, config){
+	            MsgService.tomsg(data.body.status.errorDesc);
+	        });
+		
 	}
 	
 	$scope.validateUser = function(){

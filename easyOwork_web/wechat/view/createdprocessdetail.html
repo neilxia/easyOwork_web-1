@@ -1,7 +1,7 @@
 <div class="header t_c">
 	<span class="fl"><!-- <a ui-sref="processlist"><i class="iconfont icon-zuo">返回</i></a> --></span>
-	罗长青的报销
-	<span class="fr"><i class="iconfont icon-gongzuotai f18 orange-color" ui-sref="main"></i></span>
+	审批详情
+	<span class="fr"><i class="iconfont icon-gongzuotai f20 orange-color" ui-sref="main"></i></span>
 </div>
 
 <div class="main-container" ng-controller="createdProcessDetailCtrl" ng-init="init()">
@@ -40,17 +40,20 @@
 			<div class="row pt20 pb20" ng-repeat="step in data.processStepDTOList | orderBy:['stepNo']">
 				<div class="col-xs-1">
 					<div class="t_c">
-						<span><i class="iconfont icon-zhengque green-color f20"></i></span>
+						<span ng-if="step.status=='APPROVED'"><i class="iconfont icon-zhengque green-color f20"></i></span>
+						<span ng-if="step.status=='PENDING'"><i class="iconfont icon-zhengque orange-color f20"></i></span>
+						<span ng-if="step.status=='REJECTED'"><i class="iconfont icon-zhengque red-color f20"></i></span>
 					</div>
 				</div>
 				<div class="col-xs-2">
-					<div class="imgbox t_c">
+					<div class="t_c" ng-class="{'imgbox':step.status=='APPROVED','orange-imgbox':step.status=='PENDING','orange-imgbox':step.status=='REJECTED'}">
 						<span class="white-color">{{step.userDTO.name}}</span>
 					</div>
 				</div>
 				<div class="col-xs-5">
 					<span class="block">{{step.userDTO.name}}</span>
-					<span class="block green-color">{{step.statusDesc}}</span>
+					<span class="block" ng-class="{'green-color':step.status=='APPROVED','orange-color':step.status=='PENDING','orange-color':step.status=='REJECTED'}">{{step.statusDesc}}</span>
+					<span class="block c6">{{step.message}}</span>
 				</div>
 				<div class="col-xs-4">
 					<span class="c5">{{step.actionDate}}</span>

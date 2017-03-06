@@ -1,7 +1,7 @@
 <div class="header t_c">
 	<span class="fl"><!-- <a ui-sref="tasklist"><i class="iconfont icon-zuo">返回</i></a> --></span>
 	项目任务详情
-	<span class="fr"><i class="iconfont icon-gongzuotai f18 orange-color" ui-sref="main"></i></span>
+	<span class="fr"><i class="iconfont icon-gongzuotai f20 orange-color" ui-sref="main"></i></span>
 </div>
 
 <div class="main-container" ng-controller="projectTaskDetailCtrl" ng-init="init()">
@@ -9,7 +9,10 @@
 		<div class="section-content">
 			<div class="row pt10 pb10 bt1">
 				<div class="col-xs-1">
-					<span><i class="iconfont icon-zhengque green-color f30"></i></span>
+					<span ng-if="data.status=='已完成'"><i class="iconfont icon-zhengque green-color f30"></i></span>
+					<span ng-if="data.status=='已开始'"><i class="iconfont icon-jinhangzhong orange-color f30"></i></span>
+					<span ng-if="data.status=='已分配'"><i class="iconfont icon-jinhangzhong orange-color f30"></i></span>
+					<span ng-if="data.status=='已拒绝'"><i class="iconfont icon-dvt-reject red-color f30"></i></span>
 				</div>
 				<div class="col-xs-2 ht40 lht40">
 					<span>{{data.status}}</span>

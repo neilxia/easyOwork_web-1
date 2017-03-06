@@ -21,7 +21,9 @@
         'wechat.projecttask',
         'wechat.report',
         'wechat.staff',
-        'wechat.myinfo'
+        'wechat.myinfo',
+        'wechat.jssdk'
+        
     ]);
 })();
 

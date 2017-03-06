@@ -1,7 +1,7 @@
 <div class="header t_c">
 	<span class="fl"><!-- <a ui-sref="processlist"><i class="iconfont icon-zuo">返回</i></a> --></span>
 	审批详情
-	<span class="fr"><i class="iconfont icon-gongzuotai f18 orange-color" ui-sref="main"></i></span>
+	<span class="fr"><i class="iconfont icon-gongzuotai f20 orange-color" ui-sref="main"></i></span>
 </div>
 
 <div class="main-container" ng-controller="myProcessDetailCtrl" ng-init="init()">
@@ -46,13 +46,14 @@
 					</div>
 				</div>
 				<div class="col-xs-2">
-					<div class="t_c"ng-class="{'imgbox':step.status=='APPROVED','orange-imgbox':step.status=='PENDING'}">
+					<div class="t_c" ng-class="{'imgbox':step.status=='APPROVED','orange-imgbox':step.status=='PENDING'}">
 						<span class="white-color">{{step.userDTO.name}}</span>
 					</div>
 				</div>
 				<div class="col-xs-5">
 					<span class="block">{{step.userDTO.name}}</span>
 					<span class="block" ng-class="{'green-color':step.status=='APPROVED','orange-color':step.status=='PENDING'}">{{step.statusDesc}}</span>
+					<span class="block c6">{{step.message}}</span>
 				</div>
 				<div class="col-xs-4">
 					<span class="c5">{{step.actionDate}}</span>
@@ -61,7 +62,22 @@
 		</div>
 	</div>
 	<div class="row footer orange-color">
-		<div class="col-xs-6 orange-color" ng-click="changeProcess(data,'APPROVE')">同意</div>
-		<div class="col-xs-6" ng-click="changeProcess(data,'REJECT')">拒绝</div>
+		<div class="col-xs-6 orange-color" ng-click="updateProcess('APPROVE')">同意</div>
+		<div class="col-xs-6" ng-click="updateProcess('REJECT')">拒绝</div>
 	</div>
 </div>
+<script type="text/ng-template" id="addcomment.html">
+        <div class="whitemodal">
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td">
+                    <tr>
+                        <td class="pl5"><input type="text" ng-model="message" class="form-control" placeholder="说点儿什么"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white wd80 fl" ng-click="cancel()">取消</button>
+                <button type="button" class="btn btn-primary wd80" ng-click="ok()">确定</button>
+            </div>
+        </div>
+    </script>

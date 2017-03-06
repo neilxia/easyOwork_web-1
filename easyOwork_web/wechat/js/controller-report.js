@@ -40,6 +40,21 @@ app.controller('reportDetailCtrl',['$rootScope','$scope','LocalStorage','reportS
 		$rootScope.$state.go('login');
 	}
 	$scope.init = function(){
-		$scope.data = $rootScope.$stateParams.data;
+		var reportUuid = $rootScope.$stateParams.data;
+		$scope.options={
+                "reportUuid":reportUuid	//任务编号
+            };
+		var promise = reportService.inquiryWechatReport({body:$scope.options});
+        promise.success(function(data, status, headers, config){
+            var sts=data.body.status;
+            if(sts.statusCode==0){
+            	$scope.data = data.body.data;
+            }else{
+                MsgService.tomsg(data.body.status.errorDesc);
+            }
+        });
+        promise.error(function(data, status, headers, config){
+            MsgService.tomsg(data.body.status.errorDesc);
+        });
 	}
 }]);

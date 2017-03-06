@@ -37,7 +37,22 @@ app.controller('projectTaskDetailCtrl',['$rootScope','$scope','LocalStorage','pr
 		$rootScope.$state.go('login');
 	}
 	$scope.init = function(){
-		$scope.data = $rootScope.$stateParams.data;
+		var projectTaskUuid = $rootScope.$stateParams.data;
+		$scope.options={
+                "projectTaskUuid":projectTaskUuid	//任务编号
+            };
+		var promise = projectService.inquiryWechatProjectTask({body:$scope.options});
+        promise.success(function(data, status, headers, config){
+            var sts=data.body.status;
+            if(sts.statusCode==0){
+            	$scope.data = data.body.data;
+            }else{
+                MsgService.tomsg(data.body.status.errorDesc);
+            }
+        });
+        promise.error(function(data, status, headers, config){
+            MsgService.tomsg(data.body.status.errorDesc);
+        });
 	}
 	$scope.updateTask = function(actionType){
 		$scope.options={

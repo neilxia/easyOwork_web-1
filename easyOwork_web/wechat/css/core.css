@@ -17,6 +17,9 @@
   -o-transition: border-color ease-in-out .15s;
   transition: border-color ease-in-out .15s;
 }
+.modal-dialog{
+	margin-top:45%;
+}
 a{ 
 	text-decoration:none;
 }
@@ -97,6 +100,12 @@ a{
 }
 .pb50{
 	padding-bottom:50px;
+}
+.pl20{
+	padding-left:20px;
+}
+.pr20{
+	padding-right:20px;
 }
 .t_c{
 	text-align:center;

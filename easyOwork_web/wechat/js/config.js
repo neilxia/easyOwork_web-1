@@ -4,7 +4,7 @@
 var config = angular.module('wechat.config',[]);
 config.factory('AppConfig',function(){
     return {
-        BASE_URL:'http://localhost:8080/',
+        BASE_URL:'https://www.qinghuiyang.com/',
     }
 });
 config.factory('LocalStorage',['$window',function($window){

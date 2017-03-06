@@ -1,7 +1,7 @@
 <div class="header t_c">
 	<span class="fl"><!-- <a ui-sref="main"><i class="iconfont icon-zuo">返回</i></a> --></span>
 	通讯录
-	<span class="fr"><i class="iconfont icon-gongzuotai f18 orange-color" ui-sref="main"></i></span>
+	<span class="fr"><i class="iconfont icon-gongzuotai f20 orange-color" ui-sref="main"></i></span>
 </div>
 
 <div class="main-container" ng-controller="staffListCtrl" ng-init="init()">
@@ -40,7 +40,7 @@
 		</div>
 		 -->
 		<div class="section-content">
-			<div class="row pt10 pb10 bb1" ng-repeat="data in datalist | filter:sltname">
+			<div class="row pt10 pb10 bb1" ng-repeat="data in dispalydatalist = (datalist | filter:sltname)">
 				<div class="col-xs-2 ht40 lht40">
 					<div class="t_c" ng-class="{'imgbox':$index%3==1,'orange-imgbox':$index%3==2,'blue-imgbox':$index%3==0}">
 						<span class="white-color">{{data.name | cutlast:2}}</span>
@@ -52,11 +52,12 @@
 					<span class="block c6">{{data.position}}</span>
 				</div>
 				<div class="col-xs-7">
-					<span class="block pt5 t_r">{{data.personalPhone}} <i class="iconfont icon-dianhua orange-color"></i></span>
-					<span class="block pt5 t_r">{{data.personalEmail}} <i class="iconfont icon-youxiang orange-color"></i></span>
+					<span class="block pt5 t_r" ng-if="data.personalPhone">{{data.personalPhone}} <i class="iconfont icon-dianhua orange-color"></i></span>
+					<span class="block pt20 t_r" ng-if="data.personalEmail" href="mailto:{{data.personalEmail}}">{{data.personalEmail}} <i class="iconfont icon-youxiang orange-color"></i></span>
 				</div>
 			</div>
 		</div>
+		<div class="row t_c pt20" ng-if="dispalydatalist.length>0">共{{dispalydatalist.length}}位员工</div>
 	</div>
 	
 </div>

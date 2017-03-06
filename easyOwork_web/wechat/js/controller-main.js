@@ -2,12 +2,26 @@
  * Created by Dumin on 2016/7/21.
  */
 var app = angular.module('wechat.main',[]);
-app.controller('mainCtrl',['$rootScope','$scope','LocalStorage','employeesService',function($rootScope,$scope,LocalStorage,employeesService){
-	var openId=LocalStorage.getOpenId();
-	if(openId == null || openId == ''){
-		$rootScope.$state.go('login');
-	}
+app.controller('mainCtrl',['$rootScope','$scope','LocalStorage','employeesService','MsgService','$location',function($rootScope,$scope,LocalStorage,employeesService,MsgService,$location){
 	$scope.init = function(){
+		//LocalStorage.setOpenId('fdsklajflkdjslkafld');
+		var openId=LocalStorage.getOpenId();
+		var search = window.location.search;
+		$scope.code = '';
+		if(search != null && search.length>1){
+			var searchArray = search.substr(1).split("&");
+			if(searchArray != null && searchArray.length>0){
+				for(var i=0; i<searchArray.length;i++){
+					if(searchArray[i].indexOf("code=")==0){
+						$scope.code = searchArray[i].substr(5);
+					}
+				}
+			}
+		}
+		if(openId == null || openId == ''){
+			$rootScope.$state.go('login',{'code':$scope.code});
+			return;
+		}
 		$scope.taskInprogress = 0;
 		$scope.taskNew = 0;
 		$scope.projectTaskInprogress = 0;
