@@ -86,11 +86,11 @@
                         <td class="pl5">
                             <div class="nose-group"  ng-class="{'has-error':baseForm.name.$dirty && baseForm.name.$invalid}">
                                 <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.name.$dirty && baseForm.name.$invalid" popover="请输入部门名称" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                <input type="text" class="form-control" name="name" ng-model="theform.name"  placeholder="请输入部门名称（必填）" ng-maxlength="12" required />
+                                <input type="text" class="form-control" name="name" ng-model="theform.name"  placeholder="请输入部门名称（必填）" ng-maxlength="60" required />
                             </div>
                         </td>
                     </tr>
-                    <td class="g9">部门经理</td>
+                    <td class="g9">负责人</td>
                     <td class="pl5">
                         <div selectdepyuan yuangong="1" myselected="managerUser" selectedallarr="managerUsersallarr"></div>
                     </td>

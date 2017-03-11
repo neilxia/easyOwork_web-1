@@ -48,7 +48,7 @@ function structuremsgCtrl(){
             columns:[
                 {headerText: "部门名称", dataField: "name", width:'350'},
                 {headerText: "部门描述", dataField: "desc",width:'auto'},
-                {headerText: "部门经理", dataField: "managerName",width:'100'}
+                {headerText: "负责人", dataField: "managerName",width:'100'}
             ],
             data:[],
             itemClick:function(id,date){
