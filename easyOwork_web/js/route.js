@@ -154,7 +154,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
         .state('colleague.searchlist', {
             url: "/searchlist",
             templateUrl: 'modules/colleague/tmp/searchlist.html',
-            data: { pageTitle: '同事查询'}
+            data: { pageTitle: '企业通讯录'}
 
         })
         

@@ -22,19 +22,21 @@
     <link rel="stylesheet" href="fonts/font-awesome-4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="fonts/custom/iconfont.css">
     
+    <!-- build:css css/all-in-one.min.css -->
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/cjbase.pc.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet" />
     <link id="loadBefore" href="css/login.css" rel="stylesheet">
     <link href="css/my.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
-
+	<!-- endbuild -->
+	
     <!--angular-->
     <!--<script src="plugins/jquery/jquery-2.1.1.min.js"></script>-->
     <script src="plugins/jquery/jquery1.12.0.min.js"></script>
     <!--<script src="plugins/jquery-ui/jquery-ui.js"></script>-->
     <!--<script src="plugins/angular/angular.min.js"></script>-->
-    <script src="plugins/angular1.2.30/angular1.2.30.js"></script>
+    <script src="plugins/angular1.2.30/angular1.2.30.min.js"></script>
     <!--<script src="plugins/angular1.2.30/angular-loader.min.js"></script>-->
     <script src="plugins/ui-router/angular-ui-router.min.js"></script>
     <script src="plugins/oclazyload/dist/ocLazyLoad.min.js"></script>
@@ -58,8 +60,8 @@
     <script src="plugins/xeditable/xeditable.js"></script>
     <!--ngJsTree-->
     <link href="plugins/jsTree/style.css" rel="stylesheet">
-    <script src="plugins/jsTree/jstree.js"></script>
-    <script src="plugins/jsTree/ngJsTree.js"></script>
+    <script src="plugins/jsTree/jstree.min.js"></script>
+    <script src="plugins/jsTree/ngJsTree.min.js"></script>
     <script src="plugins/echarts.common.min.js"></script>
     <!--angular-file-upload-->
     <script src="plugins/angular-file-upload/angular-file-upload.min.js"></script>
@@ -68,7 +70,7 @@
     <script src="plugins/timelinr/jquery.timelinr-0.9.6.js"></script>
     <!--ui.bootstrap-->
 	<script src="plugins/ui-bootstrap/bootstrap.js"></script>
-	<script src="plugins/ui-bootstrap/ui-bootstrap-tpls-0.12.1.js"></script>
+	<script src="plugins/ui-bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
     <!--ngTags-->
     <!--<script src="http://cdn.bootcss.com/ng-tags-input/2.3.0/ng-tags-input.min.js"></script>-->
     <!--<link href="http://cdn.bootcss.com/ng-tags-input/2.3.0/ng-tags-input.min.css" rel="stylesheet" media="screen">-->
@@ -90,7 +92,7 @@
 
 
     <!-- angular程序脚本 -->
-
+    
     <!--<script src="js/angular-md5.js"></script>-->
 
     <!--注意看，这里的路径和上面的bootstrap都在一个文件夹里-->
@@ -110,7 +112,7 @@
 	(function() {
 	  var hm = document.createElement("script");
 	  hm.src = "https://hm.baidu.com/hm.js?389c945e23ddb70a082a290f939907b5";
-	  var s = document.getElementsByTagName("script")[0];
+	  var s = document.getElementsByTagName("script")[0]; 
 	  s.parentNode.insertBefore(hm, s);
 	})();
 	</script>
@@ -131,17 +133,23 @@
 <!--<script src="modules/demo/init.js"></script>-->
 
 <!-- Custom and plugin javascript -->
+<!-- build:js js/main.min.js -->
 <script src="js/app.js"></script>
 <script src="js/config.js"></script>
 <script src="js/servicesRest.js"></script>
 <script src="js/services.js"></script>
 <script src="js/filers.js"></script>
-<script src="js/route.js"></script>
 <script src="js/controllers.js"></script>
 <script src="js/interceptors.js"></script>
 <script src="js/inspinia.js"></script>
 <script src="js/directives.js"></script>
+<!-- endbuild -->
 
+<!-- build:js js/route.min.js -->
+<script src="js/route.js"></script>
+<!-- endbuild -->
+
+<!-- build:js js/ctr.min.js -->
 <!--login/register-->
 <script src="modules/login/ctrl/loginCtrl.js"></script>
 <script src="modules/login/init.js"></script>
@@ -247,5 +255,7 @@
 <!--tree-grid-->
 <!--<link href="plugins/tree-grid/treeGrid.css" rel="stylesheet">
 <script src="plugins/tree-grid/tree-grid-directive.js"></script>-->
+
+<!-- endbuild -->
 </body>
 </html>

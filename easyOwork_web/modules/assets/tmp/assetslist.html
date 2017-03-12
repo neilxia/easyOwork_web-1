@@ -19,7 +19,7 @@
             <!--<select class="form-control input-sm" ng-init="selectstate=''" ng-model="selectstate" ng-options="x.val as x.name for x in statelist">
             </select>-->
             <span class="form-group-sm search-group">
-                <input type="text" class="form-control wd180" ng-model="sltname" placeholder="编号/厂商/型号/姓名">
+                <input type="text" class="form-control wd180" ng-model="sltname" placeholder="编号/品牌/型号/姓名">
                 <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
             </span>
         </form>
@@ -33,7 +33,7 @@
                 <tr>
                     <th class="pl20">资产编号</th>
                     <th width="100">类别</th>
-                    <th width="100">厂商</th>
+                    <th width="100">品牌</th>
                     <th width="100">型号</th>
                     <th width="100">价格</th>
                     <th width="100">购买日期</th>
@@ -95,7 +95,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>厂商</td>
+                        <td>品牌</td>
                         <td class="pl10">
                             <div class="nose-group"  ng-class="{'has-error':baseForm.assetName.$dirty && baseForm.assetName.$invalid}">
                                 <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.assetName.$dirty && baseForm.assetName.$error.required" popover="不能为空" popover-placement="bottom" popover-trigger="mouseenter"></i>

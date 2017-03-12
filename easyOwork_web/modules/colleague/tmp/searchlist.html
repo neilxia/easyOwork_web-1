@@ -3,12 +3,12 @@
     <div class="payetilebox">
         <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" reload-route title="刷新"></a></div>
         <ul>
-            <li class="active">同事查询</li>
+            <li class="active">企业通讯录</li>
         </ul>
     </div>
     <ol class="breadbox">
         <li>工作面板</li>
-        <li class="active">同事查询</li>
+        <li class="active">企业通讯录</li>
     </ol>
     <div class="btnbox">
     <form class="f_r form-inline">
@@ -23,27 +23,25 @@
             <table class="table bbe table-hover" cellspacing="0" cellpadding="0" width="100%;">
                 <thead>
                 <tr>
-                    <th width="100"><span class="p15">姓名</span></th>
-                    <th width="50">性别</th>
-                    <th width="120">部门</th>
-                    <th width="120">职位</th>
-                    <th width="150">邮箱</th>
+                	<th width="100" class="pl20">员工编号</th>
+                    <th width="150"><span class="p15">姓名</span></th>
+                    <th width="100">性别</th>
+                    <th width="150">部门</th>
+                    <th width="150">职位</th>
+                    <th width="200">邮箱</th>
                     <th>手机号码</th>
-                    <th>员工编号</th>
-                    <th>入职日期</th>
                     <!-- <th width="160">操作</th> -->
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize | orderBy:['orgList[0].name']">
+                <tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize | orderBy:['orgList[0].name','position','name']">
+                    <td class="pl20">{{data.id}}</td>
                     <td><span class="p15">{{data.name}}</span></td>
                     <td>{{data.sex}}</td>
                     <td>{{data.orgList[0].name}}</td>
                     <td>{{data.position}}</td>
-                    <td>{{data.personalEmail}}</td>
+                    <td><a href="mailto:{{data.personalEmail}}">{{data.personalEmail}}</a></td>
                     <td>{{data.personalPhone}}</td>
-                    <td>{{data.id}}</td>
-                    <td>{{data.joiningDate}}</td>
                     <!--  
                     <td>
 	                    <div class="btn-group">
