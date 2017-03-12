@@ -75,6 +75,33 @@ function projectmydtmainlistCtrl(){
                         }
                     });
                     $scope.datadt.projectTaskDTOList = myTaskList;
+
+                    $scope.thispages1={
+                        total:$scope.datadt.projectTaskDTOList.length,
+                        pageNum:1,
+                        pageSize:10
+                    };
+                    $scope.thispages2={
+                        total:$scope.datadt.projectDocumentDTOList.length,
+                        pageNum:1,
+                        pageSize:10
+                    };
+                    $scope.thispages3={
+                        total:$scope.datadt.projectStageDTOList.length,
+                        pageNum:1,
+                        pageSize:10
+                    };
+                    $scope.thispages4={
+                        total:$scope.datadt.projectUserDTOList.length,
+                        pageNum:1,
+                        pageSize:10
+                    };
+                    $scope.thispages5={
+                        total:$scope.datadt.projectCommentDTOList.length,
+                        pageNum:1,
+                        pageSize:10
+                    };
+
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
                 }

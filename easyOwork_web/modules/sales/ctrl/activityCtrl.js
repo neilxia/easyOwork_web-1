@@ -168,6 +168,21 @@ function activitydtmainCtrl(){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                     $scope.datadt=data.body.data.campaigns[0];
+                    $scope.thispages1={
+                        total:$scope.datadt.customerList.length,
+                        pageNum:1,
+                        pageSize:10
+                    };
+                    $scope.thispages2={
+                        total:$scope.datadt.documentDTOList.length,
+                        pageNum:1,
+                        pageSize:10
+                    };
+                    $scope.thispages3={
+                        total:$scope.datadt.activityList.length,
+                        pageNum:1,
+                        pageSize:10
+                    };
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
                 }

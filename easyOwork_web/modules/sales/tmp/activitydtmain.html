@@ -43,7 +43,7 @@
                 <div tabset class="towntabbox01 towntabbox02">
                     <div tab>
                         <div tab-heading>潜在客户({{datadt.customerList.length || "0"}})</div>
-                        <div class="ind-medo_com" slim-scroll box-height="300">
+                        <div class="ind-medo_com" slim-scroll box-height="400">
                             <div class="btnbox">
                                 <button class="btn btn-default btn-sm" ng-click="addCustomerFun()">新增</button>
                                 <!--<button class="btn btn-default btn-sm" ng-click="addmodelFun()">删除</button>-->
@@ -72,10 +72,14 @@
                             </table>
 
                         </div>
+                        <div class="nose-panel-footer cf bte">
+                            <pagination ng-show="thispages1.total>thispages1.pageSize" total-items="thispages1.total"  items-per-page="thispages1.pageSize" ng-model="thispages1.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+                            <div class="g9">共 {{thispages1.total || '0'}} 条数据</div>
+                        </div>
                     </div>
                     <div tab>
                         <div tab-heading>文档({{datadt.documentDTOList.length || "0"}})</div>
-                        <div class="ind-medo_com" slim-scroll box-height="300">
+                        <div class="ind-medo_com" slim-scroll box-height="400">
                             <div class="btnbox">
                                 <button class="btn btn-default btn-sm" ng-click="addDocument()">新增</button>
                                 <!--<button class="btn btn-default btn-sm" ng-click="deleteAllDocument()">删除</button>-->
@@ -100,10 +104,14 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="nose-panel-footer cf bte">
+                            <pagination ng-show="thispages2.total>thispages2.pageSize" total-items="thispages2.total"  items-per-page="thispages2.pageSize" ng-model="thispages2.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+                            <div class="g9">共 {{thispages2.total || '0'}} 条数据</div>
+                        </div>
                     </div>
                     <div tab>
                         <div tab-heading>日程活动({{datadt.activityList.length || "0"}})</div>
-                        <div class="ind-medo_com" slim-scroll box-height="300">
+                        <div class="ind-medo_com" slim-scroll box-height="400">
                             <div class="btnbox">
                                 <button class="btn btn-default btn-sm" ng-click="addActivitylFun()">新增</button>
                                 <!--<button class="btn btn-default btn-sm" ng-click="addmodelFun()">删除</button>-->
@@ -131,6 +139,10 @@
                                 <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="nose-panel-footer cf bte">
+                            <pagination ng-show="thispages3.total>thispages3.pageSize" total-items="thispages3.total"  items-per-page="thispages3.pageSize" ng-model="thispages3.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+                            <div class="g9">共 {{thispages3.total || '0'}} 条数据</div>
                         </div>
                     </div>
                 </div>

@@ -66,36 +66,52 @@
                     <div tab>
                         <div tab-heading>任务列表({{datadt.projectTaskDTOList.length}})</div>
                         <div class="ind-medo_com" slim-scroll box-height="300">
-                            <!--<div class="btnbox">
+                            <div class="btnbox">
+                                <form class="f_r form-inline">
+                                    <div selectdepyuan yuangong="1" myselected="ygselected" selectedallarr="ygselectedallarr" size="'sm'" class="wd170 dib" title="实施人"></div>
+                                    <select class="form-control input-sm dib" ng-init="selectedStatus=''" ng-model="selectedStatus" ng-options="x.val as x.name for x in projectStatusArr">
+                                    </select>
+                                    <select class="form-control input-sm dib" ng-init="selectedStatus=''" ng-model="selectedStage" ng-options="x.projectStageName as x.projectStageName for x in datadt.projectStageDTOList">
+                                        <option value="">选择阶段</option>
+                                    </select>
+                                    <!--<span class="form-group-sm search-group">
+                                        <input type="text" class="form-control wd180" ng-model="sltname" placeholder="搜索名称">
+                                        <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
+                                    </span>-->
+                                </form>
                                 <button class="btn btn-default btn-sm" ng-click="addTask()">新增</button>
                                 <button class="btn btn-default btn-sm" ng-click="deleteAllTask()">删除</button>
-                            </div>-->
+                            </div>
                             <table class="table table-hover bbe" cellspacing="0" cellpadding="0" width="100%;">
                                 <thead>
                                 <tr>
-                                    <th class="pl20">任务描述</th>
+                                    <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
+                                    <th>任务名称</th>
                                     <th width="100">项目阶段</th>
                                     <th width="160">开始/结束时间</th>
-                                    <th width="100">实施人</th>
-                                    <th width="100">状态</th>
+                                    <th width="100">实施人列表</th>
+                                    <th width="100">任务状态</th>
                                     <th width="100">完成百分比</th>
-                                    <th width="100">操作</th>
+                                    <th width="90">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="data in datadt.projectTaskDTOList">
-                                    <td class="pl20">{{data.taskName}}</td>
+                                <tr ng-repeat="data in datadt.projectTaskDTOList | filter:{'toUserDTO':ygselected[0].name,'status':selectedStatus,'projectStageDTO':selectedStage?selectedStage:''} | startFrom: (thispages1.pageNum-1) * thispages1.pageSize | limitTo: thispages1.pageSize">
+                                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
+                                    <td>{{data.taskName}}</td>
                                     <td>{{data.projectStageDTO.projectStageName}}</td>
                                     <td>{{data.startDate}} ~ {{data.endDate}}</td>
                                     <td>{{data.toUserDTO.name}}</td>
                                     <td>{{data.status}}</td>
                                     <td>{{data.progress}}%</td>
-                                    <td>
-                                        <button ng-click="editTask(data)" class="btn btn-default btn-xs h30" title="编辑"><i class="iconfont icon-bianji"></i></button>
-                                    </td>
+                                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editTask(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deleteTask(data)"><i class="iconfont icon-del f14"></i></button></td>
                                 </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="nose-panel-footer cf bte">
+                            <pagination ng-show="thispages1.total>thispages1.pageSize" total-items="thispages1.total"  items-per-page="thispages1.pageSize" ng-model="thispages1.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+                            <div class="g9">共 {{thispages1.total || '0'}} 条数据</div>
                         </div>
                     </div>
                     <div tab>
@@ -110,9 +126,9 @@
                                 <tr>
                                     <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
                                     <th>文档名称</th>
-                                    <th>上传人员</th>
+                                    <th width="100">上传人员</th>
                                     <!--<th width="100">项目阶段</th>-->
-                                    <th width="160">操作</th>
+                                    <th width="90">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -127,7 +143,43 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="nose-panel-footer cf bte">
+                            <pagination ng-show="thispages2.total>thispages2.pageSize" total-items="thispages2.total"  items-per-page="thispages2.pageSize" ng-model="thispages2.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+                            <div class="g9">共 {{thispages2.total || '0'}} 条数据</div>
+                        </div>
                     </div>
+                    <!--<div tab>
+                        <div tab-heading>报销列表({{inquiryHandData.length}})</div>
+                        <div class="ind-medo_com" slim-scroll box-height="300">
+                            <div class="btnbox">
+                                <button class="btn btn-default btn-sm" ng-click="addmodelFun()">新增</button>
+                                <button class="btn btn-default btn-sm" ng-click="addmodelFun()">删除</button>
+                            </div>
+                            <table class="table table-hover bbe" cellspacing="0" cellpadding="0" width="100%;">
+                                <thead>
+                                <tr>
+                                    <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
+                                    <th>报销事项</th>
+                                    <th width="100">报销人员</th>
+                                    <th width="100">报销金额</th>
+                                    <th width="100">报销状态</th>
+                                    <th width="90">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
+                                    <td>用户体验设计相关文档</td>
+                                    <td><span class="orange">张小凡</span></td>
+                                    <td>￥6350.00</td>
+                                    <td>待处理</td>
+                                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editstaff(data)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="delete(data)"><i class="iconfont icon-del f14"></i></button></td>
+                                </tr>
+                                &lt;!&ndash;<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">&ndash;&gt;
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>-->
                     <div tab>
                         <div tab-heading>阶段负责人({{datadt.projectStageDTOList.length}})</div>
                         <div class="ind-medo_com" slim-scroll box-height="300">
@@ -145,6 +197,7 @@
                                     <th width="100">E-mail</th>
                                     <th width="100">部门</th>
                                     <!-- <th width="100">职位</th> -->
+                                    <th width="60">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -156,40 +209,53 @@
                                     <td>{{data.userDTO.personalEmail || '---'}}</td>
                                     <td>{{data.userDTO.orgList[0].name || '---'}}</td>
                                     <!-- <td>{{data.userDTO.roleList[0].name || '---'}}</td> -->
+                                    <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editStage(data)"><i class="iconfont icon-bianji f14"></i></button></td>
                                 </tr>
                                 <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
                                 </tbody>
                             </table>
                         </div>
+                        <div class="nose-panel-footer cf bte">
+                            <pagination ng-show="thispages3.total>thispages3.pageSize" total-items="thispages3.total"  items-per-page="thispages3.pageSize" ng-model="thispages3.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+                            <div class="g9">共 {{thispages3.total || '0'}} 条数据</div>
+                        </div>
                     </div>
                     <div tab>
                         <div tab-heading>参与人员({{datadt.projectUserDTOList.length}})</div>
                         <div class="ind-medo_com" slim-scroll box-height="300">
-<!--                            <div class="btnbox">
+                            <div class="btnbox">
                                 <button class="btn btn-default btn-sm" ng-click="addUserProject()">新增</button>
                                 <button class="btn btn-default btn-sm" ng-click="deleteAllUserProject()">删除</button>
-                            </div>-->
+                            </div>
                             <table class="table table-hover bbe" cellspacing="0" cellpadding="0" width="100%;">
                                 <thead>
                                 <tr>
-                                    <th class="pl20">姓名</th>
+                                    <th width="50" class="t_r"><input icheck type="checkbox" name="chkAll" ng-model="main.checkAll"></th>
+                                    <th>姓名</th>
                                     <th width="100">手机号码</th>
                                     <th width="100">E-mail</th>
                                     <th width="100">部门</th>
                                     <!-- <th width="100">职位</th> -->
+                                    <th width="60">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="data in datadt.projectUserDTOList">
-                                    <td class="pl20">{{data.name}}</td>
+                                    <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
+                                    <td>{{data.name}}</td>
                                     <td>{{data.personalPhone || '---'}}</td>
                                     <td>{{data.personalEmail || '---'}}</td>
                                     <td>{{data.orgList[0].name || '---'}}</td>
                                     <!-- <td>{{data.roleList[0].name || '---'}}</td> -->
+                                    <td><button class="btn btn-danger btn-xs h30" title="删除" ng-click="deleteUserProject(data)"><i class="iconfont icon-del f14"></i></button></td>
                                 </tr>
                                 <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="nose-panel-footer cf bte">
+                            <pagination ng-show="thispages4.total>thispages4.pageSize" total-items="thispages4.total"  items-per-page="thispages4.pageSize" ng-model="thispages4.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+                            <div class="g9">共 {{thispages4.total || '0'}} 条数据</div>
                         </div>
                     </div>
                     <div tab>
@@ -210,14 +276,14 @@
                                 </tr>
                             </table>
                         </div>
+                        <div class="nose-panel-footer cf bte">
+                            <pagination ng-show="thispages5.total>thispages5.pageSize" total-items="thispages5.total"  items-per-page="thispages5.pageSize" ng-model="thispages5.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+                            <div class="g9">共 {{thispages5.total || '0'}} 条数据</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-        </div>
-        <div class="nose-panel-footer cf bte">
-            <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
-            <div class="g9">共 {{thispages.total || '0'}} 条数据</div>
         </div>
     </div>
 

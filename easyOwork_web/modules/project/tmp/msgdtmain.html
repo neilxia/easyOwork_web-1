@@ -98,7 +98,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="data in datadt.projectTaskDTOList | filter:{'toUserDTO':ygselected[0].name,'status':selectedStatus,'projectStageDTO':selectedStage?selectedStage:''}">
+                                <tr ng-repeat="data in datadt.projectTaskDTOList | filter:{'toUserDTO':ygselected[0].name,'status':selectedStatus,'projectStageDTO':selectedStage?selectedStage:''} | startFrom: (thispages1.pageNum-1) * thispages1.pageSize | limitTo: thispages1.pageSize">
                                     <td class="t_r"><input icheck type="checkbox" value="{{data}}" name="chkList" ng-model="data.checked"></td>
                                     <td>{{data.taskName}}</td>
                                     <td>{{data.projectStageDTO.projectStageName}}</td>
@@ -110,6 +110,10 @@
                                 </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="nose-panel-footer cf bte">
+                            <pagination ng-show="thispages1.total>thispages1.pageSize" total-items="thispages1.total"  items-per-page="thispages1.pageSize" ng-model="thispages1.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+                            <div class="g9">共 {{thispages1.total || '0'}} 条数据</div>
                         </div>
                     </div>
                     <div tab>
@@ -140,6 +144,10 @@
                                 <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="nose-panel-footer cf bte">
+                            <pagination ng-show="thispages2.total>thispages2.pageSize" total-items="thispages2.total"  items-per-page="thispages2.pageSize" ng-model="thispages2.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+                            <div class="g9">共 {{thispages2.total || '0'}} 条数据</div>
                         </div>
                     </div>
                     <!--<div tab>
@@ -209,6 +217,10 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="nose-panel-footer cf bte">
+                            <pagination ng-show="thispages3.total>thispages3.pageSize" total-items="thispages3.total"  items-per-page="thispages3.pageSize" ng-model="thispages3.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+                            <div class="g9">共 {{thispages3.total || '0'}} 条数据</div>
+                        </div>
                     </div>
                     <div tab>
                         <div tab-heading>参与人员({{datadt.projectUserDTOList.length}})</div>
@@ -243,6 +255,10 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="nose-panel-footer cf bte">
+                            <pagination ng-show="thispages4.total>thispages4.pageSize" total-items="thispages4.total"  items-per-page="thispages4.pageSize" ng-model="thispages4.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+                            <div class="g9">共 {{thispages4.total || '0'}} 条数据</div>
+                        </div>
                     </div>
                     <div tab>
                         <div tab-heading>动态({{datadt.projectCommentDTOList.length}})</div>
@@ -262,15 +278,16 @@
                                 </tr>
                             </table>
                         </div>
+                        <div class="nose-panel-footer cf bte">
+                            <pagination ng-show="thispages5.total>thispages5.pageSize" total-items="thispages5.total"  items-per-page="thispages5.pageSize" ng-model="thispages5.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+                            <div class="g9">共 {{thispages5.total || '0'}} 条数据</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
         </div>
-        <div class="nose-panel-footer cf bte">
-            <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
-            <div class="g9">共 {{thispages.total || '0'}} 条数据</div>
-        </div>
+
     </div>
 
 

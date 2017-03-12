@@ -202,6 +202,31 @@ function assetsdtmainmsgCtrl(){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                     $scope.datadt=data.body.data.sales[0];
+                    $scope.thispages1={
+                        total:$scope.datadt.productList.length,
+                        pageNum:1,
+                        pageSize:10
+                    };
+                    $scope.thispages2={
+                        total:$scope.datadt.activityList.length,
+                        pageNum:1,
+                        pageSize:10
+                    };
+                    $scope.thispages3={
+                        total:$scope.datadt.rivalList.length,
+                        pageNum:1,
+                        pageSize:10
+                    };
+                    $scope.thispages4={
+                        total:$scope.datadt.contractDTOList.length,
+                        pageNum:1,
+                        pageSize:10
+                    };
+                    $scope.thispages5={
+                        total:$scope.datadt.documentDTOList.length,
+                        pageNum:1,
+                        pageSize:10
+                    };
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
                 }

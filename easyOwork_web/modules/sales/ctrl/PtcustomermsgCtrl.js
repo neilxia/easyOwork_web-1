@@ -206,6 +206,16 @@ function PtcustomerdtmainmsgCtrl(){
                 var sts=data.body.status;
                 if(sts.statusCode==0){
                     $scope.datadt=data.body.data.customers[0];
+                    $scope.thispages1={
+                        total:$scope.datadt.documentList.length,
+                        pageNum:1,
+                        pageSize:10
+                    };
+                    $scope.thispages2={
+                        total:$scope.datadt.activityList.length,
+                        pageNum:1,
+                        pageSize:10
+                    };
                 }else{
                     MsgService.tomsg(data.body.status.errorDesc);
                 }

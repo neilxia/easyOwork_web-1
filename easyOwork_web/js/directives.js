@@ -327,8 +327,8 @@ function slimScroll($timeout){
                     height: scope.boxHeight,
                     alwaysVisible: true,
                     position : 'right',
-                    size: '4px',
-                    color: '#e5e5e5',
+                    size: '6px',
+                    color: '#666',
                     railOpacity: 0.9
                 });
 
