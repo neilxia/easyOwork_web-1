@@ -319,6 +319,7 @@ function slimScroll($timeout){
     return {
         restrict: 'A',
         scope: {
+            options:'=',
             boxHeight: '@'
         },
         link: function(scope, element) {
@@ -332,7 +333,7 @@ function slimScroll($timeout){
                     railOpacity: 0.9
                 });
 
-            });
+            },300);
         }
     };
 }
