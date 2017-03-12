@@ -78,7 +78,7 @@
                             <div class="nose-group" ng-class="{'has-error':baseForm.content.$dirty && baseForm.content.$invalid}">
                                 <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$invalid" popover="请输入公告详情" popover-placement="bottom" popover-trigger="mouseenter"></i>
                                 <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.content.$dirty && baseForm.content.$error.maxlength" popover="不大于200字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
-                                <textarea class="form-control" rows="8" name="content" placeholder="请输入公告详情，不大于200字" ng-maxlength="200" ng-model="notices.content" required></textarea>
+                                <textarea class="form-control" rows="8" name="content" placeholder="请输入公告详情，不大于2000字" ng-maxlength="2000" ng-model="notices.content" required></textarea>
                             </div>
 
                         </td>

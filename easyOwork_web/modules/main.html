@@ -198,10 +198,11 @@
                         <div class="panel-heading poi" ui-sref="notice.view"><a class="f_r"><i class="iconfont icon-right f14"></i></a><span class="f16">公告</span></div>
                         <div class="pl15 pr5">
                             <ul class="ind-notice_com pr10" slim-scroll box-height="203" >
-                                <li ng-repeat="data in inquiryAnnouncementsData" ui-sref="notice.view({data:data})">
+                                <li ui-sref="notice.view({data:inquiryAnnouncementsData[0]})"  ng-if="inquiryAnnouncementsData.length>0">
                                     <a>
-                                        <div class="h20 ovh">{{data.name}}</div>
-                                        <div class="g9 mt3 f12"><span class="f_r">{{data.announcementDate}}</span>{{data.createBy}}</div>
+                                        <div class="h20 ovh">{{inquiryAnnouncementsData[0].name}}</div>
+                                        <div class="g9 mt3 f12"><span class="f_r">{{inquiryAnnouncementsData[0].announcementDate}}</span>{{inquiryAnnouncementsData[0].createBy}}</div>
+                                        <div class="ovh">{{inquiryAnnouncementsData[0].content}}</div>
                                     </a>
                                 </li>
                                 <!--<li>

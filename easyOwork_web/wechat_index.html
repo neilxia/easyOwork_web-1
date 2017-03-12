@@ -9,19 +9,21 @@
 <meta name="author" content="成都青辉阳科技有限公司">
 <meta name="description" content="青辉阳科技为企业提供全角色工作平台, 企业只需注册成为工作平台用户即可使用丰富的企业管理功能(考勤, 员工薪酬, 任务管理, 工作报告, 招聘, 项目管理, 客户关系管理, 部门统筹分析, 企业决策分析), 产品与微信深度融合, 您可在微信端完成相关工作, 无需额外下载APP">
 <title>青辉阳-企业工作平台</title>
+<!-- build:css wechat/css/all-in-one.min.css -->
+<link rel="stylesheet" href="./wechat/css/core.css">
+<!-- endbuild -->
 <link rel="stylesheet" href="./plugins/ui-bootstrap/bootstrap.css">
 <link href="./plugins/angular-notify/angular-notify.min.css" rel="stylesheet">
 <link href="./plugins/iCheck/custom.css" rel="stylesheet">
 <link rel="stylesheet" href="./wechat/font/iconfont.css">
-<link rel="stylesheet" href="./wechat/css/core.css">
 
 <script src="./plugins/jquery/jquery1.12.0.min.js"></script>
 <script src="./plugins/ui-bootstrap/bootstrap.js"></script>
-<script src="./plugins/angular1.2.30/angular1.2.30.js"></script>
+<script src="./plugins/angular1.2.30/angular1.2.30.min.js"></script>
 <script src="./plugins/ui-router/angular-ui-router.min.js"></script>
 <script src="./plugins/oclazyload/dist/ocLazyLoad.min.js"></script>
 <script src="./plugins/ui-bootstrap/bootstrap.js"></script>
-<script src="./plugins/ui-bootstrap/ui-bootstrap-tpls-0.12.1.js"></script>
+<script src="./plugins/ui-bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
 <script src="./plugins/angular-notify/angular-notify.min.js"></script>
 <script src="./plugins/angular/angular-cookies.min.js"></script>
 
@@ -29,13 +31,21 @@
 
 <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript"></script>
 
+<!-- build:js wechat/js/route.min.js -->
+<script src="./wechat/js/route.js"></script>
+<!-- endbuild -->
+
+<!-- build:js wechat/js/main.min.js -->
 <script src="./wechat/js/app.js"></script>
 <script src="./wechat/js/config.js"></script>
-<script src="./wechat/js/route.js"></script>
 <script src="./wechat/js/directives.js"></script>
 <script src="./wechat/js/interceptors.js"></script>
 <script src="./wechat/js/filters.js"></script>
 <script src="./wechat/js/servicesRest.js"></script>
+<script src="./wechat/js/service.js"></script>
+<!-- endbuild -->
+
+<!-- build:js wechat/js/ctr.min.js -->
 <script src="./wechat/js/controller-main.js"></script>
 <script src="./wechat/js/controller-login.js"></script>
 <script src="./wechat/js/controller-logout.js"></script>
@@ -47,7 +57,7 @@
 <script src="./wechat/js/controller-projecttask.js"></script>
 <script src="./wechat/js/controller-myinfo.js"></script>
 <script src="./wechat/js/controller-jssdktest.js"></script>
-<script src="./wechat/js/service.js"></script>
+<!-- endbuild -->
 
 <!--[if IE 8]>
 <style>

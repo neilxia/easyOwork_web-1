@@ -143,12 +143,12 @@ app.factory('Common', ['$q','$modal','RecruitFlowService',
                     //windowClass: "confirmModal",// 自定义modal上级div的class
                     size : 'sm', //大小配置
                     resolve : {
-                        comdata : function(){
+                        data : function(){
                             return {modalContent: modalContent,modalTitle: modalTitle};//surgeonSug: $scope.surgeonSug,
                         }
                     }
                 });
-                function ConfirmCtrl($scope,$modalInstance,comdata){
+                function ConfirmCtrl($scope,$modalInstance,data){
                     $scope.iconbox=data.modalTitle;
                     $scope.content=data.modalContent;
                     $scope.ok = function() {

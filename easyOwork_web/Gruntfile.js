@@ -39,10 +39,15 @@ module.exports = function (grunt) {
 	        files: [
 	          {expand: true, cwd: '.', src: ['index.html','market/**/*.*'], dest: 'dist'}
 	        ]
+        },
+        wechat: {
+	        files: [
+	          {expand: true, cwd: '.', src: ['wechat_index.html','wechat/**/*.*'], dest: 'dist'}
+	        ]
         }
       },
       useminPrepare : {
-          build : {
+          prod : {
               files : [{
                       src : 'dist/ind.html'
                   }
@@ -54,6 +59,13 @@ module.exports = function (grunt) {
                       src : 'dist/index.html'
                   }
               ]
+          },
+          wechat : {
+              files : [
+                  {
+                      src : 'dist/wechat_index.html'
+                  }
+              ]
           }
       },
       // 文件合并
@@ -62,41 +74,99 @@ module.exports = function (grunt) {
           separator: ';',
           stripBanners: true
         },
-        js:{
+        prod_route:{
             src: [
-              "js/*.js","moduless/**/*.js"
+              "js/route.js"
             ],
-            dest: "dist/js/all-in-one.js"
+            dest: "dist/js/route.js"
         },
-        css:{
+        prod_main:{
+            src: [
+              "js/app.js","js/config.js","js/servicesRest.js","js/services.js","js/filers.js","js/controllers.js","js/interceptors.js","js/inspinia.js","js/directives.js"
+            ],
+            dest: "dist/js/main.js"
+        },
+        prod_ctr:{
+            src: [
+              "modules/**/*.js"
+            ],
+            dest: "dist/js/ctr.js"
+        },
+        market_route:{
+            src: [
+              "market/js/route.js"
+            ],
+            dest: "dist/market/js/route.js"
+        },
+        market_main:{
+            src: [
+              "market/js/main.js","market/js/app.js","market/config.js","market/directives.js","market/service.js"
+            ],
+            dest: "dist/market/js/main.js"
+        },
+        market_ctr:{
+            src: [
+              "market/js/*.js","!market/js/route.js","!market/js/main.js","!market/js/app.js","!market/config.js","!market/directives.js","!market/service.js"
+            ],
+            dest: "dist/market/js/ctr.js"
+        },
+        wechat_route:{
+            src: [
+              "wechat/js/route.js"
+            ],
+            dest: "dist/wechat/js/route.js"
+        },
+        wechat_main:{
+            src: [
+              "wechat/js/app.js","wechat/js/config.js","wechat/js/directives.js","wechat/js/service.js","wechat/js/interceptors.js","wechat/js/filters.js","wechat/js/servicesRest.js"
+            ],
+            dest: "dist/wechat/js/main.js"
+        },
+        wechat_ctr:{
+            src: [
+              "wechat/js/*.js","!wechat/js/route.js","!wechat/js/app.js","!wechat/js/config.js","!wechat/js/directives.js","!wechat/js/service.js","!wechat/js/interceptors.js","!wechat/js/filters.js","!wechat/js/servicesRest.js"
+            ],
+            dest: "dist/wechat/js/ctr.js"
+        },
+        prod_css:{
           src: [
-            "css/*.css"
+            "css/main.css","css/my.css","css/login.css","css/common.css","css/cjbase.pc.css","css/animate.css",
           ],
           dest: "dist/css/all-in-one.css"
-        }
+        },
+        market_css:{
+            src: [
+              "market/css/core.css",
+            ],
+            dest: "dist/market/css/all-in-one.css"
+         },
+         wechat_css:{
+             src: [
+               "wechat/css/core.css",
+             ],
+             dest: "dist/wechat/css/all-in-one.css"
+           }
       },
   
       //压缩JS
       uglify: {
-        prod: {  
+    	generated: { 
+    	  options: {
+	          mangle: false //不混淆变量名
+	      },
           files: [{
               expand: true,
               cwd: 'dist',
-              src: ['js/*.js','!js/route.js','!js/interceptors.js'],
-              dest: 'dist'
-          },
-          {
-              expand: true,
-              cwd: 'dist',
-              src: ['modules/**/*.js','!modules/login/ctrl/loginCtrl.js'],
-              dest: 'dist'
+              src: ['js/ctr.js','js/route.js','js/main.js','market/js/ctr.js','market/js/route.js','market/js/main.js','wechat/js/ctr.js','wechat/js/route.js','wechat/js/main.js'],
+              dest: 'dist',
+              ext: '.min.js'
           }]
         }
       },
   
       //压缩CSS
       cssmin: {
-        prod: {
+    	generated: {
           options: {
             report: 'gzip'
           },
@@ -104,8 +174,9 @@ module.exports = function (grunt) {
             {
               expand: true,
               cwd: 'dist',
-              src: ['css/*.css'],
-              dest: 'dist'
+              src: ['css/all-in-one.css','market/css/all-in-one.css','wechat/css/all-in-one.css'],
+              dest: 'dist',
+              ext: '.min.css'
             }
           ]
         }
@@ -113,20 +184,38 @@ module.exports = function (grunt) {
   
       //压缩图片
       imagemin: {
-        prod: {
-          options: {
-            optimizationLevel: 7,
-            pngquant: true
+          prod: {
+            options: {
+              optimizationLevel: 7,
+              pngquant: true
+           },
+           files: [
+             {expand: true, cwd: 'images', src: ['*.{png,jpg,jpeg,gif,webp,svg}'], dest: 'dist/images'}
+           ]
          },
-         files: [
-           {expand: true, cwd: 'images', src: ['*.{png,jpg,jpeg,gif,webp,svg}'], dest: 'dist/images'}
-         ]
-       }
-     },
+         market: {
+             options: {
+               optimizationLevel: 7,
+               pngquant: true
+            },
+            files: [
+              {expand: true, cwd: 'market/images', src: ['*.{png,jpg,jpeg,gif,webp,svg}'], dest: 'dist/market/images'}
+            ]
+          },
+          wechat: {
+              options: {
+                optimizationLevel: 7,
+                pngquant: true
+             },
+             files: [
+               {expand: true, cwd: 'wechat/images', src: ['*.{png,jpg,jpeg,gif,webp,svg}'], dest: 'dist/wechat/images'}
+             ]
+           }
+       },
  
      // 处理html中css、js 引入合并问题
      usemin: {
-       html: ['dist/ind.html','dist/index.html']
+       html: ['dist/ind.html','dist/index.html','dist/wechat_index.html']
      },
  
      //压缩HTML
@@ -152,13 +241,19 @@ module.exports = function (grunt) {
      filerev : {
          build : {
              files : [{
-                     src : ['dist/css/*.css','dist/js/*.js','dist/modules/**/*.js']
+                     src : ['dist/css/all-in-one.min.css','dist/js/main.min.js','dist/js/route.min.js','dist/js/ctr.min.js']
                  }
              ]
          },
          market : {
              files : [{
-                     src : ['dist/market/css/*.css','dist/market/js/*.js']
+                     src : ['dist/market/css/all-in-one.min.css','dist/market/js/main.min.js','dist/market/js/route.min.js','dist/market/js/ctr.min.js']
+                 }
+             ]
+         },
+         wechat : {
+             files : [{
+                     src : ['dist/wechat/css/all-in-one.min.css','dist/wechat/js/main.min.js','dist/wechat/js/route.min.js','dist/wechat/js/ctr.min.js']
                  }
              ]
          }
@@ -170,11 +265,11 @@ module.exports = function (grunt) {
    grunt.registerTask('prod', [
      'clean',                 //清除文件
      'copy',                 //复制文件
-     //'concat',               //合并文件
-     'useminPrepare',
+     'concat',               //合并文件
      'imagemin',             //图片压缩
-     'cssmin',               //CSS压缩
-     //'uglify',             //JS压缩
+     'cssmin:generated',               //CSS压缩
+     'uglify:generated',             //JS压缩
+     'useminPrepare',
      'filerev',				//Hash文件名
      'usemin'               //修改引用
      //'htmlmin'               //HTML压缩
