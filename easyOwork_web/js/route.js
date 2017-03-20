@@ -27,6 +27,35 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                         {
                             // flexslider
                             files:['plugins/flexslider/flexslider.css','plugins/flexslider/jquery.flexslider.js']
+                        },
+                        {
+                            //MetsiMenu
+                            files:['plugins/metisMenu/jquery.metisMenu.js']
+                        },{
+                            //SlimScroll
+                            files:['plugins/slimscroll/jquery.slimscroll.min.js']
+                        },{
+                            //iCheck
+                            files:['plugins/iCheck/custom.css','plugins/iCheck/icheck.min.js']
+                        },{
+                            files:['plugins/xeditable/xeditable.css']
+                        },{
+                            //ngJsTree
+                            name: 'ngJsTree',
+                            files:['plugins/jsTree/style.css','plugins/jsTree/ngJsTree.js','plugins/echarts.common.min.js']
+                        },{
+                            //angular-file-upload
+                            name:'angularFileUpload',
+                            files:['plugins/angular-file-upload/angular-file-upload.min.js']
+                        },{
+                            //timelinr
+                            files:['plugins/timelinr/css/style.css','plugins/timelinr/jquery.timelinr-0.9.6.js']
+                        },{
+                            //bootstrap
+                            files:['plugins/ui-bootstrap/bootstrap.js']
+                        },{
+                            //inspinia
+                            files:['js/inspinia.js']
                         }
                     ])
 
