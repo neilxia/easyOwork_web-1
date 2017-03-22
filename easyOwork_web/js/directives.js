@@ -343,7 +343,7 @@ function multipleEmail(){
         require: "ngModel",
         link: function (scope, element, attr, ngModel) {
             if (ngModel) {
-                var mobileRegexp = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+                var mobileRegexp = /^(0|86|17951)?(13[0-9]|15[012356789]|17[345678]|18[0-9]|14[57])[0-9]{8}$/;
                 var emailsRegexp = /^([a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*[;；]?)+$/i;
             }
             var customValidator = function (value) {

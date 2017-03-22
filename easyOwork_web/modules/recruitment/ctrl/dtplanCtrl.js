@@ -461,11 +461,13 @@ function dtresumemsgCtrl(){
                     var filePath = LocalStorage.getObject('userinfo').entId+'/recruit/resume/'+noseService.randomWord(false, 32)+'_';
                     var key= filePath+file.name;
                     var promise = OSSService.uploadFile(filePath,file);
+                    debugger;
                     promise.success(function (data, status, headers, config) {
                         var urlPromise = OSSService.getUrl({'body':{'key':key}});
                         urlPromise.success(function (data, status, headers, config) {
                             var sts=data.body.status;
                             if(sts.statusCode==0){
+                            	debugger;
                                 $scope.modalform.resumeUrl = data.body.data.url;
                                 $scope.modalform.resumeName = file.name;
                             }
@@ -501,6 +503,34 @@ function dtresumemsgCtrl(){
                 $scope.modalform=row;
                 //$scope.modalform.sponsor=[row.sponsor];
                 $scope.modalform.sponsorarr=[[],[row.sponsor]];
+                var resumeUploader = $scope.resumeUploader = new FileUploader({
+                    url: '', //不使用默认URL上传
+                    queueLimit: 1,     //文件个数
+                    removeAfterUpload: true,   //上传后删除文件
+                    autoUpload:false
+                });
+                resumeUploader.onAfterAddingFile = function(fileItem){
+                	resumeUploader.cancelAll();
+                    var file = $("#resumeFile").get(0).files[0];
+                    var filePath = LocalStorage.getObject('userinfo').entId+'/recruit/resume/'+noseService.randomWord(false, 32)+'_';
+                    var key= filePath+file.name;
+                    var promise = OSSService.uploadFile(filePath,file);
+                    debugger;
+                    promise.success(function (data, status, headers, config) {
+                        var urlPromise = OSSService.getUrl({'body':{'key':key}});
+                        urlPromise.success(function (data, status, headers, config) {
+                            var sts=data.body.status;
+                            if(sts.statusCode==0){
+                            	debugger;
+                                $scope.modalform.resumeUrl = data.body.data.url;
+                                $scope.modalform.resumeName = file.name;
+                            }
+                        });
+                    });
+                    promise.error(function (data, status, headers, config) {
+                        MsgService.tomsg('简历上传失败');
+                    });
+                };
                 //[[],[row.userDTO]]
                 //提交增加
                 $scope.ok = function (state) {
