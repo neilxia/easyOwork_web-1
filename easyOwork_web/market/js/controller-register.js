@@ -27,6 +27,7 @@ app.controller('registerCtrl',['$rootScope','$scope','$http','commonService','Ap
 		else{
 			var mobileRegexp = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
 	        var emailsRegexp = /^([a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*[;；]?)+$/i;
+
 	        var validity = (mobileRegexp.test(value) || emailsRegexp.test(value));
 	        if(!validity){
 	        	$scope.userError = '请输入正确的电话号码或电子邮件';

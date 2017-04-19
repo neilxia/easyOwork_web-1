@@ -1,42 +1,61 @@
 <div id="header" class="g-hd z-top" ng-controller="headerCtrl"
 	ng-init="init()">
-		<div class="gutter">
-			<h1 class="hd-logo">
-				<a><img src="./market/image/logo.png" alt="青辉阳"></a>
-			</h1>
-			<!-- 
-			<ul class="hd-nav evcat" id="nav" data-evcat="home-nav">
-				<li class="itm text"><a ui-sref="product">产品<span></span></a></li>
-				<li class="itm text"><a ui-sref="price">价格及购买<span></span></a></li>
-				<li class="itm text"><a ui-sref="customize">定制服务<span></span></a></li>
-				<li class="itm text"><a>帮助<span></span></a></li>
-				<li class="itm text"><a ui-sref="register">企业注册<span></span></a></li>
-				<li class="itm text" ng-show="!userinfo.name"><a ui-sref="login">登录<span></span></a></li>
-				<li class="itm text" ng-show="userinfo.name"><a ng-click="logout()">{{userinfo.name}}(退出)</a></li>
-				<li class="itm"><a id="topReg" class="u-btn u-btn-solid"
-					href="/ind.html#/index" target="_blank" hidefocus="true"
-					data-evact="to-register">青辉阳工作</a></li>
-			</ul>
-			 -->
-			 <ul class="nav-list">
-				<li><a ui-sref="product">产品<span></span></a></li>
-				<li><a ui-sref="price">价格<span></span></a></li>
-				<li><a ui-sref="customize">定制<span></span></a></li>
-				<li><a ui-sref="register">注册<span></span></a></li>
-				<li ng-show="!userinfo.name"><a ui-sref="login">登录<span></span></a></li>
-				<li ng-show="userinfo.name">
-					<a class="addvalue">{{userinfo.name}}({{userinfo.entName}})<i class="icon iconfont">&#xe60d;</i></a>
-					<div class="subnav notshow" ng-click="logout()">
-						<div><a>退出</a></div>
-					</div>
+		<nav class="gutter navbar navbar-default" role="navigation" style="border: none;">
+			<!--<div class="container-fluid"> -->
+				<div class="navbar-header">
+			 
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse">
+					 	<span class="sr-only">切换导航</span>
+					 	<span class="icon-bar"></span>
+					 	<span class="icon-bar"></span>
+					 	<span class="icon-bar"></span>
+					 	<span class="icon-bar"></span>
+					 	<span class="icon-bar"></span>
+					</button>
+			 <!--<h1 class="hd-logo">-->
+					<a ui-sref="index" class="hd-logo navbar-brand"><img src="./market/image/logo.png" class="img-responsive" alt="青辉阳"></a>
+			<!--</h1>-->
+			 	</div>
+			 
+					 <div class="collapse navbar-collapse" id="example-navbar-collapse">
+					 <ul class="nav navbar-nav navbar-right">
+					 	<!--nav-list-->
+						<li class="u-li"><a ui-sref="product" class="active">产品<span></span></a></li>
+						<li class="u-li"><a ui-sref="price">价格<span></span></a></li>
+						<li class="u-li"><a ui-sref="customize">定制<span></span></a></li>
+						<li class="u-li"><a ui-sref="register">注册<span></span></a></li>
+						<li ng-show="!userinfo.name" class="u-li"><a ui-sref="login">登录<span></span></a></li>
+						<li ng-show="userinfo.name" class="u-li">
+							<a class="addvalue">{{userinfo.name}}({{userinfo.entName}})<i class="icon iconfont">&#xe60d;</i></a>
+							<div class="subnav notshow" ng-click="logout()">
+								<div><a>退出</a></div>
+							</div>
+							
+						</li>
+						<li class="u-lifi"><a id="topReg" class="u-btn u-btn-solid" style="padding:10px" ng-click="openQiyiWork()"
+							hidefocus="true"
+							data-evact="to-register">e之助工作平台</a></li>
+					</ul>
 					
-				</li>
-				<li><a id="topReg" class="u-btn u-btn-solid" style="padding:10px" ng-click="openQiyiWork()"
-					hidefocus="true"
-					data-evact="to-register">e之助工作平台</a></li>
-			</ul>
-		</div>
+					</div>
+			<!--</div>-->
+		</nav>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script type="text/javascript">
 	$('.subnav').mouseover(function(){
 		$('.subnav').removeClass('notshow');

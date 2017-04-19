@@ -7,7 +7,7 @@
 			
 			<form class="form-horizontal" role="form" ng-show="verifyStep">
 				<div class="form-group" style="padding-bottom:30px">
-					<div class="col-xs-offset-3 col-xs-2 findpwd-step c_o"><i class="iconfont icon-one "></i><span >身份验证</span></div>
+					<div class="col-xs-offset-1 col-xs-2 findpwd-step c_o"><i class="iconfont icon-one "></i><span >身份验证</span></div>
 					<div class="col-xs-1 findpwd-step c_o"><i class="iconfont icon-jiantou "></i></div>
 					<div class="col-xs-2 findpwd-step "><span ><i class="iconfont icon-two "></i>重置密码</span></div>
 					<div class="col-xs-1 findpwd-step "><i class="iconfont icon-jiantou "></i></div>
@@ -23,7 +23,7 @@
 					<div class="col-sm-offset-3 col-sm-2">
 						<input type="password" ng-model="form.verificationCode" placeholder="验证码" ng-change="validateVerificationCode()" class="form-control">
 					</div>
-					<button type="button" class="col-sm-2 btn btn-primary ml10 wd140" get-code ng-disabled="userError||userError==undefined" ng-click="sendMSG()">获取验证码</button>
+					<button type="button" class="col-sm-2 btn btn-primary ml10 wd140 checkBtn" get-code ng-disabled="userError||userError==undefined" ng-click="sendMSG()">获取验证码</button>
 					<span class="col-sm-5 control-label input-error" style="text-align:left">{{verificationError}}</span>
 					
 				</div>

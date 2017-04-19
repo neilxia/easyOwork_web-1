@@ -28,7 +28,7 @@
 						<input type="password" ng-model="form.verificationCode" placeholder="验证码" ng-change="validateVerificationCode()" class="form-control">
 					</div>
 					<div class="col-sm-2">
-						<button type="button" class="btn btn-primary ml10 wd140" get-code ng-disabled="userError||userError == undefined" ng-click="sendMSG()">获取验证码</button>
+						<button type="button" class="btn btn-primary ml10 wd140 checkBtnRe" get-code ng-disabled="userError||userError == undefined" ng-click="sendMSG()">获取验证码</button>
 					</div>
 					<span class="col-sm-4 control-label input-error" style="text-align:left">{{verificationError}}</span>
 				</div>

@@ -4,7 +4,9 @@
 var config = angular.module('market.config',[]);
 config.factory('AppConfig',function(){
     return {
-        BASE_URL:'https://www.qinghuiyang.com/',
+        // BASE_URL:'https://www.qinghuiyang.com/',
+        BASE_URL:'http://120.76.96.199/',
+
     }
 });
 config.factory('LocalStorage',['$window',function($window){
