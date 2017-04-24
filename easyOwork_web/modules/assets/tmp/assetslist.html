@@ -36,10 +36,12 @@
                     <th width="100">品牌</th>
                     <th width="100">型号</th>
                     <th width="100">价格</th>
+                    <th width="100">数量</th>
                     <th width="100">购买日期</th>
                     <th width="100">使用者</th>
                     <th width="100">状态</th>
                     <th width="125">操作</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -49,6 +51,7 @@
                     <td>{{data.assetName}}</td>
                     <td>{{data.assetModel}}</td>
                     <td><span ng-if="data.price">￥{{data.price}}</span></td>
+                    <td><span>{{data.price}}</span>
                     <td>{{data.startDate}}</td>
                     <td><span>{{data.userDTO.name || '---'}}</span></td>
                     <td><span>{{data.userDTO.name?'已分配':'未分配'}}</span></td>
@@ -62,6 +65,10 @@
             <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
             <div class="g9">共 {{thispages.total || '0'}} 条数据</div>
         </div>
+        <div class="modal-content" ng-if="barTrue">
+            <button type="button" class="btn btn-danger wd80" ng-click="addmodelFun(data)">分配对象</button>
+        </div>
+        <!-- <div ng-click="blinkObj()">点我</div> -->
     </div>
 
 
@@ -146,6 +153,9 @@
                 <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
                 <button type="submit" class="btn btn-primary wd80">确定</button>
             </div>
+                
+            </div>
+
         </form>
     </div>
 </script>

@@ -11,6 +11,10 @@ function assetslistCtrl(){
             pageNum:1,
             pageSize:10
         };
+        // $scope.barTrue=false;
+        // $scope.blinkObj=function(){
+        //     this.barTrue = !this.barTrue;
+        // }
 /*        $scope.statelist=[
             {name:'全部状态',val:''},
             {name:'已分配',val:'NORMAL'},

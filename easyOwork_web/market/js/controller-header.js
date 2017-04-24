@@ -7,7 +7,17 @@ app.controller('headerCtrl',['$rootScope','$scope','LocalStorage','commonService
 	$scope.init = function(){
 		$rootScope.userinfo = LocalStorage.getObject("userinfo");
 	}
-	
+	$scope.myShow = false;
+	$scope.changeMyshow = function(){
+		this.myShow = !this.myShow;
+	}
+	// $scope.hideThisNav = function(){
+	// 	$(".hideThisNav").css({"display":"none"});
+	// }
+	$scope.hideThisNav = function(){
+		$(".hideThisNav").removeClass("in");
+	}
+
 	$scope.openQiyiWork = function(){
 		if($rootScope.userinfo==null||$rootScope.userinfo.name==null){
 			$rootScope.$state.go('login');
@@ -44,6 +54,7 @@ app.controller('headerCtrl',['$rootScope','$scope','LocalStorage','commonService
             promise.error(function(data, status, headers, config){
             	$rootScope.loading = false;
             });
+
         }
 		
 }]);
