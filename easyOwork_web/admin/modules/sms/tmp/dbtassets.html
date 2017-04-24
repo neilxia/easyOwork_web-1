@@ -1,0 +1,88 @@
+<div id="page-wrapper" ng-controller="dbtassetsCtrl" ng-init="initFun()">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="initFun()" title="刷新"></a></div>
+        <ul>
+            <li class="active">分配资产</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>工作面板</li>
+        <li>资产管理</li>
+        <li class="active">分配资产</li>
+    </ol>
+    <div class="btnbox">
+        <form class="f_r form-inline">
+            <select class="form-control input-sm" ng-model="selectclass" ng-options="x.name as x.name for x in listClass">
+                <option value=''>全部类型</option>
+            </select>
+            <span class="form-group-sm search-group">
+                <input type="text" class="form-control wd180" ng-model="sltname" placeholder="搜索关键词">
+                <span class="searchbtn"><i class="iconfont icon-sousuo f18"></i></span>
+            </span>
+        </form>
+        <!--<button class="btn btn-default btn-sm" ng-click="addmodelFun()">分配资产</button>-->
+        <!--<button class="btn btn-default btn-sm" ng-click="deleteAll()">删除</button>-->
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
+                <thead>
+                <tr>
+                    <th class="pl20">资产编号</th>
+                    <th width="100">类别</th>
+                    <th width="100">品牌</th>
+                    <th width="100">型号</th>
+                    <th width="100">状态</th>
+                    <th width="90">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="data in datalist | filter:{'assetType':selectclass==null?'':selectclass,'assetName':sltname} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                    <td class="pl20"><a ui-sref="assets.assetsview({'data':data})" class="a_prime">{{data.id}}</a></td>
+                    <td>{{data.assetType}}</td>
+                    <td>{{data.assetName}}</td>
+                    <td>{{data.assetModel}}</td>
+                    <td><span>{{data.userDTO.name?'已分配':'未分配'}}</span></td>
+                    <td><button class="btn btn-default btn-xs h30" title="分配" ng-click="addmodelFun(data)"><i class="iconfont icon-fenpeizichanpsd f14"></i></button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="nose-panel-footer cf bte">
+            <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+            <div class="g9">共 {{thispages.total || '0'}} 条数据</div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
+
+<!--模板-->
+<script type="text/ng-template" id="addmodel.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">选择分配人</div>
+        </div>
+        <!--{{baseForm.$valid}}-->
+        <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
+                    <tr>
+                        <td width="60">选择员工</td>
+                        <td class="pl10">
+                            <div selectdepyuan yuangong="1" myselected="modalform.userDTO" selectedallarr="modalform.selectedallarr"></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary wd80">确定</button>
+            </div>
+        </form>
+    </div>
+</script>

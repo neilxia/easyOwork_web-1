@@ -1,0 +1,97 @@
+<div id="page-wrapper" ng-controller="emaillistCtrl" ng-init="initFun()">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="initFun()" title="刷新"></a></div>
+        <ul>
+            <li class="active">邮件模板</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>邮件营销</li>
+        <li class="active">邮件模板</li>
+    </ol>
+    <div class="btnbox">
+        <button class="btn btn-default btn-sm" ng-click="addmodelFun()">新增邮件模板</button>
+        <!--<button class="btn btn-default btn-sm" ng-click="deleteAll()">删除</button>-->
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
+                <thead>
+                <tr>
+                    <th width="200" class="pl20">模板名称</th>
+                    <th width="100">主题</th>
+                    <th>内容</th>
+                    <th width="125">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="data in datalist |  filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                    <td class="pl20">{{data.name}}</td>
+                    <td>{{data.subject}}</td>
+                    <td>{{data.content}}</td>
+                    <td><button class="btn btn-danger ml5 btn-xs h30" title="修改" ng-click="addmodelFun()"><i class="iconfont icon-bianji f14"></i></button></td>
+                </tr>
+                <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
+                </tbody>
+            </table>
+        </div>
+        <div class="nose-panel-footer cf bte">
+            <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+            <div class="g9">共 {{thispages.total || '0'}} 条数据</div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
+
+<script type="text/ng-template" id="addmodel.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">{{thename}}邮件模板</div>
+        </div>
+        <!--{{baseForm.$valid}}-->
+        <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
+                    <tr>
+                        <td width="60">模板名称</td>
+                        <td class="pl10">
+                            <div class="nose-group"  ng-class="{'has-error':baseForm.customerName.$dirty && baseForm.customerName.$invalid}">
+                                <input type="text" class="form-control" name="customerName" ng-model="modalform.customerName"  placeholder="输入姓名" ng-maxlength="20" required />
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">模板主题</td>
+                        <td class="pl10">
+                            <div >
+                                
+                                <input type="text" class="form-control" name="customerName" ng-model="modalform.customerName"  placeholder="输入电子邮箱" ng-maxlength="20" required />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60">模板内容</td>
+                        <td class="pl10">
+                            <div >
+                                
+                                <textarea rows="20" class="form-control" name="customerName" ng-model="modalform.customerName"  placeholder="输入电话号码" ng-maxlength="20" required />
+                            </div>
+                        </td>
+                    </tr>
+                    
+                </table>
+               
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary wd80">确定</button>
+            </div>
+        </form>
+    </div>
+</script>

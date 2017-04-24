@@ -1,0 +1,148 @@
+<div id="page-wrapper" ng-controller="MainCtrl" ng-init="initFun()">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="initFun()" title="刷新"></a></div>
+        <ul>
+            <li class="active">仪表盘</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li class="active">仪表盘</li>
+    </ol>
+    <div  class="container pt30 pb30 bbc">
+        <div class="row">
+            <div class="col-lg-3">
+                <span>今日客户数: 10</span>
+            </div>
+            <div class="col-lg-3">
+                <span>今日收入: 10,000</span>
+            </div>
+            <div class="col-lg-3">
+                <span class="block">总客户数: 4,000</span>
+            </div>
+            <div class="col-lg-3">
+                <span>总收入: 490,000</span>
+            </div>
+        </div>
+    </div>
+    <div class="btnbox">
+        <form class="f_r form-inline">
+            <div class="btn-group" role="group" aria-label="...">
+              <button type="button" class="btn btn-default">最近1周</button>
+              <button type="button" class="btn btn-default">最近1个月</button>
+              <button type="button" class="btn btn-default">最近半年</button>
+              <button type="button" class="btn btn-default">最近1年</button>
+              <button type="button" class="btn btn-default">最近3年</button>
+            </div>
+        </form>
+    </div>
+    <!--
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <div></div>
+        </div>
+        <div class="nose-panel-footer cf bte">
+            
+        </div>
+    </div>
+    -->
+    
+    <div  class="container pt30">
+        <div class="row">
+            <div class="col-lg-5">
+                <div id="customerChart" style="width:100%;height:300px"></div>
+            </div>
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-5">
+                <div id="incomeChart" style="width:100%;height:300px"></div>
+            </div>
+        </div>
+        
+    </div>
+
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
+
+<!--模板-->
+<script type="text/ng-template" id="addmodel.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">{{thename}}资产</div>
+        </div>
+        <!--{{baseForm.$valid}}-->
+        <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
+                    <tr>
+                        <td width="40">类型</td>
+                        <td class="pl10">
+                            <select class="form-control" ng-model="modalform.assetType" ng-options="x.name as x.name for x in listClass" required>
+                                <option value="">选择类型（必填）</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>编号</td>
+                        <td class="pl10">
+                            <input type="text" class="form-control" ng-model="modalform.id" placeholder="输入资产编号" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>品牌</td>
+                        <td class="pl10">
+                            <div class="nose-group"  ng-class="{'has-error':baseForm.assetName.$dirty && baseForm.assetName.$invalid}">
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.assetName.$dirty && baseForm.assetName.$error.required" popover="不能为空" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <i class="iconfont icon-tishi f20 abs_r" ng-show="baseForm.assetName.$dirty && baseForm.assetName.$error.maxlength" popover="不能超过20个字符" popover-placement="bottom" popover-trigger="mouseenter"></i>
+                                <input type="text" class="form-control" name="assetName" ng-model="modalform.assetName"  placeholder="输入资产名称" ng-maxlength="20" required />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>型号</td>
+                        <td class="pl10">
+                            <input type="text" class="form-control" ng-model="modalform.assetModel" placeholder="输入资产型号" required>
+                        </td>
+                    </tr>
+
+                </table>
+                <div showhid>
+                    <table cellpadding="0" cellspacing="0" width="100%" class="line40td dropdown" style="display: none;">
+                        <tr>
+                            <td width="40">价格</td>
+                            <td class="pl10">
+                                <input type="number" class="form-control" ng-model="modalform.price" placeholder="输入价格(元)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>日期</td>
+                            <td class="pl10">
+                                <div class="form-inline">
+                                    <div class="qiyi-group dib line20td">
+                                        <input type="datetime" name="startDate" class="form-control" date-time ng-model="modalform.startDate" view="date" min-view="date" format="yyyy-MM-dd"  auto-close="true" placeholder="购买日期">
+                                        <span class="abs_r" ><i class="iconfont icon-rili" ></i></span>
+                                    </div>
+                                    <input type="text" class="form-control dib ml5" ng-model="modalform.age"  style="width: 243px;" placeholder="服务年限">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top">描述</td>
+                            <td class="pl10">
+                                <textarea class="form-control" ng-model="modalform.description"  rows="3" placeholder="输入资产描述"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="pt10" style="padding-left: 50px;"><a class="clickbtn" title="展开/收起"><i class="fa fa-lg fa-angle-down"></i><span class="f12 g9 ml5">选填字段</span></a></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary wd80">确定</button>
+            </div>
+        </form>
+    </div>
+</script>

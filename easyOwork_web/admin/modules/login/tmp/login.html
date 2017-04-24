@@ -1,0 +1,77 @@
+<!--banner-->
+<div class="loginpage" ng-controller="loginCtrl" ng-init="init()">
+    <div class="abs_l"><!--<a ui-sref="index">
+    	 <img src="./images/logo.png" alt=""></a> <span class="i f16 white ml5">青辉阳工作平台让工作更简单！</span> -->
+    	<span class="f20 orange b">{{ent.name}}</span>
+    </div>
+    <div class="abs_r">
+        <!-- <button type="button" class="btn btn-primary bdrs20 wd100" ng-click="registerModal()">企业注册</button> -->
+        <!--<button type="button" class="btn btn-primary bdrs20 wd70" ng-click="loginModal()">登录</button>-->
+    </div>
+    <div class="login-flexslider" id="login_banner">
+        <ul class="slides">
+            <li><a style="background-image:url('./images/login_bg01.jpg')"></a></li>
+            <!-- <li><a style="background-image:url('./images/login_bg02.jpg')"></a></li> -->
+        </ul>
+    </div>
+    <div class="login-box white t_c animated loginscreen fadeInDown">
+        <div class="f58">e之助后台管理系统</div>
+        <div class="f22 mt20 mb30"></div>
+        <div class="mt20 a_prime b"></div>
+        <!--<div class="input-group input-group-lg mt20">
+            <input type="text" class="form-control" ng-model="cpname" placeholder="输入企业名称">
+            <span class="input-group-btn">
+                <button class="btn btn-primary wd120" type="button" ng-click="registerModal()">创建企业</button>
+            </span>
+        </div>-->
+        <div class="pct80 mauto">
+            <form name="form" ng-submit="loginok(form.$valid)" novalidate="novalidate">
+                <div class="pl15 pr15">
+                    <div class="nose-group mt10" ng-class="{'has-error':form.registername.$dirty && form.registername.$invalid}">
+                       
+                        <input type="text"  name="registername" ng-model="Zh.registername" required class="form-control input-lg" placeholder="用户名">
+                    </div>
+                    <div class="nose-group mt10"  ng-class="{'has-error':form.registerPassword.$dirty && (form.registerPassword.$error.required || form.registerPassword.$invalid)}">
+                        <input type="password" class="form-control input-lg" id="registerPassword" name="registerPassword" ng-model="Zh.registerPassword" required placeholder="密码" required />
+                    </div>
+                    <div class="mt10"><button type="submit" class="btn btn-primary btn-lg btn-block" ng-click="ok()">登录</button></div>
+                    
+                </div>
+            </form>
+        </div>
+        <!--<div class="mt20 f16">
+            <a ng-click="loginModal()">现在登录</a>
+            <span class="ml15 mr15">|</span>
+            <a ng-click="findpwdModal()">忘记密码？</a>
+            <span class="ml15 mr15">|</span>
+            <a ng-click="registerModal('invite')">邀请注册</a>
+        </div>-->
+    </div>
+	 
+    <div class="login-footer white t_c">
+        	该服务由<a href="javascript:window.open('https://www.qinghuiyang.com')">成都青辉阳科技有限公司</a>提供.
+    </div>
+	 
+</div>
+<script>
+    var login_bannerObj=$('#login_banner');
+    var WinW=$(window).width();
+    var WinH=$(window).height();
+    login_bannerObj.flexslider({
+//        animation: "slide",
+        slideshowSpeed: 10000,           // 自动播放速度毫秒
+        animationSpeed: 1000,            //滚动效果播放时长
+        start:function(){
+            autoH();
+        }
+    });
+    function autoH(){
+        login_bannerObj.find('.slides').height(WinH);
+        $('body').height(WinH);
+    }
+    window.onresize=function(){
+        WinH=$(window).height();
+        autoH();
+    }
+
+</script>

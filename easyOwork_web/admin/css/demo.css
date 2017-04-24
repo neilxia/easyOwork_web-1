@@ -1,0 +1,22 @@
+/*demo*/
+.wrapper{ width: 1200px; margin: 0 auto;}
+.panel-body{}
+.panel-body h5{ margin-top:10px; margin-bottom: 10px; }
+
+.show-grid [class^=col-] {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #eee;
+    background-color: rgba(86,61,124,.15);
+    border: 1px solid #ddd;
+    border: 1px solid rgba(86,61,124,.2);
+}
+
+/*icon*/
+.fontawesome-icon-list .fa-hover {
+    margin:  15px 0;
+}
+.fontawesome-icon-list .fa-hover a .fa {
+    font-size: 28px;
+    vertical-align: -6px;
+}

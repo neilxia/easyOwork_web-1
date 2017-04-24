@@ -1,0 +1,169 @@
+<div id="page-wrapper" ng-controller="customerlistCtrl" ng-init="initFun()">
+    <!--主要内容-->
+    <div class="payetilebox">
+        <div class="f_r mt5"><!--<a class="iconfont icon-fanhui f22" back-button title="返回"></a>--> <a class="iconfont icon-shuaxin f22 ml15" ng-click="initFun()" title="刷新"></a></div>
+        <ul>
+            <li class="active">客户查询</li>
+        </ul>
+    </div>
+    <ol class="breadbox">
+        <li>客户</li>
+        <li class="active">客户查询</li>
+    </ol>
+    <div class="btnbox">
+        <button class="btn btn-default btn-sm" >新增客户</button>
+        <!--<button class="btn btn-default btn-sm" ng-click="deleteAll()">删除</button>-->
+    </div>
+    <div class="nose-panel">
+        <div class="nose-panel-body">
+            <table class="table table-hover" cellspacing="0" cellpadding="0" width="100%;">
+                <thead>
+                <tr>
+                    <th class="pl20">公司名称</th>
+                    <th width="100">注册人姓名</th>
+                    <th width="100">电话号码</th>
+                    <th width="100">电子邮箱</th>
+                    <th width="150">注册时间</th>
+                    <th width="100">客户负责人</th>
+                    <th width="125">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="data in datalist |  filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
+                    <td class="pl20"><a class="a_prime" ng-click="viewFun(data)">{{data.entName}}</a></td>
+                    <td>{{data.name}}</td>
+                    <td>{{data.phone}}</td>
+                    <td>{{data.email}}</td>
+                    <td>{{data.time}}</td>
+                    <td>{{data.saleName}}&nbsp;&nbsp;&nbsp;<i class="iconfont icon-bianji"></i></td>
+                    <td><button class="btn btn-danger ml5 btn-xs h30" title="客户操作记录" ng-click="viewHistory(data)"><i class="iconfont icon-6 f14"></i></button></td>
+                </tr>
+                <!--<tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">-->
+                </tbody>
+            </table>
+        </div>
+        <div class="nose-panel-footer cf bte">
+            <pagination ng-show="thispages.total>thispages.pageSize" total-items="thispages.total"  items-per-page="thispages.pageSize" ng-model="thispages.pageNum" max-size="5"  class="pagination-sm yi-page m0 f_r" boundary-links="true"></pagination>
+            <div class="g9">共 {{thispages.total || '0'}} 条数据</div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <div ng-include="'modules/common/footer.html'"></div>
+</div>
+
+<!--模板-->
+<script type="text/ng-template" id="viewmodel.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">客户详情</div>
+        </div>
+        <!--{{baseForm.$valid}}-->
+        <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
+                    <tr>
+                        <td width="150">客户名称</td>
+                        <td class="pl10">
+                            {{modalform.entName}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>注册人姓名</td>
+                        <td class="pl10">
+                            {{modalform.name}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>注册人电话号码</td>
+                        <td class="pl10">
+                            {{modalform.phone}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>注册人邮箱</td>
+                        <td class="pl10">
+                            {{modalform.email}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>注册时间</td>
+                        <td class="pl10">
+                            {{modalform.time}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>客户负责人</td>
+                        <td class="pl10">
+                            {{modalform.saleName}}
+                        </td>
+                    </tr>
+                    </table>
+                    
+                </div>
+            </div>
+            <div class="modal-footer">
+                
+            </div>
+        </form>
+    </div>
+</script>
+
+<script type="text/ng-template" id="viewHistory.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">客户跟踪记录</div>
+        </div>
+        <!--{{baseForm.$valid}}-->
+        <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
+                    <tr>
+                        <td width="150">客户名称</td>
+                        <td class="pl10">
+                            {{modalform.entName}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>注册人姓名</td>
+                        <td class="pl10">
+                            {{modalform.name}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>注册人电话号码</td>
+                        <td class="pl10">
+                            {{modalform.phone}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>注册人邮箱</td>
+                        <td class="pl10">
+                            {{modalform.email}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>注册时间</td>
+                        <td class="pl10">
+                            {{modalform.time}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>客户负责人</td>
+                        <td class="pl10">
+                            {{modalform.saleName}}
+                        </td>
+                    </tr>
+                    </table>
+                    
+                </div>
+            </div>
+            <div class="modal-footer">
+                
+            </div>
+        </form>
+    </div>
+</script>
