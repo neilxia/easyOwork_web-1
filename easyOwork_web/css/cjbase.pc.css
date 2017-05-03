@@ -354,7 +354,7 @@ button, input, select, textarea { font-size: 100%; outline:none;}
 .mt10{margin-top:10px;}
 .mt12{margin-top: 12px;}
 .mt14{margin-top: 14px;}
-.mt15{margin-top:15px;}
+.mt15{margin-top:0;}
 .mt18{margin-top:18px;}
 .mt20{margin-top:20px;}
 .mt25{margin-top:25px;}

@@ -24,7 +24,7 @@
 						<li class="u-li" ng-click="hideThisNav()"><a ui-sref="price">价格<span></span></a></li>
 						<li class="u-li" ng-click="hideThisNav()"><a ui-sref="customize">定制<span></span></a></li>
 						<li class="u-li" ng-click="hideThisNav()"><a ui-sref="register">注册<span></span></a></li>
-						<li ng-show="!userinfo.name" class="u-li"><a ui-sref="login">登录<span></span></a></li>
+						<li ng-show="!userinfo.name" ng-click="hideThisNav()" class="u-li"><a ui-sref="login">登录<span></span></a></li>
 						<li ng-show="userinfo.name" class="u-li" ng-click="changeMyshow()">
 							<a class="addvalue">{{userinfo.name}}({{userinfo.entName}})<i class="icon iconfont">&#xe60d;</i></a>
 							<div class="subnav notshow" ng-click="logout()" ng-if="myShow">

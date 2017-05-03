@@ -24,9 +24,9 @@
                 <thead>
                 <tr>
                 	<th width="100" class="pl20">员工编号</th>
-                    <th width="150"><span class="p15">姓名</span></th>
+                    <th width="150"><span class="p15" ng-click="chooseName()">姓名</span></th>
                     <th width="100">性别</th>
-                    <th width="150">部门</th>
+                    <th width="150" ng-click="chooseBumen()">部门</th>
                     <th width="150">职位</th>
                     <th width="200">邮箱</th>
                     <th>手机号码</th>
@@ -34,7 +34,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize | orderBy:['orgList[0].name','position','name']">
+                <tr ng-repeat="data in datalist | filter:sltname | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize | orderBy:paiXu">
                     <td class="pl20">{{data.id}}</td>
                     <td><span class="p15">{{data.name}}</span></td>
                     <td>{{data.sex}}</td>

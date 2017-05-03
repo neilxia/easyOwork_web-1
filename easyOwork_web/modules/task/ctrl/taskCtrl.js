@@ -10,6 +10,29 @@ function sendtaskCtrl(){
     	$scope.initFun=function(){
     		inquiryCreatedTasks();
     	};
+        
+        
+        $scope.addRenwu = function () {
+            var modalInstance = $modal.open({
+                templateUrl: 'addRenwu.html',
+                //size:'sm',
+                controller: modalCtrl,
+                resolve:{
+                    listClass : function() {
+                        return $scope.listClass;
+                    }
+                }
+            });
+            function modalCtrl ($scope, $modalInstance,listClass) {
+                $scope.listClass=listClass;                        
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            };
+        };
+
+
+
     	function inquiryCreatedTasks(){
             $scope.options={
         		"userDTO":{
@@ -100,6 +123,9 @@ function receivetaskCtrl(){
     	$scope.initFun=function(){
     		inquiryAssignedTasks();
     	};
+        $scope.styleObj={
+            "width":"10%"
+        }
     	function inquiryAssignedTasks(){
             $scope.options={
         		"userDTO":{
@@ -132,19 +158,23 @@ function receivetaskCtrl(){
 }
 
 function addtaskCtrl(){
-    return['$scope', '$modal' ,'$compile','$state','roleService','MsgService','taskService','LocalStorage','$stateParams','noseService',function($scope,$modal,$compile,$state,roleService,MsgService,taskService,LocalStorage,$stateParams,noseService){
+    return['$scope', '$modal' ,'$compile','$state','roleService','MsgService','taskService','LocalStorage','$stateParams','noseService','Common','OSSService',function($scope,$modal,$compile,$state,roleService,MsgService,taskService,LocalStorage,$stateParams,noseService,Common,OSSService){
     	
     	var userinfo=LocalStorage.getObject('userinfo');
     	$scope.editMode = false;
+        var companyinfo;
     	$scope.initFun=function(){
+            getduanDateFun();
+            // companyinfo=LocalStorage.getObject('companyinfoR');
 	    	$scope.task={
 	    		"taskType":"",
 	    		"title":"",
 	    		"content":"",
-	    		"startDate":null,
+	    		"startDate":$scope.currentDate.cdate,
 	    		"endDate":null,
 	    		"userDTO":{},
 	    		"userDTOList":[]
+                // "sourseUrl":companyinfo.sourseUrl
 	    	};
 	    	var selectedTask = $stateParams.selectedTask;
 	    	if(selectedTask != undefined && selectedTask != null){
@@ -155,7 +185,38 @@ function addtaskCtrl(){
                 };
 	    	}
     	};
-    	
+    	//上传开始
+        // var uploader = $scope.uploader = new FileUploader({
+        //     url: '', //不使用默认URL上传
+        //     queueLimit: 1,     //文件个数
+        //     removeAfterUpload: true,   //上传后删除文件
+        //     autoUpload:false
+        // });
+        // uploader.onAfterAddingFile = function(fileItem){
+        //     uploader.cancelAll();
+        //     var file = $("#licence").get(0).files[0];
+        //     var filePath = $scope.task.userDTO+'/company/sourse/';
+        //     var key= filePath+file.name;
+        //     var promise = OSSService.uploadFile(filePath,file);
+        //     promise.success(function (data, status, headers, config) {
+        //          var urlPromise = OSSService.getUrl({'body':{'key':key}});
+        //          urlPromise.success(function (data, status, headers, config) {
+        //              var sts=data.body.status;
+        //              if(sts.statusCode==0){
+        //                  $scope.EPinfo.sourseUrl = data.body.data.url;
+        //                  LocalStorage.setObject('companyinfoR',$scope.EPinfo);
+        //                  $scope.changeCompanyInfoFun($scope.EPinfo.sourseUrl,'licenceUrl');
+        //              }
+        //          });
+                 
+        //     })
+        // };
+
+
+        function getduanDateFun(){
+           $scope.currentDate= Common.getduanDate(0,1)[0];
+        }
+
     	$scope.submit = function(){
     		
     		if($scope.theapply && $scope.theapply.selectedallarr){
@@ -230,6 +291,56 @@ function viewtaskCtrl(){
                 };
 	    	}
     	};
+        $scope.styleObj = {
+            "width":"10%"
+        }
+        $scope.isBtnTrue="false";
+        $scope.isBtnFalse="true";
+        $scope.submitFinish=function(){
+            $scope.isBtnTrue="false";
+            $scope.isBtnFalse="true";
+        }
+        $scope.changeFinish=function(){
+            $scope.isBtnTrue="true";
+            $scope.isBtnFalse="false";
+        }
+        // $scope.editProgress = function () {
+        //     var modalInstance = $modal.open({
+        //         templateUrl: 'editprogressR.html',
+        //         controller: modalCtrl,
+        //         resolve:{
+        //             datadt : function() {
+        //                 return $scope.datadt;
+        //             }
+        //         }
+        //     });
+        //     function modalCtrl ($scope, $modalInstance,datadt) {
+        //         $scope.progress = datadt.projectProgress;
+        //         $scope.ok = function (state) {
+        //             if(!state){return;} //状态判断
+        //             //判断格式
+        //             if($scope.progress!=undefined && $scope.progress<=100){
+        //                 var promise = projectService.changeProject({body:{"actionType":'MODIFY',"projectName":datadt.projectName,'projectProgress':$scope.progress}});
+        //                 promise.success(function(data, status, headers, config){
+        //                     var sts=data.body.status;
+        //                     if(sts.statusCode==0){
+        //                         datadt.projectProgress = $scope.progress;
+        //                         $modalInstance.close();
+        //                     }else{
+        //                         MsgService.tomsg(data.body.status.errorDesc);
+        //                     }
+        //                 });
+        //                 promise.error(function(data, status, headers, config){
+        //                     MsgService.tomsg(data.body.status.errorDesc);
+        //                 });
+        //             }
+        //         };
+        //         $scope.cancel = function () {
+        //             $modalInstance.dismiss('cancel');
+        //         };
+        //     };
+        // };
+
     	$scope.updateTask = function(actionType){
     		$scope.options={
     			"actionType":actionType,

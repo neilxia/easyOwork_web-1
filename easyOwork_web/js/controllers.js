@@ -10,6 +10,8 @@ angular.module('qiyi')
                 fix_height();
             },0);
         });
+
+
         $scope.initFun=function(){
             //if(!userinfo.tokenId){$state.go('login');return;}
             //初始化阿里云OSS参数
@@ -18,6 +20,7 @@ angular.module('qiyi')
             //inquiryAnnouncementsFun();//公告
         }
         $scope.$on('to-parent1', function(event,data) {
+            // console.log("alslasa",data);
         	//企业信息
             $scope.companyinfo=LocalStorage.getObject('companyinfo');
             //用户信息
@@ -54,7 +57,12 @@ angular.module('qiyi')
             	"customerCount":data.customerCount,
             	"recruitCount":data.recruitCount
             }
+
+            
+
         });
+
+
         /**
         $scope.$on('to-parent2', function(event,data) {
             $scope.userinfoall=LocalStorage.getObject('userinfo');
@@ -490,4 +498,41 @@ angular.module('qiyi')
             $state.go("colleague.search",{name:$scope.searchText})
         }
     }])
+    // .controller('receivetaskCtrl',['$rootScope','$scope','$state','LocalStorage','publicService','MsgService','companyService','employeesService','$timeout',function($rootScope,$scope,$state,LocalStorage,publicService,MsgService,companyService,employeesService,$timeout){
+
+
+    //     $scope.inithdFun=function(){
+    //         //getCompanyInfo();
+    //         //getUserInfo();
+    //         //getNotes();
+    //         initMain();
+    //     };
+    //     function initMain(){
+    //         var options={
+    //                 "id":userinfo.id,   //员工号
+    //                 "personalEmail":userinfo.personalEmail, //邮件地址
+    //                 "personalPhoneCountryCode":userinfo.personalPhoneCountryCode,   //电话号码
+    //                 "personalPhone":userinfo.personalPhone      //电话号码
+    //         };
+    //         var promise = employeesService.initMain({body:options});
+    //         promise.success(function(data, status, headers, config){
+    //             var sts=data.body.status;
+    //             if(sts.statusCode==0){
+    //                 var datas=data.body.data;
+    //                 //company data
+    //                 $scope.companyinfo=datas.entDTO;
+    //                 LocalStorage.setObject('companyinfo',datas.entDTO);
+    //                 //user data
+    //                 var userinfoall=angular.extend({},userinfo,datas.userList[0]);
+    //                 $scope.userinfoall=userinfoall;
+    //                 LocalStorage.setObject('userinfo',userinfoall);
+    //                 //note data
+    //                 $scope.notes=datas.notes;
+    //                 $scope.unreadCount = datas.unreadCount;
+                    
+    //                 $scope.$emit('to-parent1', datas);//父级
+    //             }
+    //         });
+    //     }
+    // }])
 ;

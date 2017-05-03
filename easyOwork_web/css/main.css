@@ -11,6 +11,53 @@
 .personal .introbox li .iconfont{ display: none;}
 .personal .introbox li:hover{ background-color: #eee;}
 .personal .introbox li:hover .iconfont{display: inline-block;}
+/*删除个人信息*/
+/*.panel{display: none;}*/
+.mainPanel{display:none;}
+/*待我审批*/
+.tableShen .poi{
+    width:30%!important;
+    float: left;
+    height: 10rem;
+    background-color:red; 
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border-radius: 5px;
+}
+.tableShen td{
+    padding: 0!important;
+    display: block;
+    overflow: hidden;
+    height: 2.5rem;
+    width: 100%;
+    line-height: 2.5rem;
+}
+
+.tl01{
+    text-indent: 1rem;
+    line-height: 2.5rem;
+}
+.tableShen .tl02{
+    text-align: center;
+    font-weight: bolder;
+    width: 90%;
+    margin:0 auto; 
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.tl03{
+    text-indent: 1rem;
+}
+.span02{
+    float: right;
+}
+/*.panel-body{
+    height: 200px;
+    overflow: hidden;
+}*/
+
 /*备忘录*/
 .ind_memo_list{}
 .ind_memo_list li{ background-color: #eee; padding: 3px 15px 3px 10px; margin-right: 10px; margin-bottom: 10px; position: relative;}
@@ -156,3 +203,31 @@
     border-color: #71767b;
 }
 .btn-grouptop > button.active{}
+
+/*任务时间轴*/
+.project-mgsdtboxR{  background-color: #fafafa;}
+.project-mgsdtR li{ position: relative; width: 100%; text-align: center;height: 50px;line-height: 50px;}
+.project-mgsdtR li .titlebox{ height: 26px; float: left;}
+.project-mgsdtR li .titlebox > button{ position: relative; z-index: 1; }
+.project-mgsdtR li .sign{ width: 12px; height: 12px;  background-color: orange; display: inline-block; z-index: 8;position: absolute;top: 50%;margin-top: -6px;}
+
+
+.project-mgsdtR li .textbox:before{
+    content:"";
+    position: absolute;
+    top: 0;
+    left: 6px;
+    bottom: 0;
+    height: 100%;
+    width: 1px;
+    border-left: 2px solid orange;
+    z-index: 0;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
+.project-mgsdtR li:first-child .textbox:before{top: 50%; height: 50%;}
+.project-mgsdtR li:last-child .textbox:before{height: 50%;}
+
+.project-mgsdtR li.sucs .sign{ background-color: orange;}
+.project-mgsdtR li.sucs .textbox{color: #f7941d;}
+.project-mgsdtR li.sucs .textbox:before{border-left-color:#f7941d;}

@@ -11,6 +11,7 @@ function addpcsCtrl(){
             removeAfterUpload: true,   //上传后删除文件
             autoUpload:false
         });
+
         attachmentUploader.onAfterAddingFile = function(fileItem){
             debugger;
             attachmentUploader.cancelAll();

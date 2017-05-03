@@ -9,6 +9,26 @@ function searchlistCtrl(){
             pageNum:1,
             pageSize:10
         };
+        var chooseBtn = true;
+        $scope.chooseName=function(){
+            if(chooseBtn){
+                $scope.paiXu = "name";
+                chooseBtn=false;
+            }else{
+                $scope.paiXu = "";
+                chooseBtn=true;
+            }
+        }
+        $scope.chooseBumen=function(){
+            if(chooseBtn){
+                $scope.paiXu = "orgList[0].name";
+                chooseBtn=false;
+            }else{
+                $scope.paiXu = "";
+                chooseBtn=true;
+            }
+        }
+
         function inquiryEmployeeFun(){
         	var options={
                     "type":'ALL'

@@ -128,6 +128,12 @@
                             </td>
                         </tr>
                         <tr>
+                            <td width="40">数量</td>
+                            <td class="pl10">
+                                <input type="number" class="form-control" ng-model="modalform.Num" placeholder="输入数量(个)"/>
+                            </td>
+                        </tr>
+                        <tr>
                             <td>日期</td>
                             <td class="pl10">
                                 <div class="form-inline">
@@ -149,6 +155,13 @@
                     <div class="pt10" style="padding-left: 50px;"><a class="clickbtn" title="展开/收起"><i class="fa fa-lg fa-angle-down"></i><span class="f12 g9 ml5">选填字段</span></a></div>
                 </div>
             </div>
+            <!--<div class="cf mb10">
+                    <div class="col-xs-2 t_r pt7 g9">分配给</div>
+                    <div class="col-xs-10">
+                        <div selectdepyuan yuangong="1" myselected="theapply.userDTOList" selectedallarr="theapply.selectedallarr">
+                        </div>
+                    </div>
+            </div>-->
             <div class="modal-footer">
                 <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
                 <button type="submit" class="btn btn-primary wd80">确定</button>
@@ -156,6 +169,34 @@
                 
             </div>
 
+        </form>
+    </div>
+</script>
+
+
+
+<script type="text/ng-template" id="addmodelT.html">
+    <div class="whitemodal">
+        <div class="modal-header">
+            <button type="button" class="close"  ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <div class="f16">选择分配人</div>
+        </div>
+        <!--{{baseForm.$valid}}-->
+        <form role="baseForm" name="baseForm" ng-submit="ok(baseForm.$valid)" novalidate="novalidate">
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" width="100%" class="line40td mt5">
+                    <tr>
+                        <td width="60">选择员工</td>
+                        <td class="pl10">
+                            <div selectdepyuan yuangong="1" myselected="modalform.userDTO" selectedallarr="modalform.selectedallarr"></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white wd80" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary wd80">确定</button>
+            </div>
         </form>
     </div>
 </script>

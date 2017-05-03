@@ -204,18 +204,20 @@ function addreportCtrl() {
 			'taskService',
 			'projectService',
 			'CustomerService',
+			'Common',
 			function($scope, $modal, $compile, $state, roleService, MsgService,
 					reportService, LocalStorage, $stateParams, noseService,
-					taskService, projectService, CustomerService) {
+					taskService, projectService, CustomerService,Common) {
 
 				var userinfo = LocalStorage.getObject('userinfo');
 				$scope.editMode = false;
 				$scope.initFun = function() {
+					getduanDateFun();
 					$scope.report = {
 						"reportType" : "",
 						"title" : "",
 						"content" : "",
-						"startDate" : null,
+						"startDate" : $scope.currentDate.cdate,
 						"endDate" : null,
 						"userDTO" : {},
 						"userDTOList" : []
@@ -235,6 +237,9 @@ function addreportCtrl() {
 									0, 1);
 					}
 				};
+				function getduanDateFun(){
+		           $scope.currentDate= Common.getduanDate(0,1)[0];
+		        }
 
 				$scope.getTask = function() {
 					var modalInstance = $modal.open({

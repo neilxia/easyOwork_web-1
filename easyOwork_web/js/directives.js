@@ -325,18 +325,23 @@ function slimScroll($timeout){
         link: function(scope, element) {
             $timeout(function(){
                 element.slimScroll({
-                    height: scope.boxHeight,
+                    // height: scope.boxHeight,
+                    height:'10rem',
                     alwaysVisible: true,
                     position : 'right',
                     size: '6px',
                     color: '#666',
                     railOpacity: 0.9
+
                 });
 
             },300);
         }
     };
 }
+
+
+
 
 function multipleEmail(){
     return {
@@ -431,6 +436,58 @@ function onFinishRender($timeout) {
         }
     };
 }
+function repeatFinish(){
+return {
+link: function(scope,element,attr){
+            var a = Math.round(Math.random())*190+65;
+            var b = Math.round(Math.random())*190+65;
+            var c = Math.round(Math.random())*190+65;
+            var str = "rgba("+a+","+b+","+c+",1)";
+            // $scope.objColor = {
+            // "background-color" : str
+            // }
+    element.css({"background-color":str});
+}
+}
+}
+// 定义日历指令
+
+function datCanlarder(){
+    return {
+        // restrict:'A',
+        replace: true,
+        templateUrl:'dataCanlarder.html',
+        link:function(scope,element){
+
+                $('#mydatepicker').dcalendarpicker(); 
+                $('#mydatepicker2').dcalendarpicker({
+                    format:'yyyy-mm-dd'
+                }); 
+                $('#mycalendar').dcalendar(
+                        
+                    );
+         
+        }
+    }
+}
+//自定义新的日历指令
+function datPicker(){
+    return {
+        replace:true,
+        templateUrl:'datPicker.html',
+        link:function(scope,element){
+                $('#datepicker1').datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: false,
+                onSelect:function(dateText,inst){
+                    // alert("nin"+ dateText);
+                    $(".textDatepica").text(dateText);
+                }
+            });
+        }
+    }
+}
+
 
 /*function onloadFinishset($timeout,$window) {
     return {
@@ -1287,4 +1344,7 @@ angular
     .directive('currentTime', currentTime) //当前时间
     .directive('accessid', ['accessService',accessId]) //权限控制是否显示元素
     .directive('protectedid', ['accessService',protectedId]) //权限控制是否显示元素
+    .directive('repeatFinish',repeatFinish)      //控制审批颜色随机
+    .directive('datCanlarder',datCanlarder)    //创建一个日历
+    .directive('datPicker',datPicker)  //创建一个日历
 ;

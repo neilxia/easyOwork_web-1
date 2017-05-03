@@ -26,7 +26,7 @@
             </span>
         </form>
         <button class="btn btn-default btn-sm" ui-sref="task.addtask">分配任务</button>
-        <button class="btn btn-default btn-sm" ng-click="deleteMultipleTasks()"">删除</button>
+        <button class="btn btn-default btn-sm" ng-click="deleteMultipleTasks()">删除</button>
     </div>
     <div class="nose-panel">
         <div class="nose-panel-body">
@@ -45,7 +45,7 @@
                 <tr ng-repeat="task in tasklist | filter:{status:selectedTaskStatus} | filter:{title:form.searchValue} | startFrom: (thispages.pageNum-1) * thispages.pageSize | limitTo: thispages.pageSize">
                     <td class="t_r"><input icheck type="checkbox" value="{{task}}" name="chkList" ng-model="task.checked"></td>
                     <td>{{task.startDate}} 到 {{task.endDate}}</td>
-                    <td>{{task.title}}</td>
+                    <td ng-click="addRenwu()">{{task.title}}</td>
                     <td><span class="mr5" ng-repeat="user in task.userDTOList">{{user.name}}</span></td>
                     <td>{{task.status}}</td>
                     <td><button class="btn btn-default btn-xs h30" title="编辑" ng-click="editTask(task)"><i class="iconfont icon-bianji f14"></i></button><button class="btn btn-danger ml5 btn-xs h30" title="删除" ng-click="deleteTask(task)"><i class="iconfont icon-del f14"></i></button></td>
@@ -63,3 +63,41 @@
     <!-- Footer -->
     <div ng-include="'modules/common/footer.html'"></div>
 </div>
+
+<script type="text/ng-template" id="addRenwu.html">
+    <div class="whitemodal">
+        <div class="project-mgsdtboxR mt20">
+                    <table class="line30td f12" cellspacing="0" cellpadding="0" width="100%;">
+                        <tr>
+                            <td width="60" valign="top">任务进度</td>
+                            <td>
+                                <ul class="project-mgsdtR">
+                                    <li>
+                                        <div class="titlebox"><span class="sign bdrs50 poi" ng-click="updateStageStatus(data)"></span></div>
+                                        <div class="textbox">
+                                            <div>任务开始啊</div>
+                                      
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="titlebox"><span class="sign bdrs50 poi" ng-click="updateStageStatus(data)"></span></div>
+                                        <div class="textbox">
+                                            <div>任务开始啊</div>
+                                
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="titlebox"><span class="sign bdrs50 poi" ng-click="updateStageStatus(data)"></span></div>
+                                        <div class="textbox">
+                                            <div>任务开始啊</div>
+                                      
+                                        </div>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+        <button type="button" class="btn btn-default" ng-click="cancel()">关闭</button>
+    </div>
+</script>

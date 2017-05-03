@@ -204,6 +204,9 @@ textarea{resize: none;}
 
 
 .nose-panel{}
+.nose-panel {
+    cursor:pointer;
+}
 .nose-panel-heading{}
 .nose-panel-body{}
 .nose-panel-body .table{ font-size: 12px;}
@@ -410,4 +413,24 @@ textarea{resize: none;}
 
 @media (min-width: 992px) and (max-width: 1199px){
 
+}
+/*日历*/
+.rightTd{
+    /*float: right;*/
+    position: absolute;
+    right: 5px;
+    top: 0;
+}
+.rightTdA{
+    position: relative;
+}
+.textDateTi{
+    width: 240px;
+    height: 40px;
+    position: absolute;
+    bottom: 20px;
+    left: 10px;
+}
+#ui-datepicker-div{
+    display: none;
 }

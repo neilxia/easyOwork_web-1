@@ -5,12 +5,16 @@ function assetslistCtrl(){
         $scope.initFun = function(){
             inquiryAssetTypesFun(); //查询类型list
             inquiryAssetsFun(); //查询list
+            // $scope.modalform.assetName = thisComputerType.assetName;
         };
         $scope.thispages={
             total:null,
             pageNum:1,
             pageSize:10
         };
+        
+        
+
         // $scope.barTrue=false;
         // $scope.blinkObj=function(){
         //     this.barTrue = !this.barTrue;
@@ -76,6 +80,7 @@ function assetslistCtrl(){
 
         //添加/修改/删除
         function changeAssetFun(change,row,$modalInstance,oldrow){
+            // var thisComputerType = LocalStorage.getObject('computerType');
             if(oldrow==undefined){oldrow=row}
             var startDate=$filter('date')(row.startDate,'yyyy-MM-dd');
             if(change!='DELETE'){
@@ -110,9 +115,13 @@ function assetslistCtrl(){
             promise.error(function(data, status, headers, config){
                 MsgService.tomsg(data.body.status.errorDesc);
             });
+            LocalStorage.setObject('computerType',$scope.options);
         }
         //新增
         $scope.addmodelFun = function () {
+            // $scope.modalform.assetName = thisComputerType.assetName;
+            var thisComputerType=LocalStorage.getObject('computerType');
+
             var modalInstance = $modal.open({
                 templateUrl: 'addmodel.html',
                 //size:'sm',
@@ -123,15 +132,20 @@ function assetslistCtrl(){
                     }
                 }
             });
+
             function modalCtrl ($scope, $modalInstance,listClass) {
                 $scope.thename='新增';
+                // var thisComputerType = LocalStorage.getObject('computerType');
                 $scope.listClass=listClass;
                 $scope.modalform={};
+                $scope.modalform.assetName = thisComputerType.assetName;
+                $scope.modalform.assetModel = thisComputerType.assetModel;
                 //提交增加
                 $scope.ok = function (state) {
                     if(!state){return;} //状态判断
                     changeAssetFun('ADD',$scope.modalform,$modalInstance);
                 };
+                
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                 };
@@ -171,6 +185,52 @@ function assetslistCtrl(){
                 changeAssetFun('DELETE',row);
             });
         };
+        //新增
+        $scope.addmodelFunT = function (data) {
+            var modalInstance = $modal.open({
+                templateUrl: 'addmodelT.html',
+                controller: modalCtrl
+            });
+            function modalCtrl ($scope, $modalInstance) {
+                $scope.thename='新增';
+                $scope.modalform={};
+                $scope.modalform=data;
+                //提交增加
+                $scope.ok = function (state) {
+                    if(!state){return;} //状态判断
+                    assignWithdrawAssetFun('ASSIGN',$scope.modalform,$modalInstance);
+                };
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            };
+        };
+
+
+        // 分配
+        function assignWithdrawAssetFun(change,row,$modalInstance,oldrow){
+            if(oldrow==undefined){oldrow=row}
+            $scope.options={
+                "actionType":change,    //ASSIGN, WITHDRAW
+                "userDTO":row.userDTO[0] || row.userDTO || "",
+                "id":row.id //资产号
+            }
+            var promise = assetService.assignWithdrawAsset({body:$scope.options});
+            promise.success(function(data, status, headers, config){
+                var sts=data.body.status;
+                if(sts.statusCode==0){
+                    inquiryAssetsFun();
+                    $modalInstance.close();
+                }else{
+                    MsgService.tomsg(data.body.status.errorDesc);
+                }
+            });
+            promise.error(function(data, status, headers, config){
+                MsgService.tomsg(data.body.status.errorDesc);
+            });
+        }
+
+
 
     }]
 }
